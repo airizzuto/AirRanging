@@ -1,0 +1,11 @@
+
+$primary-color: white;
+$secondary-color: hsl(191, 100%, 47%);
+$tertiary-color: hsl(0, 0%, 25%);
+$background-color: rgba(143, 143, 143, 0.60);
+
+@mixin blurring {
+  background-color: hsla(0, 0%, 56%, 0.60);
+  backdrop-filter: blur(20px);
+}
+
