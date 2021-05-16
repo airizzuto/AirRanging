@@ -4,7 +4,7 @@ namespace api.Enums
   /// https://www.faa.gov/documentLibrary/media/Order/Order_7360.1.pdf
   /// 
   /// </summary>
-  public enum EngineType
+  public enum EngineTypes
   {
     Electric,
     Piston,

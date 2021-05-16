@@ -1,6 +1,6 @@
 namespace api.Enums
 {
-  public enum WakeClass
+  public enum WakeCategories
   {
     Heavy,
     Medium,
