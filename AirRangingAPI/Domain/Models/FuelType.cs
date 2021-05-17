@@ -1,4 +1,4 @@
-namespace AirRangingAPI.Models
+namespace AirRangingAPI.Domain.Models
 {
   public partial class FuelType
   {

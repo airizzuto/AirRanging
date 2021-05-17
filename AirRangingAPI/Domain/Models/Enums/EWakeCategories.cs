@@ -1,4 +1,4 @@
-namespace AirRangingAPI.Enums
+namespace AirRangingAPI.Domain.Models.Enums
 {
   public enum EWakeCategories
   {
