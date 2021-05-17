@@ -1,6 +1,6 @@
 namespace AirRangingAPI.Enums
 {
-  public enum WakeCategories
+  public enum EWakeCategories
   {
     Heavy,
     Medium,

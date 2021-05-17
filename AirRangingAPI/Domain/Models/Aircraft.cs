@@ -20,15 +20,14 @@ namespace AirRangingAPI.Models
     public string Model { get; set; }
 
     public string Variant { get; set; }
-    public AircraftTypes AircraftType { get; set; }
-    public EngineTypes EngineType { get; set; }
-    public WeightCategories WeightClass { get; set; }
-    public WakeCategories WakeCategory { get; set; }
-    public FuelTypes FuelType { get; set; }
+    public EAircraftTypes AircraftType { get; set; }
+    public EEngineTypes EngineType { get; set; }
+    public EWeightCategories WeightClass { get; set; }
+    public EWakeCategories WakeCategory { get; set; }
+    public EFuelTypes FuelType { get; set; }
 
     public int MTOW { get; set; }
 
-    [Required]
     public int CruiseSpeed { get; set; }
 
     [Required]
@@ -38,7 +37,6 @@ namespace AirRangingAPI.Models
     [Required]
     public decimal MaxRange { get; set; }
 
-    [Required]
     public int ServiceCeiling { get; set; }
   }
 }
