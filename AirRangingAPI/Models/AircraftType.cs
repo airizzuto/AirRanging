@@ -1,4 +1,4 @@
-namespace api.Models
+namespace AirRangingAPI.Models
 {
   public partial class AircraftType
   {

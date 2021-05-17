@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace api.Models
+namespace AirRangingAPI.Models
 {
     public class WeightCategoryContext : DbContext
     {

@@ -1,4 +1,4 @@
-namespace api.Enums
+namespace AirRangingAPI.Enums
 {
   public enum WakeCategories
   {

@@ -1,4 +1,4 @@
-namespace api.Enums
+namespace AirRangingAPI.Enums
 {
   /// <summary>
   /// https://www.faa.gov/documentLibrary/media/Order/Order_7360.1.pdf

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace api.Controllers
+namespace AirRangingAPI.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]

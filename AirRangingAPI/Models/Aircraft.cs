@@ -1,4 +1,4 @@
-namespace api.Models
+namespace AirRangingAPI.Models
 {
   public class Aircraft
   {
@@ -13,6 +13,6 @@ namespace api.Models
     public FuelType FuelType { get; set; }
     public decimal MaxFuel { get; set; }
     // TODO: Converted Fuel Weight <-> Volume
-    public int MaxRange { get; set; }
+    public decimal MaxRange { get; set; }
   }
 }
