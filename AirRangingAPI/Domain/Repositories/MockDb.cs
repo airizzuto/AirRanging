@@ -4,7 +4,7 @@ using API.Domain.Models.Enums;
 
 namespace API.Domain.Repositories
 {
-  public class MockDb : IAirRangingDb
+  public class MockDb
   {
     public Aircraft GetById(int id)
     {
