@@ -4,7 +4,7 @@ namespace AirRangingAPI.Domain.Models.Enums
   /// https://www.faa.gov/documentLibrary/media/Order/Order_7360.1.pdf
   /// The class is part of the description used to distinguish an aircraft type.
   /// </summary>
-  public enum EAircraftTypes
+  public enum EAircraftType
   {
     AutnomousUnmannedAircraft,
     FixedWing,

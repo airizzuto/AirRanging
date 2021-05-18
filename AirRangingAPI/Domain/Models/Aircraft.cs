@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using AirRangingAPI.Enums;
+using AirRangingAPI.Domain.Models.Enums;
 
 namespace AirRangingAPI.Domain.Models
 {
@@ -20,11 +20,11 @@ namespace AirRangingAPI.Domain.Models
     public string Model { get; set; }
 
     public string Variant { get; set; }
-    public EAircraftTypes AircraftType { get; set; }
-    public EEngineTypes EngineType { get; set; }
-    public EWeightCategories WeightClass { get; set; }
-    public EWakeCategories WakeCategory { get; set; }
-    public EFuelTypes FuelType { get; set; }
+    public EAircraftType AircraftType { get; set; }
+    public EEngineType EngineType { get; set; }
+    public EWeightCategory WeightCategory { get; set; }
+    public EWakeCategory WakeCategory { get; set; }
+    public EFuelType FuelType { get; set; }
 
     public int MTOW { get; set; }
 

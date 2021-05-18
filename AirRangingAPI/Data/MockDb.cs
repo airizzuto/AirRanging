@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using AirRangingAPI.Enums;
-using AirRangingAPI.Models;
+using AirRangingAPI.Domain.Models;
+using AirRangingAPI.Domain.Models.Enums;
 
 namespace AirRangingAPI.Data
 {
@@ -10,9 +10,9 @@ namespace AirRangingAPI.Data
     {
       return new Aircraft {
         Id=0, Icao="C152", Manufacturer="Cessna", Model="152",
-        AircraftType=AircraftTypes.FixedWing, EngineType=EngineTypes.Piston,
-        WeightClass=WeightCategories.Small, WakeCategory=WakeCategories.Light,
-        FuelType=FuelTypes.AvGas,
+        AircraftType=EAircraftType.FixedWing, EngineType=EEngineType.Piston,
+        WeightCategory=EWeightCategory.Small, WakeCategory=EWakeCategory.Light,
+        FuelType=EFuelType.AvGas,
         CruiseSpeed=107, FuelCapacity=26, MaxRange=415, ServiceCeiling=14700
       };
     }
