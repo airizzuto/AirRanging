@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using AirRangingAPI.Domain.Models;
 using AirRangingAPI.Domain.Models.Enums;
 
-namespace AirRangingAPI.Data
+namespace AirRangingAPI.Domain.Repositories
 {
   public class MockDb : IAirRangingDb
   {
-    public Aircraft GetAircraftById(int id)
+    public Aircraft GetById(int id)
     {
       return new Aircraft {
         Id=0, IcaoId="C152", Manufacturer="Cessna", Model="152",
@@ -17,7 +17,7 @@ namespace AirRangingAPI.Data
       };
     }
 
-    public IEnumerable<Aircraft> GetAllAircraft()
+    public IEnumerable<Aircraft> ListAsync()
     {
       var aircrafts = new List<Aircraft>
       {

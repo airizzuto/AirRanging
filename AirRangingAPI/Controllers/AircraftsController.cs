@@ -15,8 +15,6 @@ namespace AirRangingAPI.Controllers
     {
         _aircraftService = aircraftService;
     }
-    
-    // TODO: replace with model
 
     // GET api/aircrafts
     [HttpGet]
@@ -26,9 +24,10 @@ namespace AirRangingAPI.Controllers
       return aircrafts;
     }
 
+    // TODO: replace with model
     // GET api/aircrafts/5
     [HttpGet("{id}")]
-    public ActionResult<Aircraft> Get(int id)
+    public ActionResult<string> Get(int id)
     {
       return "C152";
     }
