@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AirRangingAPI.Domain.Models;
 using AirRangingAPI.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -19,14 +20,15 @@ namespace AirRangingAPI.Controllers
 
     // GET api/aircrafts
     [HttpGet]
-    public ActionResult<IEnumerable<string>> Get()
+    public async Task<IEnumerable<Aircraft>> GetAllAsync()
     {
-      return new string[] {"C152", "C172", "A320", "T-50"};
+      var aircrafts = await _aircraftService.ListAsync();
+      return aircrafts;
     }
 
     // GET api/aircrafts/5
     [HttpGet("{id}")]
-    public ActionResult<string> Get(int id)
+    public ActionResult<Aircraft> Get(int id)
     {
       return "C152";
     }
