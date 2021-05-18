@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AirRangingAPI.Domain.Models;
-using AirRangingAPI.Domain.Services;
+using API.Domain.Models;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AirRangingAPI.Controllers
+namespace API.Controllers
 {
   [Route("/api/[controller]")]
   [ApiController]

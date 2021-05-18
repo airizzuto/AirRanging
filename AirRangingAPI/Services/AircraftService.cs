@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AirRangingAPI.Domain.Models;
-using AirRangingAPI.Domain.Repositories;
+using API.Domain.Models;
+using API.Domain.Repositories;
 
-namespace AirRangingAPI.Domain.Services
+namespace API.Services
 {
   public class AircraftService : IAircraftService
   {

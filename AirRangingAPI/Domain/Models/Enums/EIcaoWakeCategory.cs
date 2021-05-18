@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace AirRangingAPI.Domain.Models.Enums
+namespace API.Domain.Models.Enums
 {
   /// <summary>
   /// <para>Heavy (H) - Aircraft types of 300_000 pounds or more.</para>

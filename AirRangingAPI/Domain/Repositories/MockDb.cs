@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using AirRangingAPI.Domain.Models;
-using AirRangingAPI.Domain.Models.Enums;
+using API.Domain.Models;
+using API.Domain.Models.Enums;
 
-namespace AirRangingAPI.Domain.Repositories
+namespace API.Domain.Repositories
 {
   public class MockDb : IAirRangingDb
   {

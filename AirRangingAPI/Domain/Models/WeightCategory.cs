@@ -1,4 +1,4 @@
-namespace AirRangingAPI.Domain.Models
+namespace API.Domain.Models
 {
   public partial class WeightCategory
   {

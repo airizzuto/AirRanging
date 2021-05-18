@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace AirRangingAPI.Domain.Models.Enums
+namespace API.Domain.Models.Enums
 {
   /// <summary>
   /// Take-off weight categories

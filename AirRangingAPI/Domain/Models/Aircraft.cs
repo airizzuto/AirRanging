@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using AirRangingAPI.Domain.Models.Enums;
+using API.Domain.Models.Enums;
 
-namespace AirRangingAPI.Domain.Models
+namespace API.Domain.Models
 {
   public class Aircraft
   {

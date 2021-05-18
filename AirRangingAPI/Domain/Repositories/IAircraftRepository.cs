@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AirRangingAPI.Domain.Models;
+using API.Domain.Models;
 
-namespace AirRangingAPI.Domain.Repositories
+namespace API.Domain.Repositories
 {
     public interface IAircraftRepository
     {
