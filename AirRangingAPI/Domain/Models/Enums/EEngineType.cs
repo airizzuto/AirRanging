@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace AirRangingAPI.Domain.Models.Enums
 {
   /// <summary>
@@ -6,10 +8,22 @@ namespace AirRangingAPI.Domain.Models.Enums
   /// </summary>
   public enum EEngineType
   {
+    [Description("E")]
     Electric,
+
+    [Description("P")]
     Piston,
+
+    [Description("T")]
     TurbopropTurboshaft,
+
+    [Description("J")]
     Jet,
+
+    [Description("R")]
     Rocket,
+
+    [Description("C")]
+    TwoEngineCoupledProp,
   }
 }

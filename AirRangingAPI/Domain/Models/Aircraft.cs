@@ -11,7 +11,7 @@ namespace AirRangingAPI.Domain.Models
     
     [Required]
     [MaxLength(4)]
-    public string Icao { get; set; }
+    public string IcaoId { get; set; }
 
     [Required]
     public string Manufacturer { get; set; }
@@ -23,7 +23,7 @@ namespace AirRangingAPI.Domain.Models
     public EAircraftType AircraftType { get; set; }
     public EEngineType EngineType { get; set; }
     public EWeightCategory WeightCategory { get; set; }
-    public EWakeCategory WakeCategory { get; set; }
+    public EIcaoWakeCategory IcaoWakeCategory { get; set; }
     public EFuelType FuelType { get; set; }
 
     public int MTOW { get; set; }

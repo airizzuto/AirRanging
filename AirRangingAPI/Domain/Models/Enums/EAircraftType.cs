@@ -6,7 +6,7 @@ namespace AirRangingAPI.Domain.Models.Enums
   /// </summary>
   public enum EAircraftType
   {
-    AutnomousUnmannedAircraft,
+    AutonomousUnmannedAircraft,
     FixedWing,
     AmphibianFixedWing,
     SeaplaneFixedWing,
