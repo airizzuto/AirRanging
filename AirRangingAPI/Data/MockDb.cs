@@ -9,9 +9,9 @@ namespace AirRangingAPI.Data
     public Aircraft GetAircraftById(int id)
     {
       return new Aircraft {
-        Id=0, Icao="C152", Manufacturer="Cessna", Model="152",
+        Id=0, IcaoId="C152", Manufacturer="Cessna", Model="152",
         AircraftType=EAircraftType.FixedWing, EngineType=EEngineType.Piston,
-        WeightCategory=EWeightCategory.Small, WakeCategory=EWakeCategory.Light,
+        WeightCategory=EWeightCategory.Small, IcaoWakeCategory=EIcaoWakeCategory.Light,
         FuelType=EFuelType.AvGas,
         CruiseSpeed=107, FuelCapacity=26, MaxRange=415, ServiceCeiling=14700
       };
@@ -22,31 +22,31 @@ namespace AirRangingAPI.Data
       var aircrafts = new List<Aircraft>
       {
         new Aircraft {
-          Id=0, Icao="C152", Manufacturer="Cessna", Model="152",
-          AircraftType=AircraftTypes.FixedWing, EngineType=EngineTypes.Piston,
-          WeightClass=WeightCategories.Small, WakeCategory=WakeCategories.Light,
-          FuelType=FuelTypes.AvGas,
+          Id=0, IcaoId="C152", Manufacturer="Cessna", Model="152",
+          AircraftType=EAircraftType.FixedWing, EngineType=EEngineType.Piston,
+          WeightCategory=EWeightCategory.Small, IcaoWakeCategory=EIcaoWakeCategory.Light,
+          FuelType=EFuelType.AvGas,
           CruiseSpeed=107, FuelCapacity=26, MaxRange=415, ServiceCeiling=14700
         },
         new Aircraft {
-          Id=1, Icao="C152", Manufacturer="Cessna", Model="152", Variant="Long-Range",
-          AircraftType=AircraftTypes.FixedWing, EngineType=EngineTypes.Piston,
-          WeightClass=WeightCategories.Small, WakeCategory=WakeCategories.Light,
-          FuelType=FuelTypes.AvGas,
+          Id=1, IcaoId="C152", Manufacturer="Cessna", Model="152", Variant="Long-Range",
+          AircraftType=EAircraftType.FixedWing, EngineType=EEngineType.Piston,
+          WeightCategory=EWeightCategory.Small, IcaoWakeCategory=EIcaoWakeCategory.Light,
+          FuelType=EFuelType.AvGas,
           CruiseSpeed=107, FuelCapacity=38, MaxRange=691, ServiceCeiling=14700
         },
         new Aircraft {
-          Id=2, Icao="C172", Manufacturer="Cessna", Model="172",
-          AircraftType=AircraftTypes.FixedWing, EngineType=EngineTypes.Piston,
-          WeightClass=WeightCategories.Small, WakeCategory=WakeCategories.Light,
-          FuelType=FuelTypes.AvGas,
+          Id=2, IcaoId="C172", Manufacturer="Cessna", Model="172",
+          AircraftType=EAircraftType.FixedWing, EngineType=EEngineType.Piston,
+          WeightCategory=EWeightCategory.Small, IcaoWakeCategory=EIcaoWakeCategory.Light,
+          FuelType=EFuelType.AvGas,
           CruiseSpeed=122, FuelCapacity=56, MaxRange=696, ServiceCeiling=13500
         },
         new Aircraft {
-          Id=3, Icao="A320", Manufacturer="Airbus", Model="320",
-          AircraftType=AircraftTypes.FixedWing, EngineType=EngineTypes.Jet,
-          WeightClass=WeightCategories.Large, WakeCategory=WakeCategories.Medium,
-          FuelType=FuelTypes.JetA, MTOW=172000,
+          Id=3, IcaoId="A320", Manufacturer="Airbus", Model="320",
+          AircraftType=EAircraftType.FixedWing, EngineType=EEngineType.Jet,
+          WeightCategory=EWeightCategory.Large, IcaoWakeCategory=EIcaoWakeCategory.Medium,
+          FuelType=EFuelType.JetA, MTOW=172000,
           CruiseSpeed=447, FuelCapacity=6400, MaxRange=3300, ServiceCeiling=39100
         }
       };
