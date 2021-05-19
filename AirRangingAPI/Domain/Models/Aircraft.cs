@@ -5,7 +5,6 @@ namespace API.Domain.Models
 {
   public class Aircraft
   {
-    // TODO: Validation
     public int Id { get; set; }    
     public string IcaoId { get; set; }
     public string Manufacturer { get; set; }

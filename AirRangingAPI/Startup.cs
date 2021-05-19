@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Domain.Repositories;
 using API.Persistance.Contexts;
+using API.Persistance.Repositories;
+using API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace API
 {
@@ -39,9 +43,13 @@ namespace API
             };
 
             services
-                .AddEntityFrameworkNpgsql()
-                .AddDbContext<AppDbContext>(opt =>
-                    opt.UseNpgsql(builder.ConnectionString));
+                .AddDbContext<AppDbContext>(
+                    opt => opt.UseNpgsql(builder.ConnectionString)
+                );
+            
+            services.AddScoped<IAircraftRepository, AircraftRepository>();
+            services.AddScoped<IAircraftService, AircraftService>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -57,6 +65,10 @@ namespace API
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1"));
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
