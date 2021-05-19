@@ -1,6 +1,6 @@
 using API.Domain.Models.Enums;
 
-namespace AirRangingAPI.Resources
+namespace API.Resources
 {
     public class AircraftResource
     {

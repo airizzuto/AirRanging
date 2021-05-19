@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AirRangingAPI.Resources;
+using API.Resources;
 using API.Domain.Models;
 using API.Services;
 using AutoMapper;
@@ -26,8 +26,7 @@ namespace API.Controllers
     public async Task<IEnumerable<AircraftResource>> GetAllAsync()
     {
         var aircrafts = await _aircraftService.ListAsync();
-        var resources = _mapper
-            .Map<IEnumerable<Aircraft>, IEnumerable<AircraftResource>>(aircrafts);
+        var resources = _mapper.Map<IEnumerable<Aircraft>, IEnumerable<AircraftResource>>(aircrafts);
 
         return resources;
     }

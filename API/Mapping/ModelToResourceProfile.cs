@@ -1,8 +1,8 @@
-using AirRangingAPI.Resources;
+using API.Resources;
 using API.Domain.Models;
 using AutoMapper;
 
-namespace AirRangingAPI.Mapping
+namespace API.Mapping
 {
     public class ModelToResourceProfile : Profile
     {
