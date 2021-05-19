@@ -806,7 +806,4 @@ sketch
 # Additional files built by Visual Studio
 *.tlog
 Docker/pg-data/
-AirRangingAPI/secrets.json
-AirRangingAPI/dbconfig.json
-AirRangingAPI/Startup.cs
 API/Migrations/
