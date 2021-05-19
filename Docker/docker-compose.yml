@@ -14,7 +14,7 @@ services:
 
     # Bind mount the default Postgres port
     ports:
-      - "5432:5432"
+      - "54321:5432"
 
     # Bind mount local volume for Postgres data
     volumes:
