@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AirRangingAPI.Resources;
 using API.Domain.Models;
 using API.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -11,17 +13,23 @@ namespace API.Controllers
   public class AircraftsController : ControllerBase
   {
     private readonly IAircraftService _aircraftService;
-    public AircraftsController(IAircraftService aircraftService)
+    private readonly IMapper _mapper;
+
+    public AircraftsController(IAircraftService aircraftService, IMapper mapper)
     {
         _aircraftService = aircraftService;
+        _mapper = mapper;
     }
 
     // GET api/aircrafts
     [HttpGet]
-    public async Task<IEnumerable<Aircraft>> GetAllAsync()
+    public async Task<IEnumerable<AircraftResource>> GetAllAsync()
     {
-      var aircrafts = await _aircraftService.ListAsync();
-      return aircrafts;
+        var aircrafts = await _aircraftService.ListAsync();
+        var resources = _mapper
+            .Map<IEnumerable<Aircraft>, IEnumerable<AircraftResource>>(aircrafts);
+
+        return resources;
     }
 
     // TODO: replace with model

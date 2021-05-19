@@ -20,7 +20,6 @@ namespace API.Domain.Models
     public decimal FuelCapacity { get; set; }
     // TODO: Convert Fuel Weight <-> Volume
     public decimal MaxRange { get; set; }
-
     public int ServiceCeiling { get; set; }
   }
 }

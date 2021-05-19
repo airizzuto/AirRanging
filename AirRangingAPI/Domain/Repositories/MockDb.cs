@@ -6,18 +6,7 @@ namespace API.Domain.Repositories
 {
   public class MockDb
   {
-    public Aircraft GetById(int id)
-    {
-      return new Aircraft {
-        Id=0, IcaoId="C152", Manufacturer="Cessna", Model="152",
-        AircraftType=EAircraftType.FixedWing, EngineType=EEngineType.Piston,
-        WeightCategory=EWeightCategory.Small, IcaoWakeCategory=EIcaoWakeCategory.Light,
-        FuelType=EFuelType.AvGas,
-        CruiseSpeed=107, FuelCapacity=26, MaxRange=415, ServiceCeiling=14700
-      };
-    }
-
-    public IEnumerable<Aircraft> ListAsync()
+    public IEnumerable<Aircraft> AircraftList()
     {
       var aircrafts = new List<Aircraft>
       {
