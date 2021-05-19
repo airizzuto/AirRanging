@@ -47,6 +47,8 @@ namespace API
                     opt => opt.UseNpgsql(builder.ConnectionString)
                 );
             
+            services.AddAutoMapper(typeof(Startup));
+            
             services.AddScoped<IAircraftRepository, AircraftRepository>();
             services.AddScoped<IAircraftService, AircraftService>();
 
