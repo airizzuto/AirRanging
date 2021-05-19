@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 
 namespace API
 {
@@ -29,10 +30,18 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            var connectionString = Configuration.GetConnectionString("AirRangingDB");
+            var dbPassword = Configuration["DbPassword"];
+
+            var builder = new NpgsqlConnectionStringBuilder(connectionString) {
+                Password = dbPassword
+            };
+
             services
                 .AddEntityFrameworkNpgsql()
                 .AddDbContext<AppDbContext>(opt =>
-                    opt.UseNpgsql(Configuration.GetConnectionString("ApiConnection"))); // TODO
+                    opt.UseNpgsql(builder.ConnectionString));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
