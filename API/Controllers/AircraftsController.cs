@@ -25,18 +25,20 @@ namespace API.Controllers
     [HttpGet]
     public async Task<IEnumerable<AircraftResource>> GetAllAsync()
     {
-        var aircrafts = await _aircraftService.ListAsync();
+        var aircrafts = await _aircraftService.GetAllAircraftsAsync();
         var resources = _mapper.Map<IEnumerable<Aircraft>, IEnumerable<AircraftResource>>(aircrafts);
 
         return resources;
     }
 
-    // TODO: replace with model
     // GET api/aircrafts/5
     [HttpGet("{id}")]
-    public ActionResult<string> Get(int id)
+    public async Task<AircraftResource> GetIdAsync(int id)
     {
-      return "C152";
+      var aircraft = await _aircraftService.GetAircraftByIdAsync(id);
+      var resource = _mapper.Map<Aircraft, AircraftResource>(aircraft);
+
+      return resource;
     }
 
     // POST api/aircrafts

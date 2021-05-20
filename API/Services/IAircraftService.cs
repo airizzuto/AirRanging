@@ -6,6 +6,7 @@ namespace API.Services
 {
     public interface IAircraftService
     {
-        Task<IEnumerable<Aircraft>> ListAsync();
+        Task<IEnumerable<Aircraft>> GetAllAircraftsAsync();
+        Task<Aircraft> GetAircraftByIdAsync(int id);
     }
 }

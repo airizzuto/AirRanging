@@ -13,9 +13,14 @@ namespace API.Services
         _aircraftRepository = aircraftRepository;
     }
 
-    public async Task<IEnumerable<Aircraft>> ListAsync()
+    public async Task<Aircraft> GetAircraftByIdAsync(int id)
     {
-      return await _aircraftRepository.ListAsync();
+      return await _aircraftRepository.GetAircraftByIdAsync(id);
+    }
+
+    public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync()
+    {
+      return await _aircraftRepository.GetAllAircraftsAsync();
     }
   }
 }

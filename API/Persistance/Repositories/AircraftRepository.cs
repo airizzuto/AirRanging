@@ -11,14 +11,14 @@ namespace API.Persistance.Repositories
   {
     public AircraftRepository(AppDbContext context) : base(context) { }
 
-    public Aircraft GetById()
-    {
-      throw new System.NotImplementedException();
-    }
-
-    public async Task<IEnumerable<Aircraft>> ListAsync()
+    public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync()
     {
       return await _context.Aircrafts.ToListAsync();
+    }
+
+    public async Task<Aircraft> GetAircraftByIdAsync(int id)
+    {
+      return await _context.Aircrafts.FindAsync(id);
     }
   }
 }
