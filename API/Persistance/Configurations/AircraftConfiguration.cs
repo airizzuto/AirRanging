@@ -44,6 +44,8 @@ namespace API.Persistance.Configurations
             builder.Property(a => a.MaxRange).IsRequired();
             builder.Property(a => a.ServiceCeiling);
 
+            // TODO: separate data seeding?
+            #region DataSeed
             builder.HasData(
                 new Aircraft
                 {
@@ -115,6 +117,7 @@ namespace API.Persistance.Configurations
                     ServiceCeiling = 39100
                 }
             );
+            #endregion
         }
     }
 }
