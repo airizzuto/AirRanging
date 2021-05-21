@@ -54,6 +54,7 @@ namespace API
             
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAircraftRepository, AircraftRepository>();
             services.AddScoped<IAircraftService, AircraftService>();
 
