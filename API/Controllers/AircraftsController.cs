@@ -26,7 +26,7 @@ namespace API.Controllers
     [HttpGet]
     public async Task<IEnumerable<GetAircraftResource>> GetAllAsync()
     {
-        var aircrafts = await _aircraftService.GetAllAircraftsAsync();
+        var aircrafts = await _aircraftService.GetAllAsync();
         var resources = _mapper.Map<IEnumerable<Aircraft>, IEnumerable<GetAircraftResource>>(aircrafts);
 
         return resources;
@@ -34,9 +34,9 @@ namespace API.Controllers
 
     // GET api/aircrafts/5
     [HttpGet("{id}")]
-    public async Task<GetAircraftResource> GetIdAsync(int id)
+    public async Task<GetAircraftResource> GetByIdAsync(int id)
     {
-      var aircraft = await _aircraftService.GetAircraftByIdAsync(id);
+      var aircraft = await _aircraftService.GetByIdAsync(id);
       var resource = _mapper.Map<Aircraft, GetAircraftResource>(aircraft);
 
       return resource;
@@ -44,14 +44,14 @@ namespace API.Controllers
 
     // POST api/aircrafts
     [HttpPost]
-    public async Task<IActionResult> CreateAircraftAsync([FromBody] CreateAircraftResource resource) {
+    public async Task<IActionResult> PostAircraftAsync([FromBody] CreateAircraftResource resource) {
         if (!ModelState.IsValid) 
         {
             return BadRequest(ModelState.GetErrorMessages());
         }
 
         var aircraft = _mapper.Map<CreateAircraftResource, Aircraft>(resource);
-        var result = await _aircraftService.CreateAircraftAsync(aircraft);
+        var result = await _aircraftService.CreateAsync(aircraft);
 
         if (!result.Success)
         {

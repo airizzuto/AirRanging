@@ -7,8 +7,8 @@ namespace API.Domain.Services
 {
     public interface IAircraftService
     {
-        Task<IEnumerable<Aircraft>> GetAllAircraftsAsync();
-        Task<Aircraft> GetAircraftByIdAsync(int id);
-        Task<CreateAircraftResponse> CreateAircraftAsync(Aircraft aircraft);
+        Task<IEnumerable<Aircraft>> GetAllAsync();
+        Task<Aircraft> GetByIdAsync(int id);
+        Task<CreateAircraftResponse> CreateAsync(Aircraft aircraft);
     }
 }

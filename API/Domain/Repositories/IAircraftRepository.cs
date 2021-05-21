@@ -6,7 +6,8 @@ namespace API.Domain.Repositories
 {
     public interface IAircraftRepository
     {
-        Task<IEnumerable<Aircraft>> GetAllAircraftsAsync();
-        Task<Aircraft> GetAircraftByIdAsync(int id);
+        Task<IEnumerable<Aircraft>> GetAllAsync();
+        Task<Aircraft> GetByIdAsync(int id);
+        Task CreateAsync(Aircraft aircraft);
     }
 }
