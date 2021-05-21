@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Resources;
 using API.Domain.Models;
-using API.Services;
+using API.Domain.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using API.Extensions;
 
 namespace API.Controllers
 {
@@ -41,10 +42,25 @@ namespace API.Controllers
       return resource;
     }
 
-    // TODO: 
     // POST api/aircrafts
     [HttpPost]
-    public void Post([FromBody] string value) { }
+    public async Task<IActionResult> CreateAircraftAsync([FromBody] CreateAircraftResource resource) {
+        if (!ModelState.IsValid) 
+        {
+            return BadRequest(ModelState.GetErrorMessages());
+        }
+
+        var aircraft = _mapper.Map<CreateAircraftResource, Aircraft>(resource);
+        var result = await _aircraftService.CreateAircraftAsync(aircraft);
+
+        if (!result.Success)
+        {
+          return BadRequest(result.Message);
+        }
+
+        var getAircraftResource = _mapper.Map<Aircraft, GetAircraftResource>(result.Aircraft);
+        return Ok(getAircraftResource);
+    }
 
     // PUT api/aircrafts/5
     [HttpPut("{id}")]

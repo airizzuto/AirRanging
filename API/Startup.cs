@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using API.Domain.Repositories;
 using API.Persistance.Contexts;
 using API.Persistance.Repositories;
-using API.Services;
+using API.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -18,6 +18,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 using Microsoft.EntityFrameworkCore.Design;
+using FluentValidation.AspNetCore;
+using System.Reflection;
 
 namespace API
 {
@@ -33,7 +35,10 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            // TODO: separation of application and infrastructure injection to another file
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             var connectionString = Configuration.GetConnectionString("AirRangingDB");
             var dbPassword = Configuration["DbPassword"];
@@ -47,7 +52,7 @@ namespace API
                     opt => opt.UseNpgsql(builder.ConnectionString)
                 );
             
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             
             services.AddScoped<IAircraftRepository, AircraftRepository>();
             services.AddScoped<IAircraftService, AircraftService>();
