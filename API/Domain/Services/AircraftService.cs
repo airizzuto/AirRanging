@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using API.Domain.Models;
 using API.Domain.Repositories;
 
-namespace API.Services
+namespace API.Domain.Services
 {
   public class AircraftService : IAircraftService
   {
