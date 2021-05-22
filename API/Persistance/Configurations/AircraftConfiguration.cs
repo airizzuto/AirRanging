@@ -11,11 +11,22 @@ namespace API.Persistance.Configurations
         {
             // Aircraft Entity
             builder.ToTable("Aircrafts");
+
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.Id).IsRequired();
-            builder.Property(a => a.IcaoId).IsRequired().HasMaxLength(4);
-            builder.Property(a => a.Manufacturer).IsRequired();
-            builder.Property(a => a.Model).IsRequired();
+
+            builder.Property(a => a.Id)
+                .IsRequired();
+
+            builder.Property(a => a.IcaoId)
+                .IsRequired()
+                .HasMaxLength(4);
+
+            builder.Property(a => a.Manufacturer)
+                .IsRequired();
+
+            builder.Property(a => a.Model)
+                .IsRequired();
+
             builder.Property(a => a.Variant);
 
             builder.Property(a => a.AircraftType)
@@ -39,13 +50,19 @@ namespace API.Persistance.Configurations
                 .HasConversion<string>();
 
             builder.Property(a => a.MTOW);
+
             builder.Property(a => a.CruiseSpeed);
-            builder.Property(a => a.FuelCapacity).IsRequired();
-            builder.Property(a => a.MaxRange).IsRequired();
+
+            builder.Property(a => a.FuelCapacity)
+                .IsRequired();
+
+            builder.Property(a => a.MaxRange)
+                .IsRequired();
+
             builder.Property(a => a.ServiceCeiling);
 
             // TODO: separate data seeding?
-            #region DataSeed
+            #region DataSeeding
             builder.HasData(
                 new Aircraft
                 {
