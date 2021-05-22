@@ -31,7 +31,7 @@ namespace API.Persistance.Configurations
 
             builder.Property(a => a.AircraftType)
                 .IsRequired()
-                .HasConversion<string>();
+                .HasConversion<string>(); // TODO: check if redundant with JsonStringEnumConverter
 
             builder.Property(a => a.EngineType)
                 .IsRequired()

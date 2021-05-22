@@ -30,21 +30,6 @@ namespace API.Resources
             
             RuleFor(x => x.Variant)
                 .MaximumLength(255);
-            
-            // RuleFor(x => x.AircraftType) // FIXME
-            //     .IsEnumName(typeof(EAircraftType));
-
-            // RuleFor(x => x.EngineType) // FIXME
-            //     .IsEnumName(typeof(EEngineType));
-
-            // RuleFor(x => x.WeightCategory) // FIXME
-            //     .IsEnumName(typeof(EWeightCategory));
-
-            // RuleFor(x => x.IcaoWakeCategory) // FIXME
-            //     .IsEnumName(typeof(EIcaoWakeCategory));
-
-            // RuleFor(x => x.FuelType) // FIXME
-            //     .IsEnumName(typeof(EFuelType));
 
             RuleFor(x => x.CruiseSpeed)
                 .LessThan(300_000);

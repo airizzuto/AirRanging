@@ -10,16 +10,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.OpenApi.Models;
 using Npgsql;
-using Microsoft.EntityFrameworkCore.Design;
 using FluentValidation.AspNetCore;
 using System.Reflection;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace API
 {
@@ -38,6 +40,11 @@ namespace API
             // TODO: separation of application and infrastructure injection to another file
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddJsonOptions(options => 
+                    options.JsonSerializerOptions.Converters.Add(
+                        new JsonStringEnumConverter()
+                    )
+                )
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             var connectionString = Configuration.GetConnectionString("AirRangingDB");
