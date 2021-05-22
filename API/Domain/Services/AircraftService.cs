@@ -17,19 +17,20 @@ namespace API.Domain.Services
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CreateAircraftResponse> CreateAsync(Aircraft aircraft)
+    public async Task<SaveAircraftResponse> CreateAsync(Aircraft aircraft)
     {
         // TODO: Error handling separated implementation
         try
         {
-            await _aircraftRepository.CreateAsync(aircraft);
+            await _aircraftRepository.AddAsync(aircraft);
             await _unitOfWork.CompleteAsync();
 
-            return new CreateAircraftResponse(aircraft);
+            return new SaveAircraftResponse(aircraft);
         }
         catch (System.Exception ex)
         {
-            return new CreateAircraftResponse(
+            // logging
+            return new SaveAircraftResponse(
                 $"An error ocurred when saving the aircraft: {ex.Message}"
             );
         }
@@ -37,12 +38,39 @@ namespace API.Domain.Services
 
     public async Task<Aircraft> GetByIdAsync(int id)
     {
-      return await _aircraftRepository.GetByIdAsync(id);
+        return await _aircraftRepository.GetByIdAsync(id);
     }
 
     public async Task<IEnumerable<Aircraft>> GetAllAsync()
     {
-      return await _aircraftRepository.GetAllAsync();
+        return await _aircraftRepository.GetAllAsync();
+    }
+
+    public async Task<SaveAircraftResponse> UpdateAsync(int id, Aircraft aircraft)
+    {
+        var existingAircraft = await _aircraftRepository.GetByIdAsync(id);
+
+        if (existingAircraft == null)
+        {
+            return new SaveAircraftResponse("Aircraft not found.");
+        }
+
+        // entity properties rewrite
+
+        try
+        {
+            _aircraftRepository.Update(existingAircraft);
+            await _unitOfWork.CompleteAsync();
+
+            return new SaveAircraftResponse(existingAircraft);
+        }
+        catch (System.Exception ex)
+        {
+            // logging
+            return new SaveAircraftResponse(
+                $"Error ocurred when updating the aircraft: {ex.Message}"
+            );
+        }
     }
   }
 }

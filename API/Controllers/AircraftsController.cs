@@ -44,13 +44,13 @@ namespace API.Controllers
 
     // POST api/aircrafts
     [HttpPost]
-    public async Task<IActionResult> PostAircraftAsync([FromBody] CreateAircraftResource resource) {
+    public async Task<IActionResult> PostAircraftAsync([FromBody] SaveAircraftResource resource) {
         if (!ModelState.IsValid) 
         {
             return BadRequest(ModelState.GetErrorMessages());
         }
 
-        var aircraft = _mapper.Map<CreateAircraftResource, Aircraft>(resource);
+        var aircraft = _mapper.Map<SaveAircraftResource, Aircraft>(resource);
         var result = await _aircraftService.CreateAsync(aircraft);
 
         if (!result.Success)
@@ -64,7 +64,25 @@ namespace API.Controllers
 
     // PUT api/aircrafts/5
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value) { }
+    public async Task<IActionResult> PutAircraftAsync(int id, [FromBody] SaveAircraftResource resource)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState.GetErrorMessages());
+      }
+
+      var aircraft = _mapper.Map<SaveAircraftResource, Aircraft>(resource);
+      var result = await _aircraftService.UpdateAsync(id, aircraft);
+
+      if (!result.Success)
+      {
+        return BadRequest(result.Message);
+      }
+
+      var aircraftResource = _mapper.Map<Aircraft, GetAircraftResource>(result.Aircraft);
+
+      return Ok(aircraftResource);
+    }
 
     // DELETE api/aircrafts/5
     [HttpDelete("{id}")]

@@ -22,9 +22,14 @@ namespace API.Persistance.Repositories
       return await _context.Aircrafts.FindAsync(id);
     }
     
-    public async Task CreateAsync(Aircraft aircraft)
+    public async Task AddAsync(Aircraft aircraft)
     {
       await _context.Aircrafts.AddAsync(aircraft);
+    }
+
+    public void Update(Aircraft aircraft)
+    {
+      _context.Aircrafts.Update(aircraft);
     }
   }
 }

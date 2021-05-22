@@ -8,7 +8,7 @@ namespace API.Mapping
     {
         public ResourceToModelProfile()
         {
-            CreateMap<CreateAircraftResource, Aircraft>();
+            CreateMap<SaveAircraftResource, Aircraft>();
         }
     }
 }

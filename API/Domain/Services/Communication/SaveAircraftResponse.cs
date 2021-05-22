@@ -2,11 +2,11 @@ using API.Domain.Models;
 
 namespace API.Domain.Services.Communication
 {
-    public class CreateAircraftResponse : BaseResponse
+    public class SaveAircraftResponse : BaseResponse
     {
         public Aircraft Aircraft { get; private set; }
         
-        private CreateAircraftResponse(bool success, string message, Aircraft aircraft) 
+        private SaveAircraftResponse(bool success, string message, Aircraft aircraft) 
             : base(success, message)
         {
             Aircraft = aircraft;
@@ -17,7 +17,7 @@ namespace API.Domain.Services.Communication
         /// </summary>
         /// <param name="aircraft">Saved aircraft.</param>
         /// <returns>Response.</returns>
-        public CreateAircraftResponse(Aircraft aircraft)
+        public SaveAircraftResponse(Aircraft aircraft)
             : this(true, string.Empty, aircraft) { }
         
         /// <summary>
@@ -25,7 +25,7 @@ namespace API.Domain.Services.Communication
         /// </summary>
         /// <param name="message">Error message.</param>
         /// <returns>Response.</returns>
-        public CreateAircraftResponse(string message) 
+        public SaveAircraftResponse(string message) 
             : this(false, message, null) { }
     }
 }

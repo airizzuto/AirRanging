@@ -2,7 +2,7 @@ using API.Domain.Models.Enums;
 
 namespace API.Resources
 {
-    public class CreateAircraftResource
+    public class SaveAircraftResource
     {
         public int Id { get; set; }    
         public string IcaoId { get; set; }

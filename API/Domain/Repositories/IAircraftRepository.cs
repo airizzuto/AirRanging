@@ -8,6 +8,7 @@ namespace API.Domain.Repositories
     {
         Task<IEnumerable<Aircraft>> GetAllAsync();
         Task<Aircraft> GetByIdAsync(int id);
-        Task CreateAsync(Aircraft aircraft);
+        Task AddAsync(Aircraft aircraft);
+        void Update(Aircraft aircraft);
     }
 }
