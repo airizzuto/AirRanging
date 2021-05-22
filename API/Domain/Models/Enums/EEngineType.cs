@@ -3,27 +3,28 @@ using System.ComponentModel;
 namespace API.Domain.Models.Enums
 {
   /// <summary>
-  /// https://www.faa.gov/documentLibrary/media/Order/Order_7360.1.pdf
-  /// 
+  /// Represents the type of engine used in aircraft per ICAO standards.
   /// </summary>
   public enum EEngineType
   {
+    Unknown = 0,
+
     [Description("E")]
-    Electric,
+    Electric = 1,
 
     [Description("P")]
-    Piston,
+    Piston = 2,
 
     [Description("T")]
-    TurbopropTurboshaft,
+    TurbopropTurboshaft = 3,
 
     [Description("J")]
-    Jet,
+    Jet = 4,
 
     [Description("R")]
-    Rocket,
+    Rocket = 5,
 
     [Description("C")]
-    TwoEngineCoupledProp,
+    TwoEngineCoupledProp = 6,
   }
 }

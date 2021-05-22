@@ -3,7 +3,7 @@ using System.ComponentModel;
 namespace API.Domain.Models.Enums
 {
   /// <summary>
-  /// Take-off weight categories
+  /// Represents the aircraft take-off weight categories:
   /// <para>J - Super. A-380-800 (A338) and An-222 (A225).</para>
   /// <para>H - Heavy. 300_000 pounds or more.</para>
   /// <para>L - Large. 41_000 pounds to 300_000 not included.</para>
@@ -11,16 +11,18 @@ namespace API.Domain.Models.Enums
   /// </summary>
   public enum EWeightCategory
   {
+    Unknown = 0,
+
     [Description("J")]
-    Super,
+    Super = 1,
 
     [Description("H")]
-    Heavy,
+    Heavy = 2,
 
     [Description("L")]
-    Large,
+    Large = 3,
 
     [Description("S")]
-    Small,
+    Small = 4,
   }
 }

@@ -1,12 +1,14 @@
 namespace API.Domain.Models.Enums
 {
   /// <summary>
-  /// Standards weights FAA Weight and Balance Handbook FAA-H-8083-1B 3-4.
+  /// <para>Represents fuel type used for engines.</para>
+  /// Reference: Standards weights FAA Weight and Balance Handbook FAA-H-8083-1B 3-4.
   /// </summary>
   public enum EFuelType
   {
-    AvGas,
-    JetA,
+    Unknown = 0,
+    AvGas = 1,
+    JetA = 2,
   }
 
   // TODO: weights

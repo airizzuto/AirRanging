@@ -1,18 +1,18 @@
 namespace API.Domain.Models.Enums
 {
   /// <summary>
-  /// https://www.faa.gov/documentLibrary/media/Order/Order_7360.1.pdf
-  /// The class is part of the description used to distinguish an aircraft type.
+  /// Represents the description used to distinguish an aircraft type.
   /// </summary>
   public enum EAircraftType
   {
-    AutonomousUnmannedAircraft,
-    FixedWing,
-    AmphibianFixedWing,
-    SeaplaneFixedWing,
-    Gyrocopter,
-    Helicopter,
-    RemotelyPilotedAircraft,
-    TiltRotor,
+    Unknown = 0,
+    AutonomousUnmannedAircraft = 1,
+    FixedWing = 2,
+    AmphibianFixedWing = 3,
+    SeaplaneFixedWing = 4,
+    Gyrocopter = 5,
+    Helicopter = 6,
+    RemotelyPilotedAircraft = 7,
+    TiltRotor = 8,
   }
 }
