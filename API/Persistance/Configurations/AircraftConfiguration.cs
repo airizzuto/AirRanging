@@ -29,6 +29,8 @@ namespace API.Persistance.Configurations
 
             builder.Property(a => a.Variant);
 
+            builder.Property(a => a.Registration);
+
             builder.Property(a => a.AircraftType)
                 .IsRequired()
                 .HasConversion<string>(); // TODO: check if redundant with JsonStringEnumConverter
@@ -49,7 +51,7 @@ namespace API.Persistance.Configurations
                 .IsRequired()
                 .HasConversion<string>();
 
-            builder.Property(a => a.MTOW);
+            builder.Property(a => a.MaxTakeoffWeight);
 
             builder.Property(a => a.CruiseSpeed);
 
@@ -75,7 +77,7 @@ namespace API.Persistance.Configurations
                     WeightCategory = EWeightCategory.Small,
                     IcaoWakeCategory = EIcaoWakeCategory.Light,
                     FuelType = EFuelType.AvGas,
-                    MTOW = 1670,
+                    MaxTakeoffWeight = 1670,
                     CruiseSpeed = 107,
                     FuelCapacity = 26,
                     MaxRange = 415,
@@ -93,7 +95,7 @@ namespace API.Persistance.Configurations
                     WeightCategory = EWeightCategory.Small,
                     IcaoWakeCategory = EIcaoWakeCategory.Light,
                     FuelType = EFuelType.AvGas,
-                    MTOW = 1670,
+                    MaxTakeoffWeight = 1670,
                     CruiseSpeed = 107,
                     FuelCapacity = 38,
                     MaxRange = 691,
@@ -110,7 +112,7 @@ namespace API.Persistance.Configurations
                     WeightCategory = EWeightCategory.Small,
                     IcaoWakeCategory = EIcaoWakeCategory.Light,
                     FuelType = EFuelType.AvGas,
-                    MTOW = 2450,
+                    MaxTakeoffWeight = 2450,
                     CruiseSpeed = 122,
                     FuelCapacity = 56,
                     MaxRange = 696,
@@ -127,7 +129,7 @@ namespace API.Persistance.Configurations
                     WeightCategory = EWeightCategory.Large,
                     IcaoWakeCategory = EIcaoWakeCategory.Medium,
                     FuelType = EFuelType.JetA,
-                    MTOW = 172000,
+                    MaxTakeoffWeight = 172000,
                     CruiseSpeed = 447,
                     FuelCapacity = 6400,
                     MaxRange = 3300,
