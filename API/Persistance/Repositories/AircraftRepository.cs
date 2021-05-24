@@ -17,7 +17,7 @@ namespace API.Persistance.Repositories
       return await _context.Aircrafts.ToListAsync();
     }
 
-    public async Task<Aircraft> GetByIdAsync(int id)
+    public async Task<Aircraft> FindAsync(int id)
     {
       return await _context.Aircrafts.FindAsync(id);
     }
