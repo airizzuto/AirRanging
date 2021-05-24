@@ -27,29 +27,38 @@ namespace API.Resources
                 .NotNull()
                 .NotEmpty().WithMessage("Model must be provided")
                 .MaximumLength(255);
+
+            RuleFor(x => x.EngineCount)
+                .NotNull()
+                .NotEmpty().WithMessage("Aircraft must have an engine")
+                .GreaterThanOrEqualTo((short) 1)
+                .LessThan(short.MaxValue);
             
             RuleFor(x => x.Variant)
                 .MaximumLength(255);
 
             RuleFor(x => x.CruiseSpeed)
-                .LessThan(300_000);
+                .LessThan(300_000); // TODO: TBD VNO Validation
 
             RuleFor(x => x.FuelCapacity)
                 .NotNull()
                 .NotEmpty().WithMessage(
                     "Fuel capacity is required for calculations"
                     )
-                .LessThan(10_000_000);
+                .GreaterThanOrEqualTo(0)
+                .LessThan(decimal.MaxValue);
 
             RuleFor(x => x.MaxRange)
                 .NotNull()
                 .NotEmpty().WithMessage(
                     "Max Range is required for calculations"
                     )
-                .LessThan(1_000_000);
+                .GreaterThanOrEqualTo(0)
+                .LessThan(1_000_000); // TODO: TBD MaxRange Validation
             
             RuleFor(x => x.ServiceCeiling)
-                .LessThan(1_000_000);
+                .GreaterThanOrEqualTo(-2000) // TODO: TBD Max Ceiling Validation
+                .LessThan(1_000_000); // TODO: TBD Max Ceiling Validation
         }
     }
 }

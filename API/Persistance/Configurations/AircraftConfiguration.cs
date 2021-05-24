@@ -38,6 +38,9 @@ namespace API.Persistance.Configurations
             builder.Property(a => a.EngineType)
                 .IsRequired()
                 .HasConversion<string>();
+            
+            builder.Property(a => a.EngineCount)
+                .IsRequired();
 
             builder.Property(a => a.WeightCategory)
                 .IsRequired()
@@ -72,8 +75,9 @@ namespace API.Persistance.Configurations
                     IcaoId = "C152",
                     Manufacturer = "Cessna",
                     Model = "152",
-                    AircraftType = EAircraftType.FixedWing,
+                    AircraftType = EAircraftType.SingleEngineLand,
                     EngineType = EEngineType.Piston,
+                    EngineCount = 1,
                     WeightCategory = EWeightCategory.Small,
                     IcaoWakeCategory = EIcaoWakeCategory.Light,
                     FuelType = EFuelType.AvGas,
@@ -90,8 +94,9 @@ namespace API.Persistance.Configurations
                     Manufacturer = "Cessna",
                     Model = "152",
                     Variant = "Long-Range",
-                    AircraftType = EAircraftType.FixedWing,
+                    AircraftType = EAircraftType.SingleEngineLand,
                     EngineType = EEngineType.Piston,
+                    EngineCount = 1,
                     WeightCategory = EWeightCategory.Small,
                     IcaoWakeCategory = EIcaoWakeCategory.Light,
                     FuelType = EFuelType.AvGas,
@@ -107,8 +112,9 @@ namespace API.Persistance.Configurations
                     IcaoId = "C172",
                     Manufacturer = "Cessna",
                     Model = "172",
-                    AircraftType = EAircraftType.FixedWing,
+                    AircraftType = EAircraftType.SingleEngineLand,
                     EngineType = EEngineType.Piston,
+                    EngineCount = 1,
                     WeightCategory = EWeightCategory.Small,
                     IcaoWakeCategory = EIcaoWakeCategory.Light,
                     FuelType = EFuelType.AvGas,
@@ -124,8 +130,9 @@ namespace API.Persistance.Configurations
                     IcaoId = "A320",
                     Manufacturer = "Airbus",
                     Model = "320",
-                    AircraftType = EAircraftType.FixedWing,
+                    AircraftType = EAircraftType.MultiEngineLand,
                     EngineType = EEngineType.Jet,
+                    EngineCount = 2,
                     WeightCategory = EWeightCategory.Large,
                     IcaoWakeCategory = EIcaoWakeCategory.Medium,
                     FuelType = EFuelType.JetA,
@@ -134,6 +141,24 @@ namespace API.Persistance.Configurations
                     FuelCapacity = 6400,
                     MaxRange = 3300,
                     ServiceCeiling = 39100
+                },
+                new Aircraft
+                {
+                    Id = -96,
+                    IcaoId = "B758",
+                    Manufacturer = "Boeing",
+                    Model = "737-800",
+                    AircraftType = EAircraftType.MultiEngineLand,
+                    EngineType = EEngineType.Jet,
+                    EngineCount = 2,
+                    WeightCategory = EWeightCategory.Large,
+                    IcaoWakeCategory = EIcaoWakeCategory.Medium,
+                    FuelType = EFuelType.JetA,
+                    MaxTakeoffWeight = 144500,
+                    CruiseSpeed = 453,
+                    FuelCapacity = 6875,
+                    MaxRange = 2935,
+                    ServiceCeiling = 41000
                 }
             );
             #endregion

@@ -7,12 +7,13 @@ namespace API.Domain.Models.Enums
   {
     Unknown = 0,
     AutonomousUnmannedAircraft = 1,
-    FixedWing = 2,
-    AmphibianFixedWing = 3,
-    SeaplaneFixedWing = 4,
-    Gyrocopter = 5,
-    Helicopter = 6,
-    RemotelyPilotedAircraft = 7,
-    TiltRotor = 8,
+    SingleEngineLand = 2,
+    MultiEngineLand = 3,
+    SingleEngineSea = 4,
+    MultiEngineSea = 5,
+    Gyrocopter = 6,
+    Helicopter = 7,
+    RemotelyPilotedAircraft = 8,
+    TiltRotor = 9,
   }
 }

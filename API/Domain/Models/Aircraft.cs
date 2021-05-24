@@ -14,6 +14,7 @@ namespace API.Domain.Models
     public string Registration { get; set; }
     public EAircraftType AircraftType { get; set; }
     public EEngineType EngineType { get; set; }
+    public short EngineCount { get; set; }
     public EWeightCategory WeightCategory { get; set; }
     public EIcaoWakeCategory IcaoWakeCategory { get; set; }
     public EFuelType FuelType { get; set; }
