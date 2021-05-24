@@ -36,9 +36,9 @@ namespace API.Domain.Services
         }
     }
 
-    public async Task<Aircraft> GetByIdAsync(int id)
+    public async Task<Aircraft> FindAsync(int id)
     {
-        return await _aircraftRepository.GetByIdAsync(id);
+        return await _aircraftRepository.FindAsync(id);
     }
 
     public async Task<IEnumerable<Aircraft>> GetAllAsync()
@@ -48,7 +48,7 @@ namespace API.Domain.Services
 
     public async Task<SaveAircraftResponse> UpdateAsync(int id, Aircraft aircraft)
     {
-        var existingAircraft = await _aircraftRepository.GetByIdAsync(id);
+        var existingAircraft = await _aircraftRepository.FindAsync(id);
 
         if (existingAircraft == null)
         {
@@ -56,6 +56,23 @@ namespace API.Domain.Services
         }
 
         // entity properties rewrite
+        #region Entity Properties
+        existingAircraft.IcaoId = aircraft.IcaoId;
+        existingAircraft.Manufacturer = aircraft.Manufacturer;
+        existingAircraft.Model = aircraft.Model;
+        existingAircraft.Variant = aircraft.Variant;
+        existingAircraft.Registration = aircraft.Registration;
+        existingAircraft.AircraftType = aircraft.AircraftType;
+        existingAircraft.EngineType = aircraft.EngineType;
+        existingAircraft.WeightCategory = aircraft.WeightCategory;
+        existingAircraft.IcaoWakeCategory = aircraft.IcaoWakeCategory;
+        existingAircraft.FuelType = aircraft.FuelType;
+        existingAircraft.MaxTakeoffWeight = aircraft.MaxTakeoffWeight;
+        existingAircraft.CruiseSpeed = aircraft.CruiseSpeed;
+        existingAircraft.FuelCapacity = aircraft.FuelCapacity;
+        existingAircraft.MaxRange = aircraft.MaxRange;
+        existingAircraft.ServiceCeiling = aircraft.ServiceCeiling;
+        #endregion
 
         try
         {
@@ -66,7 +83,6 @@ namespace API.Domain.Services
         }
         catch (System.Exception ex)
         {
-            // logging
             return new SaveAircraftResponse(
                 $"Error ocurred when updating the aircraft: {ex.Message}"
             );
