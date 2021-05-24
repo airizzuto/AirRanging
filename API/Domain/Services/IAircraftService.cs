@@ -9,7 +9,8 @@ namespace API.Domain.Services
     {
         Task<IEnumerable<Aircraft>> GetAllAsync();
         Task<Aircraft> FindAsync(int id);
-        Task<SaveAircraftResponse> CreateAsync(Aircraft aircraft);
-        Task<SaveAircraftResponse> UpdateAsync(int id, Aircraft aircraft);
+        Task<AircraftResponse> CreateAsync(Aircraft aircraft);
+        Task<AircraftResponse> UpdateAsync(int id, Aircraft aircraft);
+        Task<AircraftResponse> DeleteAsync(int id);
     }
 }

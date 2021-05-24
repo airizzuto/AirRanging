@@ -8,28 +8,33 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Persistance.Repositories
 {
-  public class AircraftRepository : BaseRepository, IAircraftRepository
-  {
-    public AircraftRepository(AppDbContext context) : base(context) { }
+    public class AircraftRepository : BaseRepository, IAircraftRepository
+    {
+        public AircraftRepository(AppDbContext context) : base(context) { }
 
-    public async Task<IEnumerable<Aircraft>> GetAllAsync()
-    {
-      return await _context.Aircrafts.ToListAsync();
-    }
+        public async Task<IEnumerable<Aircraft>> GetAllAsync()
+        {
+            return await _context.Aircrafts.ToListAsync();
+        }
 
-    public async Task<Aircraft> FindAsync(int id)
-    {
-      return await _context.Aircrafts.FindAsync(id);
-    }
-    
-    public async Task AddAsync(Aircraft aircraft)
-    {
-      await _context.Aircrafts.AddAsync(aircraft);
-    }
+        public async Task<Aircraft> FindAsync(int id)
+        {
+            return await _context.Aircrafts.FindAsync(id);
+        }
 
-    public void Update(Aircraft aircraft)
-    {
-      _context.Aircrafts.Update(aircraft);
+        public async Task AddAsync(Aircraft aircraft)
+        {
+            await _context.Aircrafts.AddAsync(aircraft);
+        }
+
+        public void Update(Aircraft aircraft)
+        {
+            _context.Aircrafts.Update(aircraft);
+        }
+
+        public void Remove(Aircraft aircraft)
+        {
+            _context.Aircrafts.Remove(aircraft);
+        }
     }
-  }
 }

@@ -10,5 +10,6 @@ namespace API.Domain.Repositories
         Task<Aircraft> FindAsync(int id);
         Task AddAsync(Aircraft aircraft);
         void Update(Aircraft aircraft);
+        void Remove(Aircraft aircraft);
     }
 }

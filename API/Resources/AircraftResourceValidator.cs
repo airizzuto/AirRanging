@@ -2,10 +2,10 @@ using FluentValidation;
 
 namespace API.Resources
 {
-    public class GetAircraftResourceValidator
-        : AbstractValidator<GetAircraftResource>
+    public class AircraftResourceValidator
+        : AbstractValidator<AircraftResource>
     {
-        public GetAircraftResourceValidator()
+        public AircraftResourceValidator()
         {
             RuleFor(x => x.Id)
                 .NotNull()
