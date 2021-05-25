@@ -1,11 +1,11 @@
 using FluentValidation;
 
-namespace API.Resources
+namespace API.DTOs.Aircraft
 {
-    public class AircraftReadResourceValidator
-        : AbstractValidator<AircraftReadResource>
+    public class AircraftReadDTOValidator
+        : AbstractValidator<AircraftReadDTO>
     {
-        public AircraftReadResourceValidator()
+        public AircraftReadDTOValidator()
         {
             RuleFor(x => x.Id)
                 .NotNull()

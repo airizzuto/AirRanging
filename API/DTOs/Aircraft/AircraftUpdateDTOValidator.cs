@@ -1,11 +1,11 @@
 using FluentValidation;
 
-namespace API.Resources
+namespace API.DTOs.Aircraft
 {
-    public class AircraftUpdateResourceValidator
-        : AbstractValidator<AircraftUpdateResource>
+    public class AircraftUpdateDTOValidator
+        : AbstractValidator<AircraftUpdateDTO>
     {
-        public AircraftUpdateResourceValidator()
+        public AircraftUpdateDTOValidator()
         {
             // TODO: better validations
             

@@ -1,10 +1,10 @@
 using API.Domain.Models.Enums;
 
-namespace API.Resources
+namespace API.DTOs.Aircraft
 {
-    public class AircraftUpdateResource
+    public class AircraftReadDTO
     {
-        public int Id { get; set; }
+        public int Id { get; set; }    
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }

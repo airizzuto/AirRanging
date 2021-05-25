@@ -1,8 +1,8 @@
 using API.Domain.Models.Enums;
 
-namespace API.Resources
+namespace API.DTOs.Aircraft
 {
-    public class AircraftCreateResource
+    public class AircraftCreateDTO
     {
         public int Id { get; set; }    
         public string IcaoId { get; set; }

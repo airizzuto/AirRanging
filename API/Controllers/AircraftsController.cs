@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Resources;
+using API.DTOs.Aircraft;
 using API.Domain.Models;
 using API.Domain.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using API.Extensions;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace API.Controllers
 {
@@ -24,34 +25,34 @@ namespace API.Controllers
 
         // GET api/aircrafts
         [HttpGet]
-        public async Task<IEnumerable<AircraftReadResource>> Get()
+        public async Task<IEnumerable<AircraftReadDTO>> Get()
         {
             var aircrafts = await _aircraftService.GetAllAsync();
-            var resources = _mapper.Map<IEnumerable<Aircraft>, IEnumerable<AircraftReadResource>>(aircrafts);
+            var resources = _mapper.Map<IEnumerable<Aircraft>, IEnumerable<AircraftReadDTO>>(aircrafts);
 
             return resources;
         }
 
         // GET api/aircrafts/5
         [HttpGet("{id}")]
-        public async Task<AircraftReadResource> Get(int id)
+        public async Task<AircraftReadDTO> Get(int id)
         {
             var aircraft = await _aircraftService.FindAsync(id);
-            var resource = _mapper.Map<Aircraft, AircraftReadResource>(aircraft);
+            var resource = _mapper.Map<Aircraft, AircraftReadDTO>(aircraft);
 
             return resource;
         }
 
         // POST api/aircrafts
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AircraftCreateResource resource)
+        public async Task<IActionResult> Create([FromBody] AircraftCreateDTO resource)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            var aircraft = _mapper.Map<AircraftCreateResource, Aircraft>(resource);
+            var aircraft = _mapper.Map<AircraftCreateDTO, Aircraft>(resource);
             var result = await _aircraftService.CreateAsync(aircraft);
 
             if (!result.Success)
@@ -59,20 +60,20 @@ namespace API.Controllers
                 return BadRequest(result.Message);
             }
 
-            var AircraftResource = _mapper.Map<Aircraft, AircraftCreateResource>(result.Aircraft);
+            var AircraftResource = _mapper.Map<Aircraft, AircraftCreateDTO>(result.Aircraft);
             return Ok(AircraftResource);
         }
 
         // PUT api/aircrafts/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] AircraftUpdateResource resource)
+        public async Task<IActionResult> Update(int id, [FromBody] AircraftUpdateDTO resource)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            var aircraft = _mapper.Map<AircraftUpdateResource, Aircraft>(resource);
+            var aircraft = _mapper.Map<AircraftUpdateDTO, Aircraft>(resource);
             var result = await _aircraftService.UpdateAsync(id, aircraft);
 
             if (!result.Success)
@@ -80,17 +81,18 @@ namespace API.Controllers
                 return BadRequest(result.Message);
             }
 
-            var aircraftResource = _mapper.Map<Aircraft, AircraftReadResource>(result.Aircraft);
+            var aircraftResource = _mapper.Map<Aircraft, AircraftReadDTO>(result.Aircraft);
 
             return Ok(aircraftResource);
         }
 
         // PATCH api/aircrafts/5
-        // [HttpPatch("{id}")]
-        // public async Task<IActionResult> PartialUpdate(int id, [FromBody] AircraftCreateResource resource)
-        // {
-            
-        // }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PartialUpdate(int id, [FromBody] JsonPatchDocument<AircraftUpdateDTO> resource)
+        {
+            // TODO:
+            throw new System.NotImplementedException();
+        }
 
         // DELETE api/aircrafts/5
         [HttpDelete("{id}")]

@@ -1,5 +1,5 @@
 using API.Domain.Models;
-using API.Resources;
+using API.DTOs.Aircraft;
 using AutoMapper;
 
 namespace API.Mapping
@@ -8,10 +8,10 @@ namespace API.Mapping
     {
         public AircraftsProfile()
         {
-            CreateMap<Aircraft, AircraftCreateResource>();
-            CreateMap<AircraftCreateResource, Aircraft>();
-            CreateMap<AircraftUpdateResource, Aircraft>();
-            CreateMap<Aircraft, AircraftUpdateResource>();
+            CreateMap<Aircraft, AircraftCreateDTO>();
+            CreateMap<AircraftCreateDTO, Aircraft>();
+            CreateMap<AircraftUpdateDTO, Aircraft>();
+            CreateMap<Aircraft, AircraftUpdateDTO>();
         }
     }
 }

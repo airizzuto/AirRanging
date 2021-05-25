@@ -1,12 +1,12 @@
 using API.Domain.Models.Enums;
 using FluentValidation;
 
-namespace API.Resources
+namespace API.DTOs.Aircraft
 {
-    public class AircraftCreateResourceValidator
-        : AbstractValidator<AircraftCreateResource>
+    public class AircraftCreateDTOValidator
+        : AbstractValidator<AircraftCreateDTO>
     {
-        public AircraftCreateResourceValidator()
+        public AircraftCreateDTOValidator()
         {
             // TODO: better validations
             
