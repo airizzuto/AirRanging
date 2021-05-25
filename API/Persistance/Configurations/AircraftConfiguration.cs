@@ -15,7 +15,7 @@ namespace API.Persistance.Configurations
             builder.HasKey(a => a.Id);
 
             builder.Property(a => a.Id)
-                .IsRequired();
+                .ValueGeneratedOnAdd();
 
             builder.Property(a => a.IcaoId)
                 .IsRequired()
@@ -145,7 +145,7 @@ namespace API.Persistance.Configurations
                 new Aircraft
                 {
                     Id = -96,
-                    IcaoId = "B758",
+                    IcaoId = "B738",
                     Manufacturer = "Boeing",
                     Model = "737-800",
                     AircraftType = EAircraftType.MultiEngineLand,

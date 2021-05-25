@@ -8,10 +8,7 @@ namespace API.Resources
     {
         public SaveAircraftResourceValidator()
         {
-            // TODO: better validations 
-            RuleFor(x => x.Id)
-                .NotNull()
-                .NotEmpty().WithMessage("Id is required");
+            // TODO: better validations
             
             RuleFor(x => x.IcaoId)
                 .NotNull()
