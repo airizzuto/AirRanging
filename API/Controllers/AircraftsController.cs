@@ -103,8 +103,7 @@ namespace API.Controllers
                 return BadRequest(result.Message);
             }
 
-            var aircraftResource = _mapper.Map<Aircraft, AircraftReadResource>(result.Aircraft);
-            return Ok(aircraftResource);
+            return NoContent();
         }
     }
 }
