@@ -3,10 +3,10 @@ using FluentValidation;
 
 namespace API.Resources
 {
-    public class SaveAircraftResourceValidator
-        : AbstractValidator<SaveAircraftResource>
+    public class AircraftCreateResourceValidator
+        : AbstractValidator<AircraftCreateResource>
     {
-        public SaveAircraftResourceValidator()
+        public AircraftCreateResourceValidator()
         {
             // TODO: better validations
             
