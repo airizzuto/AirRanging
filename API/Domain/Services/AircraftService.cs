@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using API.Domain.Models;
 using API.Domain.Repositories;
 using API.Domain.Services.Communication;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace API.Domain.Services
 {
@@ -85,6 +86,23 @@ namespace API.Domain.Services
             {
                 return new AircraftResponse(
                     $"Error ocurred when updating the aircraft: {ex.Message}"
+                );
+            }
+        }
+
+        public async Task<AircraftResponse> PartialUpdateAsync(Aircraft aircraft)
+        {
+            try
+            {
+                _aircraftRepository.Update(aircraft);
+                await _unitOfWork.CompleteAsync();
+
+                return new AircraftResponse(aircraft);
+            }
+            catch (System.Exception ex)
+            {
+                return new AircraftResponse(
+                    $"Error ocurred updating aircraft property: {ex.Message}"
                 );
             }
         }

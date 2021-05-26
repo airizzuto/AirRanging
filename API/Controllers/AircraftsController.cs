@@ -88,10 +88,28 @@ namespace API.Controllers
 
         // PATCH api/aircrafts/5
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PartialUpdate(int id, [FromBody] JsonPatchDocument<AircraftUpdateDTO> resource)
+        public async Task<IActionResult> PartialUpdate(
+            int id, JsonPatchDocument<AircraftUpdateDTO> patchDocument)
         {
-            // TODO:
-            throw new System.NotImplementedException();
+            var existingAircraft = await _aircraftService.FindAsync(id);
+            if (existingAircraft == null)
+            {
+                return NotFound();
+            }
+
+            var aircraftToPatch = _mapper.Map<AircraftUpdateDTO>(existingAircraft);
+            patchDocument.ApplyTo(aircraftToPatch, ModelState);
+
+            if (!TryValidateModel(aircraftToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            var resource = _mapper.Map(aircraftToPatch, existingAircraft);
+
+            await _aircraftService.PartialUpdateAsync(resource);
+            
+            return NoContent();
         }
 
         // DELETE api/aircrafts/5

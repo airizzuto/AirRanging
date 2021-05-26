@@ -11,6 +11,7 @@ namespace API.Domain.Services
         Task<Aircraft> FindAsync(int id);
         Task<AircraftResponse> CreateAsync(Aircraft aircraft);
         Task<AircraftResponse> UpdateAsync(int id, Aircraft aircraft);
+        Task<AircraftResponse> PartialUpdateAsync(Aircraft aircraft);
         Task<AircraftResponse> DeleteAsync(int id);
     }
 }
