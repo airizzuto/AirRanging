@@ -22,6 +22,7 @@ using FluentValidation.AspNetCore;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace API
 {
@@ -61,11 +62,15 @@ namespace API
             
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            // Repository
             services.AddScoped<IAircraftRepository, AircraftRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAircraftService, AircraftService>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
