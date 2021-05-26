@@ -1,4 +1,3 @@
-using System;
 using API.Controllers;
 using API.Domain.Repositories;
 using Moq;
@@ -10,11 +9,13 @@ using API.Domain.Models.Enums;
 using API.Mapping;
 using API.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
+using API.Tests.Helpers;
 
 namespace AirRangingAPI.Tests
 {
     public class AircraftsControllerTests
     {
+        private MockAPI _mock = new MockAPI();
         private static List<Aircraft> GetAircrafts(int num)
         {
             var aircrafts = new List<Aircraft>();
@@ -43,24 +44,14 @@ namespace AirRangingAPI.Tests
         }
 
         [Fact]
-        public void GetAllAircrafts_Returns200OK_WhenDBIsEmpty()
+        public void GetAllAircrafts_Returns200OK_WhenDBIsEmpty()  // FIXME
         {
             // Arrange
-            var mockRepo = new Mock<IAircraftRepository>();
-            var mockService = new Mock<IAircraftService>();
+            _mock.service.Setup(service => service.GetAllAsync())
+                .ReturnsAsync(GetAircrafts(0));
 
-            mockService.Setup(service => 
-                service.GetAllAsync());
-
-            mockRepo.Setup(repo => 
-                repo.GetAllAircraftsAsync()).ReturnsAsync(GetAircrafts(0));
-
-            var realProfile = new AircraftsProfile();
-            var configuration = new MapperConfiguration(cfg => 
-                cfg.AddProfile(realProfile));
-            IMapper mapper = new Mapper(configuration);
-            
-            var controller = new AircraftsController(mockService.Object, mapper);
+            var controller = new AircraftsController(
+                _mock.service.Object, _mock.mapper);
 
             // Act
             var result = controller.GetAllAircrafts();

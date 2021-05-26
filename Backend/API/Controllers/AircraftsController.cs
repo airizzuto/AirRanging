@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs.Aircraft;
 using API.Domain.Models;
-using API.Domain.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using API.Extensions;
 using Microsoft.AspNetCore.JsonPatch;
+using API.Domain.Interfaces;
+using API.Data.Repositories;
 
 namespace API.Controllers
 {
@@ -14,76 +14,77 @@ namespace API.Controllers
     [ApiController]
     public class AircraftsController : ControllerBase
     {
-        private readonly IAircraftService _aircraftService;
+        private readonly IAircraftRepository _repository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AircraftsController(IAircraftService aircraftService, IMapper mapper)
+        public AircraftsController(
+            IAircraftRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _aircraftService = aircraftService;
+            _repository = repository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         // GET api/aircrafts
         [HttpGet]
-        public async Task<IEnumerable<AircraftReadDTO>> GetAllAircrafts()
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts()
         {
-            var aircrafts = await _aircraftService.GetAllAsync();
-            var resources = _mapper.Map<IEnumerable<Aircraft>, IEnumerable<AircraftReadDTO>>(aircrafts);
+            var aircrafts = await _repository.GetAllAircraftsAsync();
 
-            return resources;
+            var resource = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+            return Ok(resource);
         }
 
         // GET api/aircrafts/5
         [HttpGet("{id}")]
-        public async Task<AircraftReadDTO> GetAircraftById(int id)
+        public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(int id)
         {
-            var aircraft = await _aircraftService.FindAsync(id);
-            var resource = _mapper.Map<Aircraft, AircraftReadDTO>(aircraft);
+            var aircraft = await _repository.GetAircraftByIdAsync(id);
 
-            return resource;
+            if (aircraft == null)
+            {
+                return NotFound();
+            }
+
+            var resource = _mapper.Map<AircraftReadDTO>(aircraft);
+            return Ok(resource);
         }
 
         // POST api/aircrafts
         [HttpPost]
-        public async Task<IActionResult> CreateAircraft([FromBody] AircraftCreateDTO resource)
+        public async Task<IActionResult> CreateAircraft(
+            AircraftCreateDTO aircraftCreateDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState.GetErrorMessages());
-            }
 
-            var aircraft = _mapper.Map<AircraftCreateDTO, Aircraft>(resource);
-            var result = await _aircraftService.CreateAsync(aircraft);
+            var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
+            await _repository.CreateAircraftAsync(aircraftModel);
+            await _unitOfWork.CompleteAsync();
 
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
+            var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
-            var AircraftResource = _mapper.Map<Aircraft, AircraftCreateDTO>(result.Aircraft);
-            return Ok(AircraftResource);
+            return CreatedAtRoute(nameof(GetAircraftById), 
+                new {aircraftReadDto.Id}, aircraftReadDto);
         }
 
         // PUT api/aircrafts/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAircraft(int id, [FromBody] AircraftUpdateDTO resource)
+        public async Task<IActionResult> UpdateAircraft(
+            int id, AircraftUpdateDTO aircraftUpdateDTO)
         {
-            if (!ModelState.IsValid)
+            var existingAircraft = await _repository.GetAircraftByIdAsync(id);
+
+            if (existingAircraft == null)
             {
-                return BadRequest(ModelState.GetErrorMessages());
+                return NotFound();
             }
 
-            var aircraft = _mapper.Map<AircraftUpdateDTO, Aircraft>(resource);
-            var result = await _aircraftService.UpdateAsync(id, aircraft);
+            _mapper.Map(aircraftUpdateDTO, existingAircraft);
 
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
+            _repository.UpdateAircraft(existingAircraft);
+            await _unitOfWork.CompleteAsync();
 
-            var aircraftResource = _mapper.Map<Aircraft, AircraftReadDTO>(result.Aircraft);
-
-            return Ok(aircraftResource);
+            return NoContent();
         }
 
         // PATCH api/aircrafts/5
@@ -91,7 +92,7 @@ namespace API.Controllers
         public async Task<IActionResult> PartialUpdateAircraft(
             int id, JsonPatchDocument<AircraftUpdateDTO> patchDocument)
         {
-            var existingAircraft = await _aircraftService.FindAsync(id);
+            var existingAircraft = await _repository.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
                 return NotFound();
@@ -105,9 +106,10 @@ namespace API.Controllers
                 return ValidationProblem(ModelState);
             }
 
-            var resource = _mapper.Map(aircraftToPatch, existingAircraft);
+            _mapper.Map(aircraftToPatch, existingAircraft);
 
-            await _aircraftService.PartialUpdateAsync(resource);
+            _repository.UpdateAircraft(existingAircraft);
+            await _unitOfWork.CompleteAsync();
             
             return NoContent();
         }
@@ -116,12 +118,14 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAircraft(int id)
         {
-            var result = await _aircraftService.DeleteAsync(id);
-
-            if (!result.Success)
+            var existingAircraft = await _repository.GetAircraftByIdAsync(id);
+            if (existingAircraft == null)
             {
-                return BadRequest(result.Message);
+                return NotFound();
             }
+
+            _repository.DeleteAircraft(existingAircraft);
+            await _unitOfWork.CompleteAsync();
 
             return NoContent();
         }

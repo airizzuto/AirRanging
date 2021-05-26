@@ -3,7 +3,7 @@ using API.Domain.Models;
 using API.Domain.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Persistance.Contexts
+namespace API.Data.Contexts
 {
     public class AppDbContext : DbContext
     {

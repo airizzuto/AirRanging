@@ -4,7 +4,7 @@ namespace API.DTOs.Aircraft
 {
     public class AircraftCreateDTO
     {
-        public int Id { get; set; }    
+        public int Id { get; set; }
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }

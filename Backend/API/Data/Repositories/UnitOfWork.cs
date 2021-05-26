@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using API.Persistance.Contexts;
+using API.Data.Contexts;
 
-namespace API.Domain.Repositories
+namespace API.Data.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {

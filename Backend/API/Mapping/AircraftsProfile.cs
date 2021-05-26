@@ -8,7 +8,7 @@ namespace API.Mapping
     {
         public AircraftsProfile()
         {
-            CreateMap<Aircraft, AircraftCreateDTO>();
+            CreateMap<Aircraft, AircraftReadDTO>();
             CreateMap<AircraftCreateDTO, Aircraft>();
             CreateMap<AircraftUpdateDTO, Aircraft>();
             CreateMap<Aircraft, AircraftUpdateDTO>();

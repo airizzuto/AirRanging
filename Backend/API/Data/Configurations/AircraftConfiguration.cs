@@ -3,7 +3,7 @@ using API.Domain.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace API.Persistance.Configurations
+namespace API.Data.Configurations
 {
     public class AircraftConfiguration : IEntityTypeConfiguration<Aircraft>
         {

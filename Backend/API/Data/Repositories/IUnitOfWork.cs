@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace API.Domain.Repositories
+namespace API.Data.Repositories
 {
     public interface IUnitOfWork
     {

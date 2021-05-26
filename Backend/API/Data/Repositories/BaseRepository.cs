@@ -1,6 +1,6 @@
-using API.Persistance.Contexts;
+using API.Data.Contexts;
 
-namespace API.Persistance.Repositories
+namespace API.Data.Repositories
 {
   public abstract class BaseRepository
   {

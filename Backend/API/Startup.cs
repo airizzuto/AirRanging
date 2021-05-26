@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Domain.Repositories;
-using API.Persistance.Contexts;
-using API.Persistance.Repositories;
-using API.Domain.Services;
+using API.Domain.Interfaces;
+using API.Data.Contexts;
+using API.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -55,22 +54,19 @@ namespace API
                 Password = dbPassword
             };
 
-            services
-                .AddDbContext<AppDbContext>(
-                    opt => opt.UseNpgsql(builder.ConnectionString)
-                );
-            
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            
-            // Repository
-            services.AddScoped<IAircraftRepository, AircraftRepository>();
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAircraftService, AircraftService>();
+            services.AddDbContext<AppDbContext>(
+                opt => opt.UseNpgsql(builder.ConnectionString)
+            );
 
             services.AddControllers().AddNewtonsoftJson(s => {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IAircraftRepository, AircraftRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
