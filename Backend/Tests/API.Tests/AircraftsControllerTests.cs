@@ -11,9 +11,8 @@ using API.Mapping;
 using API.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Tests
+namespace AirRangingAPI.Tests
 {
-    
     public class AircraftsControllerTests
     {
         private static List<Aircraft> GetAircrafts(int num)
