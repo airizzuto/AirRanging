@@ -25,7 +25,7 @@ namespace API.Controllers
 
         // GET api/aircrafts
         [HttpGet]
-        public async Task<IEnumerable<AircraftReadDTO>> Get()
+        public async Task<IEnumerable<AircraftReadDTO>> GetAllAircrafts()
         {
             var aircrafts = await _aircraftService.GetAllAsync();
             var resources = _mapper.Map<IEnumerable<Aircraft>, IEnumerable<AircraftReadDTO>>(aircrafts);
@@ -35,7 +35,7 @@ namespace API.Controllers
 
         // GET api/aircrafts/5
         [HttpGet("{id}")]
-        public async Task<AircraftReadDTO> Get(int id)
+        public async Task<AircraftReadDTO> GetAircraftById(int id)
         {
             var aircraft = await _aircraftService.FindAsync(id);
             var resource = _mapper.Map<Aircraft, AircraftReadDTO>(aircraft);
@@ -45,7 +45,7 @@ namespace API.Controllers
 
         // POST api/aircrafts
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AircraftCreateDTO resource)
+        public async Task<IActionResult> CreateAircraft([FromBody] AircraftCreateDTO resource)
         {
             if (!ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace API.Controllers
 
         // PUT api/aircrafts/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] AircraftUpdateDTO resource)
+        public async Task<IActionResult> UpdateAircraft(int id, [FromBody] AircraftUpdateDTO resource)
         {
             if (!ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace API.Controllers
 
         // PATCH api/aircrafts/5
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PartialUpdate(
+        public async Task<IActionResult> PartialUpdateAircraft(
             int id, JsonPatchDocument<AircraftUpdateDTO> patchDocument)
         {
             var existingAircraft = await _aircraftService.FindAsync(id);
@@ -114,7 +114,7 @@ namespace API.Controllers
 
         // DELETE api/aircrafts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAircraft(int id)
         {
             var result = await _aircraftService.DeleteAsync(id);
 

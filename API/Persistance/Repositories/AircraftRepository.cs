@@ -12,27 +12,27 @@ namespace API.Persistance.Repositories
     {
         public AircraftRepository(AppDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Aircraft>> GetAllAsync()
+        public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync()
         {
             return await _context.Aircrafts.ToListAsync();
         }
 
-        public async Task<Aircraft> FindAsync(int id)
+        public async Task<Aircraft> FindAircraftByIdAsync(int id)
         {
             return await _context.Aircrafts.FindAsync(id);
         }
 
-        public async Task AddAsync(Aircraft aircraft)
+        public async Task AddAircraftAsync(Aircraft aircraft)
         {
             await _context.Aircrafts.AddAsync(aircraft);
         }
 
-        public void Update(Aircraft aircraft)
+        public void UpdateAircraft(Aircraft aircraft)
         {
             _context.Aircrafts.Update(aircraft);
         }
 
-        public void Remove(Aircraft aircraft)
+        public void RemoveAircraft(Aircraft aircraft)
         {
             _context.Aircrafts.Remove(aircraft);
         }

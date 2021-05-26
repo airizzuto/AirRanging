@@ -23,7 +23,7 @@ namespace API.Domain.Services
             // TODO: Error handling separated implementation
             try
             {
-                await _aircraftRepository.AddAsync(aircraft);
+                await _aircraftRepository.AddAircraftAsync(aircraft);
                 await _unitOfWork.CompleteAsync();
 
                 return new AircraftResponse(aircraft);
@@ -39,17 +39,17 @@ namespace API.Domain.Services
 
         public async Task<Aircraft> FindAsync(int id)
         {
-            return await _aircraftRepository.FindAsync(id);
+            return await _aircraftRepository.FindAircraftByIdAsync(id);
         }
 
         public async Task<IEnumerable<Aircraft>> GetAllAsync()
         {
-            return await _aircraftRepository.GetAllAsync();
+            return await _aircraftRepository.GetAllAircraftsAsync();
         }
 
         public async Task<AircraftResponse> UpdateAsync(int id, Aircraft aircraft)
         {
-            var existingAircraft = await _aircraftRepository.FindAsync(id);
+            var existingAircraft = await _aircraftRepository.FindAircraftByIdAsync(id);
 
             if (existingAircraft == null)
             {
@@ -77,7 +77,7 @@ namespace API.Domain.Services
 
             try
             {
-                _aircraftRepository.Update(existingAircraft);
+                _aircraftRepository.UpdateAircraft(existingAircraft);
                 await _unitOfWork.CompleteAsync();
 
                 return new AircraftResponse(existingAircraft);
@@ -94,7 +94,7 @@ namespace API.Domain.Services
         {
             try
             {
-                _aircraftRepository.Update(aircraft);
+                _aircraftRepository.UpdateAircraft(aircraft);
                 await _unitOfWork.CompleteAsync();
 
                 return new AircraftResponse(aircraft);
@@ -109,7 +109,7 @@ namespace API.Domain.Services
 
         public async Task<AircraftResponse> DeleteAsync(int id)
         {
-            var existingAircraft = await _aircraftRepository.FindAsync(id);
+            var existingAircraft = await _aircraftRepository.FindAircraftByIdAsync(id);
 
             if (existingAircraft == null)
             {
@@ -118,7 +118,7 @@ namespace API.Domain.Services
 
             try
             {
-                _aircraftRepository.Remove(existingAircraft);
+                _aircraftRepository.RemoveAircraft(existingAircraft);
                 await _unitOfWork.CompleteAsync();
 
                 return new AircraftResponse(existingAircraft);
