@@ -806,4 +806,4 @@ sketch
 # Additional files built by Visual Studio
 *.tlog
 Docker/pg-data/
-API/Migrations/
+**/Migrations/
