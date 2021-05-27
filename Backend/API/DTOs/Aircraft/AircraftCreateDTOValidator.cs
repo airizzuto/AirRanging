@@ -11,9 +11,7 @@ namespace API.DTOs.Aircraft
             // TODO: better validations
             
             RuleFor(x => x.IcaoId)
-                .NotNull()
-                .NotEmpty().WithMessage("ICAO Id is required")
-                .MaximumLength(4).WithMessage("Maximum length of id is 4");
+                .MaximumLength(4).WithMessage("Maximum length of ICAO code is 4");
 
             RuleFor(x => x.Manufacturer)
                 .NotNull()
@@ -22,7 +20,7 @@ namespace API.DTOs.Aircraft
             
             RuleFor(x => x.Model)
                 .NotNull()
-                .NotEmpty().WithMessage("Model must be provided")
+                .NotEmpty().WithMessage("Model name must be provided")
                 .MaximumLength(255);
 
             RuleFor(x => x.EngineCount)

@@ -16,7 +16,7 @@ namespace API.DTOs.Aircraft
         public EWeightCategory WeightCategory { get; set; }
         public EIcaoWakeCategory IcaoWakeCategory { get; set; }
         public EFuelType FuelType { get; set; }
-        public int MTOW { get; set; }
+        public int MaxTakeoffWeight { get; set; }
         public int CruiseSpeed { get; set; }
         public decimal FuelCapacity { get; set; }
         public decimal MaxRange { get; set; }
