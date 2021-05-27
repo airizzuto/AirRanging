@@ -6,6 +6,7 @@ namespace API.Domain.Interfaces
 {
     public interface IAircraftRepository
     {
+        Task SaveChangesAsync();
         Task<IEnumerable<Aircraft>> GetAllAircraftsAsync();
         Task<Aircraft> GetAircraftByIdAsync(int id);
         Task CreateAircraftAsync(Aircraft aircraft);

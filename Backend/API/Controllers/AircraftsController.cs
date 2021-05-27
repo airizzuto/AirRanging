@@ -15,15 +15,13 @@ namespace API.Controllers
     public class AircraftsController : ControllerBase
     {
         private readonly IAircraftRepository _repository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public AircraftsController(
-            IAircraftRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
+            IAircraftRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _unitOfWork = unitOfWork;
         }
 
         // GET api/aircrafts
@@ -57,7 +55,7 @@ namespace API.Controllers
         {
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.CreateAircraftAsync(aircraftModel);
-            await _unitOfWork.CompleteAsync();
+            await _repository.SaveChangesAsync();
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
@@ -82,7 +80,7 @@ namespace API.Controllers
             _mapper.Map(aircraftUpdateDTO, existingAircraft);
 
             _repository.UpdateAircraft(existingAircraft);
-            await _unitOfWork.CompleteAsync();
+            await _repository.SaveChangesAsync();
 
             return NoContent();
         }
@@ -109,8 +107,8 @@ namespace API.Controllers
             _mapper.Map(aircraftToPatch, existingAircraft);
 
             _repository.UpdateAircraft(existingAircraft);
-            await _unitOfWork.CompleteAsync();
-            
+            await _repository.SaveChangesAsync();
+
             return NoContent();
         }
 
@@ -125,7 +123,7 @@ namespace API.Controllers
             }
 
             _repository.DeleteAircraft(existingAircraft);
-            await _unitOfWork.CompleteAsync();
+            await _repository.SaveChangesAsync();
 
             return NoContent();
         }
