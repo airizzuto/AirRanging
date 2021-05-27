@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace API.Domain.Models.Enums
 {
@@ -16,6 +17,7 @@ namespace API.Domain.Models.Enums
     Piston = 2,
 
     [Description("T")]
+    [EnumMember(Value = "Turboprop Turboshaft")]
     TurbopropTurboshaft = 3,
 
     [Description("J")]
@@ -25,6 +27,7 @@ namespace API.Domain.Models.Enums
     Rocket = 5,
 
     [Description("C")]
+    [EnumMember(Value = "Two Engines Coupled Single Prop")]
     TwoEngineCoupledProp = 6,
   }
 }

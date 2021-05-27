@@ -29,6 +29,13 @@ namespace API.DTOs.Aircraft
                 .GreaterThanOrEqualTo((short) 1)
                 .LessThan(short.MaxValue);
             
+            RuleFor(x => x.FuelType)
+                .Equal(EFuelType.Electric).When(x => x.EngineType == EEngineType.Electric);
+            
+            RuleFor(x => x.MaxTakeoffWeight)
+                .GreaterThan(0)
+                .LessThan(int.MaxValue);
+            
             RuleFor(x => x.Variant)
                 .MaximumLength(255);
 

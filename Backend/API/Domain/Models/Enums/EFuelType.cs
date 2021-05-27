@@ -9,6 +9,8 @@ namespace API.Domain.Models.Enums
     Unknown = 0,
     AvGas = 1,
     JetA = 2,
+    Diesel = 3,
+    Electric = 4, // TODO: requirements and valids on electric
   }
 
   // TODO: weights

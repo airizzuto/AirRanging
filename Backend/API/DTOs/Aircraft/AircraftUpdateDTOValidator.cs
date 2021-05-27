@@ -26,7 +26,11 @@ namespace API.DTOs.Aircraft
                 .NotEmpty().WithMessage("Aircraft must have an engine")
                 .GreaterThanOrEqualTo((short) 1)
                 .LessThan(short.MaxValue);
-            
+
+            RuleFor(x => x.MaxTakeoffWeight)
+                .GreaterThan(0)
+                .LessThan(int.MaxValue);
+
             RuleFor(x => x.Variant)
                 .MaximumLength(255);
 
