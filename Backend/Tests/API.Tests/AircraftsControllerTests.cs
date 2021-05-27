@@ -1,60 +1,33 @@
 using API.Controllers;
-using API.Domain.Repositories;
 using Moq;
 using AutoMapper;
 using Xunit;
 using System.Collections.Generic;
 using API.Domain.Models;
 using API.Domain.Models.Enums;
-using API.Mapping;
-using API.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using API.Tests.Helpers;
+using System.Threading.Tasks;
 
 namespace AirRangingAPI.Tests
 {
     public class AircraftsControllerTests
     {
-        private MockAPI _mock = new MockAPI();
-        private static List<Aircraft> GetAircrafts(int num)
-        {
-            var aircrafts = new List<Aircraft>();
-            if (num > 0)
-            {
-                aircrafts.Add(new Aircraft
-                {
-                    Id = 0,
-                    IcaoId = "C152",
-                    Manufacturer = "Cessna",
-                    Model = "152",
-                    AircraftType = EAircraftType.SingleEngineLand,
-                    EngineType = EEngineType.Piston,
-                    WeightCategory = EWeightCategory.Small,
-                    IcaoWakeCategory = EIcaoWakeCategory.Light,
-                    FuelType = EFuelType.AvGas,
-                    MaxTakeoffWeight = 1670,
-                    CruiseSpeed = 107,
-                    FuelCapacity = 26,
-                    MaxRange = 415,
-                    ServiceCeiling = 14700
-                });
-            }
-
-            return aircrafts;
-        }
+        private MockAPI _mock = new();
+        private MockAircraftsData _mockData = new();
 
         [Fact]
-        public void GetAllAircrafts_Returns200OK_WhenDBIsEmpty()  // FIXME
+        public async Task GetAllAircraftsAsync_Returns200OK_WhenDBIsEmpty()
         {
             // Arrange
-            _mock.service.Setup(service => service.GetAllAsync())
-                .ReturnsAsync(GetAircrafts(0));
+            _mock.repo.Setup(repo => repo.GetAllAircraftsAsync())
+                .ReturnsAsync(_mockData.GetAircrafts(0));
 
             var controller = new AircraftsController(
-                _mock.service.Object, _mock.mapper);
+                _mock.repo.Object, _mock.mapper);
 
             // Act
-            var result = controller.GetAllAircrafts();
+            var result = await controller.GetAllAircrafts();
 
             // Assert
             Assert.IsType<OkObjectResult>(result.Result);
