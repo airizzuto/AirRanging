@@ -2,8 +2,7 @@ using FluentValidation;
 
 namespace API.DTOs.Aircraft
 {
-    public class AircraftUpdateDTOValidator
-        : AbstractValidator<AircraftUpdateDTO>
+    public class AircraftUpdateDTOValidator : AbstractValidator<AircraftUpdateDTO>
     {
         public AircraftUpdateDTOValidator()
         {

@@ -20,8 +20,8 @@ using Npgsql;
 using FluentValidation.AspNetCore;
 using System.Reflection;
 using System.Text.Json.Serialization;
-using System.Text.Json;
 using Newtonsoft.Json.Serialization;
+using System.Text.Json;
 
 namespace API
 {
@@ -40,12 +40,17 @@ namespace API
             // TODO: separation of application and infrastructure injection to another file
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddJsonOptions(options => 
-                    options.JsonSerializerOptions.Converters.Add(
-                        new JsonStringEnumConverter()
-                    )
-                )
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+                .AddJsonOptions(opts => {
+                    opts.JsonSerializerOptions.Converters.Add(
+                        new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                    })
+                .AddNewtonsoftJson(opts => {
+                        opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    })
+                .AddFluentValidation(fv => { 
+                    fv.RegisterValidatorsFromAssemblyContaining<Startup>();
+                    fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                });
 
             var connectionString = Configuration.GetConnectionString("AirRangingDB");
             var dbPassword = Configuration["DbPassword"];
@@ -58,9 +63,7 @@ namespace API
                 opt => opt.UseNpgsql(builder.ConnectionString)
             );
 
-            services.AddControllers().AddNewtonsoftJson(s => {
-                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
+            services.AddControllers();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
