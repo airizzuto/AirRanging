@@ -37,11 +37,10 @@ namespace API.Controllers
         }
 
         // GET api/aircrafts/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name="GetAircraftById")]
         public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(int id)
         {
             var aircraft = await _repository.GetAircraftByIdAsync(id);
-
             if (aircraft == null)
             {
                 return NotFound();
@@ -53,18 +52,20 @@ namespace API.Controllers
 
         // POST api/aircrafts
         [HttpPost]
-        public async Task<IActionResult> CreateAircraft(
+        public async Task<ActionResult<AircraftReadDTO>> CreateAircraft(
             AircraftCreateDTO aircraftCreateDto)
         {
-
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.CreateAircraftAsync(aircraftModel);
             await _unitOfWork.CompleteAsync();
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
-            return CreatedAtRoute(nameof(GetAircraftById), 
-                new {aircraftReadDto.Id}, aircraftReadDto);
+            return CreatedAtRoute(
+                nameof(GetAircraftById),
+                new { aircraftReadDto.Id },
+                aircraftReadDto
+            );
         }
 
         // PUT api/aircrafts/5
@@ -73,7 +74,6 @@ namespace API.Controllers
             int id, AircraftUpdateDTO aircraftUpdateDTO)
         {
             var existingAircraft = await _repository.GetAircraftByIdAsync(id);
-
             if (existingAircraft == null)
             {
                 return NotFound();
