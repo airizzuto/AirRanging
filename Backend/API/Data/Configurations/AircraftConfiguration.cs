@@ -18,7 +18,6 @@ namespace API.Data.Configurations
                 .ValueGeneratedOnAdd();
 
             builder.Property(a => a.IcaoId)
-                .IsRequired()
                 .HasMaxLength(4);
 
             builder.Property(a => a.Manufacturer)
