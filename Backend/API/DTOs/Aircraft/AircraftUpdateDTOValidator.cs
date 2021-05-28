@@ -1,3 +1,4 @@
+using API.Domain.Models.Enums;
 using FluentValidation;
 
 namespace API.DTOs.Aircraft
@@ -8,8 +9,11 @@ namespace API.DTOs.Aircraft
         {
             // TODO: better validations
             
+            // TODO: better validations
+            // ex: RuleFor(m => m.FirstName).NotEmpty().When(m => m.CustomerType.ToLower() == "person");
+            
             RuleFor(x => x.IcaoId)
-                .MaximumLength(4).WithMessage("Maximum length of id is 4");
+                .MaximumLength(4).WithMessage("Maximum length of ICAO code is 4");
 
             RuleFor(x => x.Manufacturer)
                 .NotNull()
@@ -20,17 +24,32 @@ namespace API.DTOs.Aircraft
                 .NotNull()
                 .NotEmpty().WithMessage("Model name must be provided")
                 .MaximumLength(255);
+            
+            RuleFor(x => x.AircraftType)
+                .IsInEnum();
+            
+            RuleFor(x => x.EngineType)
+                .IsInEnum();
+
+            RuleFor(x => x.WeightCategory)
+                .IsInEnum();
+            
+            RuleFor(x => x.IcaoWakeCategory)
+                .IsInEnum();
 
             RuleFor(x => x.EngineCount)
                 .NotNull()
                 .NotEmpty().WithMessage("Aircraft must have an engine")
                 .GreaterThanOrEqualTo((short) 1)
                 .LessThan(short.MaxValue);
-
+            
+            RuleFor(x => x.FuelType)
+                .Equal(EFuelType.Electric).When(x => x.EngineType == EEngineType.Electric);
+            
             RuleFor(x => x.MaxTakeoffWeight)
                 .GreaterThan(0)
                 .LessThan(int.MaxValue);
-
+            
             RuleFor(x => x.Variant)
                 .MaximumLength(255);
 
@@ -44,6 +63,10 @@ namespace API.DTOs.Aircraft
                     )
                 .GreaterThanOrEqualTo(0)
                 .LessThan(decimal.MaxValue);
+
+            RuleFor(x => x.MaxTakeoffWeight)
+                .GreaterThanOrEqualTo(0)
+                .LessThanOrEqualTo(int.MaxValue);
 
             RuleFor(x => x.MaxRange)
                 .NotNull()

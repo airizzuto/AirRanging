@@ -22,6 +22,18 @@ namespace API.DTOs.Aircraft
                 .NotNull()
                 .NotEmpty().WithMessage("Model name must be provided")
                 .MaximumLength(255);
+            
+            RuleFor(x => x.AircraftType)
+                .IsInEnum();
+            
+            RuleFor(x => x.EngineType)
+                .IsInEnum();
+
+            RuleFor(x => x.WeightCategory)
+                .IsInEnum();
+            
+            RuleFor(x => x.IcaoWakeCategory)
+                .IsInEnum();
 
             RuleFor(x => x.EngineCount)
                 .NotNull()
@@ -49,6 +61,10 @@ namespace API.DTOs.Aircraft
                     )
                 .GreaterThanOrEqualTo(0)
                 .LessThan(decimal.MaxValue);
+
+            RuleFor(x => x.MaxTakeoffWeight)
+                .GreaterThanOrEqualTo(0)
+                .LessThanOrEqualTo(int.MaxValue);
 
             RuleFor(x => x.MaxRange)
                 .NotNull()
