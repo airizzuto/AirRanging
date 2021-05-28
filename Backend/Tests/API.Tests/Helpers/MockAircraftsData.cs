@@ -6,7 +6,7 @@ namespace API.Tests.Helpers
 {
     public class MockAircraftsData
     {
-        public Aircraft mockAircraft0 = new Aircraft 
+        public Aircraft aircraft0 = new Aircraft 
         {
             Id = 0,
             IcaoId = "C152",
@@ -23,7 +23,7 @@ namespace API.Tests.Helpers
             MaxRange = 415,
             ServiceCeiling = 14700
         };
-        public Aircraft mockAircraft1 = new Aircraft
+        public Aircraft aircraft1 = new Aircraft
         {
             Id = 1,
             IcaoId = "B738",
@@ -48,7 +48,7 @@ namespace API.Tests.Helpers
             var aircrafts = new List<Aircraft>();
             if (num > 0)
             {
-                aircrafts.Add(mockAircraft0);
+                aircrafts.Add(aircraft0);
             }
 
             return aircrafts;
