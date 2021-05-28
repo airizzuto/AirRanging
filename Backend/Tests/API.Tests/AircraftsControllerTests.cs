@@ -14,6 +14,8 @@ namespace AirRangingAPI.Tests
         private MockAPI _mock = new();
         private MockAircraftsData _mockData = new();
 
+        #region GetAll
+
         [Fact]
         public async Task GetAllAircraftsAsync_Returns200OK_WhenDBIsEmpty()
         {
@@ -86,7 +88,11 @@ namespace AirRangingAPI.Tests
             // Assert;
             Assert.IsType<ActionResult<IEnumerable<AircraftReadDTO>>>(result);
         }
-    
+
+        #endregion
+
+        #region GetById
+
         [Fact]
         public async Task GetAircraftByIdAsync_Returns404NotFound_WhenNonExistentIDProvided()
         {
@@ -140,5 +146,53 @@ namespace AirRangingAPI.Tests
             // Assert
             Assert.IsType<ActionResult<AircraftReadDTO>>(result);
         }
+
+        #endregion
+
+        #region Create
+
+        [Fact]
+        public async Task CreateAircraftAsync_ReturnsCorrectResourceType_WhenValidObjectSubmitted()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
+                .ReturnsAsync(_mockData.mockAircraft1);
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper
+            );
+
+            // Act
+            var result = await controller.CreateAircraft(new AircraftCreateDTO { });
+
+            // Assert
+            Assert.IsType<ActionResult<AircraftReadDTO>>(result);
+        }
+
+        [Fact]
+        public async Task CreateAircraftAsync_Returns201Created_WhenValidObjectSubmitted()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
+                .ReturnsAsync(_mockData.mockAircraft1);
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper
+            );
+
+            // Act
+            var result = await controller.CreateAircraft(new AircraftCreateDTO { });
+
+            // Assert
+            Assert.IsType<CreatedAtRouteResult>(result.Result);
+        }
+        
+        #endregion
+
+        #region Update
+
+        // TODO
+
+        #endregion
     }
 }
