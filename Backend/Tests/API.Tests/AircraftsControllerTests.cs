@@ -14,6 +14,8 @@ namespace AirRangingAPI.Tests
         private MockAPI _mock = new();
         private MockAircraftsData _mockData = new();
 
+        // TODO: additional testing
+
         #region GetAll
 
         [Fact]
@@ -116,7 +118,7 @@ namespace AirRangingAPI.Tests
         {
             // Arrange
             _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
-                .ReturnsAsync(_mockData.mockAircraft1);
+                .ReturnsAsync(_mockData.aircraft1);
 
             var controller = new AircraftsController(
                 _mock.repo.Object, _mock.mapper
@@ -134,7 +136,7 @@ namespace AirRangingAPI.Tests
         {
             // Arrange
             _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
-                .ReturnsAsync(_mockData.mockAircraft1);
+                .ReturnsAsync(_mockData.aircraft1);
 
             var controller = new AircraftsController(
                 _mock.repo.Object, _mock.mapper
@@ -156,7 +158,7 @@ namespace AirRangingAPI.Tests
         {
             // Arrange
             _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
-                .ReturnsAsync(_mockData.mockAircraft1);
+                .ReturnsAsync(_mockData.aircraft1);
 
             var controller = new AircraftsController(
                 _mock.repo.Object, _mock.mapper
@@ -174,7 +176,7 @@ namespace AirRangingAPI.Tests
         {
             // Arrange
             _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
-                .ReturnsAsync(_mockData.mockAircraft1);
+                .ReturnsAsync(_mockData.aircraft1);
 
             var controller = new AircraftsController(
                 _mock.repo.Object, _mock.mapper
@@ -189,10 +191,103 @@ namespace AirRangingAPI.Tests
         
         #endregion
 
-        #region Update
+        #region Full Update
 
-        // TODO
+        [Fact]
+        public async Task UpdateAircraft_Returns204NoContent_WhenValidObjectSubmitted()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
+                .ReturnsAsync(_mockData.aircraft1);
 
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper
+            );
+
+            // Act
+            var result = await controller.UpdateAircraft(1, new AircraftUpdateDTO { });
+
+            // Assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public async Task UpdateAircraft_Returns404NotFound_WhenNonExistentResourceIdSubmitted()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
+                .ReturnsAsync(() => null);
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper
+            );
+
+            // Act
+            var result = await controller.UpdateAircraft(1, new AircraftUpdateDTO { });
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        #endregion
+    
+        #region Partial Update
+
+        [Fact]
+        public async Task PartialUpdateAircraft_Returns404NotFound_WhenNonExistingResourceIDSubmitted()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
+                .ReturnsAsync(() => null);
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper
+            );
+
+            // Act
+            var result = await controller.PartialUpdateAircraft(1,
+                new Microsoft.AspNetCore.JsonPatch.JsonPatchDocument<AircraftUpdateDTO> { }
+            );
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        #endregion
+    
+        #region Delete
+
+        [Fact]
+        public async Task DeleteAircraft_Returns204NoContent_WhenValidResourceIDSubmitted()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => 
+                repo.GetAircraftByIdAsync(1)).ReturnsAsync(_mockData.aircraft1);
+
+            var controller = new AircraftsController(_mock.repo.Object, _mock.mapper);
+
+            // Act
+            var result = await controller.DeleteAircraft(1);
+
+            // Assert
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public async Task DeleteAircraft_Returns404NotFound_WhenNonExistentResourceIDSubmitted()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => 
+                repo.GetAircraftByIdAsync(0)).ReturnsAsync(() => null);
+
+            var controller = new AircraftsController(_mock.repo.Object, _mock.mapper);
+
+            // Act
+            var result = await controller.DeleteAircraft(0);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
         #endregion
     }
 }
