@@ -1,13 +1,11 @@
 using API.Controllers;
 using Moq;
-using AutoMapper;
 using Xunit;
-using System.Collections.Generic;
-using API.Domain.Models;
-using API.Domain.Models.Enums;
 using Microsoft.AspNetCore.Mvc;
 using API.Tests.Helpers;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using API.DTOs.Aircraft;
 
 namespace AirRangingAPI.Tests
 {
@@ -31,6 +29,116 @@ namespace AirRangingAPI.Tests
 
             // Assert
             Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetAllAircraftsAsync_ReturnsOneItem_WhenDBHasOneResource()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAllAircraftsAsync())
+                .ReturnsAsync(_mockData.GetAircrafts(1));
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper);
+
+            // Act
+            var result = await controller.GetAllAircrafts();
+
+            // Assert
+            var okResult = result.Result as OkObjectResult;
+
+            var aircraft = okResult.Value as List<AircraftReadDTO>;
+
+            Assert.Single(aircraft);
+        }
+
+        [Fact]
+        public async Task GetAllAircraftsAsync_Returns200OK_WhenDBHasOneResource()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAllAircraftsAsync())
+                .ReturnsAsync(_mockData.GetAircrafts(1));
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper);
+
+            // Act
+            var result = await controller.GetAllAircrafts();
+
+            // Assert;
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetAllAircraftsAsync_ReturnsCorrectType_WhenDBHasOneResource()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAllAircraftsAsync())
+                .ReturnsAsync(_mockData.GetAircrafts(1));
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper
+            );
+
+            // Act
+            var result = await controller.GetAllAircrafts();
+
+            // Assert;
+            Assert.IsType<ActionResult<IEnumerable<AircraftReadDTO>>>(result);
+        }
+    
+        [Fact]
+        public async Task GetAircraftByIdAsync_Returns404NotFound_WhenNonExistentIDProvided()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(0))
+                .Returns(() => null);
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper
+            );
+
+            // Act
+            var result = await controller.GetAircraftById(1);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetAircraftByIdAsync_Returns200OK_WhenValidIDProvided()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
+                .ReturnsAsync(_mockData.mockAircraft1);
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper
+            );
+
+            // Act
+            var result = await controller.GetAircraftById(1);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetAircraftByIdAsync_ReturnsCorrectType_WhenValidIDProvided()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
+                .ReturnsAsync(_mockData.mockAircraft1);
+
+            var controller = new AircraftsController(
+                _mock.repo.Object, _mock.mapper
+            );
+
+            // Act
+            var result = await controller.GetAircraftById(1);
+
+            // Assert
+            Assert.IsType<ActionResult<AircraftReadDTO>>(result);
         }
     }
 }
