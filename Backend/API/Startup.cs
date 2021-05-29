@@ -22,6 +22,8 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json.Serialization;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using API.Conventions;
 
 namespace API
 {
@@ -63,7 +65,21 @@ namespace API
                 opt => opt.UseNpgsql(builder.ConnectionString)
             );
 
-            services.AddControllers();
+            services.AddControllers(options => {
+                options.Conventions.Add(new GroupingByNamespaceConvention());
+            });
+
+            services.AddApiVersioning(options =>
+                {
+                    options.AssumeDefaultVersionWhenUnspecified = true;
+                    options.DefaultApiVersion = ApiVersion.Default;
+                    options.ApiVersionReader = ApiVersionReader.Combine( 
+                        new HeaderApiVersionReader("X-Version"),
+                        new MediaTypeApiVersionReader("version")
+                    );
+                    options.ReportApiVersions = true;
+                }
+            );
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -72,7 +88,16 @@ namespace API
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
+                var titleBase = "AirRanging API";
+                var description = "Web API for Aircraft Route Planning";
+                var license = new OpenApiLicense() { Name = "MIT" };
+
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                {
+                    Version = "v1",
+                    Title = titleBase + "v1",
+                    Description = description,
+                });
             });
         }
 
@@ -82,13 +107,20 @@ namespace API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1"));
+
             }
             else
             {
+                app.UseExceptionHandler("/Error"); // TODO
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(config => {
+                config.SwaggerEndpoint("/swagger/v1/swagger.json", "AirRangingAPI v1");
+            });
+
+            app.UseStatusCodePages();
 
             app.UseHttpsRedirection();
 

@@ -6,12 +6,12 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
 using API.Domain.Interfaces;
-using API.Data.Repositories;
 
-namespace API.Controllers
+namespace API.Controllers.V1
 {
-    [Route("/api/[controller]")]
     [ApiController]
+    [Route("/api/[controller]")]
+    [ApiVersion("1.0")]
     public class AircraftsController : ControllerBase
     {
         private readonly IAircraftRepository _repository;
@@ -127,5 +127,8 @@ namespace API.Controllers
 
             return NoContent();
         }
+    
+        // TODO: filter query
+    
     }
 }
