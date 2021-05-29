@@ -10,7 +10,7 @@ namespace API.Data.Repositories
 {
     public class AircraftRepository : BaseRepository, IAircraftRepository
     {
-        public AircraftRepository(AppDbContext context) : base(context) { }
+        public AircraftRepository(ApplicationDbContext context) : base(context) { }
 
         // TODO: error handling
         public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync()

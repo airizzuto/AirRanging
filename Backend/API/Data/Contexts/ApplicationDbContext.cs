@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Contexts
 {
-    public class AppDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
         public DbSet<Aircraft> Aircrafts { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder) 
         {

@@ -5,10 +5,10 @@ namespace API.Data.Repositories
 {
     public abstract class BaseRepository
     {
-        protected readonly AppDbContext _context;
+        protected readonly ApplicationDbContext _context;
         readonly IUnitOfWork _unitOfWork;
 
-        public BaseRepository(AppDbContext context)
+        public BaseRepository(ApplicationDbContext context)
         {
             _context = context;
             _unitOfWork = new UnitOfWork(_context);
