@@ -6,6 +6,7 @@ using API.Tests.Helpers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using API.DTOs.Aircraft;
+using API.Controllers.V1;
 
 namespace AirRangingAPI.Tests
 {
