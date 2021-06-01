@@ -1,12 +1,11 @@
-using API.Controllers;
+using API.Controllers.V1;
+using API.DTOs.V1.Aircraft;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
-using Microsoft.AspNetCore.Mvc;
 using API.Tests.Helpers;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using API.DTOs.Aircraft;
-using API.Controllers.V1;
 
 namespace AirRangingAPI.Tests
 {

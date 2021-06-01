@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using API.Domain.Models;
-using API.Domain.Models.Enums;
+using API.Models;
+using API.Models.Enums;
 
 namespace API.Tests.Helpers
 {
