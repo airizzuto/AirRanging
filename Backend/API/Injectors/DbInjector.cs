@@ -1,7 +1,6 @@
 using System;
 using API.Data.Contexts;
 using API.Data.Repositories;
-using API.Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

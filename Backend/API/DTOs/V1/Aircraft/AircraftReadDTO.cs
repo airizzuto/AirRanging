@@ -1,6 +1,6 @@
-using API.Domain.Models.Enums;
+using API.Models.Enums;
 
-namespace API.DTOs.Aircraft
+namespace API.DTOs.V1.Aircraft
 {
     public class AircraftReadDTO
     {

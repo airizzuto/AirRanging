@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace API.Domain.Models.Enums
+namespace API.Models.Enums
 {
   /// <summary>
   /// <para>Represents the ICAO weight category of an aircraft:</para>

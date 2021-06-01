@@ -1,10 +1,12 @@
-using API.Domain.Models.Enums;
+using System.ComponentModel.DataAnnotations;
+using API.Models.Enums;
 
-namespace API.DTOs.Aircraft
+namespace API.Models
 {
-    public class AircraftUpdateDTO
+    public class Aircraft
     {
         public int Id { get; set; }
+        // FK userid
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
@@ -17,9 +19,14 @@ namespace API.DTOs.Aircraft
         public EIcaoWakeCategory IcaoWakeCategory { get; set; }
         public EFuelType FuelType { get; set; }
         public int MaxTakeoffWeight { get; set; }
+        // RequiredRunwayLength int { get; set; }
         public int CruiseSpeed { get; set; }
         public decimal FuelCapacity { get; set; }
+        // TODO: Convert Fuel Weight <-> Volume
         public decimal MaxRange { get; set; }
         public int ServiceCeiling { get; set; }
+
+        // public User CreatedBy { get; set; }
+        // public List<User> UsersSaved { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Domain.Models;
-using API.Domain.Interfaces;
+using API.Models;
 using API.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;

@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.DTOs.Aircraft;
-using API.Domain.Models;
+using API.DTOs.V1.Aircraft;
+using API.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
-using API.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
+using API.Data.Repositories;
 
 namespace API.Controllers.V1
 {
@@ -16,11 +17,13 @@ namespace API.Controllers.V1
     {
         private readonly IAircraftRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;  // TODO: logger implementation
 
         public AircraftsController(
-            IAircraftRepository repository, IMapper mapper)
+            IAircraftRepository repository, IMapper mapper, ILogger<AircraftsController> logger)
         {
             _repository = repository;
+            _logger = logger;
             _mapper = mapper;
         }
 

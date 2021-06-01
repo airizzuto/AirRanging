@@ -58,7 +58,6 @@ namespace API.Injectors
                     Description = description,
                 });
             });
-
         }
     }
 }

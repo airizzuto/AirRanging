@@ -1,5 +1,5 @@
-using API.Domain.Models;
-using API.DTOs.Aircraft;
+using API.Models;
+using API.DTOs.V1.Aircraft;
 using AutoMapper;
 
 namespace API.Mapping

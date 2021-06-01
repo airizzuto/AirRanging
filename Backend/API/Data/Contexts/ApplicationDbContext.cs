@@ -1,6 +1,5 @@
 using System.Reflection;
-using API.Domain.Models;
-using API.Domain.Models.Enums;
+using API.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Contexts

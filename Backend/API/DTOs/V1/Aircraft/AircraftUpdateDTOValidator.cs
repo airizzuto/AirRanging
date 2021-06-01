@@ -1,7 +1,7 @@
-using API.Domain.Models.Enums;
+using API.Models.Enums;
 using FluentValidation;
 
-namespace API.DTOs.Aircraft
+namespace API.DTOs.V1.Aircraft
 {
     public class AircraftUpdateDTOValidator : AbstractValidator<AircraftUpdateDTO>
     {

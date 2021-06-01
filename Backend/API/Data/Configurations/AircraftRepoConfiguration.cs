@@ -1,11 +1,11 @@
-using API.Domain.Models;
-using API.Domain.Models.Enums;
+using API.Models;
+using API.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace API.Data.Configurations
 {
-    public class AircraftConfiguration : IEntityTypeConfiguration<Aircraft>
+    public class AircraftRepoConfiguration : IEntityTypeConfiguration<Aircraft>
         {
         public void Configure(EntityTypeBuilder<Aircraft> builder)
         {

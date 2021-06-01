@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Domain.Models;
+using API.Models;
 
-namespace API.Domain.Interfaces
+namespace API.Data.Repositories
 {
     public interface IAircraftRepository
     {
