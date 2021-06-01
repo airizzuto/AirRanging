@@ -11,13 +11,10 @@ namespace API.Injectors
 {
     public class DbInjector : IInjector
     {
-        IConfiguration _configuration;
         public void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
-            _configuration = configuration;
-
-            var connectionString = _configuration.GetConnectionString("AirRangingDB");
-            var dbPassword = _configuration["DbPassword"];
+            var connectionString = configuration.GetConnectionString("AirRangingDB");
+            var dbPassword = configuration["DbPassword"];
 
             var builder = new NpgsqlConnectionStringBuilder(connectionString) {
                 Password = dbPassword

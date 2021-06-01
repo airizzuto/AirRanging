@@ -17,13 +17,11 @@ namespace API.Controllers.V1
     {
         private readonly IAircraftRepository _repository;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;  // TODO: logger implementation
 
         public AircraftsController(
-            IAircraftRepository repository, IMapper mapper, ILogger<AircraftsController> logger)
+            IAircraftRepository repository, IMapper mapper)
         {
             _repository = repository;
-            _logger = logger;
             _mapper = mapper;
         }
 
