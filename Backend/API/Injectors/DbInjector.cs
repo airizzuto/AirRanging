@@ -24,6 +24,9 @@ namespace API.Injectors
                 opt => opt.UseNpgsql(builder.ConnectionString)
             );
 
+            services.AddIdentityCore<IdentityUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IAircraftRepository, AircraftRepository>();

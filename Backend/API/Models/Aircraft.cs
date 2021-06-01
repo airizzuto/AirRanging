@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using API.Models.Enums;
 
 namespace API.Models
