@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using API.Models;
 
-namespace API.Data.Repositories
+namespace API.Services.Identity
     {
-    public interface IIdentityRepository
+    public interface IIdentityService
     {
         Task<AuthenticationResult> RegisterAsync(string email, string password);
         Task<AuthenticationResult> LoginAsync(string email, string password);

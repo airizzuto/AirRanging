@@ -9,14 +9,14 @@ using API.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace API.Data.Repositories
+namespace API.Services.Identity
 {
-    public class IdentityRepository : IIdentityRepository
+    public class IdentityService : IIdentityService
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly JwtSettings _jwtSettings;
 
-        public IdentityRepository(UserManager<IdentityUser> userManager, JwtSettings jwtSettings)
+        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
@@ -53,7 +53,7 @@ namespace API.Data.Repositories
             {
                 return new AuthenticationResult
                 {
-                Errors = new[] { "User with this email address already exists" }
+                    Errors = new[] { "User with this email address already exists" }
                 };
             }
 

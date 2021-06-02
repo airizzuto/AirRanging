@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using API.Data.Repositories;
 using API.DTOs.V1.Registration;
+using API.Services.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.V1
@@ -10,11 +10,11 @@ namespace API.Controllers.V1
     [Route("/identity")]
     public class IdentityController : ControllerBase
     {
-        private readonly IIdentityRepository _repository;
+        private readonly IIdentityService _service;
 
-        public IdentityController(IIdentityRepository repository)
+        public IdentityController(IIdentityService service)
         {
-            _repository = repository;
+            _service = service;
         }
 
         [HttpPost("register")]
@@ -27,7 +27,7 @@ namespace API.Controllers.V1
                 });
             }
 
-            var authResponse = await _repository.RegisterAsync(request.Email, request.Password);
+            var authResponse = await _service.RegisterAsync(request.Email, request.Password);
 
             if(!authResponse.Success)
             {
@@ -44,7 +44,7 @@ namespace API.Controllers.V1
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
-            var authResponse = await _repository.LoginAsync(request.Email, request.Password);
+            var authResponse = await _service.LoginAsync(request.Email, request.Password);
 
             if(!authResponse.Success)
             {
