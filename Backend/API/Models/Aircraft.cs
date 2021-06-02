@@ -27,9 +27,9 @@ namespace API.Models
         public decimal FuelCapacity { get; set; }
         public decimal MaxRange { get; set; }
         public int ServiceCeiling { get; set; }
-
-        // TODO user
+        public int SavesCount { get; set; }
         public string UserId { get; set; }
+        // TODO: add username reference
 
         [ForeignKey(nameof(UserId))]
         public virtual IdentityUser User { get; set; }

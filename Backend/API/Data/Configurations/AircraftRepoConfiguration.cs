@@ -65,6 +65,8 @@ namespace API.Data.Configurations
 
             builder.Property(a => a.ServiceCeiling);
 
+            builder.Property(a => a.SavesCount)
+                .HasDefaultValue(1);
 
             // TODO: separate data seeding?
             #region DataSeeding
