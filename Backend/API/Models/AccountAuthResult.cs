@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace API.Models
 {
-    public class AuthenticationResult
+    public class AccountAuthResult
     {
         public string Token { get; set; }
         public bool Success { get; set; }

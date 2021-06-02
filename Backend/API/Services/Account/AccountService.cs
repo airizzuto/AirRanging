@@ -9,73 +9,83 @@ using API.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace API.Services.Identity
+namespace API.Services.Account
 {
-    public class IdentityService : IIdentityService
+    public class AccountService : IAccountService
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly JwtSettings _jwtSettings;
 
-        public IdentityService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings)
+        public AccountService(UserManager<IdentityUser> userManager, JwtSettings jwtSettings)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
         }
 
-        public async Task<AuthenticationResult> LoginAsync(string email, string password)
+        // TODO: User || email login
+        public async Task<AccountAuthResult> LoginAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                return new AuthenticationResult
+                return new AccountAuthResult
                 {
-                    Errors = new[] { "User does not exist" } 
+                    Errors = new[] { "Email not found" } 
                 };
             }
 
             var userHasValidPassword = await _userManager.CheckPasswordAsync(user, password);
             if(!userHasValidPassword)
             {
-                return new AuthenticationResult
+                return new AccountAuthResult
                 {
                     Errors = new[] {"User/password invalid"}
                 };
             }
 
-            return GenerateAuthenticationResultForUser(user);
+            return GenerateAccountAuthResultForUser(user);
         }
 
-        public async Task<AuthenticationResult> RegisterAsync(string email, string password)
+        public async Task<AccountAuthResult> RegisterAsync(
+            string username, string email, string password)
         {
-            // TODO: change auth methods
-            var existingUser = await _userManager.FindByEmailAsync(email);
-            if (existingUser != null)
+            var existingUsername = await _userManager.FindByNameAsync(username);
+            if (existingUsername != null)
             {
-                return new AuthenticationResult
+                return new AccountAuthResult
                 {
-                    Errors = new[] { "User with this email address already exists" }
+                    Errors = new[] { "Username already in use" }
+                };
+            }
+
+            var existingEmail = await _userManager.FindByEmailAsync(email);
+            if (existingEmail != null)
+            {
+                return new AccountAuthResult
+                {
+                    Errors = new[] { "Email already in use" }
                 };
             }
 
             var newUser = new IdentityUser
             {
+                UserName = username,
                 Email = email,
-                UserName = email, // TODO: change
             };
 
             var createdUser = await _userManager.CreateAsync(newUser, password);
             if (!createdUser.Succeeded)
             {
-                return new AuthenticationResult
+                return new AccountAuthResult
                 {
-                Errors = createdUser.Errors.Select(x => x.Description)
+                    Errors = createdUser.Errors.Select(x => x.Description)
                 };
             }
 
-            return GenerateAuthenticationResultForUser(newUser);
+            return GenerateAccountAuthResultForUser(newUser);
         }
 
-        private AuthenticationResult GenerateAuthenticationResultForUser(IdentityUser newUser)
+        private AccountAuthResult GenerateAccountAuthResultForUser(IdentityUser newUser)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_jwtSettings.Secret);
@@ -96,7 +106,7 @@ namespace API.Services.Identity
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return new AuthenticationResult
+            return new AccountAuthResult
             {
                 Success = true,
                 Token = tokenHandler.WriteToken(token)
