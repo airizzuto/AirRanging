@@ -65,6 +65,7 @@ namespace API.Data.Configurations
 
             builder.Property(a => a.ServiceCeiling);
 
+
             // TODO: separate data seeding?
             #region DataSeeding
             builder.HasData(

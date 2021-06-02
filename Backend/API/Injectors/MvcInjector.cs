@@ -80,7 +80,6 @@ namespace API.Injectors
                     })
                 .AddFluentValidation(fv => { 
                     fv.RegisterValidatorsFromAssemblyContaining<Startup>();
-                    fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                 });
 
             services.AddControllers(options => {

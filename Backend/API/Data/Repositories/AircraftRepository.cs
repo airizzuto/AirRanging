@@ -9,9 +9,11 @@ namespace API.Data.Repositories
 {
     public class AircraftRepository : BaseRepository, IAircraftRepository
     {
-        public AircraftRepository(ApplicationDbContext context) : base(context) { }
+        public AircraftRepository(ApplicationDbContext context) : base(context) 
+        {
 
-        // TODO: error handling
+        }
+
         public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync()
         {
             return await _context.Aircrafts.ToListAsync();
@@ -43,6 +45,25 @@ namespace API.Data.Repositories
                 throw new ArgumentNullException(nameof(aircraft));
             }
             _context.Aircrafts.Remove(aircraft);
+        }
+
+        public async Task<bool> UserOwnsAircraftAsync(int id, string getUserId)
+        {
+            var aircraft = await _context.Aircrafts
+                .AsNoTracking()
+                .SingleOrDefaultAsync(a => a.Id == id);
+            
+            if (aircraft == null)
+            {
+                return false;
+            }
+
+            if (aircraft.UserId != getUserId)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

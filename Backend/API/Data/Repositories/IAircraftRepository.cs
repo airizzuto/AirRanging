@@ -12,5 +12,6 @@ namespace API.Data.Repositories
         Task CreateAircraftAsync(Aircraft aircraft);
         void UpdateAircraft(Aircraft aircraft);
         void DeleteAircraft(Aircraft aircraft);
+        Task<bool> UserOwnsAircraftAsync(int id, string getUserId);
     }
 }

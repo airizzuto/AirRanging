@@ -67,13 +67,13 @@ namespace API.Services.Account
                 };
             }
 
-            var newUser = new IdentityUser
+            var user = new IdentityUser
             {
                 UserName = username,
                 Email = email,
             };
 
-            var createdUser = await _userManager.CreateAsync(newUser, password);
+            var createdUser = await _userManager.CreateAsync(user, password);
             if (!createdUser.Succeeded)
             {
                 return new AccountAuthResult
@@ -82,20 +82,20 @@ namespace API.Services.Account
                 };
             }
 
-            return GenerateAccountAuthResultForUser(newUser);
+            return GenerateAccountAuthResultForUser(user);
         }
 
-        private AccountAuthResult GenerateAccountAuthResultForUser(IdentityUser newUser)
+        private AccountAuthResult GenerateAccountAuthResultForUser(IdentityUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_jwtSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                            new Claim(JwtRegisteredClaimNames.Sub, newUser.Email),
+                            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                            new Claim(JwtRegisteredClaimNames.Email, newUser.Email),
-                            new Claim("id", newUser.Id),
+                            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                            new Claim("id", user.Id),
                         }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(

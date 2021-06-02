@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Logging;
 using API.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using API.Extensions;
 
 namespace API.Controllers.V1
 {
     [ApiController]
     [Route("/api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiVersion("1.0")]
     public class AircraftsController : ControllerBase
     {
@@ -27,6 +31,7 @@ namespace API.Controllers.V1
 
         // GET api/aircrafts
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts()
         {
             var aircrafts = await _repository.GetAllAircraftsAsync();
@@ -37,6 +42,7 @@ namespace API.Controllers.V1
 
         // GET api/aircrafts/5
         [HttpGet("{id}", Name="GetAircraftById")]
+        [AllowAnonymous]
         public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(int id)
         {
             var aircraft = await _repository.GetAircraftByIdAsync(id);
@@ -54,6 +60,7 @@ namespace API.Controllers.V1
         public async Task<ActionResult<AircraftReadDTO>> CreateAircraft(
             AircraftCreateDTO aircraftCreateDto)
         {
+            aircraftCreateDto.UserId = HttpContext.GetUserId(); // Adds user id to model
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.CreateAircraftAsync(aircraftModel);
             await _repository.SaveChangesAsync();
@@ -78,6 +85,15 @@ namespace API.Controllers.V1
                 return NotFound();
             }
 
+            var userId = HttpContext.GetUserId();
+            var userOwnsAircraft = await _repository.UserOwnsAircraftAsync(id, userId);
+            if (!userOwnsAircraft)
+            {
+                return BadRequest(
+                    new { Error = "Current user does not own this aircraft" }
+                );
+            }
+
             _mapper.Map(aircraftUpdateDTO, existingAircraft);
 
             _repository.UpdateAircraft(existingAircraft);
@@ -95,6 +111,15 @@ namespace API.Controllers.V1
             if (existingAircraft == null)
             {
                 return NotFound();
+            }
+
+            var userId = HttpContext.GetUserId();
+            var userOwnsAircraft = await _repository.UserOwnsAircraftAsync(id, userId);
+            if (!userOwnsAircraft)
+            {
+                return BadRequest(
+                    new { Error = "Current user does not own this aircraft" }
+                );
             }
 
             var aircraftToPatch = _mapper.Map<AircraftUpdateDTO>(existingAircraft);
@@ -121,6 +146,15 @@ namespace API.Controllers.V1
             if (existingAircraft == null)
             {
                 return NotFound();
+            }
+
+            var userId = HttpContext.GetUserId();
+            var userOwnsAircraft = await _repository.UserOwnsAircraftAsync(id, userId);
+            if (!userOwnsAircraft)
+            {
+                return BadRequest(
+                    new { Error = "Current user does not own this aircraft" }
+                );
             }
 
             _repository.DeleteAircraft(existingAircraft);
