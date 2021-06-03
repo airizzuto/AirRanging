@@ -10,9 +10,8 @@ namespace API.Models.Enums
     AvGas = 1,
     JetA = 2,
     Diesel = 3,
-    Electric = 4, // TODO: requirements and valids on electric
+    Electric = 4,
   }
 
-  // TODO: weights
-
+  // TODO: Fuel weights for unit conversion and W&B calculation
 }

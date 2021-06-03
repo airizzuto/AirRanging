@@ -9,7 +9,6 @@ namespace API.Data.Configurations
         {
         public void Configure(EntityTypeBuilder<Aircraft> builder)
         {
-            // Aircraft Entity
             builder.ToTable("Aircrafts");
 
             builder.HasKey(a => a.Id);
@@ -32,7 +31,7 @@ namespace API.Data.Configurations
 
             builder.Property(a => a.AircraftType)
                 .IsRequired()
-                .HasConversion<string>(); // TODO: check if redundant with JsonStringEnumConverter
+                .HasConversion<string>(); // TODO: Test if redundant with JsonStringEnumConverter
 
             builder.Property(a => a.EngineType)
                 .IsRequired()
@@ -68,7 +67,7 @@ namespace API.Data.Configurations
             builder.Property(a => a.SavesCount)
                 .HasDefaultValue(1);
 
-            // TODO: separate data seeding?
+            // TODO: Separate data seeding to a 
             #region DataSeeding
             builder.HasData(
                 new Aircraft

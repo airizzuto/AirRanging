@@ -31,7 +31,7 @@ namespace API
             }
             else
             {
-                app.UseExceptionHandler("/Error"); // TODO
+                app.UseExceptionHandler("/Error"); // TODO: Error handling endpoint?
                 app.UseHsts();
             }
 

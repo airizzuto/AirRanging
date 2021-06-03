@@ -11,6 +11,6 @@ namespace API.Models.Enums
     Oil = 2,
   }
 
-  // TODO: weights
+  // TODO: Liquids weights for unit conversion and W&B calculation
 
 }

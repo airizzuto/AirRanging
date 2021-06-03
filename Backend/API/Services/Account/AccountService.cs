@@ -22,7 +22,7 @@ namespace API.Services.Account
             _jwtSettings = jwtSettings;
         }
 
-        // TODO: User || email login
+        // TODO: Login with username or email. Switch if "@" is present?
         public async Task<AccountAuthResult> LoginAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);

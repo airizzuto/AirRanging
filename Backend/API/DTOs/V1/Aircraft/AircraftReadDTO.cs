@@ -20,6 +20,6 @@ namespace API.DTOs.V1.Aircraft
         public decimal MaxRange { get; set; }
         public int ServiceCeiling { get; set; }
         public int SavesCount { get; set; }
-        public string UserId { get; set; }
+        public string Username { get; set; }
     }
 }

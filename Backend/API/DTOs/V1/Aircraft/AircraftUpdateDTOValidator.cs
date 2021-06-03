@@ -7,11 +7,6 @@ namespace API.DTOs.V1.Aircraft
     {
         public AircraftUpdateDTOValidator()
         {
-            // TODO: better validations
-            
-            // TODO: better validations
-            // ex: RuleFor(m => m.FirstName).NotEmpty().When(m => m.CustomerType.ToLower() == "person");
-            
             RuleFor(x => x.IcaoId)
                 .MaximumLength(4).WithMessage("Maximum length of ICAO code is 4");
 

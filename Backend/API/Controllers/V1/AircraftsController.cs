@@ -21,12 +21,16 @@ namespace API.Controllers.V1
     {
         private readonly IAircraftRepository _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger<AircraftsController> _logger;
 
         public AircraftsController(
-            IAircraftRepository repository, IMapper mapper)
+            IAircraftRepository repository,
+            IMapper mapper,
+            ILogger<AircraftsController> logger)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET api/aircrafts
@@ -60,7 +64,15 @@ namespace API.Controllers.V1
         public async Task<ActionResult<AircraftReadDTO>> CreateAircraft(
             AircraftCreateDTO aircraftCreateDto)
         {
-            aircraftCreateDto.UserId = HttpContext.GetUserId(); // Adds user id to model
+            var userId = HttpContext.GetUserId();
+            if (userId == null)
+            {
+                return BadRequest(
+                    new { Error = "Login to create aircraft"}
+                );
+            }
+
+            aircraftCreateDto.UserId = userId;
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.CreateAircraftAsync(aircraftModel);
             await _repository.SaveChangesAsync();
@@ -162,8 +174,7 @@ namespace API.Controllers.V1
 
             return NoContent();
         }
-    
-        // TODO: filter query
-    
+
+        // TODO: Filtering. And then sort by savescount
     }
 }

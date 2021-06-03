@@ -7,9 +7,6 @@ namespace API.DTOs.V1.Aircraft
     {
         public AircraftCreateDTOValidator()
         {
-            // TODO: better validations
-            // ex: RuleFor(m => m.FirstName).NotEmpty().When(m => m.CustomerType.ToLower() == "person");
-            
             RuleFor(x => x.IcaoId)
                 .MaximumLength(4).WithMessage("Maximum length of ICAO code is 4");
 
@@ -22,8 +19,9 @@ namespace API.DTOs.V1.Aircraft
                 .NotNull()
                 .NotEmpty().WithMessage("Model name must be provided")
                 .MaximumLength(255);
-            
-            RuleFor(x => x.AircraftType)
+
+            // TODO: Link EngineCount requirement to single or multi engine AircraftType. Ex: SingleEngineLand must have only one engine.
+            RuleFor(x => x.AircraftType)  
                 .IsInEnum();
             
             RuleFor(x => x.EngineType)
@@ -35,6 +33,7 @@ namespace API.DTOs.V1.Aircraft
             RuleFor(x => x.IcaoWakeCategory)
                 .IsInEnum();
 
+            // TODO: Link EngineCount requirement to single or multi engine AircraftType. Ex: SingleEngineLand must have only one engine.
             RuleFor(x => x.EngineCount)
                 .NotNull()
                 .NotEmpty().WithMessage("Aircraft must have an engine")
