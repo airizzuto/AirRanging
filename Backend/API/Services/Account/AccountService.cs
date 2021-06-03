@@ -96,6 +96,8 @@ namespace API.Services.Account
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                             new Claim(JwtRegisteredClaimNames.Email, user.Email),
                             new Claim("id", user.Id),
+                            // TODO: Better implementation for a better username injection to aircraft created?
+                            new Claim("username", user.UserName),
                         }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(

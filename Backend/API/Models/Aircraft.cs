@@ -21,6 +21,7 @@ namespace API.Models
         public int MaxTakeoffWeight { get; set; }
 
         // MinRunwayLength int { get; set; }
+
         // MaxRunwayLength int { get; set; }
 
         public int CruiseSpeed { get; set; }
@@ -31,6 +32,7 @@ namespace API.Models
 
 
         public string UserId { get; set; }
+        public string Username { get; set; }
 
         // TODO: Add username reference. To indicate who is the user that created the aircraft when searching or selecting.
 

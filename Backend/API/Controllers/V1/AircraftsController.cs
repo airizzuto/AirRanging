@@ -41,6 +41,7 @@ namespace API.Controllers.V1
             var aircrafts = await _repository.GetAllAircraftsAsync();
 
             var resource = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+
             return Ok(resource);
         }
 
@@ -73,6 +74,7 @@ namespace API.Controllers.V1
             }
 
             aircraftCreateDto.UserId = userId;
+            aircraftCreateDto.Username = HttpContext.GetUsername();
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.CreateAircraftAsync(aircraftModel);
             await _repository.SaveChangesAsync();
