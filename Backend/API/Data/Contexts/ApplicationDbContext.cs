@@ -9,6 +9,7 @@ namespace API.Data.Contexts
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Aircraft> Aircrafts { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

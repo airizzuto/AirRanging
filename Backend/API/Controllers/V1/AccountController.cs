@@ -40,7 +40,8 @@ namespace API.Controllers.V1
             }
 
             return Ok(new AccountAuthSuccessResponse {
-                Token = authResponse.Token
+                Token = authResponse.Token,
+                RefreshToken = authResponse.RefreshToken,
             });
         }
 
@@ -57,7 +58,26 @@ namespace API.Controllers.V1
             }
 
             return Ok(new AccountAuthSuccessResponse {
-                Token = authResponse.Token
+                Token = authResponse.Token,
+                RefreshToken = authResponse.RefreshToken,
+            });
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> RefreshToken([FromBody] AccountRefreshTokenRequest request)
+        {
+            var authResponse = await _service.RefreshTokenAsync(request.Token, request.RefreshToken);
+
+            if(!authResponse.Success)
+            {
+                return BadRequest(new AccountAuthFailedResponse {
+                    Errors = authResponse.Errors
+                });
+            }
+
+            return Ok(new AccountAuthSuccessResponse {
+                Token = authResponse.Token,
+                RefreshToken = authResponse.RefreshToken,
             });
         }
     }

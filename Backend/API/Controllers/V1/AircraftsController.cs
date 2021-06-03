@@ -25,12 +25,10 @@ namespace API.Controllers.V1
 
         public AircraftsController(
             IAircraftRepository repository,
-            IMapper mapper,
-            ILogger<AircraftsController> logger)
+            IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _logger = logger;
         }
 
         // GET api/aircrafts

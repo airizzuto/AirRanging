@@ -10,5 +10,6 @@ namespace API.Services.Account
         );
 
         Task<AccountAuthResult> LoginAsync(string email, string password);
+        Task<AccountAuthResult> RefreshTokenAsync(string token, string refreshToken);
     }
 }
