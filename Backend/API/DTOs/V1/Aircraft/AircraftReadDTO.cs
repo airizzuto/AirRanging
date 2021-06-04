@@ -1,8 +1,10 @@
+using System;
+
 namespace API.DTOs.V1.Aircraft
 {
     public class AircraftReadDTO
     {
-        public int Id { get; set; }    
+        public Guid Id { get; set; }    
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }

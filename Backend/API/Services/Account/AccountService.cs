@@ -98,23 +98,23 @@ namespace API.Services.Account
         // TODO SECURITY: Simplify token checks to "Token Invalid" before using it in production.
         public async Task<AccountAuthResult> RefreshTokenAsync(string token, string refreshToken)
         {
-            var validatedToken = GetPrincipalFromToken(token);
-            if (validatedToken == null)
+            var claimsPrincipal = GetPrincipalFromToken(token);
+            if (claimsPrincipal == null)
             {
                 return new AccountAuthResult { Errors = new[] {"Invalid Token"} };
             }
 
-            var expirationDateUnix = long.Parse(validatedToken.Claims.Single(
+            var expirationDateUnix = long.Parse(claimsPrincipal.Claims.Single(
                 x => x.Type == JwtRegisteredClaimNames.Exp).Value);
             var expirationDateTimeUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                 .AddSeconds(expirationDateUnix);
 
-            if (expirationDateTimeUtc > DateTime.UtcNow)
+            if (expirationDateTimeUtc < DateTime.UtcNow)
             {
                 return new AccountAuthResult { Errors = new[] {"This token has not expired yet"} };
             }
 
-            var jti = validatedToken.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
+            var jti = claimsPrincipal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
 
             var storedRefreshToken = await _context.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
             if (storedRefreshToken == null)
@@ -146,7 +146,7 @@ namespace API.Services.Account
             _context.RefreshTokens.Update(storedRefreshToken);
             await _context.SaveChangesAsync(); // TODO: Unit of work?
 
-            var user = await _userManager.FindByIdAsync(validatedToken.Claims.Single(x => x.Type == "id").Value);
+            var user = await _userManager.FindByIdAsync(claimsPrincipal.Claims.Single(x => x.Type == "id").Value);
 
             return await GenerateAccountAuthResultForUserASync(user);
         }
@@ -157,8 +157,8 @@ namespace API.Services.Account
 
             try
             {
-                var principal = tokenHandler.ValidateToken(token, _tokenValidationParameters, out var validatedToken);
-                if (!IsJwtWithValidSecurityAlgorithm(validatedToken))
+                var principal = tokenHandler.ValidateToken(token, _tokenValidationParameters, out var claimsPrincipal);
+                if (!IsJwtWithValidSecurityAlgorithm(claimsPrincipal))
                 {
                     return null;
                 }
@@ -170,9 +170,9 @@ namespace API.Services.Account
             }
         }
 
-        private bool IsJwtWithValidSecurityAlgorithm(SecurityToken validatedToken)
+        private bool IsJwtWithValidSecurityAlgorithm(SecurityToken claimsPrincipal)
         {
-            return (validatedToken is JwtSecurityToken jwtSecurityToken) 
+            return (claimsPrincipal is JwtSecurityToken jwtSecurityToken) 
                 && jwtSecurityToken.Header.Alg.Equals(
                     SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
         }

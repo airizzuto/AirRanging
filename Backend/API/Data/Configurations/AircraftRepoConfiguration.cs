@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using API.Models;
 using API.Models.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -72,7 +74,7 @@ namespace API.Data.Configurations
             builder.HasData(
                 new Aircraft
                 {
-                    Id = -100,
+                    Id = Guid.NewGuid(),
                     IcaoId = "C152",
                     Manufacturer = "Cessna",
                     Model = "152",
@@ -90,7 +92,7 @@ namespace API.Data.Configurations
                 },
                 new Aircraft
                 {
-                    Id = -99,
+                    Id = Guid.NewGuid(),
                     IcaoId = "C152",
                     Manufacturer = "Cessna",
                     Model = "152",
@@ -109,7 +111,7 @@ namespace API.Data.Configurations
                 },
                 new Aircraft
                 {
-                    Id = -98,
+                    Id = Guid.NewGuid(),
                     IcaoId = "C172",
                     Manufacturer = "Cessna",
                     Model = "172",
@@ -127,7 +129,7 @@ namespace API.Data.Configurations
                 },
                 new Aircraft
                 {
-                    Id = -97,
+                    Id = Guid.NewGuid(),
                     IcaoId = "A320",
                     Manufacturer = "Airbus",
                     Model = "320",
@@ -145,7 +147,7 @@ namespace API.Data.Configurations
                 },
                 new Aircraft
                 {
-                    Id = -96,
+                    Id = Guid.NewGuid(),
                     IcaoId = "B738",
                     Manufacturer = "Boeing",
                     Model = "737-800",

@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using API.Models.Enums;
 using Microsoft.AspNetCore.Identity;
@@ -6,7 +7,7 @@ namespace API.Models
 {
     public class Aircraft
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }

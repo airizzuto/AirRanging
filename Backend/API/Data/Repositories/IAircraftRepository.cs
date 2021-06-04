@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Models;
@@ -8,10 +9,10 @@ namespace API.Data.Repositories
     {
         Task SaveChangesAsync();
         Task<IEnumerable<Aircraft>> GetAllAircraftsAsync();
-        Task<Aircraft> GetAircraftByIdAsync(int id);
+        Task<Aircraft> GetAircraftByIdAsync(Guid id);
         Task CreateAircraftAsync(Aircraft aircraft);
         void UpdateAircraft(Aircraft aircraft);
         void DeleteAircraft(Aircraft aircraft);
-        Task<bool> UserOwnsAircraftAsync(int id, string getUserId);
+        Task<bool> UserOwnsAircraftAsync(Guid id, string getUserId);
     }
 }

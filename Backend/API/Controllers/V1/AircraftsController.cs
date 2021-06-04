@@ -10,6 +10,7 @@ using API.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.Extensions;
+using System;
 
 namespace API.Controllers.V1
 {
@@ -46,7 +47,7 @@ namespace API.Controllers.V1
         // GET api/aircrafts/5
         [HttpGet("{id}", Name="GetAircraftById")]
         [AllowAnonymous]
-        public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(int id)
+        public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(Guid id)
         {
             var aircraft = await _repository.GetAircraftByIdAsync(id);
             if (aircraft == null)
@@ -89,7 +90,7 @@ namespace API.Controllers.V1
         // PUT api/aircrafts/5
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAircraft(
-            int id, AircraftUpdateDTO aircraftUpdateDTO)
+            Guid id, AircraftUpdateDTO aircraftUpdateDTO)
         {
             var existingAircraft = await _repository.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
@@ -117,7 +118,7 @@ namespace API.Controllers.V1
         // PATCH api/aircrafts/5
         [HttpPatch("{id}")]
         public async Task<IActionResult> PartialUpdateAircraft(
-            int id, JsonPatchDocument<AircraftUpdateDTO> patchDocument)
+            Guid id, JsonPatchDocument<AircraftUpdateDTO> patchDocument)
         {
             var existingAircraft = await _repository.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
@@ -152,7 +153,7 @@ namespace API.Controllers.V1
 
         // DELETE api/aircrafts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAircraft(int id)
+        public async Task<IActionResult> DeleteAircraft(Guid id)
         {
             var existingAircraft = await _repository.GetAircraftByIdAsync(id);
             if (existingAircraft == null)

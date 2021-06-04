@@ -8,6 +8,7 @@ namespace API.Models
     public class RefreshToken
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Token { get; set; }
         public string JwtId { get; set; }
         public DateTime CreationDate { get; set; }
@@ -19,8 +20,5 @@ namespace API.Models
 
         [ForeignKey(nameof(UserId))]
         public virtual IdentityUser User { get; set; }
-        
-        
-        
     }
 }

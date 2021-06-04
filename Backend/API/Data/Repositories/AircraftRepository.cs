@@ -19,7 +19,7 @@ namespace API.Data.Repositories
             return await _context.Aircrafts.ToListAsync();
         }
 
-        public async Task<Aircraft> GetAircraftByIdAsync(int id)
+        public async Task<Aircraft> GetAircraftByIdAsync(Guid id)
         {
             return await _context.Aircrafts.FindAsync(id);
         }
@@ -47,7 +47,7 @@ namespace API.Data.Repositories
             _context.Aircrafts.Remove(aircraft);
         }
 
-        public async Task<bool> UserOwnsAircraftAsync(int id, string getUserId)
+        public async Task<bool> UserOwnsAircraftAsync(Guid id, string getUserId)
         {
             var aircraft = await _context.Aircrafts
                 .AsNoTracking()
