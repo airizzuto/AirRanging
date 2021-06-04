@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.Extensions;
 using System;
+using System.Linq;
 
 namespace API.Controllers.V1
 {
@@ -26,10 +27,12 @@ namespace API.Controllers.V1
 
         public AircraftsController(
             IAircraftRepository repository,
-            IMapper mapper)
+            IMapper mapper,
+            ILogger<AircraftsController> logger)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         // GET api/aircrafts
@@ -38,6 +41,8 @@ namespace API.Controllers.V1
         public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts()
         {
             var aircrafts = await _repository.GetAllAircraftsAsync();
+
+            _logger.LogInformation($"INFO: Returning {aircrafts.Count()} aircrafts from db");
 
             var resource = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
@@ -54,6 +59,8 @@ namespace API.Controllers.V1
             {
                 return NotFound();
             }
+
+            _logger.LogInformation($"INFO: Returning aircraft {id}");
 
             var resource = _mapper.Map<AircraftReadDTO>(aircraft);
             return Ok(resource);
@@ -77,6 +84,8 @@ namespace API.Controllers.V1
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.CreateAircraftAsync(aircraftModel);
             await _repository.SaveChangesAsync();
+
+            _logger.LogInformation($"INFO: Created new aircraft");
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
@@ -111,6 +120,8 @@ namespace API.Controllers.V1
 
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
+
+            _logger.LogInformation($"INFO: Updated aircraft {id}");
 
             return NoContent();
         }
@@ -148,6 +159,8 @@ namespace API.Controllers.V1
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
+            _logger.LogInformation($"INFO: Partially updated aircraft {id}");
+
             return NoContent();
         }
 
@@ -172,6 +185,8 @@ namespace API.Controllers.V1
 
             _repository.DeleteAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
+
+            _logger.LogInformation($"INFO: Deleted aircraft {id}");
 
             return NoContent();
         }

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using API.DTOs.V1.Account;
 using API.Services.Account;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace API.Controllers.V1
 {
@@ -11,10 +12,12 @@ namespace API.Controllers.V1
     public class IdentityController : ControllerBase
     {
         private readonly IAccountService _service;
+        private readonly ILogger<IdentityController> _logger;
 
-        public IdentityController(IAccountService service)
+        public IdentityController(IAccountService service, ILogger<IdentityController> logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         [HttpPost("register")]
@@ -39,6 +42,8 @@ namespace API.Controllers.V1
                 });
             }
 
+            _logger.LogInformation($"INFO: User created");
+
             return Ok(new AccountAuthSuccessResponse {
                 Token = authResponse.Token,
                 RefreshToken = authResponse.RefreshToken,
@@ -56,6 +61,8 @@ namespace API.Controllers.V1
                     Errors = authResponse.Errors
                 });
             }
+
+            _logger.LogInformation($"INFO: User {request.Email} logged");
 
             return Ok(new AccountAuthSuccessResponse {
                 Token = authResponse.Token,
