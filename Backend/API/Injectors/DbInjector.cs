@@ -25,6 +25,8 @@ namespace API.Injectors
             );
 
             services.AddIdentityCore<IdentityUser>()
+                // TODO REFACTOR: Review use of default implementation instead of custom token and refresh token 
+                // .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
