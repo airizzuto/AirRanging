@@ -85,7 +85,7 @@ namespace API.Controllers.V1
             await _repository.CreateAircraftAsync(aircraftModel);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: Created new aircraft");
+            _logger.LogInformation($"INFO: {aircraftModel.Username} created new aircraft");
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
