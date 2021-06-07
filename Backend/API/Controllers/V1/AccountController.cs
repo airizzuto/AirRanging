@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using API.DTOs.V1.Account;
+using API.Contracts.V1.Account;
 using API.Services.Account;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

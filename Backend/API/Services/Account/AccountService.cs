@@ -170,7 +170,7 @@ namespace API.Services.Account
             }
         }
 
-        private bool IsJwtWithValidSecurityAlgorithm(SecurityToken claimsPrincipal)
+        private static bool IsJwtWithValidSecurityAlgorithm(SecurityToken claimsPrincipal)
         {
             return (claimsPrincipal is JwtSecurityToken jwtSecurityToken) 
                 && jwtSecurityToken.Header.Alg.Equals(
@@ -184,13 +184,15 @@ namespace API.Services.Account
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.Iss, Constants.Path.Full),
                             new Claim(JwtRegisteredClaimNames.Email, user.Email),
                             new Claim("id", user.Id),
                             // TODO: Better implementation for passing creator username to aircraft model?
                             new Claim("username", user.UserName),
                         }),
+                NotBefore = DateTime.Now,
                 Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),

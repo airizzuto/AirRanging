@@ -7,6 +7,7 @@ using API.Services.Account;
 using API.Settings;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -51,10 +52,11 @@ namespace API.Injectors
 
             var tokenValidationParameters = new TokenValidationParameters
             {
+                ClockSkew = TimeSpan.Zero,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(jwtSettings.Secret)),
-                ValidateIssuer = false,
+                ValidIssuer = Constants.Path.Full,
                 ValidateAudience = false,
                 RequireExpirationTime = false,
                 ValidateLifetime = true,
@@ -72,6 +74,15 @@ namespace API.Injectors
                 options.SaveToken = true;
                 options.TokenValidationParameters = tokenValidationParameters;
             });
+
+            // services.AddAuthorization(options => {
+            //     var defaultAuthBuilder = new AuthorizationPolicyBuilder();
+            //     var defaultAuthPolicy = defaultAuthBuilder
+            //         .RequireAuthenticatedUser()
+            //         .Build();
+
+            //     options.DefaultPolicy = defaultAuthPolicy;
+            // });
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)

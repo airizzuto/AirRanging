@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace API.DTOs.V1.Account
+namespace API.Contracts.V1.Account
 {
     public class AccountRegistrationRequestValidator : AbstractValidator<AccountRegistrationRequest>
     {
