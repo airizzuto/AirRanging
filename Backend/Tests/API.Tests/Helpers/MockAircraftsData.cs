@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using API.Models;
 using API.Models.Enums;
@@ -6,9 +7,10 @@ namespace API.Tests.Helpers
 {
     public class MockAircraftsData
     {
+        // TODO: Update mocks
         public Aircraft aircraft0 = new Aircraft 
         {
-            Id = 0,
+            Id = Guid.NewGuid(),
             IcaoId = "C152",
             Manufacturer = "Cessna",
             Model = "152",
@@ -25,7 +27,7 @@ namespace API.Tests.Helpers
         };
         public Aircraft aircraft1 = new Aircraft
         {
-            Id = 1,
+            Id = Guid.NewGuid(),
             IcaoId = "B738",
             Manufacturer = "Boeing",
             Model = "737-800",

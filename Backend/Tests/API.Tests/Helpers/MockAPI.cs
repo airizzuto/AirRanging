@@ -2,6 +2,7 @@ using System;
 using API.Data.Repositories;
 using API.Mapping;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace API.Tests.Helpers
@@ -12,7 +13,8 @@ namespace API.Tests.Helpers
         public AircraftsProfile profile;
         MapperConfiguration configuration;
         public IMapper mapper;
-        
+        public ILogger logger;
+
         public MockAPI()
         {
             repo = new Mock<IAircraftRepository>();
