@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -86,7 +88,8 @@ namespace API.Injectors
             // });
 
             services.AddMvc(options => {
-                options.Filters.AddService<ValidationFilter>();
+                // Not needed. Already included
+                // options.Filters.AddService<ValidationFilter>();
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddJsonOptions(options => {
@@ -96,7 +99,7 @@ namespace API.Injectors
                 .AddNewtonsoftJson(options => {
                         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     })
-                .AddFluentValidation(fv => { 
+                .AddFluentValidation(fv => {
                     fv.RegisterValidatorsFromAssemblyContaining<Startup>();
                 });
 
@@ -138,6 +141,10 @@ namespace API.Injectors
                     In = ParameterLocation.Header,
                     Description = "JWT Authorization header using the Bearer scheme.",
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
     }
