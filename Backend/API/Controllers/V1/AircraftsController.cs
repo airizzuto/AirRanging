@@ -36,6 +36,10 @@ namespace API.Controllers.V1
         }
 
         // GET api/aircrafts
+        /// <summary>
+        /// Retrieves all aircrafts in the database
+        /// </summary>
+        /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts()
@@ -50,6 +54,11 @@ namespace API.Controllers.V1
         }
 
         // GET api/aircrafts/5
+        /// <summary>
+        /// Retrieves aircraft {id} in the database
+        /// </summary>
+        /// <response code="200">Retrieves aircraft (id) in the database</response>
+        /// <response code="404">Aircraft by (id) not found in the database</response>
         [HttpGet("{id}", Name="GetAircraftById")]
         [AllowAnonymous]
         public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(Guid id)
@@ -67,6 +76,11 @@ namespace API.Controllers.V1
         }
 
         // POST api/aircrafts
+        /// <summary>
+        /// Creates an aircraft in the database
+        /// </summary>
+        /// <response code="201">Aircraft created successfully in database</response>
+        /// <response code="400">Unable to create the aircraft due to validation error</response>
         [HttpPost]
         public async Task<ActionResult<AircraftReadDTO>> CreateAircraft(
             AircraftCreateDTO aircraftCreateDto)
@@ -97,6 +111,12 @@ namespace API.Controllers.V1
         }
 
         // PUT api/aircrafts/5
+        /// <summary>
+        /// Full update aircraft {id} in the database
+        /// </summary>
+        /// <response code="204">Aircraft updated successfully in database</response>
+        /// <response code="404">Aircraft id not found</response>
+        /// <response code="400">Unable to update the aircraft due to validation error</response>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAircraft(
             Guid id, AircraftUpdateDTO aircraftUpdateDTO)
@@ -127,6 +147,12 @@ namespace API.Controllers.V1
         }
 
         // PATCH api/aircrafts/5
+        /// <summary>
+        /// Partial update aircraft {id} in the database
+        /// </summary>
+        /// <response code="204">Aircraft updated successfully in database</response>
+        /// <response code="404">Aircraft id not found</response>
+        /// <response code="400">Unable to update the aircraft due to validation error</response>
         [HttpPatch("{id}")]
         public async Task<IActionResult> PartialUpdateAircraft(
             Guid id, JsonPatchDocument<AircraftUpdateDTO> patchDocument)
@@ -165,6 +191,12 @@ namespace API.Controllers.V1
         }
 
         // DELETE api/aircrafts/5
+        /// <summary>
+        /// Delete aircraft {id} from database
+        /// </summary>
+        /// <response code="204">Aircraft deleted successfully from database</response>
+        /// <response code="404">Aircraft id not found</response>
+        /// <response code="400">User id does not own this aircraft</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAircraft(Guid id)
         {
