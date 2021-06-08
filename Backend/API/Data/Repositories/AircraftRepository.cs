@@ -4,6 +4,8 @@ using API.Models;
 using API.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
+using API.Models.Common;
+using System.Linq;
 
 namespace API.Data.Repositories
 {
@@ -14,9 +16,21 @@ namespace API.Data.Repositories
 
         }
 
-        public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync()
+        public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync(
+            PaginationFilter paginationFilter = null)
         {
-            return await _context.Aircrafts.ToListAsync();
+            if (paginationFilter == null)
+            {
+                return await _context.Aircrafts.ToListAsync();
+            }
+
+            // Pagination entities skip
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+
+            return await _context.Aircrafts
+                .Skip(skip)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
         }
 
         public async Task<Aircraft> GetAircraftByIdAsync(Guid id)

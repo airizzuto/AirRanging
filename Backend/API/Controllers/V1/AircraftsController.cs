@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.Extensions;
 using System;
 using System.Linq;
+using API.Contracts.V1.Common;
+using API.Models.Common;
 
 namespace API.Controllers.V1
 {
@@ -42,15 +44,18 @@ namespace API.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts()
+        public async Task<IActionResult> GetAllAircrafts([FromQuery]PaginationQuery paginationQuery)
         {
+            var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
             var aircrafts = await _repository.GetAllAircraftsAsync();
 
-            _logger.LogInformation($"INFO: Returning {aircrafts.Count()} aircrafts from db");
+            _logger.LogInformation(
+                $"INFO: Returning {aircrafts.Count()} aircrafts from db");
 
-            var resource = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+            var paginationResponse = new PagedResponse<AircraftReadDTO>(aircraftsResponse);
 
-            return Ok(resource);
+            return Ok(paginationResponse);
         }
 
         // GET api/aircrafts/5
@@ -61,7 +66,7 @@ namespace API.Controllers.V1
         /// <response code="404">Aircraft by (id) not found in the database</response>
         [HttpGet("{id}", Name="GetAircraftById")]
         [AllowAnonymous]
-        public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(Guid id)
+        public async Task<IActionResult> GetAircraftById(Guid id)
         {
             var aircraft = await _repository.GetAircraftByIdAsync(id);
             if (aircraft == null)
@@ -82,7 +87,7 @@ namespace API.Controllers.V1
         /// <response code="201">Aircraft created successfully in database</response>
         /// <response code="400">Unable to create the aircraft due to validation error</response>
         [HttpPost]
-        public async Task<ActionResult<AircraftReadDTO>> CreateAircraft(
+        public async Task<IActionResult> CreateAircraft(
             AircraftCreateDTO aircraftCreateDto)
         {
             var userId = HttpContext.GetUserId();
