@@ -121,7 +121,7 @@ namespace API.Controllers.V1
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: Updated aircraft {id}");
+            _logger.LogInformation($"INFO: {aircraftUpdateDTO.Username} updated aircraft {id}");
 
             return NoContent();
         }
@@ -159,7 +159,7 @@ namespace API.Controllers.V1
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: Partially updated aircraft {id}");
+            _logger.LogInformation($"INFO: {existingAircraft.Username} partially updated aircraft {id}");
 
             return NoContent();
         }
@@ -186,7 +186,7 @@ namespace API.Controllers.V1
             _repository.DeleteAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: Deleted aircraft {id}");
+            _logger.LogInformation($"INFO: {existingAircraft.Username} deleted aircraft {id}");
 
             return NoContent();
         }

@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Conventions;
+using API.Filters;
 using API.Services.Account;
 using API.Settings;
 using FluentValidation.AspNetCore;
@@ -84,7 +85,9 @@ namespace API.Injectors
             //     options.DefaultPolicy = defaultAuthPolicy;
             // });
 
-            services.AddMvc()
+            services.AddMvc(options => {
+                options.Filters.AddService<ValidationFilter>();
+            })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddJsonOptions(options => {
                     options.JsonSerializerOptions.Converters.Add(
