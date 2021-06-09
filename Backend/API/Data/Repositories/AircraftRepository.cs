@@ -90,7 +90,7 @@ namespace API.Data.Repositories
 
         private static IQueryable<Aircraft> AddQueriesFilter(GetAllAircraftsFilter filter, IQueryable<Aircraft> queryable)
         {
-            // FIXME
+            // FIXME: querying int, decimal, enums
             if (!string.IsNullOrEmpty(filter?.IcaoId))
             {
                 queryable = queryable.Where(a =>
@@ -116,41 +116,41 @@ namespace API.Data.Repositories
             }
 
             // TODO: test enum parsing and convertion from string
-            if (Enum.TryParse(filter?.AircraftType, out EAircraftType aircraftType))
-            {
-                queryable = queryable.Where(a => a.AircraftType == aircraftType);
-            }
+            // if (Enum.TryParse(filter?.AircraftType, out EAircraftType aircraftType))
+            // {
+            //     queryable = queryable.Where(a => a.AircraftType == aircraftType);
+            // }
 
-            if (Enum.TryParse(filter?.EngineType, out EEngineType engineType))
-            {
-                queryable = queryable.Where(a => a.EngineType == engineType);
-            }
+            // if (Enum.TryParse(filter?.EngineType, out EEngineType engineType))
+            // {
+            //     queryable = queryable.Where(a => a.EngineType == engineType);
+            // }
 
-            if (filter?.EngineCount != null)
-            {
-                queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
-            }
+            // if (filter?.EngineCount != null || filter?.EngineCount != 0)
+            // {
+            //     queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
+            // }
 
-            if (Enum.TryParse(filter?.WeightCategory, out EWeightCategory weightCategory))
-            {
-                queryable = queryable.Where(a => a.WeightCategory == weightCategory);
-            }
+            // if (Enum.TryParse(filter?.WeightCategory, out EWeightCategory weightCategory))
+            // {
+            //     queryable = queryable.Where(a => a.WeightCategory == weightCategory);
+            // }
 
-            if (Enum.TryParse(filter?.IcaoWakeCategory, out EIcaoWakeCategory icaoWakeCategory))
-            {
-                queryable = queryable.Where(a => a.IcaoWakeCategory == icaoWakeCategory);
-            }
+            // if (Enum.TryParse(filter?.IcaoWakeCategory, out EIcaoWakeCategory icaoWakeCategory))
+            // {
+            //     queryable = queryable.Where(a => a.IcaoWakeCategory == icaoWakeCategory);
+            // }
 
-            if (Enum.TryParse(filter?.FuelType, out EFuelType fuelType))
-            {
-                queryable = queryable.Where(a => a.FuelType == fuelType);
-            }
+            // if (Enum.TryParse(filter?.FuelType, out EFuelType fuelType))
+            // {
+            //     queryable = queryable.Where(a => a.FuelType == fuelType);
+            // }
 
             // TODO: test or rename to clarify search of aircraft max range with more than the query value
-            if (filter?.MaxRange != null)
-            {
-                queryable = queryable.Where(a => a.MaxRange >= filter.MaxRange); 
-            }
+            // if (filter?.MaxRange != null || filter?.MaxRange != 0)
+            // {
+            //     queryable = queryable.Where(a => a.MaxRange >= filter.MaxRange); 
+            // }
 
             if (!string.IsNullOrEmpty(filter?.Username))
             {
