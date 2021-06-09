@@ -27,9 +27,10 @@ namespace API.Data.Repositories
             // Pagination entities skip
             var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
 
-            return await _context.Aircrafts
+            return await _context.Aircrafts // TODO: solve EF query OrderBy warning
                 .Skip(skip)
                 .Take(paginationFilter.PageSize)
+                .OrderBy(aircraft => aircraft.SavesCount)
                 .ToListAsync();
         }
 
