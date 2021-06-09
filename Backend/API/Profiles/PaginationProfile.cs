@@ -1,5 +1,5 @@
-using API.Contracts.V1.Common;
-using API.Models.Common;
+using API.Contracts.V1.Pagination;
+using API.Models.Pagination;
 using AutoMapper;
 
 namespace API.Profiles

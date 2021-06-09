@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Models;
-using API.Models.Common;
+using API.Models.Pagination;
 
 namespace API.Data.Repositories
 {

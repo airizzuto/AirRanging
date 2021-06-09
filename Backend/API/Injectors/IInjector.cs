@@ -5,9 +5,6 @@ namespace API.Injectors
 {
     public interface IInjector
     {
-        void InjectServices(IServiceCollection services, IConfiguration configuration)
-        {
-            
-        }
+        void InjectServices(IServiceCollection services, IConfiguration configuration);
     }
 }

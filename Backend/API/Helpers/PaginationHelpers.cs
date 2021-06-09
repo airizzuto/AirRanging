@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using API.Contracts.V1.Common;
-using API.Models.Common;
+using API.Contracts.V1.Pagination;
+using API.Models.Pagination;
 using API.Services;
 
 namespace API.Helpers

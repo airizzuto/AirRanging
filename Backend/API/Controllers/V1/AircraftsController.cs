@@ -12,10 +12,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.Extensions;
 using System;
 using System.Linq;
-using API.Contracts.V1.Common;
-using API.Models.Common;
+using API.Models.Pagination;
 using API.Services;
 using API.Helpers;
+using API.Contracts.V1.Pagination;
 
 namespace API.Controllers.V1
 {

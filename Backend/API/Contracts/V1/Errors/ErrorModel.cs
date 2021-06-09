@@ -1,4 +1,4 @@
-namespace API.Contracts.V1.Common
+namespace API.Contracts.V1.Errors
 {
     public class ErrorModel
     {

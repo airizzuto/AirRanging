@@ -4,7 +4,7 @@ using API.Models;
 using API.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
-using API.Models.Common;
+using API.Models.Pagination;
 using System.Linq;
 
 namespace API.Data.Repositories

@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using API.Contracts.V1.Common;
+using API.Contracts.V1.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

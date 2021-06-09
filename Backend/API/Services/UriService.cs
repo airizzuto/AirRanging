@@ -1,5 +1,5 @@
 using System;
-using API.Contracts.V1.Common;
+using API.Contracts.V1.Pagination;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace API.Services
