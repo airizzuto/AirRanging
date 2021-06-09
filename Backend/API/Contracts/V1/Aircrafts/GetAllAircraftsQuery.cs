@@ -2,6 +2,7 @@ namespace API.Contracts.V1.Aircrafts
 {
     public class GetAllAircraftsQuery
     {
+        // TODO: filters
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }

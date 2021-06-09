@@ -20,23 +20,23 @@ namespace API.Data.Repositories
             GetAllAircraftsFilter filter = null,
             PaginationFilter paginationFilter = null)
         {
-        var queryable = _context.Aircrafts.AsQueryable();
+            var queryable = _context.Aircrafts.AsQueryable();
 
-        if (paginationFilter == null)
-        {
-            return await _context.Aircrafts.ToListAsync();
-        }
+            if (paginationFilter == null)
+            {
+                return await queryable.ToListAsync();
+            }
 
-        queryable = AddQueriesFilter(filter, queryable);
+            queryable = AddQueriesFilter(filter, queryable);
 
-        // Pagination entities skip
-        var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            // Pagination entities skip
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
 
-        return await _context.Aircrafts // TODO: solve EF query OrderBy warning
-            .Skip(skip)
-            .OrderBy(aircraft => aircraft.SavesCount)
-            .Take(paginationFilter.PageSize)
-            .ToListAsync();
+            return await queryable // TODO: solve EF query OrderBy warning
+                .Skip(skip)
+                .OrderBy(aircraft => aircraft.SavesCount)
+                .Take(paginationFilter.PageSize)
+                .ToListAsync();
         }
 
 
