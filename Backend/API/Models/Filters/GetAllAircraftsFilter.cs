@@ -1,3 +1,5 @@
+using API.Models.Enums;
+
 namespace API.Models.Filters
 {
     public class GetAllAircraftsFilter
@@ -9,7 +11,7 @@ namespace API.Models.Filters
         public string Variant { get; set; }
         public string AircraftType { get; set; }
         public string EngineType { get; set; }
-        public string EngineCount { get; set; }
+        public int EngineCount { get; set; }
         public string WeightCategory { get; set; }
         public string IcaoWakeCategory { get; set; }
         public string FuelType { get; set; }

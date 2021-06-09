@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using API.Models.Filters;
 using System.Linq;
+using API.Models.Enums;
 
 namespace API.Data.Repositories
 {
@@ -89,10 +90,72 @@ namespace API.Data.Repositories
 
         private static IQueryable<Aircraft> AddQueriesFilter(GetAllAircraftsFilter filter, IQueryable<Aircraft> queryable)
         {
-            // TODO: filters
+            // FIXME
+            if (!string.IsNullOrEmpty(filter?.IcaoId))
+            {
+                queryable = queryable.Where(a =>
+                    a.IcaoId.ToLower() == filter.IcaoId.ToLower());
+            }
+
+            if (!string.IsNullOrEmpty(filter?.Manufacturer))
+            {
+                queryable = queryable.Where(a =>
+                    a.Manufacturer.ToLower() == filter.Manufacturer.ToLower());
+            }
+
+            if (!string.IsNullOrEmpty(filter?.Model))
+            {
+                queryable = queryable.Where(a =>
+                    a.Model.ToLower() == filter.Model.ToLower());
+            }
+
+            if (!string.IsNullOrEmpty(filter?.Variant))
+            {
+                queryable = queryable.Where(a =>
+                    a.Variant.ToLower() == filter.Variant.ToLower());
+            }
+
+            // TODO: test enum parsing and convertion from string
+            if (Enum.TryParse(filter?.AircraftType, out EAircraftType aircraftType))
+            {
+                queryable = queryable.Where(a => a.AircraftType == aircraftType);
+            }
+
+            if (Enum.TryParse(filter?.EngineType, out EEngineType engineType))
+            {
+                queryable = queryable.Where(a => a.EngineType == engineType);
+            }
+
+            if (filter?.EngineCount != null)
+            {
+                queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
+            }
+
+            if (Enum.TryParse(filter?.WeightCategory, out EWeightCategory weightCategory))
+            {
+                queryable = queryable.Where(a => a.WeightCategory == weightCategory);
+            }
+
+            if (Enum.TryParse(filter?.IcaoWakeCategory, out EIcaoWakeCategory icaoWakeCategory))
+            {
+                queryable = queryable.Where(a => a.IcaoWakeCategory == icaoWakeCategory);
+            }
+
+            if (Enum.TryParse(filter?.FuelType, out EFuelType fuelType))
+            {
+                queryable = queryable.Where(a => a.FuelType == fuelType);
+            }
+
+            // TODO: test or rename to clarify search of aircraft max range with more than the query value
+            if (filter?.MaxRange != null)
+            {
+                queryable = queryable.Where(a => a.MaxRange >= filter.MaxRange); 
+            }
+
             if (!string.IsNullOrEmpty(filter?.Username))
             {
-                queryable = queryable.Where(a => a.Username == filter.Username);
+                queryable = queryable.Where(a =>
+                    a.Username.ToLower() == filter.Username.ToLower());
             }
 
             return queryable;
