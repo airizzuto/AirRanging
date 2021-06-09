@@ -29,8 +29,8 @@ namespace API.Data.Repositories
 
             return await _context.Aircrafts // TODO: solve EF query OrderBy warning
                 .Skip(skip)
-                .Take(paginationFilter.PageSize)
                 .OrderBy(aircraft => aircraft.SavesCount)
+                .Take(paginationFilter.PageSize)
                 .ToListAsync();
         }
 
