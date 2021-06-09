@@ -27,6 +27,7 @@ namespace API.Injectors
     {
         public void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
+            #region Identity
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -79,14 +80,17 @@ namespace API.Injectors
                 options.TokenValidationParameters = tokenValidationParameters;
             });
 
-            // services.AddAuthorization(options => {
-            //     var defaultAuthBuilder = new AuthorizationPolicyBuilder();
-            //     var defaultAuthPolicy = defaultAuthBuilder
-            //         .RequireAuthenticatedUser()
-            //         .Build();
+            /*
+                services.AddAuthorization(options => {
+                    var defaultAuthBuilder = new AuthorizationPolicyBuilder();
+                    var defaultAuthPolicy = defaultAuthBuilder
+                        .RequireAuthenticatedUser()
+                        .Build();
 
-            //     options.DefaultPolicy = defaultAuthPolicy;
-            // });
+                    options.DefaultPolicy = defaultAuthPolicy;
+                });
+            */
+            #endregion
 
             services.AddSingleton<IUriService>(provider => {
                 var accessor = provider.GetRequiredService<IHttpContextAccessor>();
@@ -96,10 +100,7 @@ namespace API.Injectors
                 return new UriService(absoluteUri);
             });
 
-            services.AddMvc(options => {
-                // Not needed. Already included
-                // options.Filters.AddService<ValidationFilter>();
-            })
+            services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddJsonOptions(options => {
                     options.JsonSerializerOptions.Converters.Add(
