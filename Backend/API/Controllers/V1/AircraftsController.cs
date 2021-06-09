@@ -12,10 +12,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using API.Extensions;
 using System;
 using System.Linq;
-using API.Models.Pagination;
+using API.Models.Filters;
 using API.Services;
 using API.Helpers;
 using API.Contracts.V1.Pagination;
+using API.Contracts.V1.Aircrafts;
 
 namespace API.Controllers.V1
 {
@@ -49,10 +50,13 @@ namespace API.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAllAircrafts([FromQuery]PaginationQuery paginationQuery)
+        public async Task<IActionResult> GetAllAircrafts(
+            [FromQuery] GetAllAircraftsQuery query,
+            [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var aircrafts = await _repository.GetAllAircraftsAsync(pagination);
+            var filter = _mapper.Map<GetAllAircraftsFilter>(query);
+            var aircrafts = await _repository.GetAllAircraftsAsync(filter, pagination);
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -237,7 +241,5 @@ namespace API.Controllers.V1
 
             return NoContent();
         }
-
-        // TODO: Filtering. And then sort by savescount
     }
 }

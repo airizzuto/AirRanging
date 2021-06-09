@@ -4,7 +4,7 @@ using API.Models;
 using API.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
-using API.Models.Pagination;
+using API.Models.Filters;
 using System.Linq;
 
 namespace API.Data.Repositories
@@ -17,22 +17,28 @@ namespace API.Data.Repositories
         }
 
         public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync(
+            GetAllAircraftsFilter filter = null,
             PaginationFilter paginationFilter = null)
         {
-            if (paginationFilter == null)
-            {
-                return await _context.Aircrafts.ToListAsync();
-            }
+        var queryable = _context.Aircrafts.AsQueryable();
 
-            // Pagination entities skip
-            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
-
-            return await _context.Aircrafts // TODO: solve EF query OrderBy warning
-                .Skip(skip)
-                .OrderBy(aircraft => aircraft.SavesCount)
-                .Take(paginationFilter.PageSize)
-                .ToListAsync();
+        if (paginationFilter == null)
+        {
+            return await _context.Aircrafts.ToListAsync();
         }
+
+        queryable = AddQueriesFilter(filter, queryable);
+
+        // Pagination entities skip
+        var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+
+        return await _context.Aircrafts // TODO: solve EF query OrderBy warning
+            .Skip(skip)
+            .OrderBy(aircraft => aircraft.SavesCount)
+            .Take(paginationFilter.PageSize)
+            .ToListAsync();
+        }
+
 
         public async Task<Aircraft> GetAircraftByIdAsync(Guid id)
         {
@@ -79,6 +85,17 @@ namespace API.Data.Repositories
             }
 
             return true;
+        }
+
+        private static IQueryable<Aircraft> AddQueriesFilter(GetAllAircraftsFilter filter, IQueryable<Aircraft> queryable)
+        {
+            // TODO: filters
+            if (!string.IsNullOrEmpty(filter?.Username))
+            {
+                queryable = queryable.Where(a => a.Username == filter.Username);
+            }
+
+            return queryable;
         }
     }
 }
