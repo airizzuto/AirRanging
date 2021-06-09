@@ -14,6 +14,8 @@ using System;
 using System.Linq;
 using API.Contracts.V1.Common;
 using API.Models.Common;
+using API.Services;
+using API.Helpers;
 
 namespace API.Controllers.V1
 {
@@ -25,16 +27,19 @@ namespace API.Controllers.V1
     {
         private readonly IAircraftRepository _repository;
         private readonly IMapper _mapper;
+        private readonly IUriService _uriService;
         private readonly ILogger<AircraftsController> _logger;
 
         public AircraftsController(
             IAircraftRepository repository,
             IMapper mapper,
-            ILogger<AircraftsController> logger)
+            ILogger<AircraftsController> logger,
+            IUriService uriService)
         {
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
+            _uriService = uriService;
         }
 
         // GET api/aircrafts
@@ -46,14 +51,19 @@ namespace API.Controllers.V1
         [AllowAnonymous]
         public async Task<IActionResult> GetAllAircrafts([FromQuery]PaginationQuery paginationQuery)
         {
-            var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
-            var aircrafts = await _repository.GetAllAircraftsAsync();
-
-            _logger.LogInformation(
-                $"INFO: Returning {aircrafts.Count()} aircrafts from db");
-
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var aircrafts = await _repository.GetAllAircraftsAsync(pagination);
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
-            var paginationResponse = new PagedResponse<AircraftReadDTO>(aircraftsResponse);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            {
+                _logger.LogInformation(
+                    $"INFO: Returning {aircrafts.Count()} aircrafts from db");
+
+                return Ok(new PagedResponse<AircraftReadDTO>(aircraftsResponse));
+            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, aircraftsResponse);
 
             return Ok(paginationResponse);
         }

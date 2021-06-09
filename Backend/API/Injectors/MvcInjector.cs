@@ -6,11 +6,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Conventions;
 using API.Filters;
+using API.Services;
 using API.Services.Account;
 using API.Settings;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -86,6 +88,14 @@ namespace API.Injectors
 
             //     options.DefaultPolicy = defaultAuthPolicy;
             // });
+
+            services.AddSingleton<IUriService>(provider => {
+                var accessor = provider.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var absoluteUri = string.Concat(
+                    request.Scheme, "://", request.Host.ToUriComponent(), "/");
+                return new UriService(absoluteUri);
+            });
 
             services.AddMvc(options => {
                 // Not needed. Already included

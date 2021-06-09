@@ -8,7 +8,7 @@ namespace API.Contracts.V1.Common
         public PaginationQuery()
         {
             PageNumber = 1;
-            PageSize = 20;
+            PageSize = 10;
         }
 
         public PaginationQuery(int pageNumber, int pageSize)
