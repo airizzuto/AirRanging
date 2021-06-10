@@ -7,6 +7,7 @@ using System;
 using API.Models.Filters;
 using System.Linq;
 using API.Models.Enums;
+using Microsoft.Extensions.Logging;
 
 namespace API.Data.Repositories
 {
@@ -88,7 +89,8 @@ namespace API.Data.Repositories
             return true;
         }
 
-        private static IQueryable<Aircraft> AddQueriesFilter(GetAllAircraftsFilter filter, IQueryable<Aircraft> queryable)
+        private static IQueryable<Aircraft> AddQueriesFilter(
+            GetAllAircraftsFilter filter, IQueryable<Aircraft> queryable)
         {
             if (!string.IsNullOrEmpty(filter?.IcaoId))
             {
@@ -114,34 +116,38 @@ namespace API.Data.Repositories
                     a.Variant.ToLower() == filter.Variant.ToLower());
             }
 
-            // FIXME: enum parsing and convertion
-            // if (Enum.TryParse(filter?.AircraftType, out EAircraftType aircraftType))
-            // {
-            //     queryable = queryable.Where(a => a.AircraftType == aircraftType);
-            // }
+            if (filter?.AircraftType != null && filter?.AircraftType != EAircraftType.Unknown)
+            {
+                queryable = queryable.Where(a =>
+                    a.AircraftType.Equals(filter.AircraftType));
+            }
 
-            // if (Enum.TryParse(filter?.EngineType, out EEngineType engineType))
-            // {
-            //     queryable = queryable.Where(a => a.EngineType == engineType);
-            // }
+            if (filter?.EngineType != null && filter?.EngineType != EEngineType.Unknown)
+            {
+                queryable = queryable.Where(a =>
+                    a.EngineType.Equals(filter.EngineType));
+            }
 
-            // if (Enum.TryParse(filter?.WeightCategory, out EWeightCategory weightCategory))
-            // {
-            //     queryable = queryable.Where(a => a.WeightCategory == weightCategory);
-            // }
+            if (filter?.WeightCategory != null && filter?.WeightCategory != EWeightCategory.Unknown)
+            {
+                queryable = queryable.Where(a =>
+                    a.WeightCategory.Equals(filter.WeightCategory));
+            }
 
-            // if (Enum.TryParse(filter?.IcaoWakeCategory, out EIcaoWakeCategory icaoWakeCategory))
-            // {
-            //     queryable = queryable.Where(a => a.IcaoWakeCategory == icaoWakeCategory);
-            // }
+            if (filter?.IcaoWakeCategory != null && filter?.IcaoWakeCategory != EIcaoWakeCategory.Unknown)
+            {
+                queryable = queryable.Where(a =>
+                    a.IcaoWakeCategory.Equals(filter.IcaoWakeCategory));
+            }
 
-            // if (Enum.TryParse(filter?.FuelType, out EFuelType fuelType))
-            // {
-            //     queryable = queryable.Where(a => a.FuelType == fuelType);
-            // }
+            if (filter?.FuelType != null && filter?.FuelType != EFuelType.Unknown)
+            {
+                queryable = queryable.Where(a =>
+                    a.FuelType.Equals(filter.FuelType));
+            }
 
-            // FIXME: int and decimal filtering
-            // if (filter?.EngineCount != null | filter?.EngineCount != 0)
+            //FIXME: int and decimal filtering
+            // if (filter?.EngineCount != null && filter?.EngineCount != 0)
             // {
             //     queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
             // }
