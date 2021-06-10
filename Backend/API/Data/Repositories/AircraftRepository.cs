@@ -35,7 +35,7 @@ namespace API.Data.Repositories
 
             return await queryable // TODO: solve EF query OrderBy warning
                 .Skip(skip)
-                .OrderBy(aircraft => aircraft.SavesCount)
+                .OrderByDescending(aircraft => aircraft.SavesCount)
                 .Take(paginationFilter.PageSize)
                 .ToListAsync();
         }
@@ -90,7 +90,6 @@ namespace API.Data.Repositories
 
         private static IQueryable<Aircraft> AddQueriesFilter(GetAllAircraftsFilter filter, IQueryable<Aircraft> queryable)
         {
-            // FIXME: querying int, decimal, enums
             if (!string.IsNullOrEmpty(filter?.IcaoId))
             {
                 queryable = queryable.Where(a =>
@@ -115,7 +114,7 @@ namespace API.Data.Repositories
                     a.Variant.ToLower() == filter.Variant.ToLower());
             }
 
-            // TODO: test enum parsing and convertion from string
+            // FIXME: enum parsing and convertion
             // if (Enum.TryParse(filter?.AircraftType, out EAircraftType aircraftType))
             // {
             //     queryable = queryable.Where(a => a.AircraftType == aircraftType);
@@ -124,11 +123,6 @@ namespace API.Data.Repositories
             // if (Enum.TryParse(filter?.EngineType, out EEngineType engineType))
             // {
             //     queryable = queryable.Where(a => a.EngineType == engineType);
-            // }
-
-            // if (filter?.EngineCount != null || filter?.EngineCount != 0)
-            // {
-            //     queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
             // }
 
             // if (Enum.TryParse(filter?.WeightCategory, out EWeightCategory weightCategory))
@@ -146,8 +140,13 @@ namespace API.Data.Repositories
             //     queryable = queryable.Where(a => a.FuelType == fuelType);
             // }
 
-            // TODO: test or rename to clarify search of aircraft max range with more than the query value
-            // if (filter?.MaxRange != null || filter?.MaxRange != 0)
+            // FIXME: int and decimal filtering
+            // if (filter?.EngineCount != null | filter?.EngineCount != 0)
+            // {
+            //     queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
+            // }
+
+            // if (filter?.MaxRange != null | filter?.MaxRange != 0)
             // {
             //     queryable = queryable.Where(a => a.MaxRange >= filter.MaxRange); 
             // }
