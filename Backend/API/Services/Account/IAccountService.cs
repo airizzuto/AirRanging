@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using API.Models;
+using API.Models.Account;
 
 namespace API.Services.Account
     {

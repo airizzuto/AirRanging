@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using API.Data.Contexts;
 using API.Models;
+using API.Models.Account;
 using API.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,13 +16,13 @@ namespace API.Services.Account
 {
     public class AccountService : IAccountService
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly ApplicationDbContext _context;
 
         public AccountService(
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             JwtSettings jwtSettings,
             TokenValidationParameters tokenValidationParameters,
             ApplicationDbContext context)
@@ -77,7 +78,7 @@ namespace API.Services.Account
                 };
             }
 
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
                 UserName = username,
                 Email = email,

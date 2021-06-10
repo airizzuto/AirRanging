@@ -1,12 +1,12 @@
 using System.Reflection;
 using API.Models;
-using Microsoft.AspNetCore.Identity;
+using API.Models.Account;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Contexts
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
