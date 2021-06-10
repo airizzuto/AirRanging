@@ -94,6 +94,7 @@ namespace API.Controllers.V1
             return Ok(resource);
         }
 
+        // TODO: save to user
         // POST api/aircrafts
         /// <summary>
         /// Creates an aircraft in the database
@@ -241,5 +242,7 @@ namespace API.Controllers.V1
 
             return NoContent();
         }
+
+        // TODO: save aircraft
     }
 }
