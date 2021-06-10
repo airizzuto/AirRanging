@@ -147,15 +147,15 @@ namespace API.Data.Repositories
             }
 
             //FIXME: int and decimal filtering
-            // if (filter?.EngineCount != null && filter?.EngineCount != 0)
-            // {
-            //     queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
-            // }
+            if (filter?.EngineCount != null && filter?.EngineCount != 0)
+            {
+                queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
+            }
 
-            // if (filter?.MaxRange != null | filter?.MaxRange != 0)
-            // {
-            //     queryable = queryable.Where(a => a.MaxRange >= filter.MaxRange); 
-            // }
+            if (filter?.MaxRange != null && filter?.MaxRange != 0)
+            {
+                queryable = queryable.Where(a => a.MaxRange >= filter.MaxRange); 
+            }
 
             if (!string.IsNullOrEmpty(filter?.Username))
             {
