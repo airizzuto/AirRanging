@@ -146,7 +146,6 @@ namespace API.Data.Repositories
                     a.FuelType.Equals(filter.FuelType));
             }
 
-            //FIXME: int and decimal filtering
             if (filter?.EngineCount != null && filter?.EngineCount != 0)
             {
                 queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
