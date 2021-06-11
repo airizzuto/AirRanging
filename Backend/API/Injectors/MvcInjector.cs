@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Conventions;
+using API.Models.Account;
 using API.Services;
 using API.Services.Account;
 using API.Settings;

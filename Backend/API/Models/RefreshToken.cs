@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
+using API.Models.Account;
 
 namespace API.Models
 {
@@ -19,6 +19,6 @@ namespace API.Models
         public string UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public virtual IdentityUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

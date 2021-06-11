@@ -178,7 +178,7 @@ namespace API.Services.Account
                     SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        private async Task<AccountAuthResult> GenerateAccountAuthResultForUserASync(IdentityUser user)
+        private async Task<AccountAuthResult> GenerateAccountAuthResultForUserASync(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_jwtSettings.Secret);

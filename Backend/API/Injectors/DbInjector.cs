@@ -1,7 +1,7 @@
 using System;
 using API.Data.Contexts;
 using API.Data.Repositories;
-using Microsoft.AspNetCore.Identity;
+using API.Models.Account;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +24,7 @@ namespace API.Injectors
                 opt => opt.UseNpgsql(builder.ConnectionString)
             );
 
-            services.AddIdentityCore<IdentityUser>()
+            services.AddIdentityCore<ApplicationUser>()
                 // TODO REFACTOR: Review use of default implementation instead of custom token and refresh token 
                 // .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
