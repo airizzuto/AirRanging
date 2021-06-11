@@ -1,6 +1,6 @@
-namespace API.Contracts.V1.Account
+namespace API.Contracts.V1.Identity
 {
-    public class AccountRegistrationRequest
+    public class UserRegistrationRequest
     {
         public string Username { get; set; }
         public string Email { get; set; }

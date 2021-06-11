@@ -1,4 +1,4 @@
-using API.Models.Account;
+using API.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

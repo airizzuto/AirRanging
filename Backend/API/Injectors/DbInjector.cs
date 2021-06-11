@@ -1,7 +1,7 @@
 using System;
 using API.Data.Contexts;
 using API.Data.Repositories;
-using API.Models.Account;
+using API.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

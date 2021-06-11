@@ -1,6 +1,6 @@
-namespace API.Contracts.V1.Account
+namespace API.Contracts.V1.Identity
 {
-    public class AccountAuthSuccessResponse
+    public class UserRefreshTokenRequest
     {
         public string Token { get; set; }
         public string RefreshToken { get; set; }

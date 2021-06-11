@@ -1,6 +1,6 @@
 using System.Reflection;
 using API.Models;
-using API.Models.Account;
+using API.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Models.Account
+namespace API.Models.Identity
 {
     public class ApplicationUser : IdentityUser
     {

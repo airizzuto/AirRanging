@@ -5,9 +5,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Conventions;
-using API.Models.Account;
+using API.Models.Identity;
 using API.Services;
-using API.Services.Account;
+using API.Services.Identity;
 using API.Settings;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -54,7 +54,7 @@ namespace API.Injectors
             configuration.Bind(nameof(jwtSettings), jwtSettings); // TODO: Review Implementation
             services.AddSingleton(jwtSettings);
 
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IIdentityService, IdentityService>();
 
             var tokenValidationParameters = new TokenValidationParameters
             {

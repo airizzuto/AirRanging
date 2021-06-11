@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using API.Data.Contexts;
 using API.Models;
-using API.Models.Account;
+using API.Models.Identity;
 using API.Models.Enums;
 
 namespace API.Data

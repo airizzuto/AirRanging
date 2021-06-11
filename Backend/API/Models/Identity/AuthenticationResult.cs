@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace API.Models.Account
+namespace API.Models.Identity
 {
-    public class AccountAuthResult
+    public class AuthenticationResult
     {
         public string Token { get; set; }
         public string RefreshToken { get; set; }

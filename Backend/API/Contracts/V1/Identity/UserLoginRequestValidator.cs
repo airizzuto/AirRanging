@@ -1,10 +1,10 @@
 using FluentValidation;
 
-namespace API.Contracts.V1.Account
+namespace API.Contracts.V1.Identity
 {
-    public class AccountLoginRequestValidator : AbstractValidator<AccountLoginRequest>
+    public class UserLoginRequestValidator : AbstractValidator<UserLoginRequest>
     {
-        public AccountLoginRequestValidator()
+        public UserLoginRequestValidator()
         {
             RuleFor(x => x.Email)
                 .NotNull()

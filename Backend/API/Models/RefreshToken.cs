@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using API.Models.Account;
+using API.Models.Identity;
 
 namespace API.Models
 {

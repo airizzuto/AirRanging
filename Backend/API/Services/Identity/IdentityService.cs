@@ -6,22 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 using API.Data.Contexts;
 using API.Models;
-using API.Models.Account;
+using API.Models.Identity;
 using API.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
-namespace API.Services.Account
+namespace API.Services.Identity
 {
-    public class AccountService : IAccountService
+    public class IdentityService : IIdentityService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly ApplicationDbContext _context;
 
-        public AccountService(
+        public IdentityService(
             UserManager<ApplicationUser> userManager,
             JwtSettings jwtSettings,
             TokenValidationParameters tokenValidationParameters,
@@ -34,12 +34,12 @@ namespace API.Services.Account
         }
 
         // TODO: Login with username or email. Switch if "@" is present?
-        public async Task<AccountAuthResult> LoginAsync(string email, string password)
+        public async Task<AuthenticationResult> LoginAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                return new AccountAuthResult
+                return new AuthenticationResult
                 {
                     Errors = new[] { "Email not found" } 
                 };
@@ -48,22 +48,22 @@ namespace API.Services.Account
             var userHasValidPassword = await _userManager.CheckPasswordAsync(user, password);
             if(!userHasValidPassword)
             {
-                return new AccountAuthResult
+                return new AuthenticationResult
                 {
                     Errors = new[] {"User/password invalid"}
                 };
             }
 
-            return await GenerateAccountAuthResultForUserASync(user);
+            return await GenerateAuthenticationResultForUserASync(user);
         }
 
-        public async Task<AccountAuthResult> RegisterAsync(
+        public async Task<AuthenticationResult> RegisterAsync(
             string username, string email, string password)
         {
             var existingUsername = await _userManager.FindByNameAsync(username);
             if (existingUsername != null)
             {
-                return new AccountAuthResult
+                return new AuthenticationResult
                 {
                     Errors = new[] { "Username already in use" }
                 };
@@ -72,7 +72,7 @@ namespace API.Services.Account
             var existingEmail = await _userManager.FindByEmailAsync(email);
             if (existingEmail != null)
             {
-                return new AccountAuthResult
+                return new AuthenticationResult
                 {
                     Errors = new[] { "Email already in use" }
                 };
@@ -87,22 +87,22 @@ namespace API.Services.Account
             var createdUser = await _userManager.CreateAsync(user, password);
             if (!createdUser.Succeeded)
             {
-                return new AccountAuthResult
+                return new AuthenticationResult
                 {
                     Errors = createdUser.Errors.Select(x => x.Description)
                 };
             }
 
-            return await GenerateAccountAuthResultForUserASync(user);
+            return await GenerateAuthenticationResultForUserASync(user);
         }
 
         // TODO SECURITY: Simplify token checks to "Token Invalid" before using it in production.
-        public async Task<AccountAuthResult> RefreshTokenAsync(string token, string refreshToken)
+        public async Task<AuthenticationResult> RefreshTokenAsync(string token, string refreshToken)
         {
             var claimsPrincipal = GetPrincipalFromToken(token);
             if (claimsPrincipal == null)
             {
-                return new AccountAuthResult { Errors = new[] {"Invalid Token"} };
+                return new AuthenticationResult { Errors = new[] {"Invalid Token"} };
             }
 
             var expirationDateUnix = long.Parse(claimsPrincipal.Claims.Single(
@@ -112,7 +112,7 @@ namespace API.Services.Account
 
             if (expirationDateTimeUtc < DateTime.UtcNow)
             {
-                return new AccountAuthResult { Errors = new[] {"This token has not expired yet"} };
+                return new AuthenticationResult { Errors = new[] {"This token has not expired yet"} };
             }
 
             var jti = claimsPrincipal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
@@ -120,27 +120,27 @@ namespace API.Services.Account
             var storedRefreshToken = await _context.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
             if (storedRefreshToken == null)
             {
-                return new AccountAuthResult { Errors = new[] {"This refresh token does not exist"} };
+                return new AuthenticationResult { Errors = new[] {"This refresh token does not exist"} };
             }
 
             if (DateTime.UtcNow > storedRefreshToken.ExpirationDate)
             {
-                return new AccountAuthResult { Errors = new[] {"This refresh token has expired"} };
+                return new AuthenticationResult { Errors = new[] {"This refresh token has expired"} };
             }
 
             if (storedRefreshToken.Invalidated)
             {
-                return new AccountAuthResult { Errors = new[] {"This refresh token has been invalidated"} };
+                return new AuthenticationResult { Errors = new[] {"This refresh token has been invalidated"} };
             }
 
             if (storedRefreshToken.Used)
             {
-                return new AccountAuthResult { Errors = new[] {"This refresh token has been used"} };
+                return new AuthenticationResult { Errors = new[] {"This refresh token has been used"} };
             }
 
             if (storedRefreshToken.JwtId != jti)
             {
-                return new AccountAuthResult { Errors = new[] {"This refresh token does not math this JWT"} };
+                return new AuthenticationResult { Errors = new[] {"This refresh token does not math this JWT"} };
             }
 
             storedRefreshToken.Used = true;
@@ -149,7 +149,7 @@ namespace API.Services.Account
 
             var user = await _userManager.FindByIdAsync(claimsPrincipal.Claims.Single(x => x.Type == "id").Value);
 
-            return await GenerateAccountAuthResultForUserASync(user);
+            return await GenerateAuthenticationResultForUserASync(user);
         }
 
         private ClaimsPrincipal GetPrincipalFromToken(string token)
@@ -178,7 +178,7 @@ namespace API.Services.Account
                     SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        private async Task<AccountAuthResult> GenerateAccountAuthResultForUserASync(ApplicationUser user)
+        private async Task<AuthenticationResult> GenerateAuthenticationResultForUserASync(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_jwtSettings.Secret);
@@ -214,7 +214,7 @@ namespace API.Services.Account
             await _context.RefreshTokens.AddAsync(refreshToken);
             await _context.SaveChangesAsync();
 
-            return new AccountAuthResult
+            return new AuthenticationResult
             {
                 Success = true,
                 Token = tokenHandler.WriteToken(token),

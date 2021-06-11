@@ -1,6 +1,6 @@
-namespace API.Contracts.V1.Account
+namespace API.Contracts.V1.Identity
 {
-    public class AccountLoginRequest
+    public class UserLoginRequest
     {
         // TODO: login with username or email. Switch if @ present?
         public string UserName { get; set; }
