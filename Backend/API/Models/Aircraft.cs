@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using API.Models.Enums;
-using Microsoft.AspNetCore.Identity;
+using API.Models.Identity;
 
 namespace API.Models
 {
@@ -38,6 +38,6 @@ namespace API.Models
         // TODO: Add username reference. To indicate who is the user that created the aircraft when searching or selecting.
 
         [ForeignKey(nameof(UserId))]
-        public virtual IdentityUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }
