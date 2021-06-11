@@ -96,7 +96,6 @@ namespace API.Services.Identity
             return await GenerateAuthenticationResultForUserASync(user);
         }
 
-        // TODO SECURITY: Simplify token checks to "Token Invalid" before using it in production.
         public async Task<AuthenticationResult> RefreshTokenAsync(string token, string refreshToken)
         {
             var claimsPrincipal = GetPrincipalFromToken(token);
@@ -112,35 +111,46 @@ namespace API.Services.Identity
 
             if (expirationDateTimeUtc < DateTime.UtcNow)
             {
-                return new AuthenticationResult { Errors = new[] {"This token has not expired yet"} };
+                return new AuthenticationResult { Errors = new[] {"Invalid token"} };
+                // return new AuthenticationResult { Errors = new[] {"This token has not expired yet"} };
             }
 
             var jti = claimsPrincipal.Claims.Single(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
 
             var storedRefreshToken = await _context.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
-            if (storedRefreshToken == null)
-            {
-                return new AuthenticationResult { Errors = new[] {"This refresh token does not exist"} };
-            }
 
-            if (DateTime.UtcNow > storedRefreshToken.ExpirationDate)
-            {
-                return new AuthenticationResult { Errors = new[] {"This refresh token has expired"} };
-            }
+            // if (storedRefreshToken == null)
+            // {
+            //     return new AuthenticationResult { Errors = new[] {"This refresh token does not exist"} };
+            // }
 
-            if (storedRefreshToken.Invalidated)
-            {
-                return new AuthenticationResult { Errors = new[] {"This refresh token has been invalidated"} };
-            }
+            // if (DateTime.UtcNow > storedRefreshToken.ExpirationDate)
+            // {
+            //     return new AuthenticationResult { Errors = new[] {"This refresh token has expired"} };
+            // }
 
-            if (storedRefreshToken.Used)
-            {
-                return new AuthenticationResult { Errors = new[] {"This refresh token has been used"} };
-            }
+            // if (storedRefreshToken.Invalidated)
+            // {
+            //     return new AuthenticationResult { Errors = new[] {"This refresh token has been invalidated"} };
+            // }
 
-            if (storedRefreshToken.JwtId != jti)
+            // if (storedRefreshToken.Used)
+            // {
+            //     return new AuthenticationResult { Errors = new[] {"This refresh token has been used"} };
+            // }
+
+            // if (storedRefreshToken.JwtId != jti)
+            // {
+            //     return new AuthenticationResult { Errors = new[] {"This refresh token does not math this JWT"} };
+            // }
+
+            if (storedRefreshToken == null 
+                || DateTime.UtcNow > storedRefreshToken.ExpirationDate
+                || storedRefreshToken.Invalidated
+                || storedRefreshToken.Used
+                || storedRefreshToken.JwtId != jti)
             {
-                return new AuthenticationResult { Errors = new[] {"This refresh token does not math this JWT"} };
+                return new AuthenticationResult { Errors = new[] {"Token invalid"} };
             }
 
             storedRefreshToken.Used = true;
