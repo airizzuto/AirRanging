@@ -117,7 +117,7 @@ namespace API.Data
             {
                 context.Aircrafts.Add(aircraft);
             }
-            context.SaveChangesAsync();
+            context.SaveChanges();
 
             var users = new ApplicationUser[]
             {
@@ -138,7 +138,7 @@ namespace API.Data
             {
                 context.Users.Add(user);
             }
-            context.SaveChangesAsync();
+            context.SaveChanges();
 
         }
     }
