@@ -1,4 +1,5 @@
 using System;
+using API.Models.Identity;
 
 namespace API.DTOs.V1.Aircraft
 {
@@ -22,6 +23,6 @@ namespace API.DTOs.V1.Aircraft
         public decimal MaxRange { get; set; }
         public int ServiceCeiling { get; set; }
         public int SavesCount { get; set; }
-        public string Username { get; set; }
+        public ApplicationUser Author { get; set; }
     }
 }

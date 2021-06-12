@@ -1,4 +1,5 @@
 using API.Models.Enums;
+using API.Models.Identity;
 
 namespace API.Models.Filters
 {
@@ -16,7 +17,6 @@ namespace API.Models.Filters
         public EFuelType FuelType { get; set; }
         public int EngineCount { get; set; }
         public decimal MaxRange { get; set; }
-        public string Username { get; set; }
-
+        public string AuthorUsername { get; set; }
     }
 }

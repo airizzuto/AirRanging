@@ -119,6 +119,7 @@ namespace API.Services.Identity
 
             var storedRefreshToken = await _context.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
 
+            #region detailed token validation errors
             // if (storedRefreshToken == null)
             // {
             //     return new AuthenticationResult { Errors = new[] {"This refresh token does not exist"} };
@@ -143,6 +144,7 @@ namespace API.Services.Identity
             // {
             //     return new AuthenticationResult { Errors = new[] {"This refresh token does not math this JWT"} };
             // }
+            #endregion
 
             if (storedRefreshToken == null 
                 || DateTime.UtcNow > storedRefreshToken.ExpirationDate
@@ -161,6 +163,9 @@ namespace API.Services.Identity
 
             return await GenerateAuthenticationResultForUserASync(user);
         }
+
+        // TODO: user delete
+        // TODO: user update
 
         private ClaimsPrincipal GetPrincipalFromToken(string token)
         {
@@ -199,9 +204,7 @@ namespace API.Services.Identity
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                             new Claim(JwtRegisteredClaimNames.Iss, Constants.Path.Full),
                             new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                            new Claim("id", user.Id),
-                            // TODO: Better implementation for passing creator username to aircraft model?
-                            new Claim("username", user.UserName),
+                            new Claim("id", user.Id)
                         }),
                 NotBefore = DateTime.Now,
                 Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),

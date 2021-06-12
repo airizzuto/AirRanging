@@ -32,12 +32,8 @@ namespace API.Models
         public int SavesCount { get; set; }
 
 
-        public string UserId { get; set; }
-        public string Username { get; set; }
-
         // TODO: Add username reference. To indicate who is the user that created the aircraft when searching or selecting.
-
-        [ForeignKey(nameof(UserId))]
-        public virtual ApplicationUser User { get; set; }
+        public string AuthorId { get; set; }
+        public virtual ApplicationUser Author { get; set; }
     }
 }

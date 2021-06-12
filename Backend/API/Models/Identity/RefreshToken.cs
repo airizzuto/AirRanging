@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using API.Models.Identity;
 
-namespace API.Models
+namespace API.Models.Identity
 {
     public class RefreshToken
     {

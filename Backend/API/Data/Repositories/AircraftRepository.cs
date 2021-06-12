@@ -34,7 +34,7 @@ namespace API.Data.Repositories
             // Pagination entities skip
             var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
 
-            return await queryable // TODO: solve EF query OrderBy warning
+            return await queryable
                 .Skip(skip)
                 .OrderByDescending(aircraft => aircraft.SavesCount)
                 .Take(paginationFilter.PageSize)
@@ -70,7 +70,7 @@ namespace API.Data.Repositories
             _context.Aircrafts.Remove(aircraft);
         }
 
-        public async Task<bool> UserOwnsAircraftAsync(Guid id, string getUserId)
+        public async Task<bool> UserOwnsAircraftAsync(Guid id, string getAuthorId)
         {
             var aircraft = await _context.Aircrafts
                 .AsNoTracking()
@@ -81,7 +81,7 @@ namespace API.Data.Repositories
                 return false;
             }
 
-            if (aircraft.UserId != getUserId)
+            if (aircraft.AuthorId != getAuthorId)
             {
                 return false;
             }
@@ -156,10 +156,10 @@ namespace API.Data.Repositories
                 queryable = queryable.Where(a => a.MaxRange >= filter.MaxRange); 
             }
 
-            if (!string.IsNullOrEmpty(filter?.Username))
+            if (!string.IsNullOrEmpty(filter?.AuthorUsername))
             {
                 queryable = queryable.Where(a =>
-                    a.Username.ToLower() == filter.Username.ToLower());
+                    a.Author.NormalizedUserName == filter.AuthorUsername.ToUpper());
             }
 
             return queryable;

@@ -1,5 +1,6 @@
 using System;
 using API.Models.Enums;
+using API.Models.Identity;
 
 namespace API.DTOs.V1.Aircraft
 {
@@ -24,7 +25,7 @@ namespace API.DTOs.V1.Aircraft
         public int ServiceCeiling { get; set; }
         public int SavesCount { get; set; }
 
-        public string UserId { get; set; }
-        public string Username { get; set; } // TODO: Check if needed
+        public string AuthorId { get; set; }
+        public ApplicationUser Author { get; set; } // TODO: Check if needed
     }
 }

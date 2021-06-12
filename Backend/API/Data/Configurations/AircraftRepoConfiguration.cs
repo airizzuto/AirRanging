@@ -1,4 +1,5 @@
 using API.Models;
+using API.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -65,6 +66,11 @@ namespace API.Data.Configurations
 
             builder.Property(a => a.SavesCount)
                 .HasDefaultValue(1);
+
+            builder
+                .HasOne(a => a.Author)
+                .WithMany(u => u.UserAircrafts)
+                .HasForeignKey(a => a.AuthorId);
         }
     }
 }

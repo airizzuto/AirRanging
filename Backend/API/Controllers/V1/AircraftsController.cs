@@ -100,6 +100,7 @@ namespace API.Controllers.V1
         /// Creates an aircraft in the database
         /// </summary>
         /// <response code="201">Aircraft created successfully in database</response>
+        /// <response code="400">Unable to create the aircraft due to user not logged in</response>
         /// <response code="400">Unable to create the aircraft due to validation error</response>
         [HttpPost]
         public async Task<IActionResult> CreateAircraft(
@@ -112,14 +113,12 @@ namespace API.Controllers.V1
                     new { Error = "Login to create aircraft"}
                 );
             }
-
-            aircraftCreateDto.UserId = userId;
-            aircraftCreateDto.Username = HttpContext.GetUsername();
+            
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.CreateAircraftAsync(aircraftModel);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {aircraftModel.Username} created new aircraft");
+            _logger.LogInformation($"INFO: User {aircraftModel.Author.UserName} created new aircraft");
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
@@ -161,7 +160,7 @@ namespace API.Controllers.V1
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {aircraftUpdateDTO.Username} updated aircraft {id}");
+            _logger.LogInformation($"INFO: User {aircraftUpdateDTO.Author.UserName} updated aircraft {id}");
 
             return NoContent();
         }
@@ -205,7 +204,7 @@ namespace API.Controllers.V1
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {existingAircraft.Username} partially updated aircraft {id}");
+            _logger.LogInformation($"INFO: User {existingAircraft.Author.UserName} partially updated aircraft {id}");
 
             return NoContent();
         }
@@ -238,7 +237,7 @@ namespace API.Controllers.V1
             _repository.DeleteAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {existingAircraft.Username} deleted aircraft {id}");
+            _logger.LogInformation($"INFO: User {existingAircraft.Author.UserName} deleted aircraft {id}");
 
             return NoContent();
         }
