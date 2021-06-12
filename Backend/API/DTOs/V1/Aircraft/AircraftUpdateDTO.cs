@@ -6,7 +6,7 @@ namespace API.DTOs.V1.Aircraft
 {
     public class AircraftUpdateDTO
     {
-        public Guid Id { get; set; }
+        public Guid AircraftID { get; set; }
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
@@ -25,7 +25,7 @@ namespace API.DTOs.V1.Aircraft
         public int ServiceCeiling { get; set; }
         public int SavesCount { get; set; }
 
-        public string AuthorId { get; set; }
+        public string AuthorID { get; set; }
         public ApplicationUser Author { get; set; } // TODO: Check if needed
     }
 }

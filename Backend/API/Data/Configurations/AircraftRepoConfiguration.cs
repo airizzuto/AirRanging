@@ -11,9 +11,9 @@ namespace API.Data.Configurations
         {
             builder.ToTable("Aircrafts");
 
-            builder.HasKey(a => a.Id);
+            builder.HasKey(a => a.AircraftID);
 
-            builder.Property(a => a.Id)
+            builder.Property(a => a.AircraftID)
                 .ValueGeneratedOnAdd();
 
             builder.Property(a => a.IcaoId)
@@ -70,7 +70,7 @@ namespace API.Data.Configurations
             builder
                 .HasOne(a => a.Author)
                 .WithMany(u => u.UserAircrafts)
-                .HasForeignKey(a => a.AuthorId);
+                .HasForeignKey(a => a.AuthorID);
         }
     }
 }

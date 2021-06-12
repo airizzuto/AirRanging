@@ -113,7 +113,7 @@ namespace API.Controllers.V1
                     new { Error = "Login to create aircraft"}
                 );
             }
-            
+
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.CreateAircraftAsync(aircraftModel);
             await _repository.SaveChangesAsync();
@@ -124,7 +124,7 @@ namespace API.Controllers.V1
 
             return CreatedAtRoute(
                 nameof(GetAircraftById),
-                new { aircraftReadDto.Id },
+                new { aircraftReadDto.AircraftID },
                 aircraftReadDto
             );
         }

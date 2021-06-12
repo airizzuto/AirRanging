@@ -9,6 +9,8 @@ using System.Linq;
 using API.Contracts.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
+using API.Extensions;
 
 namespace API
 {
@@ -28,7 +30,7 @@ namespace API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger logger)
         {
             if (env.IsDevelopment())
             {
@@ -36,9 +38,12 @@ namespace API
             }
             else
             {
-                app.UseExceptionHandler("/Error"); // TODO: Error handling endpoint?
                 app.UseHsts();
             }
+
+            app.UseExceptionHandler("/Error"); // TODO: Error handling endpoint?
+
+            app.ConfigureExceptionHandler(logger);
 
             app.UseHealthChecks("/health", new HealthCheckOptions
             {

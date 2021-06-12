@@ -7,7 +7,7 @@ namespace API.Models
 {
     public class Aircraft
     {
-        public Guid Id { get; set; }
+        public Guid AircraftID { get; set; }
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
@@ -33,7 +33,7 @@ namespace API.Models
 
 
         // TODO: Add username reference. To indicate who is the user that created the aircraft when searching or selecting.
-        public string AuthorId { get; set; }
+        public string AuthorID { get; set; }
         public virtual ApplicationUser Author { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace API.DTOs.V1.Aircraft
 {
     public class AircraftCreateDTO
     {
-        public Guid Id { get; set; }
+        public Guid AircraftID { get; set; }
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
@@ -23,7 +23,7 @@ namespace API.DTOs.V1.Aircraft
         public decimal FuelCapacity { get; set; }
         public decimal MaxRange { get; set; }
         public int ServiceCeiling { get; set; }
-        public string AuthorId { get; set; }
+        public string AuthorID { get; set; }
         public ApplicationUser Author { get; set; }
         
         

@@ -74,14 +74,14 @@ namespace API.Data.Repositories
         {
             var aircraft = await _context.Aircrafts
                 .AsNoTracking()
-                .SingleOrDefaultAsync(a => a.Id == id);
+                .SingleOrDefaultAsync(a => a.AircraftID == id);
             
             if (aircraft == null)
             {
                 return false;
             }
 
-            if (aircraft.AuthorId != getAuthorId)
+            if (aircraft.AuthorID != getAuthorId)
             {
                 return false;
             }
