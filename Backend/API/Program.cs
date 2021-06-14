@@ -14,6 +14,8 @@ namespace API
         {
             var host = CreateHostBuilder(args).Build();
 
+            host.Services.GetRequiredService<ILogger<Program>>();
+
             CreateDbIfNotExists(host);
 
             host.Run();
