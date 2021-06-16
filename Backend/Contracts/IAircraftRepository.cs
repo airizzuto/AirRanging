@@ -15,7 +15,7 @@ namespace Repositories
         
         Task<IEnumerable<Aircraft>> GetAllAircraftsAsync();
 
-        // Task<IEnumerable<Aircraft>> GetAircraftsCreated(string userId); // TODO: To aircraft DTO?
+        // Task<IEnumerable<Aircraft>> GetAircraftsOwned(Guid userId); // TODO: To aircraft DTO?
 
         // Task SaveToUserAsync(string userId, Guid aircraftId);
         Task<Aircraft> GetAircraftByIdAsync(Guid id);

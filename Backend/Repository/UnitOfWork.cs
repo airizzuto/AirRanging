@@ -1,12 +1,14 @@
 using System.Threading.Tasks;
+using Contracts;
 using Entities.Data;
 
 namespace Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private RepositoryContext _context;
+        private readonly RepositoryContext _context;
         private IAircraftRepository _aircraft;
+        private IApplicationUserRepository _applicationUser;
 
         public IAircraftRepository Aircraft {
             get {
@@ -16,6 +18,17 @@ namespace Repositories
                 }
 
                 return _aircraft;
+            }
+        }
+
+        public IApplicationUserRepository ApplicationUser {
+            get {
+                if (_applicationUser == null)
+                {
+                    _applicationUser = new ApplicationUserRepository(_context);
+                }
+
+                return _applicationUser;
             }
         }
 

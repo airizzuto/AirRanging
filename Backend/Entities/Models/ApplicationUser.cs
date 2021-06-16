@@ -5,7 +5,7 @@ namespace Entities.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<Aircraft> Aircrafts { get; set; }
+        public ICollection<Aircraft> AircraftsOwned { get; set; }
         public ICollection<Bookmark> Bookmarks { get; set; }
     }
 }

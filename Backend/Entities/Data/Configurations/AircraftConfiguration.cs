@@ -67,7 +67,7 @@ namespace Entities.Data.Configurations
                 .HasDefaultValue(1);
 
             builder.HasOne(a => a.User)
-                .WithMany(u => u.Aircrafts)
+                .WithMany(u => u.AircraftsOwned)
                 .HasForeignKey(a => a.UserId);
         }
     }
