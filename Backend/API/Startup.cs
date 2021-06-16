@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using API.Extensions;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace API
 {
@@ -72,7 +73,15 @@ namespace API
 
             app.UseHttpsRedirection();
 
+            app.UseStaticFiles();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All
+            });
+
             app.UseRouting();
+            app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
 

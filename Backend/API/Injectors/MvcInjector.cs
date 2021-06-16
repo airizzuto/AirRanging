@@ -5,14 +5,11 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using API.Conventions;
-using API.Models.Identity;
-using API.Services;
 using API.Services.Identity;
 using API.Settings;
+using API.Extensions;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -21,6 +18,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Builder;
+using API.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace API.Injectors
 {
@@ -28,6 +28,20 @@ namespace API.Injectors
     {
         public void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
+            // TODO: SECURITY: Restrict before production
+            services.AddCors(options => 
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+
+            services.Configure<IISOptions>(options => 
+            {
+
+            });
+
             #region Identity
             services.Configure<IdentityOptions>(options =>
             {
@@ -93,7 +107,6 @@ namespace API.Injectors
             */
             #endregion
 
-            // Used in queries filtering
             services.AddSingleton<IUriService>(provider => {
                 var accessor = provider.GetRequiredService<IHttpContextAccessor>();
                 var request = accessor.HttpContext.Request;
@@ -160,5 +173,7 @@ namespace API.Injectors
                 c.IncludeXmlComments(xmlPath);
             });
         }
+    
+        
     }
 }
