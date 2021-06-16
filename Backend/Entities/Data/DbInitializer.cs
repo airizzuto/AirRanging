@@ -20,7 +20,7 @@ namespace Entities.Data
             {
                 new Aircraft
                 {
-                    AircraftId = Guid.NewGuid(),
+                    Id = Guid.NewGuid(),
                     IcaoId = "C152",
                     Manufacturer = "Cessna",
                     Model = "152",
@@ -38,7 +38,7 @@ namespace Entities.Data
                 },
                 new Aircraft
                 {
-                    AircraftId = Guid.NewGuid(),
+                    Id = Guid.NewGuid(),
                     IcaoId = "C152",
                     Manufacturer = "Cessna",
                     Model = "152",
@@ -57,7 +57,7 @@ namespace Entities.Data
                 },
                 new Aircraft
                 {
-                    AircraftId = Guid.NewGuid(),
+                    Id = Guid.NewGuid(),
                     IcaoId = "C172",
                     Manufacturer = "Cessna",
                     Model = "172",
@@ -75,7 +75,7 @@ namespace Entities.Data
                 },
                 new Aircraft
                 {
-                    AircraftId = Guid.NewGuid(),
+                    Id = Guid.NewGuid(),
                     IcaoId = "A320",
                     Manufacturer = "Airbus",
                     Model = "320",
@@ -93,7 +93,7 @@ namespace Entities.Data
                 },
                 new Aircraft
                 {
-                    AircraftId = Guid.NewGuid(),
+                    Id = Guid.NewGuid(),
                     IcaoId = "B738",
                     Manufacturer = "Boeing",
                     Model = "737-800",

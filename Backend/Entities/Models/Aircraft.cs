@@ -8,7 +8,7 @@ namespace Entities.Models
 {
     public class Aircraft
     {
-        public Guid AircraftId { get; set; }
+        public Guid Id { get; set; }
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }

@@ -10,9 +10,9 @@ namespace Entities.Data.Configurations
         {
             builder.ToTable("Aircrafts");
 
-            builder.HasKey(a => a.AircraftId);
+            builder.HasKey(a => a.Id);
 
-            builder.Property(a => a.AircraftId)
+            builder.Property(a => a.Id)
                 .ValueGeneratedOnAdd();
 
             builder.Property(a => a.IcaoId)

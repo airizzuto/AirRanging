@@ -3,11 +3,11 @@ using System.ComponentModel;
 using Entities.Models.Enums;
 using Entities.Models;
 
-namespace API.DTOs.V1.Aircraft
+namespace Entities.DTOs.V1.Aircraft
 {
-    public class AircraftUpdateDTO
+    public class AircraftCreateDTO
     {
-        public Guid AircraftId { get; set; }
+        public Guid Id { get; set; }
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
@@ -24,12 +24,11 @@ namespace API.DTOs.V1.Aircraft
         public decimal FuelCapacity { get; set; }
         public decimal MaxRange { get; set; }
         public int ServiceCeiling { get; set; }
-        public int SavesCount { get; set; }
 
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
         // [DisplayName("Author")]
-        // public ApplicationUser User { get; set; } // TODO: Check if needed
+        // public ApplicationUser User { get; set; }
     }
 }
