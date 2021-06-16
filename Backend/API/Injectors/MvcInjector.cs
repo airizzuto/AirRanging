@@ -21,6 +21,8 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using API.Services;
 using Microsoft.AspNetCore.Http;
+using Logger;
+using Contracts;
 
 namespace API.Injectors
 {
@@ -128,6 +130,8 @@ namespace API.Injectors
                     fv.RegisterValidatorsFromAssemblyContaining<Startup>();
                     // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                 });
+
+            services.AddSingleton<ILoggerManager, LoggerManager>();
 
             services.AddControllers(options => {
                 options.Conventions.Add(new GroupingByNamespaceConvention());

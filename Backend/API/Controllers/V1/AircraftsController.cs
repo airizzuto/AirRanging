@@ -18,6 +18,7 @@ using API.Helpers;
 using API.Contracts.V1.Pagination;
 using API.Contracts.V1.Aircrafts;
 using API.Services.Identity;
+using Contracts;
 
 namespace API.Controllers.V1
 {
@@ -31,12 +32,12 @@ namespace API.Controllers.V1
         private readonly IMapper _mapper;
         private readonly IUriService _uriService;
         private readonly IUserService _userService;
-        private readonly ILogger<AircraftsController> _logger;
+        private readonly ILoggerManager _logger;
 
         public AircraftsController(
             IAircraftRepository repository,
             IMapper mapper,
-            ILogger<AircraftsController> logger,
+            ILoggerManager logger,
             IUriService uriService,
             IUserService userService)
         {
@@ -65,7 +66,7 @@ namespace API.Controllers.V1
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
             {
-                _logger.LogInformation(
+                _logger.LogInfo(
                     $"INFO: Returning {aircrafts.Count()} aircrafts from db");
 
                 return Ok(new PagedResponse<AircraftReadDTO>(aircraftsResponse));
@@ -92,7 +93,7 @@ namespace API.Controllers.V1
                 return NotFound();
             }
 
-            _logger.LogInformation($"INFO: Returning aircraft {id}");
+            _logger.LogInfo($"INFO: Returning aircraft {id}");
 
             var resource = _mapper.Map<AircraftReadDTO>(aircraft);
             return Ok(resource);
@@ -123,7 +124,7 @@ namespace API.Controllers.V1
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
-            _logger.LogInformation(
+            _logger.LogInfo(
                 $"INFO: User {user.UserName} created aircraft {aircraftReadDto.AircraftId}"
             );
 
@@ -165,7 +166,7 @@ namespace API.Controllers.V1
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {aircraftUpdateDTO.User.UserName} updated aircraft {id}");
+            _logger.LogInfo($"INFO: User {aircraftUpdateDTO.User.UserName} updated aircraft {id}");
 
             return NoContent();
         }
@@ -209,7 +210,7 @@ namespace API.Controllers.V1
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {existingAircraft.User.UserName} partially updated aircraft {id}");
+            _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} partially updated aircraft {id}");
 
             return NoContent();
         }
@@ -242,7 +243,7 @@ namespace API.Controllers.V1
             _repository.DeleteAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {existingAircraft.User.UserName} deleted aircraft {id}");
+            _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} deleted aircraft {id}");
 
             return NoContent();
         }

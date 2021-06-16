@@ -12,6 +12,9 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using API.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
+using System;
+using System.IO;
+using NLog;
 
 namespace API
 {
@@ -21,6 +24,7 @@ namespace API
 
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
