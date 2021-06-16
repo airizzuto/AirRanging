@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using API.Models;
-using API.Models.Identity;
+using Entities.Models;
+using Entities.Models.Identity;
 
 namespace API.Services.Identity
     {

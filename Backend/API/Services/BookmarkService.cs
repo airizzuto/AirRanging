@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using API.Data;
-using API.Models;
+using Entities.Data;
+using Entities.Models;
 
 namespace API.Services
 {

@@ -1,22 +1,23 @@
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.DTOs.V1.Aircraft;
-using API.Models;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using API.Extensions;
-using System;
-using System.Linq;
-using API.Models.Filters;
+using AutoMapper;
 using API.Services;
 using API.Helpers;
+using API.Extensions;
 using API.Contracts.V1.Pagination;
 using API.Contracts.V1.Aircrafts;
+using API.DTOs.V1.Aircraft;
 using API.Services.Identity;
 using Contracts;
+using Repositories;
+using Entities.Models;
+using Entities.Models.Filters;
 
 namespace API.Controllers.V1
 {
@@ -26,14 +27,14 @@ namespace API.Controllers.V1
     [ApiVersion("1.0")]
     public class AircraftsController : ControllerBase
     {
-        private readonly IAircraftRepository _repository;
+        private readonly ILoggerManager _logger;
+        private readonly IUnitOfWork _repository;
         private readonly IMapper _mapper;
         private readonly IUriService _uriService;
         private readonly IUserService _userService;
-        private readonly ILoggerManager _logger;
 
         public AircraftsController(
-            IAircraftRepository repository,
+            IUnitOfWork repository,
             IMapper mapper,
             ILoggerManager logger,
             IUriService uriService,
@@ -53,13 +54,13 @@ namespace API.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<PagedResponse<AircraftReadDTO>>> GetAllAircrafts(
+        public async Task<ActionResult<PagedResponse<AircraftReadDTO>>> GetAllAircraftsWithQuery(
             [FromQuery] GetAllAircraftsQuery query,
             [FromQuery] PaginationQuery paginationQuery)
         {
             var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
             var filter = _mapper.Map<GetAllAircraftsFilter>(query);
-            var aircrafts = await _repository.GetAllAircraftsAsync(filter, pagination);
+            var aircrafts = await _repository.Aircraft.GetAllAircraftsWithQueryAsync(filter, pagination);
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
             if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
@@ -85,7 +86,7 @@ namespace API.Controllers.V1
         [AllowAnonymous]
         public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(Guid id)
         {
-            var aircraft = await _repository.GetAircraftByIdAsync(id);
+            var aircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (aircraft == null)
             {
                 return NotFound();
@@ -116,9 +117,9 @@ namespace API.Controllers.V1
 
             aircraftCreateDto.UserId = user.Id;;
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
-            await _repository.CreateAircraftAsync(aircraftModel);
-            await _repository.SaveToUserAsync(user.Id, aircraftModel.AircraftId);
-            await _repository.SaveChangesAsync();
+            _repository.Aircraft.CreateAircraft(aircraftModel);
+            // await _repository.SaveToUserAsync(user.Id, aircraftModel.AircraftId);
+            await _repository.SaveAsync();
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
@@ -144,14 +145,14 @@ namespace API.Controllers.V1
         public async Task<IActionResult> UpdateAircraft(
             Guid id, AircraftUpdateDTO aircraftUpdateDTO)
         {
-            var existingAircraft = await _repository.GetAircraftByIdAsync(id);
+            var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
                 return NotFound();
             }
 
             var userId = HttpContext.GetUserId();
-            var userOwnsAircraft = await _repository.UserOwnsAircraftAsync(id, userId);
+            var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
             if (!userOwnsAircraft)
             {
                 return BadRequest(
@@ -161,8 +162,8 @@ namespace API.Controllers.V1
 
             _mapper.Map(aircraftUpdateDTO, existingAircraft);
 
-            _repository.UpdateAircraft(existingAircraft);
-            await _repository.SaveChangesAsync();
+            _repository.Aircraft.UpdateAircraft(existingAircraft);
+            await _repository.SaveAsync();
 
             _logger.LogInfo($"INFO: User {aircraftUpdateDTO.User.UserName} updated aircraft {id}");
 
@@ -180,14 +181,14 @@ namespace API.Controllers.V1
         public async Task<IActionResult> PartialUpdateAircraft(
             Guid id, JsonPatchDocument<AircraftUpdateDTO> patchDocument)
         {
-            var existingAircraft = await _repository.GetAircraftByIdAsync(id);
+            var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
                 return NotFound();
             }
 
             var userId = HttpContext.GetUserId();
-            var userOwnsAircraft = await _repository.UserOwnsAircraftAsync(id, userId);
+            var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
             if (!userOwnsAircraft)
             {
                 return BadRequest(
@@ -205,8 +206,8 @@ namespace API.Controllers.V1
 
             _mapper.Map(aircraftToPatch, existingAircraft);
 
-            _repository.UpdateAircraft(existingAircraft);
-            await _repository.SaveChangesAsync();
+            _repository.Aircraft.UpdateAircraft(existingAircraft);
+            await _repository.SaveAsync();
 
             _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} partially updated aircraft {id}");
 
@@ -223,14 +224,14 @@ namespace API.Controllers.V1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAircraft(Guid id)
         {
-            var existingAircraft = await _repository.GetAircraftByIdAsync(id);
+            var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
                 return NotFound();
             }
 
             var userId = HttpContext.GetUserId();
-            var userOwnsAircraft = await _repository.UserOwnsAircraftAsync(id, userId);
+            var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
             if (!userOwnsAircraft)
             {
                 return BadRequest(
@@ -238,8 +239,8 @@ namespace API.Controllers.V1
                 );
             }
 
-            _repository.DeleteAircraft(existingAircraft);
-            await _repository.SaveChangesAsync();
+            _repository.Aircraft.DeleteAircraft(existingAircraft);
+            await _repository.SaveAsync();
 
             _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} deleted aircraft {id}");
 

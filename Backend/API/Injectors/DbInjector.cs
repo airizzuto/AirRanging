@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Repositories;
+using Contracts;
 
 namespace API.Injectors
 {
@@ -32,7 +33,6 @@ namespace API.Injectors
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IAircraftRepository, AircraftRepository>();
             services.AddScoped<IBookmarkService, BookmarkService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }

@@ -1,4 +1,4 @@
-using API.Models;
+using Entities.Models;
 using API.DTOs.V1.Aircraft;
 using AutoMapper;
 

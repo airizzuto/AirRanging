@@ -1,4 +1,4 @@
-using API.Data;
+using Entities.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

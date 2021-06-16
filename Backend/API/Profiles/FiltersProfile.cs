@@ -1,6 +1,6 @@
 using API.Contracts.V1.Aircrafts;
 using API.Contracts.V1.Pagination;
-using API.Models.Filters;
+using Entities.Models.Filters;
 using AutoMapper;
 
 namespace API.Profiles

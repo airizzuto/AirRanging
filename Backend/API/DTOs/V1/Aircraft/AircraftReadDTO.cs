@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel;
-using API.Models.Identity;
+using Entities.Models;
 
 namespace API.DTOs.V1.Aircraft
 {

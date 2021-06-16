@@ -1,4 +1,4 @@
-using API.Models.Enums;
+using Entities.Models.Enums;
 
 namespace API.Contracts.V1.Aircrafts
 {

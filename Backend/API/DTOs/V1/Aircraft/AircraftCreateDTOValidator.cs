@@ -1,4 +1,4 @@
-using API.Models.Enums;
+using Entities.Models.Enums;
 using FluentValidation;
 
 namespace API.DTOs.V1.Aircraft
