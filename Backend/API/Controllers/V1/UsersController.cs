@@ -9,12 +9,12 @@ namespace API.Controllers.V1
 {
     [ApiController]
     [Route("/account")]
-    public class IdentityController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private readonly IIdentityService _service;
-        private readonly ILogger<IdentityController> _logger;
+        private readonly IUserService _service;
+        private readonly ILogger<UsersController> _logger;
 
-        public IdentityController(IIdentityService service, ILogger<IdentityController> logger)
+        public UsersController(IUserService service, ILogger<UsersController> logger)
         {
             _service = service;
             _logger = logger;

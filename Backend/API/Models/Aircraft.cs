@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using API.Models.Enums;
 using API.Models.Identity;
@@ -7,7 +9,7 @@ namespace API.Models
 {
     public class Aircraft
     {
-        public Guid AircraftID { get; set; }
+        public Guid AircraftId { get; set; }
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
@@ -31,9 +33,13 @@ namespace API.Models
         public int ServiceCeiling { get; set; }
         public int SavesCount { get; set; }
 
+        [DisplayName("Author")]
+        public virtual string UserId { get; set; }
 
-        // TODO: Add username reference. To indicate who is the user that created the aircraft when searching or selecting.
-        public string AuthorID { get; set; }
-        public virtual ApplicationUser Author { get; set; }
+        [ForeignKey(nameof(UserId))]
+        [DisplayName("Author")]
+        public virtual ApplicationUser User { get; set; }
+
+        public ICollection<Bookmark> Bookmarks { get; set; }
     }
 }

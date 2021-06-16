@@ -28,7 +28,7 @@ namespace API
             services.InjectServicesInAssembly(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -40,8 +40,6 @@ namespace API
             }
 
             app.UseExceptionHandler("/Error"); // TODO: Error handling endpoint?
-
-            app.ConfigureExceptionHandler(logger);
 
             app.UseHealthChecks("/health", new HealthCheckOptions
             {

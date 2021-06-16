@@ -13,6 +13,8 @@ namespace API.Data.Repositories
             GetAllAircraftsFilter filter = null,
             PaginationFilter paginationFilter = null);
 
+        // Task<IEnumerable<Aircraft>> GetAircraftsCreated(string userId); // TODO: To aircraft DTO?
+        Task SaveToUserAsync(string userId, Guid aircraftId);
         Task<Aircraft> GetAircraftByIdAsync(Guid id);
         Task CreateAircraftAsync(Aircraft aircraft);
         void UpdateAircraft(Aircraft aircraft);

@@ -5,7 +5,7 @@ namespace API.Models.Identity
 {
     public class ApplicationUser : IdentityUser
     {
-        public virtual ICollection<Aircraft> UserAircrafts { get; set; }
-        public virtual ICollection<Aircraft> SavedAircrafts { get; set; }
+        public ICollection<Aircraft> Aircrafts { get; set; }
+        public ICollection<Bookmark> Bookmarks { get; set; }
     }
 }

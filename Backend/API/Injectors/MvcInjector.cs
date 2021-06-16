@@ -54,7 +54,7 @@ namespace API.Injectors
             configuration.Bind(nameof(jwtSettings), jwtSettings); // TODO: Review Implementation
             services.AddSingleton(jwtSettings);
 
-            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IUserService, UserService>();
 
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -93,6 +93,7 @@ namespace API.Injectors
             */
             #endregion
 
+            // Used in queries filtering
             services.AddSingleton<IUriService>(provider => {
                 var accessor = provider.GetRequiredService<IHttpContextAccessor>();
                 var request = accessor.HttpContext.Request;

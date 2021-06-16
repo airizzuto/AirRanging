@@ -17,6 +17,7 @@ using API.Services;
 using API.Helpers;
 using API.Contracts.V1.Pagination;
 using API.Contracts.V1.Aircrafts;
+using API.Services.Identity;
 
 namespace API.Controllers.V1
 {
@@ -29,18 +30,21 @@ namespace API.Controllers.V1
         private readonly IAircraftRepository _repository;
         private readonly IMapper _mapper;
         private readonly IUriService _uriService;
+        private readonly IUserService _userService;
         private readonly ILogger<AircraftsController> _logger;
 
         public AircraftsController(
             IAircraftRepository repository,
             IMapper mapper,
             ILogger<AircraftsController> logger,
-            IUriService uriService)
+            IUriService uriService,
+            IUserService userService)
         {
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
             _uriService = uriService;
+            _userService = userService;
         }
 
         // GET api/aircrafts
@@ -50,7 +54,7 @@ namespace API.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAllAircrafts(
+        public async Task<ActionResult<PagedResponse<AircraftReadDTO>>> GetAllAircrafts(
             [FromQuery] GetAllAircraftsQuery query,
             [FromQuery] PaginationQuery paginationQuery)
         {
@@ -78,9 +82,9 @@ namespace API.Controllers.V1
         /// </summary>
         /// <response code="200">Retrieves aircraft (id) in the database</response>
         /// <response code="404">Aircraft by (id) not found in the database</response>
-        [HttpGet("{id}", Name="GetAircraftById")]
+        [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAircraftById(Guid id)
+        public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(Guid id)
         {
             var aircraft = await _repository.GetAircraftByIdAsync(id);
             if (aircraft == null)
@@ -94,37 +98,38 @@ namespace API.Controllers.V1
             return Ok(resource);
         }
 
-        // TODO: save to user
         // POST api/aircrafts
         /// <summary>
         /// Creates an aircraft in the database
         /// </summary>
         /// <response code="201">Aircraft created successfully in database</response>
-        /// <response code="400">Unable to create the aircraft due to user not logged in</response>
         /// <response code="400">Unable to create the aircraft due to validation error</response>
+        /// <response code="401">Unable to create the aircraft due to user not logged in</response>
         [HttpPost]
         public async Task<IActionResult> CreateAircraft(
             AircraftCreateDTO aircraftCreateDto)
         {
-            var userId = HttpContext.GetUserId();
-            if (userId == null)
+            var user = await _userService.GetUserAsync(HttpContext.GetUserId());
+            if (user == null)
             {
-                return BadRequest(
-                    new { Error = "Login to create aircraft"}
-                );
+                return BadRequest(new { Error = "Login to create aircraft"});
             }
 
+            aircraftCreateDto.UserId = user.Id;;
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.CreateAircraftAsync(aircraftModel);
+            await _repository.SaveToUserAsync(user.Id, aircraftModel.AircraftId);
             await _repository.SaveChangesAsync();
-
-            _logger.LogInformation($"INFO: User {aircraftModel.Author.UserName} created new aircraft");
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
+            _logger.LogInformation(
+                $"INFO: User {user.UserName} created aircraft {aircraftReadDto.AircraftId}"
+            );
+
             return CreatedAtRoute(
                 nameof(GetAircraftById),
-                new { aircraftReadDto.AircraftID },
+                aircraftReadDto.AircraftId,
                 aircraftReadDto
             );
         }
@@ -160,7 +165,7 @@ namespace API.Controllers.V1
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {aircraftUpdateDTO.Author.UserName} updated aircraft {id}");
+            _logger.LogInformation($"INFO: User {aircraftUpdateDTO.User.UserName} updated aircraft {id}");
 
             return NoContent();
         }
@@ -204,7 +209,7 @@ namespace API.Controllers.V1
             _repository.UpdateAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {existingAircraft.Author.UserName} partially updated aircraft {id}");
+            _logger.LogInformation($"INFO: User {existingAircraft.User.UserName} partially updated aircraft {id}");
 
             return NoContent();
         }
@@ -237,7 +242,7 @@ namespace API.Controllers.V1
             _repository.DeleteAircraft(existingAircraft);
             await _repository.SaveChangesAsync();
 
-            _logger.LogInformation($"INFO: User {existingAircraft.Author.UserName} deleted aircraft {id}");
+            _logger.LogInformation($"INFO: User {existingAircraft.User.UserName} deleted aircraft {id}");
 
             return NoContent();
         }

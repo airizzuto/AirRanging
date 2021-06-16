@@ -1,11 +1,12 @@
 using System;
+using System.ComponentModel;
 using API.Models.Identity;
 
 namespace API.DTOs.V1.Aircraft
 {
     public class AircraftReadDTO
     {
-        public Guid AircraftID { get; set; }    
+        public Guid AircraftId { get; set; }
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
@@ -23,6 +24,6 @@ namespace API.DTOs.V1.Aircraft
         public decimal MaxRange { get; set; }
         public int ServiceCeiling { get; set; }
         public int SavesCount { get; set; }
-        public ApplicationUser Author { get; set; }
+        public string AuthorUsername { get; set; }
     }
 }

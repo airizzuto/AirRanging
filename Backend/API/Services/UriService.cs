@@ -14,7 +14,7 @@ namespace API.Services
         }
 
 
-    public Uri GetAllAircraftsUri(PaginationQuery pagination = null)
+        public Uri GetAllAircraftsUri(PaginationQuery pagination = null)
         {
             var uri = new Uri(_baseUri);
 

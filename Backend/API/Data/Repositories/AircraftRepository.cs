@@ -7,15 +7,19 @@ using System;
 using API.Models.Filters;
 using System.Linq;
 using API.Models.Enums;
-using Microsoft.Extensions.Logging;
+using API.Services;
 
 namespace API.Data.Repositories
 {
     public class AircraftRepository : BaseRepository, IAircraftRepository
     {
-        public AircraftRepository(ApplicationDbContext context) : base(context) 
+        private readonly IBookmarkService _bookmarkService;
+        public AircraftRepository( 
+            IBookmarkService bookmarkService,
+            ApplicationDbContext context
+            ) : base(context) 
         {
-
+            _bookmarkService = bookmarkService;
         }
 
         public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync(
@@ -41,10 +45,16 @@ namespace API.Data.Repositories
                 .ToListAsync();
         }
 
-
         public async Task<Aircraft> GetAircraftByIdAsync(Guid id)
         {
             return await _context.Aircrafts.FindAsync(id);
+        }
+
+        // TODO: response.
+        // TODO: REVIEW: other services injected
+        public async Task SaveToUserAsync(string userId, Guid aircraftId)
+        {
+            await _bookmarkService.SaveAsync(userId, aircraftId);
         }
 
         public async Task CreateAircraftAsync(Aircraft aircraft)
@@ -74,14 +84,14 @@ namespace API.Data.Repositories
         {
             var aircraft = await _context.Aircrafts
                 .AsNoTracking()
-                .SingleOrDefaultAsync(a => a.AircraftID == id);
+                .SingleOrDefaultAsync(a => a.AircraftId == id);
             
             if (aircraft == null)
             {
                 return false;
             }
 
-            if (aircraft.AuthorID != getAuthorId)
+            if (aircraft.User.NormalizedUserName != getAuthorId)
             {
                 return false;
             }
@@ -159,7 +169,7 @@ namespace API.Data.Repositories
             if (!string.IsNullOrEmpty(filter?.AuthorUsername))
             {
                 queryable = queryable.Where(a =>
-                    a.Author.NormalizedUserName == filter.AuthorUsername.ToUpper());
+                    a.User.NormalizedUserName == filter.AuthorUsername.ToUpper());
             }
 
             return queryable;

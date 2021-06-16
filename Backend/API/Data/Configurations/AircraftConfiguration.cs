@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace API.Data.Configurations
 {
-  public class AircraftRepoConfiguration : IEntityTypeConfiguration<Aircraft>
+  public class AircraftConfiguration : IEntityTypeConfiguration<Aircraft>
     {
         public void Configure(EntityTypeBuilder<Aircraft> builder)
         {
             builder.ToTable("Aircrafts");
 
-            builder.HasKey(a => a.AircraftID);
+            builder.HasKey(a => a.AircraftId);
 
-            builder.Property(a => a.AircraftID)
+            builder.Property(a => a.AircraftId)
                 .ValueGeneratedOnAdd();
 
             builder.Property(a => a.IcaoId)
@@ -67,10 +67,9 @@ namespace API.Data.Configurations
             builder.Property(a => a.SavesCount)
                 .HasDefaultValue(1);
 
-            builder
-                .HasOne(a => a.Author)
-                .WithMany(u => u.UserAircrafts)
-                .HasForeignKey(a => a.AuthorID);
+            builder.HasOne(a => a.User)
+                .WithMany(u => u.Aircrafts)
+                .HasForeignKey(a => a.UserId);
         }
     }
 }

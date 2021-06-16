@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -11,28 +12,47 @@ using API.Models.Identity;
 using API.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services.Identity
 {
-    public class IdentityService : IIdentityService
+    public class UserService : IUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<UserService> _logger;
 
-        public IdentityService(
+        public UserService(
             UserManager<ApplicationUser> userManager,
             JwtSettings jwtSettings,
             TokenValidationParameters tokenValidationParameters,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            ILogger<UserService> logger)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
             _tokenValidationParameters = tokenValidationParameters;
             _context = context;
+            _logger = logger;
         }
+
+        public async Task<ApplicationUser> GetUserAsync(string id)
+        {
+            return await _userManager.FindByIdAsync(id);
+        }
+
+        // TODO: saved response
+        // public async Task SaveAircraftAsync(string userId, Guid aircraftId)
+        // { 
+        //     var user = await GetUserAsync(userId);
+
+        //     _logger.LogInformation(
+        //         $"INFO: saved aircraft {aircraftId} to {user.UserName}"
+        //     );
+        // }
 
         // TODO: Login with username or email. Switch if "@" is present?
         public async Task<AuthenticationResult> LoginAsync(string email, string password)

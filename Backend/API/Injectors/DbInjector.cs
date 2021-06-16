@@ -2,6 +2,7 @@ using System;
 using API.Data.Contexts;
 using API.Data.Repositories;
 using API.Models.Identity;
+using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,7 @@ namespace API.Injectors
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IAircraftRepository, AircraftRepository>();
+            services.AddScoped<IBookmarkService, BookmarkService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
