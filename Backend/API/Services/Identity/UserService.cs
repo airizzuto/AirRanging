@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using API.Data.Contexts;
-using API.Models;
+using API.Data;
 using API.Models.Identity;
 using API.Settings;
 using Microsoft.AspNetCore.Identity;
@@ -22,14 +19,14 @@ namespace API.Services.Identity
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
-        private readonly ApplicationDbContext _context;
+        private readonly RepositoryContext _context;
         private readonly ILogger<UserService> _logger;
 
         public UserService(
             UserManager<ApplicationUser> userManager,
             JwtSettings jwtSettings,
             TokenValidationParameters tokenValidationParameters,
-            ApplicationDbContext context,
+            RepositoryContext context,
             ILogger<UserService> logger)
         {
             _userManager = userManager;

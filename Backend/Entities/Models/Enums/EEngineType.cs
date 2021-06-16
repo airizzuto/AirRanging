@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.Serialization;
 
-namespace API.Models.Enums
+namespace Entities.Models.Enums
 {
   /// <summary>
   /// Represents the type of engine used in aircraft per ICAO standards.

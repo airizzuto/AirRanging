@@ -1,12 +1,12 @@
 using System;
-using API.Data.Contexts;
-using API.Data.Repositories;
-using API.Models.Identity;
 using API.Services;
+using Entities.Data;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using Repositories;
 
 namespace API.Injectors
 {
@@ -21,14 +21,14 @@ namespace API.Injectors
                 Password = dbPassword
             };
 
-            services.AddDbContext<ApplicationDbContext>(
+            services.AddDbContext<RepositoryContext>(
                 opt => opt.UseNpgsql(builder.ConnectionString)
             );
 
             services.AddIdentityCore<ApplicationUser>()
                 // TODO REFACTOR: Review use of default implementation instead of custom token and refresh token 
                 // .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<RepositoryContext>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

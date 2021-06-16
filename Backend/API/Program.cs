@@ -1,6 +1,5 @@
 using System;
 using API.Data;
-using API.Data.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,7 +34,7 @@ namespace API
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    var context = services.GetRequiredService<RepositoryContext>();
                     DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)

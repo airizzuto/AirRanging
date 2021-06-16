@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace API.Models.Enums
+namespace Entities.Models.Enums
 {
   /// <summary>
   /// Represents the aircraft take-off weight categories:

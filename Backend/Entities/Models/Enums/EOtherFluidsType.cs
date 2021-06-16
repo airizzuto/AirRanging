@@ -1,4 +1,4 @@
-namespace API.Models.Enums
+namespace Entities.Models.Enums
 {
   /// <summary>
   /// <para>Represents other type of fluids that are not fuel.</para>

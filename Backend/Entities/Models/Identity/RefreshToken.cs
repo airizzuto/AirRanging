@@ -1,9 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using API.Models.Identity;
 
-namespace API.Models.Identity
+namespace Entities.Models.Identity
 {
     public class RefreshToken
     {

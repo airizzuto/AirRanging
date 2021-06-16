@@ -1,14 +1,14 @@
 using System;
 using System.Threading.Tasks;
-using API.Data.Contexts;
+using API.Data;
 using API.Models;
 
 namespace API.Services
 {
     public class BookmarkService : IBookmarkService
     {
-        ApplicationDbContext _context;
-        public BookmarkService(ApplicationDbContext context)
+        RepositoryContext _context;
+        public BookmarkService(RepositoryContext context)
         {
             _context = context;
         }

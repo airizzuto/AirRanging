@@ -1,4 +1,4 @@
-using API.Data.Contexts;
+using API.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +9,7 @@ namespace API.Injectors
         public void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddHealthChecks()
-                .AddDbContextCheck<ApplicationDbContext>();
+                .AddDbContextCheck<RepositoryContext>();
         }
     }
 }

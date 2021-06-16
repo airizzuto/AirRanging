@@ -2,8 +2,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Contracts.V1.Identity;
 using API.Services.Identity;
+using Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace API.Controllers.V1
 {
@@ -12,9 +12,9 @@ namespace API.Controllers.V1
     public class UsersController : ControllerBase
     {
         private readonly IUserService _service;
-        private readonly ILogger<UsersController> _logger;
+        private readonly ILoggerManager _logger;
 
-        public UsersController(IUserService service, ILogger<UsersController> logger)
+        public UsersController(IUserService service, ILoggerManager logger)
         {
             _service = service;
             _logger = logger;
@@ -42,7 +42,7 @@ namespace API.Controllers.V1
                 });
             }
 
-            _logger.LogInformation($"INFO: User created");
+            _logger.LogInfo($"INFO: User created");
 
             return Ok(new AuthSuccessResponse {
                 Token = authResponse.Token,
@@ -62,7 +62,7 @@ namespace API.Controllers.V1
                 });
             }
 
-            _logger.LogInformation($"INFO: User {request.Email} logged");
+            _logger.LogInfo($"INFO: User {request.Email} logged");
 
             return Ok(new AuthSuccessResponse {
                 Token = authResponse.Token,

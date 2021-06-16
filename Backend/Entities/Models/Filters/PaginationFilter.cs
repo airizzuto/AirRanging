@@ -1,4 +1,4 @@
-namespace API.Models.Filters
+namespace Entities.Models.Filters
 {
     public class PaginationFilter
     {

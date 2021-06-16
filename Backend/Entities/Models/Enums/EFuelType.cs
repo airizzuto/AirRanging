@@ -1,4 +1,4 @@
-namespace API.Models.Enums
+namespace Entities.Models.Enums
 {
   /// <summary>
   /// <para>Represents fuel type used for engines.</para>

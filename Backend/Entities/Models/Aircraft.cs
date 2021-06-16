@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
-using API.Models.Enums;
-using API.Models.Identity;
+using Entities.Models.Enums;
 
-namespace API.Models
+namespace Entities.Models
 {
     public class Aircraft
     {

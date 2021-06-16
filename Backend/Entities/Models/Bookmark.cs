@@ -1,7 +1,6 @@
 using System;
-using API.Models.Identity;
 
-namespace API.Models
+namespace Entities.Models
 {
     public class Bookmark
     {

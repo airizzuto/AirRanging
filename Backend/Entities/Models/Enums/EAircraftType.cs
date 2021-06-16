@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace API.Models.Enums
+namespace Entities.Models.Enums
 {
   /// <summary>
   /// Represents the description used to distinguish an aircraft type.
