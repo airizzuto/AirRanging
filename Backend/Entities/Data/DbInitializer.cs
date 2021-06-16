@@ -1,10 +1,9 @@
 using System;
 using System.Linq;
-using API.Models;
-using API.Models.Identity;
-using API.Models.Enums;
+using Entities.Models;
+using Entities.Models.Enums;
 
-namespace API.Data
+namespace Entities.Data
 {
     public static class DbInitializer
     {

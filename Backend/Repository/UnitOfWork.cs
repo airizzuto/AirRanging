@@ -1,18 +1,30 @@
 using System.Threading.Tasks;
-using API.Data.Contexts;
+using Entities.Data;
 
-namespace API.Data.Repositories
+namespace Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDbContext _context;
+        private RepositoryContext _context;
+        private IAircraftRepository _aircraft;
 
-        public UnitOfWork(ApplicationDbContext context)
+        public IAircraftRepository Aircraft {
+            get {
+                if (_aircraft == null)
+                {
+                    _aircraft = new AircraftRepository(_context);
+                }
+
+                return _aircraft;
+            }
+        }
+
+        public UnitOfWork(RepositoryContext context)
         {
             _context = context;
         }
 
-        public async Task CompleteAsync()
+        public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
         }

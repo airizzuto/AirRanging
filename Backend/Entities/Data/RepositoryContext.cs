@@ -1,10 +1,10 @@
 using System.Reflection;
-using API.Models;
-using API.Models.Identity;
+using Entities.Models;
+using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Data
+namespace Entities.Data
 {
     public class RepositoryContext : IdentityDbContext<ApplicationUser>
     {
@@ -12,7 +12,7 @@ namespace API.Data
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Bookmark> Bookmarks { get; set; }
 
-        public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options) { }
+        public RepositoryContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder) 
         {

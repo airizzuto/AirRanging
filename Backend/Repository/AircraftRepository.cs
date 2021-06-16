@@ -1,26 +1,32 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using API.Models.Filters;
 using System.Linq;
-using API.Models.Enums;
+using Entities.Models;
+using Entities.Models.Filters;
+using Entities.Data;
+using Entities.Models.Enums;
 
-namespace API.Data.Repositories
+namespace Repositories
 {
-    public class AircraftRepository : BaseRepository, IAircraftRepository
+    public class AircraftRepository : BaseRepository<Aircraft>, IAircraftRepository
     {
         public AircraftRepository(RepositoryContext context) : base(context) 
         {
 
         }
 
-        public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync(
+        public async Task<IEnumerable<Aircraft>> GetAllAircraftsAsync()
+        {
+            return await FindAll().OrderBy(a => a.SavesCount).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Aircraft>> GetAllAircraftsWithQueryAsync(
             GetAllAircraftsFilter filter = null,
             PaginationFilter paginationFilter = null)
         {
-            var queryable = _context.Aircrafts.AsQueryable();
+            var queryable = FindAll();
 
             if (paginationFilter == null)
             {
@@ -41,7 +47,8 @@ namespace API.Data.Repositories
 
         public async Task<Aircraft> GetAircraftByIdAsync(Guid id)
         {
-            return await _context.Aircrafts.FindAsync(id);
+            return await FindByCondition(a => a.AircraftId.Equals(id))
+                .FirstOrDefaultAsync();
         }
 
         // TODO: response.
@@ -51,41 +58,31 @@ namespace API.Data.Repositories
         //     await _bookmarkService.SaveAsync(userId, aircraftId);
         // }
 
-        public async Task CreateAircraftAsync(Aircraft aircraft)
+        public void CreateAircraft(Aircraft aircraft)
         {
-            if (aircraft == null)
-            {
-                throw new ArgumentNullException(nameof(aircraft));
-            }
-            await _context.Aircrafts.AddAsync(aircraft);
+            Create(aircraft);
         }
 
         public void UpdateAircraft(Aircraft aircraft)
         {
-            _context.Aircrafts.Update(aircraft);
+            Update(aircraft);
         }
 
         public void DeleteAircraft(Aircraft aircraft)
         {
-            if (aircraft == null) 
-            {
-                throw new ArgumentNullException(nameof(aircraft));
-            }
-            _context.Aircrafts.Remove(aircraft);
+            Delete(aircraft);
         }
 
         public async Task<bool> UserOwnsAircraftAsync(Guid id, string getAuthorId)
         {
-            var aircraft = await _context.Aircrafts
-                .AsNoTracking()
-                .SingleOrDefaultAsync(a => a.AircraftId == id);
+            var aircraft = await GetAircraftByIdAsync(id);
             
             if (aircraft == null)
             {
                 return false;
             }
 
-            if (aircraft.User.NormalizedUserName != getAuthorId)
+            if (aircraft.User.Id != getAuthorId)
             {
                 return false;
             }
