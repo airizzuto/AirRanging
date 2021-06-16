@@ -47,15 +47,15 @@ namespace Repositories
 
         public async Task<Aircraft> GetAircraftByIdAsync(Guid id)
         {
-            return await FindByCondition(a => a.AircraftId.Equals(id))
+            return await FindByCondition(a => a.Id.Equals(id))
                 .FirstOrDefaultAsync();
         }
 
         // TODO: response.
         // TODO: REVIEW: other services injected
-        // public async Task SaveToUserAsync(string userId, Guid aircraftId)
+        // public async Task SaveToUserAsync(string userId, Guid Id)
         // {
-        //     await _bookmarkService.SaveAsync(userId, aircraftId);
+        //     await _bookmarkService.SaveAsync(userId, Id);
         // }
 
         public void CreateAircraft(Aircraft aircraft)
