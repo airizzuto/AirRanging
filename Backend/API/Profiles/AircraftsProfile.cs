@@ -1,5 +1,5 @@
 using Entities.Models;
-using API.DTOs.V1.Aircraft;
+using Entities.DTOs.V1.Aircraft;
 using AutoMapper;
 
 namespace API.Mapping

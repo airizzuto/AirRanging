@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using System;
 using System.IO;
 using NLog;
+using Contracts;
 
 namespace API
 {
@@ -33,7 +34,7 @@ namespace API
             services.InjectServicesInAssembly(Configuration);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
@@ -43,8 +44,6 @@ namespace API
             {
                 app.UseHsts();
             }
-
-            app.UseExceptionHandler("/Error"); // TODO: Error handling endpoint?
 
             app.UseHealthChecks("/health", new HealthCheckOptions
             {
@@ -73,7 +72,7 @@ namespace API
                 // config.SwaggerEndpoint("/swagger/v2/swagger.json", "AirRangingAPI v2");
             });
 
-            app.UseStatusCodePages();
+            app.ConfigureExceptionHandler();
 
             app.UseHttpsRedirection();
 

@@ -58,34 +58,26 @@ namespace API.Controllers.V1
             [FromQuery] GetAllAircraftsQuery query,
             [FromQuery] PaginationQuery paginationQuery)
         {
-            try
+            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
+            var filter = _mapper.Map<GetAllAircraftsFilter>(query);
+            var aircrafts = await _repository.Aircraft.GetAllAircraftsWithQueryAsync(filter, pagination);
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+
+            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
             {
-                var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-                var filter = _mapper.Map<GetAllAircraftsFilter>(query);
-                var aircrafts = await _repository.Aircraft.GetAllAircraftsWithQueryAsync(filter, pagination);
-                var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
-
-                if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
-                {
-                    _logger.LogInfo(
-                        $"INFO: Returning {aircrafts.Count()} aircrafts from db.");
-
-                    return Ok(new PagedResponse<AircraftReadDTO>(aircraftsResponse));
-                }
-
-                var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, aircraftsResponse);
-
                 _logger.LogInfo(
-                        $"INFO: Returning paginated {paginationResponse.Data.Count()} aircrafts from db."
-                );
+                    $"INFO: Returning {aircrafts.Count()} aircrafts from db.");
 
-                return Ok(paginationResponse);
+                return Ok(new PagedResponse<AircraftReadDTO>(aircraftsResponse));
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong inside 'GetAllAircraftsWithQuery' action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
+
+            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, aircraftsResponse);
+
+            _logger.LogInfo(
+                    $"INFO: Returning paginated {paginationResponse.Data.Count()} aircrafts from db."
+            );
+
+            return Ok(paginationResponse);
         }
 
         // GET api/aircrafts/5
@@ -98,25 +90,17 @@ namespace API.Controllers.V1
         [AllowAnonymous]
         public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(Guid id)
         {
-            try
+            var aircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
+            if (aircraft == null)
             {
-                var aircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
-                if (aircraft == null)
-                {
-                    _logger.LogError($"Aircraft id: {id}, not found.");
-                    return NotFound();
-                }
-
-                _logger.LogInfo($"INFO: Returning aircraft {id}.");
-
-                var resource = _mapper.Map<AircraftReadDTO>(aircraft);
-                return Ok(resource);
+                _logger.LogError($"Aircraft id: {id}, not found.");
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong inside 'GetAircraftById' action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
+
+            _logger.LogInfo($"INFO: Returning aircraft {id}.");
+
+            var resource = _mapper.Map<AircraftReadDTO>(aircraft);
+            return Ok(resource);
         }
 
         // POST api/aircrafts
@@ -127,41 +111,32 @@ namespace API.Controllers.V1
         /// <response code="400">Unable to create the aircraft due to validation error</response>
         /// <response code="401">Unable to create the aircraft due to user not logged in</response>
         [HttpPost]
-        public async Task<IActionResult> CreateAircraft(
-            AircraftCreateDTO aircraftCreateDto)
+        public async Task<IActionResult> CreateAircraft(AircraftCreateDTO aircraftCreateDto)
         {
-            try
+            var user = await _userService.GetUserAsync(HttpContext.GetUserId());
+            if (user == null)
             {
-                var user = await _userService.GetUserAsync(HttpContext.GetUserId());
-                if (user == null)
-                {
-                    _logger.LogError($"User not logged in. Unable to create aircraft.");
-                    return BadRequest();
-                }
-
-                aircraftCreateDto.UserId = user.Id;;
-                var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
-                _repository.Aircraft.CreateAircraft(aircraftModel);
-                // await _repository.SaveToUserAsync(user.Id, aircraftModel.Id);
-                await _repository.SaveAsync();
-
-                var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
-
-                _logger.LogInfo(
-                    $"INFO: User {user.UserName} created aircraft {aircraftReadDto.Id}."
-                );
-
-                return CreatedAtRoute(
-                    nameof(GetAircraftById),
-                    aircraftReadDto.Id,
-                    aircraftReadDto
-                );
+                _logger.LogError($"User not logged in. Unable to create aircraft.");
+                return BadRequest();
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong inside 'CreateAircraft' action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
+
+            aircraftCreateDto.UserId = user.Id; ;
+            var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
+            _repository.Aircraft.CreateAircraft(aircraftModel);
+            // await _repository.SaveToUserAsync(user.Id, aircraftModel.Id);
+            await _repository.SaveAsync();
+
+            var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
+
+            _logger.LogInfo(
+                $"INFO: User {user.UserName} created aircraft {aircraftReadDto.Id}."
+            );
+
+            return CreatedAtRoute(
+                nameof(GetAircraftById),
+                aircraftReadDto.Id,
+                aircraftReadDto
+            );
         }
 
         // PUT api/aircrafts/5
@@ -172,40 +147,31 @@ namespace API.Controllers.V1
         /// <response code="404">Aircraft id not found</response>
         /// <response code="400">Unable to update the aircraft due to validation error</response>
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAircraft(
-            Guid id, AircraftUpdateDTO aircraftUpdateDTO)
+        public async Task<IActionResult> UpdateAircraft(Guid id, AircraftUpdateDTO aircraftUpdateDTO)
         {
-            try
+            var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
+            if (existingAircraft == null)
             {
-                var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
-                if (existingAircraft == null)
-                {
-                    _logger.LogError($"Aircraft id: {id}, not found.");
-                    return NotFound();
-                }
-
-                var userId = HttpContext.GetUserId();
-                var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
-                if (!userOwnsAircraft)
-                {
-                    _logger.LogError($"User does not own this aircraft. Unable to update.");
-                    return BadRequest();
-                }
-
-                _mapper.Map(aircraftUpdateDTO, existingAircraft);
-
-                _repository.Aircraft.UpdateAircraft(existingAircraft);
-                await _repository.SaveAsync();
-
-                _logger.LogInfo($"INFO: User {aircraftUpdateDTO.User.UserName} updated aircraft {id}.");
-
-                return NoContent();
+                _logger.LogError($"Aircraft id: {id}, not found.");
+                return NotFound();
             }
-            catch (Exception ex)
+
+            var userId = HttpContext.GetUserId();
+            var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
+            if (!userOwnsAircraft)
             {
-                _logger.LogError($"Something went wrong inside 'UpdateAircraft' action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                _logger.LogError($"User does not own this aircraft. Unable to update.");
+                return BadRequest();
             }
+
+            _mapper.Map(aircraftUpdateDTO, existingAircraft);
+
+            _repository.Aircraft.UpdateAircraft(existingAircraft);
+            await _repository.SaveAsync();
+
+            _logger.LogInfo($"INFO: User {aircraftUpdateDTO.User.UserName} updated aircraft {id}.");
+
+            return NoContent();
         }
 
         // PATCH api/aircrafts/5
@@ -219,46 +185,38 @@ namespace API.Controllers.V1
         public async Task<IActionResult> PartialUpdateAircraft(
             Guid id, JsonPatchDocument<AircraftUpdateDTO> patchDocument)
         {
-            try
+            var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
+            if (existingAircraft == null)
             {
-                var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
-                if (existingAircraft == null)
-                {
-                    _logger.LogError($"Aircraft id: {id}, not found.");
-                    return NotFound();
-                }
-
-                var userId = HttpContext.GetUserId();
-                var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
-                if (!userOwnsAircraft)
-                {
-                    _logger.LogError($"User does not own this aircraft. Unable to update.");
-                    return BadRequest();
-                }
-
-                var aircraftToPatch = _mapper.Map<AircraftUpdateDTO>(existingAircraft);
-                patchDocument.ApplyTo(aircraftToPatch, ModelState);
-
-                if (!TryValidateModel(aircraftToPatch))
-                {
-                    _logger.LogError($"Validation error updating aircraft {aircraftToPatch.Id}.");
-                    return ValidationProblem(ModelState);
-                }
-
-                _mapper.Map(aircraftToPatch, existingAircraft);
-
-                _repository.Aircraft.UpdateAircraft(existingAircraft);
-                await _repository.SaveAsync();
-
-                _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} partially updated aircraft {id}.");
-
-                return NoContent();
+                _logger.LogError($"Aircraft id: {id}, not found.");
+                return NotFound();
             }
-            catch (Exception ex)
+
+            var userId = HttpContext.GetUserId();
+            var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
+            if (!userOwnsAircraft)
             {
-                _logger.LogError($"Something went wrong inside 'PartialUpdateAircraft' action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                _logger.LogError($"User does not own this aircraft. Unable to update.");
+                return BadRequest();
             }
+
+            var aircraftToPatch = _mapper.Map<AircraftUpdateDTO>(existingAircraft);
+            patchDocument.ApplyTo(aircraftToPatch, ModelState);
+
+            if (!TryValidateModel(aircraftToPatch))
+            {
+                _logger.LogError($"Validation error updating aircraft {aircraftToPatch.Id}.");
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(aircraftToPatch, existingAircraft);
+
+            _repository.Aircraft.UpdateAircraft(existingAircraft);
+            await _repository.SaveAsync();
+
+            _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} partially updated aircraft {id}.");
+
+            return NoContent();
         }
 
         // DELETE api/aircrafts/5
@@ -271,34 +229,26 @@ namespace API.Controllers.V1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAircraft(Guid id)
         {
-            try
+            var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
+            if (existingAircraft == null)
             {
-                var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
-                if (existingAircraft == null)
-                {
-                    return NotFound();
-                }
-
-                var userId = HttpContext.GetUserId();
-                var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
-                if (!userOwnsAircraft)
-                {
-                    _logger.LogError($"User does not own this aircraft. Unable to delete.");
-                    return BadRequest();
-                }
-
-                _repository.Aircraft.DeleteAircraft(existingAircraft);
-                await _repository.SaveAsync();
-
-                _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} deleted aircraft {id}.");
-
-                return NoContent();
+                return NotFound();
             }
-            catch (Exception ex)
+
+            var userId = HttpContext.GetUserId();
+            var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
+            if (!userOwnsAircraft)
             {
-                _logger.LogError($"Something went wrong inside 'DeleteAircraft' action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                _logger.LogError($"User does not own this aircraft. Unable to delete.");
+                return BadRequest();
             }
+
+            _repository.Aircraft.DeleteAircraft(existingAircraft);
+            await _repository.SaveAsync();
+
+            _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} deleted aircraft {id}.");
+
+            return NoContent();
         }
     }
 }
