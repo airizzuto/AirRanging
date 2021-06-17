@@ -1,4 +1,5 @@
 using System;
+using Entities;
 using Entities.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,8 @@ namespace App
             // host.Services.GetRequiredService<ILogger<Program>>();
 
             // CreateDbIfNotExists(host);
+
+            host.MigrateDatabase();
 
             host.Run();
         }

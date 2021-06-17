@@ -23,8 +23,10 @@ namespace App.Injectors
             };
 
             services.AddDbContext<RepositoryContext>(
-                opt => opt.UseNpgsql(builder.ConnectionString, opt => opt.MigrationsAssembly("Entities"))
-                
+                opt => opt.UseNpgsql(
+                    builder.ConnectionString,
+                    opt => opt.MigrationsAssembly("App")
+                )
             );
 
             services.AddIdentityCore<ApplicationUser>()

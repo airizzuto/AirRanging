@@ -1,4 +1,4 @@
-using System.Reflection;
+using Entities.Data.Configurations;
 using Entities.Models;
 using Entities.Models.Aircrafts;
 using Entities.Models.Identity;
@@ -18,7 +18,9 @@ namespace Entities.Data
 
         protected override void OnModelCreating(ModelBuilder builder) 
         {
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            builder.ApplyConfiguration(new AircraftConfiguration());
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new BookmarkConfiguration());
 
             base.OnModelCreating(builder);
         }

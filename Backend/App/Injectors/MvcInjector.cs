@@ -39,10 +39,7 @@ namespace App.Injectors
                 .AddNewtonsoftJson(options => {
                         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     })
-                .AddFluentValidation(fv => {
-                    fv.RegisterValidatorsFromAssemblyContaining<Startup>();
-                    // fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                });
+                .AddFluentValidation();
 
             services.AddSingleton<ILoggerManager, LoggerManager>();
 

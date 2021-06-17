@@ -816,3 +816,4 @@ Docker/pg-data/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+Backend/App/internal_logs/internallog.txt
