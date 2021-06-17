@@ -807,3 +807,12 @@ sketch
 *.tlog
 Docker/pg-data/
 **/Migrations/
+
+##
+## Visual Studio Code
+##
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
