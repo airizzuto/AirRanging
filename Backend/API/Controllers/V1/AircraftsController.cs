@@ -8,20 +8,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AutoMapper;
 using API.Services;
-using API.Helpers;
 using API.Extensions;
-using API.Contracts.V1.Pagination;
-using API.Contracts.V1.Aircrafts;
-using Entities.DTOs.V1.Aircraft;
 using API.Services.Identity;
 using Contracts;
-using Repositories;
-using Entities.Models;
-using Entities.Models.Filters;
+using Entities.Models.Aircrafts;
+using Entities.DTOs.V1.Aircrafts;
+using Newtonsoft.Json;
 
 namespace API.Controllers.V1
 {
-    [ApiController]
+  [ApiController]
     [Route("/api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiVersion("1.0")]
@@ -30,20 +26,17 @@ namespace API.Controllers.V1
         private readonly ILoggerManager _logger;
         private readonly IUnitOfWork _repository;
         private readonly IMapper _mapper;
-        private readonly IUriService _uriService;
         private readonly IUserService _userService;
 
         public AircraftsController(
             IUnitOfWork repository,
             IMapper mapper,
             ILoggerManager logger,
-            IUriService uriService,
             IUserService userService)
         {
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
-            _uriService = uriService;
             _userService = userService;
         }
 
@@ -54,30 +47,70 @@ namespace API.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<PagedResponse<AircraftReadDTO>>> GetAllAircraftsWithQuery(
-            [FromQuery] GetAllAircraftsQuery query,
-            [FromQuery] PaginationQuery paginationQuery)
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts(
+            [FromQuery] AircraftParameters aircraftParameters)
         {
-            var pagination = _mapper.Map<PaginationFilter>(paginationQuery);
-            var filter = _mapper.Map<GetAllAircraftsFilter>(query);
-            var aircrafts = await _repository.Aircraft.GetAllAircraftsWithQueryAsync(filter, pagination);
-            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+            var aircrafts = await _repository.Aircraft
+                .GetAircraftsAsync(aircraftParameters);
 
-            if (pagination == null || pagination.PageNumber < 1 || pagination.PageSize < 1)
+            var metadata = new
             {
-                _logger.LogInfo(
-                    $"INFO: Returning {aircrafts.Count()} aircrafts from db.");
+                aircrafts.TotalCount,
+                aircrafts.PageSize,
+                aircrafts.CurrentPage,
+                aircrafts.TotalPages,
+                aircrafts.HasNext,
+                aircrafts.HasPrevious
+            };
 
-                return Ok(new PagedResponse<AircraftReadDTO>(aircraftsResponse));
-            }
-
-            var paginationResponse = PaginationHelpers.CreatePaginatedResponse(_uriService, pagination, aircraftsResponse);
-
-            _logger.LogInfo(
-                    $"INFO: Returning paginated {paginationResponse.Data.Count()} aircrafts from db."
+            Response.Headers.Add(
+                "X-Pagination", JsonConvert.SerializeObject(metadata)
             );
 
-            return Ok(paginationResponse);
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+
+            _logger.LogInfo(
+                $"INFO: Returning paginated {aircraftsResponse.Count()} aircrafts from db."
+            );
+
+            return Ok(aircraftsResponse);
+        }
+
+        [HttpGet("/owned")]
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetOwnedAircrafts(
+            [FromQuery] AircraftParameters parameters)
+        {
+            var userId = HttpContext.GetUserId();
+            if (userId == null)
+            {
+                _logger.LogError($"User not logged in. Unable to create aircraft.");
+
+                return Unauthorized();
+            }
+
+            var aircrafts = await _repository.Aircraft.GetAircraftsOwned(userId, parameters);
+
+            var metadata = new
+            {
+                aircrafts.TotalCount,
+                aircrafts.PageSize,
+                aircrafts.CurrentPage,
+                aircrafts.TotalPages,
+                aircrafts.HasNext,
+                aircrafts.HasPrevious
+            };
+
+            Response.Headers.Add(
+                "X-Pagination", JsonConvert.SerializeObject(metadata)
+            );
+
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+
+            _logger.LogInfo(
+                $"INFO: Returning paginated {aircraftsResponse.Count()} aircrafts from db."
+            );
+
+            return Ok(aircraftsResponse);
         }
 
         // GET api/aircrafts/5

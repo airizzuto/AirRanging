@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Contracts;
 using Entities.Data;
 
-namespace Repositories
+namespace Repository
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {

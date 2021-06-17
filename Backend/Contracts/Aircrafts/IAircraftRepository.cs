@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Contracts;
-using Entities.Models;
-using Entities.Models.Filters;
+using Entities.Models.Aircrafts;
+using Entities.Models.Pagination;
 
-namespace Repositories
+namespace Contracts.Aircrafts
 {
     public interface IAircraftRepository : IBaseRepository<Aircraft>
     {
-        Task<IEnumerable<Aircraft>> GetAllAircraftsWithQueryAsync(
-            GetAllAircraftsFilter filter = null,
-            PaginationFilter paginationFilter = null);
-        
-        Task<IEnumerable<Aircraft>> GetAllAircraftsAsync();
+        Task<PagedList<Aircraft>> GetAircraftsAsync(
+            AircraftParameters aircraftParameters);
 
-        // Task<IEnumerable<Aircraft>> GetAircraftsOwned(Guid userId); // TODO: To aircraft DTO?
+        Task<PagedList<Aircraft>> GetAircraftsOwned(
+            string userId, AircraftParameters aircraftParameters);
+
+        // Task<PagedList<Aircraft>> GetAircraftsBookmarked(
+        //     Guid userId, AircraftParameters aircraftParameters);
 
         // Task SaveToUserAsync(string userId, Guid aircraftId);
         Task<Aircraft> GetAircraftByIdAsync(Guid id);

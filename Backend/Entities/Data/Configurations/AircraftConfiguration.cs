@@ -1,4 +1,4 @@
-using Entities.Models;
+using Entities.Models.Aircrafts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

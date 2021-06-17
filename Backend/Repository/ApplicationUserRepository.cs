@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Contracts;
 using Entities.Data;
-using Entities.Models;
+using Entities.Models.Aircrafts;
 
-namespace Repositories
+namespace Repository
 {
     public class ApplicationUserRepository : IApplicationUserRepository
     {

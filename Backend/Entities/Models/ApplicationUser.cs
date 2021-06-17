@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Entities.Models.Aircrafts;
 using Microsoft.AspNetCore.Identity;
 
 namespace Entities.Models

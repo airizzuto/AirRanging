@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Entities.DTOs.V1.Aircraft
+namespace Entities.DTOs.V1.Aircrafts
 {
     public class AircraftReadDTOValidator : AbstractValidator<AircraftReadDTO>
     {

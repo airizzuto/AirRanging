@@ -1,4 +1,5 @@
 using System;
+using Entities.Models.Aircrafts;
 
 namespace Entities.Models
 {

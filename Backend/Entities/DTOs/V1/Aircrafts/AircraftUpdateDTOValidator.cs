@@ -1,7 +1,7 @@
 using Entities.Models.Enums;
 using FluentValidation;
 
-namespace Entities.DTOs.V1.Aircraft
+namespace Entities.DTOs.V1.Aircrafts
 {
     public class AircraftUpdateDTOValidator : AbstractValidator<AircraftUpdateDTO>
     {

@@ -1,5 +1,6 @@
 using System.Reflection;
 using Entities.Models;
+using Entities.Models.Aircrafts;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

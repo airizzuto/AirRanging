@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using Contracts.Aircrafts;
 
-namespace Repositories
+namespace Contracts
 {
     public interface IUnitOfWork
     {

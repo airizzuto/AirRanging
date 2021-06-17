@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Entities.Models;
+using Entities.Models.Aircrafts;
 using Entities.Models.Enums;
 
 namespace Entities.Data

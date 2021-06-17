@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using Entities.Models.Enums;
-using Entities.Models;
 
-namespace Entities.DTOs.V1.Aircraft
+namespace Entities.Models.Aircrafts
 {
-    public class AircraftUpdateDTO
+    public class Aircraft
     {
         public Guid Id { get; set; }
         public string IcaoId { get; set; }
@@ -20,16 +21,24 @@ namespace Entities.DTOs.V1.Aircraft
         public EIcaoWakeCategory IcaoWakeCategory { get; set; }
         public EFuelType FuelType { get; set; }
         public int MaxTakeoffWeight { get; set; }
+
+        // MinRunwayLength int { get; set; }
+
+        // MaxRunwayLength int { get; set; }
+
         public int CruiseSpeed { get; set; }
         public decimal FuelCapacity { get; set; }
         public decimal MaxRange { get; set; }
         public int ServiceCeiling { get; set; }
         public int SavesCount { get; set; }
 
-        public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
+        [DisplayName("Author")]
+        public virtual string UserId { get; set; }
 
-        // [DisplayName("Author")]
-        // public ApplicationUser User { get; set; } // TODO: Check if needed
+        [ForeignKey(nameof(UserId))]
+        [DisplayName("Author")]
+        public virtual ApplicationUser User { get; set; }
+
+        public ICollection<Bookmark> Bookmarks { get; set; }
     }
 }

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
-using API.Services;
 using Microsoft.AspNetCore.Http;
 using Logger;
 using Contracts;
@@ -24,13 +23,13 @@ namespace API.Injectors
 
             services.ConfigureIdentity(configuration);
 
-            services.AddSingleton<IUriService>(provider => {
-                var accessor = provider.GetRequiredService<IHttpContextAccessor>();
-                var request = accessor.HttpContext.Request;
-                var absoluteUri = string.Concat(
-                    request.Scheme, "://", request.Host.ToUriComponent(), "/");
-                return new UriService(absoluteUri);
-            });
+            // services.AddSingleton<IUriService>(provider => {
+            //     var accessor = provider.GetRequiredService<IHttpContextAccessor>();
+            //     var request = accessor.HttpContext.Request;
+            //     var absoluteUri = string.Concat(
+            //         request.Scheme, "://", request.Host.ToUriComponent(), "/");
+            //     return new UriService(absoluteUri);
+            // });
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
