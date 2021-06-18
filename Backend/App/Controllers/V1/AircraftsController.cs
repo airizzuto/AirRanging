@@ -213,8 +213,8 @@ namespace App.Controllers.V1
                 $"INFO: User {aircraftReadDto.AuthorUsername} created aircraft {aircraftReadDto.Id}."
             );
 
-            return CreatedAtRoute(
-                routeName: nameof(GetAircraftById),
+            return CreatedAtAction(
+                actionName: nameof(GetAircraftById),
                 routeValues: new { id = aircraftReadDto.Id },
                 value: aircraftReadDto
             );
