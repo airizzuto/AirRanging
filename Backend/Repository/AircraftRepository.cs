@@ -7,6 +7,7 @@ using Entities.Data;
 using Entities.Models.Aircrafts;
 using Contracts.Aircrafts;
 using Entities.Models.Pagination;
+using Entities.Models.Enums;
 
 namespace Repository
 {
@@ -17,11 +18,35 @@ namespace Repository
 
         }
 
-        public async Task<PagedList<Aircraft>> GetAircraftsAsync(
+        public async Task<PagedList<Aircraft>> GetAllAircraftsAsync(
             AircraftParameters parameters)
         {
             return await PagedList<Aircraft>.ToPagedList(
                 FindAll().OrderBy(a => a.SavesCount),
+                parameters.PageNumber,
+                parameters.PageSize);
+        }
+
+        public async Task<PagedList<Aircraft>> GetAircraftsWithSearchAsync(AircraftParameters parameters)
+        {
+            var aircrafts = FindAll();
+
+            #region Search Parameters
+            SearchByIcaoId(ref aircrafts, parameters.IcaoId);
+            SearchByManufacturer(ref aircrafts, parameters.Manufacturer);
+            SearchByModel(ref aircrafts, parameters.Model);
+            SearchByVariant(ref aircrafts, parameters.Variant);
+            SearchByAuthor(ref aircrafts, parameters.AuthorUsername);
+            SearchByEngineCount(ref aircrafts, parameters.EngineCount);
+            SearchByGreaterThanMaxRange(ref aircrafts, parameters.MaxRange);
+            SearchByAircraftType(ref aircrafts, parameters.AircraftType);
+            SearchByEngineType(ref aircrafts, parameters.EngineType);
+            SearchByFuelType(ref aircrafts, parameters.FuelType);
+            SearchByWeightCategory(ref aircrafts, parameters.WeightCategory);
+            #endregion
+
+            return await PagedList<Aircraft>.ToPagedList(aircrafts
+                .OrderByDescending(a => a.SavesCount),
                 parameters.PageNumber,
                 parameters.PageSize);
         }
@@ -33,7 +58,7 @@ namespace Repository
         }
 
         // TODO: Test
-        public async Task<PagedList<Aircraft>> GetAircraftsOwned(
+        public async Task<PagedList<Aircraft>> GetAircraftsOwnedAsync(
             string userId, AircraftParameters parameters)
         {
             return await PagedList<Aircraft>.ToPagedList(
@@ -81,80 +106,105 @@ namespace Repository
             return true;
         }
 
-        // private static IQueryable<Aircraft> AddQueriesFilter(
-        //     GetAllAircraftsFilter filter, IQueryable<Aircraft> queryable)
-        // {
-        //     if (!string.IsNullOrEmpty(filter?.IcaoId))
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.IcaoId.ToLower() == filter.IcaoId.ToLower());
-        //     }
+        private static void SearchByIcaoId(
+            ref IQueryable<Aircraft> aircrafts, string icaoId)
+        {
+            if (!aircrafts.Any() || string.IsNullOrWhiteSpace(icaoId)) return;
 
-        //     if (!string.IsNullOrEmpty(filter?.Manufacturer))
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.Manufacturer.ToLower() == filter.Manufacturer.ToLower());
-        //     }
+            aircrafts = aircrafts.Where(
+                a => a.IcaoId.ToUpper().Contains(icaoId.Trim().ToUpper())
+            );
+        }
 
-        //     if (!string.IsNullOrEmpty(filter?.Model))
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.Model.ToLower() == filter.Model.ToLower());
-        //     }
+        private static void SearchByManufacturer(
+            ref IQueryable<Aircraft> aircrafts, string manufacturer)
+        {
+            if (!aircrafts.Any() || string.IsNullOrWhiteSpace(manufacturer)) return;
 
-        //     if (!string.IsNullOrEmpty(filter?.Variant))
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.Variant.ToLower() == filter.Variant.ToLower());
-        //     }
+            aircrafts = aircrafts.Where(
+                a => a.Manufacturer.ToUpper().Contains(manufacturer.Trim().ToUpper()));
+        }
 
-        //     if (filter?.AircraftType != null && filter?.AircraftType != EAircraftType.Unknown)
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.AircraftType.Equals(filter.AircraftType));
-        //     }
+        private static void SearchByModel(
+            ref IQueryable<Aircraft> aircrafts, string model)
+        {
+            if (!aircrafts.Any() || string.IsNullOrWhiteSpace(model)) return;
 
-        //     if (filter?.EngineType != null && filter?.EngineType != EEngineType.Unknown)
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.EngineType.Equals(filter.EngineType));
-        //     }
+            aircrafts = aircrafts.Where(
+                a => a.Model.ToUpper().Contains(model.Trim().ToUpper()));
+        }
 
-        //     if (filter?.WeightCategory != null && filter?.WeightCategory != EWeightCategory.Unknown)
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.WeightCategory.Equals(filter.WeightCategory));
-        //     }
+        private static void SearchByVariant(
+            ref IQueryable<Aircraft> aircrafts, string variant)
+        {
+            if (!aircrafts.Any() || string.IsNullOrWhiteSpace(variant)) return;
 
-        //     if (filter?.IcaoWakeCategory != null && filter?.IcaoWakeCategory != EIcaoWakeCategory.Unknown)
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.IcaoWakeCategory.Equals(filter.IcaoWakeCategory));
-        //     }
+            aircrafts = aircrafts.Where(
+                a => a.Variant.ToUpper().Contains(variant.Trim().ToUpper()));
+        }
 
-        //     if (filter?.FuelType != null && filter?.FuelType != EFuelType.Unknown)
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.FuelType.Equals(filter.FuelType));
-        //     }
+        private static void SearchByAuthor(
+            ref IQueryable<Aircraft> aircrafts, string authorUsername)
+        {
+            if (!aircrafts.Any() || string.IsNullOrWhiteSpace(authorUsername)) return;
 
-        //     if (filter?.EngineCount != null && filter?.EngineCount != 0)
-        //     {
-        //         queryable = queryable.Where(a => a.EngineCount == filter.EngineCount);
-        //     }
+            aircrafts = aircrafts.Where(
+                a => a.User.NormalizedUserName.Contains(
+                    authorUsername.Trim().ToUpper())
+            );
+        }
 
-        //     if (filter?.MaxRange != null && filter?.MaxRange != 0)
-        //     {
-        //         queryable = queryable.Where(a => a.MaxRange >= filter.MaxRange); 
-        //     }
+        private static void SearchByEngineCount(
+            ref IQueryable<Aircraft> aircrafts, uint engineCount)
+        {
+            if (!aircrafts.Any() || engineCount == 0) return;
 
-        //     if (!string.IsNullOrEmpty(filter?.AuthorUsername))
-        //     {
-        //         queryable = queryable.Where(a =>
-        //             a.User.NormalizedUserName == filter.AuthorUsername.ToUpper());
-        //     }
+            aircrafts = aircrafts.Where(a => a.EngineCount == engineCount);
+        }
 
-        //     return queryable;
-        // }
+        private static void SearchByGreaterThanMaxRange(
+            ref IQueryable<Aircraft> aircrafts, uint maxRange)
+        {
+            if (!aircrafts.Any() || maxRange == 0) return;
+
+            aircrafts = aircrafts.Where(a => a.MaxRange >= maxRange);
+        }
+
+        private static void SearchByAircraftType(
+            ref IQueryable<Aircraft> aircrafts, EAircraftType aircraftType)
+        {
+            if (!aircrafts.Any() || aircraftType == EAircraftType.Unknown)
+                return;
+
+            aircrafts = aircrafts.Where(a => a.AircraftType == aircraftType);
+        }
+
+        private static void SearchByEngineType(
+            ref IQueryable<Aircraft> aircrafts, EEngineType engineType)
+        {
+            if (!aircrafts.Any() || engineType == EEngineType.Unknown)
+                return;
+
+            aircrafts = aircrafts.Where(a => a.EngineType == engineType);
+        }
+
+        private static void SearchByFuelType(
+            ref IQueryable<Aircraft> aircrafts, EFuelType fuelType)
+        {
+            if (!aircrafts.Any() || fuelType == EFuelType.Unknown)
+                return;
+
+            aircrafts = aircrafts.Where(a => a.FuelType == fuelType);
+        }
+
+        private static void SearchByWeightCategory(
+            ref IQueryable<Aircraft> aircrafts, EWeightCategory weightCategory)
+        {
+            if (!aircrafts.Any() || weightCategory == EWeightCategory.Unknown)
+                return;
+
+            aircrafts = aircrafts.Where(a => a.WeightCategory == weightCategory);
+        }
+
     }
 }

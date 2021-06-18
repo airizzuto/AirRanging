@@ -16,9 +16,9 @@ namespace App
 
             // host.Services.GetRequiredService<ILogger<Program>>();
 
-            // CreateDbIfNotExists(host);
-
             host.MigrateDatabase();
+
+            // CreateDbIfNotExists(host);
 
             host.Run();
         }

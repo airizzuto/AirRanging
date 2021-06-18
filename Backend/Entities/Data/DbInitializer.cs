@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Entities.Models;
 using Entities.Models.Aircrafts;
 using Entities.Models.Enums;
 
@@ -118,26 +117,26 @@ namespace Entities.Data
             }
             context.SaveChanges();
 
-            var users = new ApplicationUser[]
-            {
-                new ApplicationUser
-                {
-                    UserName = "jholden",
-                    Email = "jamesholden@unnc.mil",
-                },
+            // var users = new ApplicationUser[]
+            // {
+            //     new ApplicationUser
+            //     {
+            //         UserName = "jholden",
+            //         Email = "jamesholden@unnc.mil",
+            //     },
 
-                new ApplicationUser
-                {
-                    UserName = "lskywalker",
-                    Email = "lukeskywalker@redsquadron.mil"
-                },
-            };
+            //     new ApplicationUser
+            //     {
+            //         UserName = "lskywalker",
+            //         Email = "lukeskywalker@redsquadron.mil"
+            //     },
+            // };
 
-            foreach (var user in users)
-            {
-                context.Users.Add(user);
-            }
-            context.SaveChanges();
+            // foreach (var user in users)
+            // {
+            //     context.Users.Add(user);
+            // }
+            // context.SaveChanges();
 
         }
     }

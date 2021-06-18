@@ -24,6 +24,7 @@ namespace Entities.DTOs.V1.Aircrafts
         public decimal FuelCapacity { get; set; }
         public decimal MaxRange { get; set; }
         public int ServiceCeiling { get; set; }
+        public string AuthorUsername { get; set; }
 
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }

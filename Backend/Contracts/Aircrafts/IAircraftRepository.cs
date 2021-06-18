@@ -8,11 +8,14 @@ namespace Contracts.Aircrafts
 {
     public interface IAircraftRepository : IBaseRepository<Aircraft>
     {
-        Task<PagedList<Aircraft>> GetAircraftsAsync(
+        Task<PagedList<Aircraft>> GetAllAircraftsAsync(
             AircraftParameters aircraftParameters);
 
-        Task<PagedList<Aircraft>> GetAircraftsOwned(
+        Task<PagedList<Aircraft>> GetAircraftsOwnedAsync(
             string userId, AircraftParameters aircraftParameters);
+
+        Task<PagedList<Aircraft>> GetAircraftsWithSearchAsync(
+            AircraftParameters aircraftParameters);
 
         // Task<PagedList<Aircraft>> GetAircraftsBookmarked(
         //     Guid userId, AircraftParameters aircraftParameters);

@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 namespace App.Controllers.V1
 {
   [ApiController]
-    [Route("/api/[controller]")]
+    [Route("/api/aircrafts/[action]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiVersion("1.0")]
     public class AircraftsController : ControllerBase
@@ -47,11 +47,11 @@ namespace App.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts(
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAircrafts(
             [FromQuery] AircraftParameters aircraftParameters)
         {
             var aircrafts = await _repository.Aircraft
-                .GetAircraftsAsync(aircraftParameters);
+                .GetAllAircraftsAsync(aircraftParameters);
 
             var metadata = new
             {
@@ -76,7 +76,43 @@ namespace App.Controllers.V1
             return Ok(aircraftsResponse);
         }
 
-        [HttpGet("/owned")]
+        // GET api/aircrafts
+        /// <summary>
+        /// Retrieves all aircrafts in the database
+        /// </summary>
+        /// <response code="200">Retrieves all aircrafts in the database</response>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> SearchAircrafts(
+            [FromQuery] AircraftParameters aircraftParameters)
+        {
+            var aircrafts = await _repository.Aircraft
+                .GetAircraftsWithSearchAsync(aircraftParameters);
+
+            var metadata = new
+            {
+                aircrafts.TotalCount,
+                aircrafts.PageSize,
+                aircrafts.CurrentPage,
+                aircrafts.TotalPages,
+                aircrafts.HasNext,
+                aircrafts.HasPrevious
+            };
+
+            Response.Headers.Add(
+                "X-Pagination", JsonConvert.SerializeObject(metadata)
+            );
+
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+
+            _logger.LogInfo(
+                $"INFO: Returning search paginated {aircraftsResponse.Count()} aircrafts from db."
+            );
+
+            return Ok(aircraftsResponse);
+        }
+
+        [HttpGet] // TODO
         public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetOwnedAircrafts(
             [FromQuery] AircraftParameters parameters)
         {
@@ -88,7 +124,7 @@ namespace App.Controllers.V1
                 return Unauthorized();
             }
 
-            var aircrafts = await _repository.Aircraft.GetAircraftsOwned(userId, parameters);
+            var aircrafts = await _repository.Aircraft.GetAircraftsOwnedAsync(userId, parameters);
 
             var metadata = new
             {
@@ -153,7 +189,8 @@ namespace App.Controllers.V1
                 return BadRequest();
             }
 
-            aircraftCreateDto.UserId = user.Id; ;
+            aircraftCreateDto.UserId = user.Id;
+            aircraftCreateDto.AuthorUsername = user.UserName;
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             _repository.Aircraft.CreateAircraft(aircraftModel);
             // await _repository.SaveToUserAsync(user.Id, aircraftModel.Id);
@@ -162,13 +199,13 @@ namespace App.Controllers.V1
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
             _logger.LogInfo(
-                $"INFO: User {user.UserName} created aircraft {aircraftReadDto.Id}."
+                $"INFO: User {aircraftReadDto.AuthorUsername} created aircraft {aircraftReadDto.Id}."
             );
 
             return CreatedAtRoute(
-                nameof(GetAircraftById),
-                aircraftReadDto.Id,
-                aircraftReadDto
+                routeName: nameof(GetAircraftById),
+                routeValues: new { id = aircraftReadDto.Id },
+                value: aircraftReadDto
             );
         }
 
