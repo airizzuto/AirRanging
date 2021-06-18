@@ -2,21 +2,25 @@ using System.Threading.Tasks;
 using Contracts;
 using Contracts.Aircrafts;
 using Entities.Data;
+using Entities.Helpers;
+using Entities.Models.Aircrafts;
 
 namespace Repository
 {
-    public class UnitOfWork : IUnitOfWork
+    public class RepositoryWrapper : IRepositoryWrapper
     {
         private readonly RepositoryContext _context;
         private IAircraftRepository _aircraft;
         private IApplicationUserRepository _applicationUser;
+
+        private readonly ISortHelper<Aircraft> _aircraftSortHelper;
 
         public IAircraftRepository Aircraft {
             get
             {
                 if (_aircraft == null)
                 {
-                    _aircraft = new AircraftRepository(_context);
+                    _aircraft = new AircraftRepository(_context, _aircraftSortHelper);
                 }
 
                 return _aircraft;
@@ -35,9 +39,12 @@ namespace Repository
             }
         }
 
-        public UnitOfWork(RepositoryContext context)
+        public RepositoryWrapper(
+            RepositoryContext context,
+            ISortHelper<Aircraft> aircraftSortHelper)
         {
             _context = context;
+            _aircraftSortHelper = aircraftSortHelper;
         }
 
         public async Task SaveAsync()

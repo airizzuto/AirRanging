@@ -3,7 +3,7 @@ using Contracts.Aircrafts;
 
 namespace Contracts
 {
-    public interface IUnitOfWork
+    public interface IRepositoryWrapper
     {
         IAircraftRepository Aircraft { get; }
         Task SaveAsync();
