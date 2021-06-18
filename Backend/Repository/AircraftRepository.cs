@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,15 +17,27 @@ namespace Repository
 
         }
 
+        /// <summary>
+        /// Retrieves all aircrafts in context.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns>Paginated list of aircrafts</returns>
         public async Task<PagedList<Aircraft>> GetAllAircraftsAsync(
             AircraftParameters parameters)
         {
             return await PagedList<Aircraft>.ToPagedList(
-                FindAll().OrderBy(a => a.SavesCount),
+                FindAll()
+                    .OrderByDescending(a => a.SavesCount)
+                    .OrderByDescending(a => a.IcaoId),
                 parameters.PageNumber,
                 parameters.PageSize);
         }
 
+        /// <summary>
+        /// Retrieves all aircrafts in context that comply with search query parameters
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns>Paginated list of aircrafts</returns>
         public async Task<PagedList<Aircraft>> GetAircraftsWithSearchAsync(AircraftParameters parameters)
         {
             var aircrafts = FindAll();
@@ -51,6 +62,11 @@ namespace Repository
                 parameters.PageSize);
         }
 
+        /// <summary>
+        /// Retrieves aircraft matching id parameter.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Aircraft</returns>
         public async Task<Aircraft> GetAircraftByIdAsync(Guid id)
         {
             return await FindByCondition(a => a.Id.Equals(id))
@@ -58,11 +74,19 @@ namespace Repository
         }
 
         // TODO: Test
+        /// <summary>
+        /// Retrieves all aircrafts in context created by user id.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="parameters"></param>
+        /// <returns>Paginated list of Aircraft</returns>
         public async Task<PagedList<Aircraft>> GetAircraftsOwnedAsync(
             string userId, AircraftParameters parameters)
         {
             return await PagedList<Aircraft>.ToPagedList(
-                FindByCondition(a => a.UserId == userId).OrderBy(a => a.SavesCount),
+                FindByCondition(a => a.UserId == userId)
+                    .OrderByDescending(a => a.SavesCount)
+                    .OrderByDescending(a => a.IcaoId),
                 parameters.PageNumber,
                 parameters.PageSize);
         }
@@ -74,16 +98,29 @@ namespace Repository
         //     await _bookmarkService.SaveAsync(userId, Id);
         // }
 
+
+        /// <summary>
+        /// Passes aircraft to be created by context.
+        /// </summary>
+        /// <param name="aircraft"></param>
         public void CreateAircraft(Aircraft aircraft)
         {
             Create(aircraft);
         }
 
+        /// <summary>
+        /// Passes aircraft to be updated by context.
+        /// </summary>
+        /// <param name="aircraft"></param>
         public void UpdateAircraft(Aircraft aircraft)
         {
             Update(aircraft);
         }
 
+        /// <summary>
+        /// Passes aircraft to be deleted by context.
+        /// </summary>
+        /// <param name="aircraft"></param>
         public void DeleteAircraft(Aircraft aircraft)
         {
             Delete(aircraft);
@@ -106,6 +143,8 @@ namespace Repository
             return true;
         }
 
+        // TODO: extract to separate file
+        #region Search methods
         private static void SearchByIcaoId(
             ref IQueryable<Aircraft> aircrafts, string icaoId)
         {
@@ -205,6 +244,7 @@ namespace Repository
 
             aircrafts = aircrafts.Where(a => a.WeightCategory == weightCategory);
         }
+        #endregion
 
     }
 }
