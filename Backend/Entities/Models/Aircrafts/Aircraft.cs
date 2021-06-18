@@ -32,12 +32,16 @@ namespace Entities.Models.Aircrafts
         public int ServiceCeiling { get; set; }
         public int SavesCount { get; set; }
 
-        [DisplayName("Author")]
+
+        public string AuthorUsername { get; set; }
+
+        [DisplayName("AuthorId")]
         public virtual string UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
         [DisplayName("Author")]
         public virtual ApplicationUser User { get; set; }
+
 
         public ICollection<Bookmark> Bookmarks { get; set; }
     }
