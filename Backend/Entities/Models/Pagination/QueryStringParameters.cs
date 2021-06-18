@@ -1,5 +1,8 @@
 namespace Entities.Models.Pagination
 {
+    /// <summary>
+    /// Base clase for pagination and sorting of model parameters when retrieving entities.
+    /// </summary>
     public abstract class QueryStringParameters
     {
         const int maxPageSize = 50;
@@ -17,5 +20,7 @@ namespace Entities.Models.Pagination
                 _pageSize = (value > maxPageSize) ? maxPageSize : value;
             }
         }
+
+        public string OrderBy { get; set; }
     }
 }

@@ -7,14 +7,19 @@ using Entities.Models.Aircrafts;
 using Contracts.Aircrafts;
 using Entities.Models.Pagination;
 using Entities.Models.Enums;
+using Entities.Helpers;
 
 namespace Repository
 {
     public class AircraftRepository : BaseRepository<Aircraft>, IAircraftRepository
     {
-        public AircraftRepository(RepositoryContext context) : base(context) 
-        {
+        private ISortHelper<Aircraft> _sortHelper;
 
+        public AircraftRepository(
+            RepositoryContext context,
+            ISortHelper<Aircraft> sortHelper) : base(context) 
+        {
+            _sortHelper = sortHelper;
         }
 
         /// <summary>
@@ -25,10 +30,14 @@ namespace Repository
         public async Task<PagedList<Aircraft>> GetAllAircraftsAsync(
             AircraftParameters parameters)
         {
+            var aircrafts = FindAll();
+            var aircraftsSorted = _sortHelper.ApplySort(aircrafts, parameters.OrderBy);
+        
             return await PagedList<Aircraft>.ToPagedList(
-                FindAll()
-                    .OrderByDescending(a => a.SavesCount)
-                    .OrderByDescending(a => a.IcaoId),
+                aircraftsSorted, // TODO: test
+                // FindAll()
+                //     .OrderByDescending(a => a.SavesCount)
+                //     .OrderByDescending(a => a.IcaoId),
                 parameters.PageNumber,
                 parameters.PageSize);
         }
@@ -92,7 +101,6 @@ namespace Repository
         }
 
         // TODO: response.
-        // TODO: REVIEW: other services injected
         // public async Task SaveToUserAsync(string userId, Guid Id)
         // {
         //     await _bookmarkService.SaveAsync(userId, Id);
@@ -142,6 +150,7 @@ namespace Repository
 
             return true;
         }
+
 
         // TODO: extract to separate file
         #region Search methods

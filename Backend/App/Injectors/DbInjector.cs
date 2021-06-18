@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Contracts;
 using Repository;
+using App.Extensions;
 
 namespace App.Injectors
 {
@@ -37,7 +38,8 @@ namespace App.Injectors
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IBookmarkService, BookmarkService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.ConfigureRepositoryWrapper();
         }
     }
 }

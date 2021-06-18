@@ -34,12 +34,12 @@ namespace App.Controllers.V1
     public class AircraftsController : ControllerBase
     {
         private readonly ILoggerManager _logger;
-        private readonly IUnitOfWork _repository;
+        private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
         public AircraftsController(
-            IUnitOfWork repository,
+            IRepositoryWrapper repository,
             IMapper mapper,
             ILoggerManager logger,
             IUserService userService)
