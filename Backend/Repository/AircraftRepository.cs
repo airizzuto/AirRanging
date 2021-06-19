@@ -34,10 +34,7 @@ namespace Repository
             var aircraftsSorted = _sortHelper.ApplySort(aircrafts, parameters.OrderBy);
         
             return await PagedList<Aircraft>.ToPagedList(
-                aircraftsSorted, // TODO: test
-                // FindAll()
-                //     .OrderByDescending(a => a.SavesCount)
-                //     .OrderByDescending(a => a.IcaoId),
+                aircraftsSorted,
                 parameters.PageNumber,
                 parameters.PageSize);
         }
@@ -65,12 +62,15 @@ namespace Repository
             SearchByWeightCategory(ref aircrafts, parameters.WeightCategory);
             #endregion
 
-            return await PagedList<Aircraft>.ToPagedList(aircrafts
-                .OrderByDescending(a => a.SavesCount),
+            var aircraftsSorted = _sortHelper.ApplySort(aircrafts, parameters.OrderBy);
+
+            return await PagedList<Aircraft>.ToPagedList(
+                aircraftsSorted,
                 parameters.PageNumber,
                 parameters.PageSize);
         }
 
+        // TODO: use only get all?
         /// <summary>
         /// Retrieves aircraft matching id parameter.
         /// </summary>
@@ -92,10 +92,25 @@ namespace Repository
         public async Task<PagedList<Aircraft>> GetAircraftsOwnedAsync(
             string userId, AircraftParameters parameters)
         {
+            var aircrafts = FindByCondition(a => a.UserId == userId);
+
+            #region Search Parameters
+            SearchByIcaoId(ref aircrafts, parameters.IcaoId);
+            SearchByManufacturer(ref aircrafts, parameters.Manufacturer);
+            SearchByModel(ref aircrafts, parameters.Model);
+            SearchByVariant(ref aircrafts, parameters.Variant);
+            SearchByEngineCount(ref aircrafts, parameters.EngineCount);
+            SearchByGreaterThanMaxRange(ref aircrafts, parameters.MaxRange);
+            SearchByAircraftType(ref aircrafts, parameters.AircraftType);
+            SearchByEngineType(ref aircrafts, parameters.EngineType);
+            SearchByFuelType(ref aircrafts, parameters.FuelType);
+            SearchByWeightCategory(ref aircrafts, parameters.WeightCategory);
+            #endregion
+
+            var aircraftsSorted = _sortHelper.ApplySort(aircrafts, parameters.OrderBy);
+
             return await PagedList<Aircraft>.ToPagedList(
-                FindByCondition(a => a.UserId == userId)
-                    .OrderByDescending(a => a.SavesCount)
-                    .OrderByDescending(a => a.IcaoId),
+                aircraftsSorted,
                 parameters.PageNumber,
                 parameters.PageSize);
         }
