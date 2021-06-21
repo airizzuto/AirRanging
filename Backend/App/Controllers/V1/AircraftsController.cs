@@ -18,14 +18,15 @@ namespace App.Controllers.V1
 {
     /// <summary>
     /// Aircraft model controller endpoints:
-    /// <para> - GET    api/aircrafts </para>
-    /// <para> - GET    api/aircrafts/search </para>
-    /// <para> - GET    api/aircrafts/owned </para>
-    /// <para> - GET    api/aircrafts/id/5 </para>
-    /// <para> - POST   api/aircrafts/create </para>
-    /// <para> - PUT    api/aircrafts/id/5 </para>
-    /// <para> - PATCH  api/aircrafts/id/5 </para>
-    /// <para> - DELETE api/aircrafts/id/5 </para>
+    /// <para> GetAllAircraft              - GET     api/aircrafts               </para>
+    /// <para> GetAircraftByParameters     - GET     api/aircrafts/search        </para>
+    /// <para> GetAircraftOwnedByUser      - GET     api/aircrafts/owned         </para>
+    /// <para> GetAircraftId               - GET     api/aircrafts/id/5          </para>
+    /// <para> CreateAircraft              - POST    api/aircrafts/create        </para>
+    /// <para> PartialUpdateAircraftId     - PUT     api/aircrafts/id/5          </para>
+    /// <para> FullUpdateAircraftId        - PATCH   api/aircrafts/id/5          </para>
+    /// <para> DeleteAircraftId            - DELETE  api/aircrafts/id/5          </para>
+    /// <para> SaveAircraftToUserBookmark  - PATCH   api/aircrafts/id/5/bookmark </para>  // TODO: get user from context, validate login, save to bookmark?
     /// </summary>
     [ApiController]
     [Route("/api/[controller]")]
@@ -203,8 +204,8 @@ namespace App.Controllers.V1
             aircraftCreateDto.UserId = user.Id;
             aircraftCreateDto.AuthorUsername = user.UserName;
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
-            _repository.Aircraft.CreateAircraft(aircraftModel);
-            // await _repository.SaveToUserAsync(user.Id, aircraftModel.Id);
+            await _repository.Aircraft.CreateAircraftAsync(aircraftModel);
+            //_repository.SaveToUserAsync(user.Id, aircraftModel.Id);
             await _repository.SaveAsync();
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);

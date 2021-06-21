@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Contracts;
 using Entities.Data;
+using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -30,10 +31,10 @@ namespace Repository
                 .AsNoTracking();
         }
 
-        public void Create(T entity)
+        public async Task CreateAsync(T entity)
         {
-            RepositoryContext.Set<T>()
-                .Add(entity);
+            await RepositoryContext.Set<T>()
+                .AddAsync(entity);
         }
 
         public void Update(T entity)

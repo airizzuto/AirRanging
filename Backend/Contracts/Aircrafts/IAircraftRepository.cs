@@ -22,7 +22,7 @@ namespace Contracts.Aircrafts
 
         // Task SaveToUserAsync(string userId, Guid aircraftId);
         Task<Aircraft> GetAircraftByIdAsync(Guid id);
-        void CreateAircraft(Aircraft aircraft);
+        Task CreateAircraftAsync(Aircraft aircraft);
         void UpdateAircraft(Aircraft aircraft);
         void DeleteAircraft(Aircraft aircraft);
         Task<bool> UserOwnsAircraftAsync(Guid id, string getUserId);

@@ -126,9 +126,9 @@ namespace Repository
         /// Passes aircraft to be created by context.
         /// </summary>
         /// <param name="aircraft"></param>
-        public void CreateAircraft(Aircraft aircraft)
+        public async Task CreateAircraftAsync(Aircraft aircraft)
         {
-            Create(aircraft);
+            await CreateAsync(aircraft);
         }
 
         /// <summary>
