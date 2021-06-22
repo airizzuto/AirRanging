@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
@@ -11,9 +10,9 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using App.Injectors;
 using App.HealthChecks;
-using App.Extensions;
 using Newtonsoft.Json;
 using NLog;
+using App.Extensions.Configurations;
 
 namespace App
 {

@@ -1,7 +1,11 @@
 using System;
+using System.Threading.Tasks;
 using Entities;
 using Entities.Data;
+using Entities.Models.Identity;
+using Logger;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -10,7 +14,7 @@ namespace App
 {
   public class Program
     {
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -18,7 +22,24 @@ namespace App
 
             host.MigrateDatabase();
 
-            // CreateDbIfNotExists(host);
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var logger = services.GetRequiredService<LoggerManager>();
+
+                try
+                {
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var context = services.GetRequiredService<RepositoryContext>();
+                    await DataContextSeeding.SeedDefaultUser(userManager);
+                    await DataContextSeeding.SeedExamples(context, userManager);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError($"An error ocurred seeding the DB: {ex.Message}");
+                }
+            }
 
             host.Run();
         }
@@ -29,23 +50,5 @@ namespace App
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-        
-        private static void CreateDbIfNotExists(IHost host)
-        {
-            using (var scope = host.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<RepositoryContext>();
-                    DataSeeding.Initialize(context);
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred creating the DB.");
-                }
-            }
-        }
     }
 }

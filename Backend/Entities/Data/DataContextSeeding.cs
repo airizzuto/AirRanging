@@ -1,16 +1,36 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Constants;
 using Entities.Models.Aircrafts;
 using Entities.Models.Enums;
+using Entities.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace Entities.Data
 {
-    public static class DataSeeding
+    public static class DataContextSeeding
     {
-        public static void Initialize(RepositoryContext context)
+        public static async Task SeedDefaultUser(UserManager<ApplicationUser> userManager)
         {
-            // TODO: users
+            var defaultUser = new ApplicationUser 
+            {
+                UserName = Authorization.default_username,
+                Email = Authorization.default_email,
+                EmailConfirmed = true,
+            };
 
+            if (userManager.Users.All(u => u.Id != defaultUser.Id))
+            {
+                await userManager.CreateAsync(defaultUser, Authorization.default_password);
+                await userManager.AddToRoleAsync(defaultUser, Authorization.default_role.ToString());
+            }
+        }
+
+        public static async Task SeedExamples(
+            RepositoryContext context,
+            UserManager<ApplicationUser> userManager)
+        {
             if (context.Aircrafts.Any())
             {
                 return;  // Already initialized
@@ -34,7 +54,8 @@ namespace Entities.Data
                     CruiseSpeed = 107,
                     FuelCapacity = 26,
                     MaxRange = 415,
-                    ServiceCeiling = 14700
+                    ServiceCeiling = 14700,
+                    User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
                 new Aircraft
                 {
@@ -53,7 +74,8 @@ namespace Entities.Data
                     CruiseSpeed = 107,
                     FuelCapacity = 38,
                     MaxRange = 691,
-                    ServiceCeiling = 14700
+                    ServiceCeiling = 14700,
+                    User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
                 new Aircraft
                 {
@@ -71,7 +93,8 @@ namespace Entities.Data
                     CruiseSpeed = 122,
                     FuelCapacity = 56,
                     MaxRange = 696,
-                    ServiceCeiling = 13500
+                    ServiceCeiling = 13500,
+                    User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
                 new Aircraft
                 {
@@ -89,7 +112,8 @@ namespace Entities.Data
                     CruiseSpeed = 447,
                     FuelCapacity = 6400,
                     MaxRange = 3300,
-                    ServiceCeiling = 39100
+                    ServiceCeiling = 39100,
+                    User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
                 new Aircraft
                 {
@@ -107,37 +131,17 @@ namespace Entities.Data
                     CruiseSpeed = 453,
                     FuelCapacity = 6875,
                     MaxRange = 2935,
-                    ServiceCeiling = 41000
+                    ServiceCeiling = 41000,
+                    User = await userManager.FindByNameAsync(Authorization.default_username)
                 }
             };
         
             foreach (var aircraft in aircrafts)
             {
-                context.Aircrafts.Add(aircraft);
+                await context.Aircrafts.AddAsync(aircraft);
             }
-            context.SaveChanges();
 
-            // var users = new ApplicationUser[]
-            // {
-            //     new ApplicationUser
-            //     {
-            //         UserName = "jholden",
-            //         Email = "jamesholden@unnc.mil",
-            //     },
-
-            //     new ApplicationUser
-            //     {
-            //         UserName = "lskywalker",
-            //         Email = "lukeskywalker@redsquadron.mil"
-            //     },
-            // };
-
-            // foreach (var user in users)
-            // {
-            //     context.Users.Add(user);
-            // }
-            // context.SaveChanges();
-
+            await context.SaveChangesAsync();
         }
     }
 }

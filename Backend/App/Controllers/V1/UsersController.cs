@@ -33,7 +33,7 @@ namespace App.Controllers.V1
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserRegistrationDTO request)
+        public async Task<IActionResult> RegisterAsync([FromBody] UserRegistrationDTO request)
         {
             if (!ModelState.IsValid)
             {
@@ -49,26 +49,26 @@ namespace App.Controllers.V1
 
             if(!authResponse.Success)
             {
-                return BadRequest(new AuthenticationFailedDTO {
-                    Errors = authResponse.Errors
-                });
+                var failedAuth = _mapper.Map<AuthenticationFailedDTO>(authResponse);
+                return BadRequest(failedAuth.Errors);
             }
 
-            _logger.LogInfo($"INFO: User created");
+            _logger.LogInfo($"INFO: User: {request.UserName} created");
 
             var authentication = _mapper.Map<AuthenticationDTO>(authResponse);
             return Ok(authentication);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginDTO request)
+        public async Task<IActionResult> LoginAsync([FromBody] UserLoginDTO request)
         {
             var authResponse = await _repository.ApplicationUser.LoginAsync(request.Email, request.Password);
 
             if(!authResponse.Success)
             {
-                _logger.LogError($"Login error: {authResponse.Errors}");
-                return BadRequest();
+                var failedAuth = _mapper.Map<AuthenticationFailedDTO>(authResponse);
+                _logger.LogError($"Login error: {failedAuth.Errors}");
+                return BadRequest(failedAuth.Errors);
             }
 
             _logger.LogInfo($"INFO: User {request.Email} logged");
@@ -78,15 +78,14 @@ namespace App.Controllers.V1
         }
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> RefreshToken([FromBody] Authentication request)
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] Authentication request)
         {
             var authResponse = await _repository.ApplicationUser.RefreshTokenAsync(request.Token, request.RefreshToken);
 
             if(!authResponse.Success)
             {
-                return BadRequest(new Authentication {
-                    Errors = authResponse.Errors
-                });
+                var failedAuth = _mapper.Map<AuthenticationFailedDTO>(authResponse);
+                return BadRequest(failedAuth.Errors);
             }
 
             var authentication = _mapper.Map<AuthenticationDTO>(authResponse);

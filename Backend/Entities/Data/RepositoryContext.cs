@@ -22,6 +22,7 @@ namespace Entities.Data
 
             builder.ApplyConfiguration(new AircraftConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new BookmarkConfiguration());
         }
     }

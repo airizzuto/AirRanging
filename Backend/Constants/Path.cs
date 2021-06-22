@@ -1,8 +1,8 @@
-namespace App.Settings
+namespace Constants
 {
-    public static class Constants
+    public static class Path
     {
-        public static class Path
+        public static class Local
         {
             public const string Base = "https://localhost";
             public const string Port = "5001";

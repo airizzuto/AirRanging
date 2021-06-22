@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Constants;
 using Repository;
 using Repository.Settings;
 
@@ -46,13 +47,14 @@ namespace App.Extensions.Configurations
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ClockSkew = TimeSpan.Zero,
-                ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(jwtSettings.Secret)),
-                ValidIssuer = Constants.Path.Full,
-                ValidateAudience = false,
-                RequireExpirationTime = false,
+                    Encoding.UTF8.GetBytes(jwtSettings.Key)),
+                ValidIssuer = Path.Local.Full + "/airrangingapi",
+                ValidAudience = Path.Local.Full + "/airranginguser", // TODO: to constant aud
+                ValidateIssuerSigningKey = true,
+                ValidateAudience = true,
                 ValidateLifetime = true,
+                RequireExpirationTime = false,
             };
 
             services.AddSingleton(tokenValidationParameters);

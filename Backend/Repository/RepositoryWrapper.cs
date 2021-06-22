@@ -24,7 +24,8 @@ namespace Repository
         private IApplicationUserRepository _applicationUser;
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
-        private UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public IAircraftRepository Aircraft {
             get
@@ -45,6 +46,7 @@ namespace Repository
                 {
                     _applicationUser = new ApplicationUserRepository(
                         _userManager,
+                        _roleManager,
                         _jwtSettings,
                         _tokenValidationParameters,
                         _context
@@ -71,12 +73,14 @@ namespace Repository
             RepositoryContext context,
             ISortHelper<Aircraft> aircraftSortHelper,
             JwtSettings jwtSettings,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _aircraftSortHelper = aircraftSortHelper;
             _jwtSettings = jwtSettings;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public async Task SaveAsync()

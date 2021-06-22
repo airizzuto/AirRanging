@@ -8,6 +8,8 @@ namespace Entities.DTOs.V1.Identity
         public UserRegistrationRequestValidator()
         {
             RuleFor(x => x.Email).EmailAddress();
+            RuleFor(x => x.UserName).NotNull().NotEmpty();
+            RuleFor(x => x.Password).NotNull().NotEmpty();
         }
     }
 }

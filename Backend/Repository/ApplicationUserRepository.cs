@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Constants;
 using Contracts;
 using Entities.Data;
 using Entities.Models.Identity;
@@ -17,17 +19,21 @@ namespace Repository
     public class ApplicationUserRepository : IApplicationUserRepository
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly RepositoryContext _context;
 
         public ApplicationUserRepository(
             UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             JwtSettings jwtSettings,
             TokenValidationParameters tokenValidationParameters,
             RepositoryContext context)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _jwtSettings = jwtSettings;
             _tokenValidationParameters = tokenValidationParameters;
             _context = context;
@@ -73,9 +79,9 @@ namespace Repository
         }
 
         public async Task<Authentication> RegisterAsync(
-            ApplicationUser applicationUser, string password)
+            ApplicationUser user, string password)
         {
-            var existingUsername = await _userManager.FindByNameAsync(applicationUser.UserName);
+            var existingUsername = await _userManager.FindByNameAsync(user.UserName);
             if (existingUsername != null)
             {
                 return new Authentication
@@ -84,7 +90,7 @@ namespace Repository
                 };
             }
 
-            var existingEmail = await _userManager.FindByEmailAsync(applicationUser.Email);
+            var existingEmail = await _userManager.FindByEmailAsync(user.Email);
             if (existingEmail != null)
             {
                 return new Authentication
@@ -93,7 +99,7 @@ namespace Repository
                 };
             }
 
-            var createdUser = await _userManager.CreateAsync(applicationUser, password);
+            var createdUser = await _userManager.CreateAsync(user, password);
             if (!createdUser.Succeeded)
             {
                 return new Authentication
@@ -102,7 +108,10 @@ namespace Repository
                 };
             }
 
-            return await GenerateAuthenticationResultForUserASync(applicationUser);
+            await _userManager.AddToRoleAsync(
+                user, Authorization.default_role.ToString());
+
+            return await GenerateAuthenticationResultForUserASync(user);
         }
 
         public async Task<Authentication> RefreshTokenAsync(string token, string refreshToken)
@@ -161,7 +170,7 @@ namespace Repository
                 || storedRefreshToken.Used
                 || storedRefreshToken.JwtId != jti)
             {
-                return new Authentication{ Errors = new[] {"Token invalid"} };
+                return new Authentication{ Errors = new[] {"Invalid token"} };
             }
 
             storedRefreshToken.Used = true;
@@ -204,21 +213,34 @@ namespace Repository
 
         private async Task<Authentication> GenerateAuthenticationResultForUserASync(ApplicationUser user)
         {
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            var roleClaims = new List<Claim>();
+            for (int i = 0; i < roles.Count; i++)
+            {
+                roleClaims.Add(new Claim("roles", roles[i]));
+            }
+
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_jwtSettings.Secret);
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] {
-                            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                            new Claim(JwtRegisteredClaimNames.Iss, Constants.Path.Full),
-                            new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                            new Claim("id", user.Id)
-                        }),
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                    new Claim(JwtRegisteredClaimNames.Jti,
+                        Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                    new Claim("uid", user.Id)
+                }.Union(userClaims)
+                 .Union(roleClaims)),
+                Issuer = Path.Local.Full + "airrangingapi",
+                Audience = Path.Local.Full + "airranginguser",
                 NotBefore = DateTime.Now,
                 Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key),
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(_jwtSettings.Key)),
                     SecurityAlgorithms.HmacSha256Signature
                 )
             };
