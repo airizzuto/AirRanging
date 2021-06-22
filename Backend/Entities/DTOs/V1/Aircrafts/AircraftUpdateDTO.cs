@@ -1,7 +1,6 @@
 using System;
-using System.ComponentModel;
 using Entities.Models.Enums;
-using Entities.Models;
+using Entities.Models.Identity;
 
 namespace Entities.DTOs.V1.Aircrafts
 {

@@ -1,12 +1,13 @@
 using System;
 using System.Text;
-using App.Services.Identity;
-using App.Settings;
+using Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Repository;
+using Repository.Settings;
 
 namespace App.Extensions
 {
@@ -40,7 +41,7 @@ namespace App.Extensions
             configuration.Bind(nameof(jwtSettings), jwtSettings); // TODO: Review Implementation
             services.AddSingleton(jwtSettings);
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 
             var tokenValidationParameters = new TokenValidationParameters
             {

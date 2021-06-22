@@ -1,18 +1,18 @@
+using System;
+using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using App.Injectors;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using System.Linq;
-using App.Contracts.HealthChecks;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using App.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
-using System;
-using System.IO;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using App.Injectors;
+using App.HealthChecks;
+using App.Extensions;
+using Newtonsoft.Json;
 using NLog;
 
 namespace App
@@ -23,7 +23,7 @@ namespace App
 
         public Startup(IConfiguration configuration)
         {
-            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -49,7 +49,7 @@ namespace App
                 {
                     context.Response.ContentType = "application/json";
 
-                    var response = new HealthCheckResponse
+                    var response = new HealthChecksListed
                     {
                         Status = report.Status.ToString(),
                         Checks = report.Entries.Select(x => new HealthCheck{

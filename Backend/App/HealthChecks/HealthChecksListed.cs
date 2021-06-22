@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace App.Contracts.HealthChecks
+namespace App.HealthChecks
 {
-    public class HealthCheckResponse
+    public class HealthChecksListed
     {
         public string Status { get; set; }
         public IEnumerable<HealthCheck> Checks { get; set; }

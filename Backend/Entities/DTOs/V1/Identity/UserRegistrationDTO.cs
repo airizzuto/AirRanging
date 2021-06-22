@@ -1,6 +1,6 @@
-namespace App.Contracts.V1.Identity
+namespace Entities.DTOs.V1.Identity
 {
-    public class UserRegistrationRequest
+    public class UserRegistrationDTO
     {
         public string Username { get; set; }
         public string Email { get; set; }

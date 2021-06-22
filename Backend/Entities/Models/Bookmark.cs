@@ -1,5 +1,6 @@
 using System;
 using Entities.Models.Aircrafts;
+using Entities.Models.Identity;
 
 namespace Entities.Models
 {

@@ -38,7 +38,7 @@ namespace App
                 try
                 {
                     var context = services.GetRequiredService<RepositoryContext>();
-                    DbInitializer.Initialize(context);
+                    DataSeeding.Initialize(context);
                 }
                 catch (Exception ex)
                 {

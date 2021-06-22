@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AutoMapper;
 using App.Extensions;
-using App.Services.Identity;
 using Contracts;
 using Entities.Models.Aircrafts;
 using Entities.DTOs.V1.Aircrafts;
@@ -29,7 +28,7 @@ namespace App.Controllers.V1
     /// <para> SaveAircraftToUserBookmark  - PATCH   api/aircrafts/id/5/bookmark </para>  // TODO: get user from context, validate login, save to bookmark?
     /// </summary>
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("/api/aircrafts")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiVersion("1.0")]
     public class AircraftsController : ControllerBase
@@ -37,18 +36,15 @@ namespace App.Controllers.V1
         private readonly ILoggerManager _logger;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
-        private readonly IUserService _userService;
 
         public AircraftsController(
             IRepositoryWrapper repository,
             IMapper mapper,
-            ILoggerManager logger,
-            IUserService userService)
+            ILoggerManager logger)
         {
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
-            _userService = userService;
         }
 
         // GET api/aircrafts
@@ -125,7 +121,7 @@ namespace App.Controllers.V1
 
         // GET api/aircrafts/owned
         [HttpGet("owned")] // TODO
-        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetOwnedAircrafts(
+        public async Task<IActionResult> GetOwnedAircrafts(
             [FromQuery] AircraftParameters parameters)
         {
             var userId = HttpContext.GetUserId();
@@ -169,7 +165,7 @@ namespace App.Controllers.V1
         /// <response code="404">Aircraft (id) not found in the database</response>
         [HttpGet("id/{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<AircraftReadDTO>> GetAircraftById(Guid id)
+        public async Task<IActionResult> GetAircraftById(Guid id)
         {
             var aircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (aircraft == null)
@@ -194,15 +190,15 @@ namespace App.Controllers.V1
         [HttpPost("create")]
         public async Task<IActionResult> CreateAircraft(AircraftCreateDTO aircraftCreateDto)
         {
-            var user = await _userService.GetUserAsync(HttpContext.GetUserId());
-            if (user == null)
+            var userId = HttpContext.GetUserId();
+            if (userId == null)
             {
                 _logger.LogError($"User not logged in. Unable to create aircraft.");
                 return BadRequest();
             }
 
-            aircraftCreateDto.UserId = user.Id;
-            aircraftCreateDto.AuthorUsername = user.UserName;
+            aircraftCreateDto.UserId = userId;
+            aircraftCreateDto.AuthorUsername = aircraftCreateDto.User.UserName; // TODO: test
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
             await _repository.Aircraft.CreateAircraftAsync(aircraftModel);
             //_repository.SaveToUserAsync(user.Id, aircraftModel.Id);

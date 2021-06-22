@@ -70,7 +70,6 @@ namespace Repository
                 parameters.PageSize);
         }
 
-        // TODO: use only get all?
         /// <summary>
         /// Retrieves aircraft matching id parameter.
         /// </summary>
@@ -82,7 +81,6 @@ namespace Repository
                 .FirstOrDefaultAsync();
         }
 
-        // TODO: Test
         /// <summary>
         /// Retrieves all aircrafts in context created by user id.
         /// </summary>

@@ -5,7 +5,7 @@ using Entities.Models.Enums;
 
 namespace Entities.Data
 {
-    public static class DbInitializer
+    public static class DataSeeding
     {
         public static void Initialize(RepositoryContext context)
         {

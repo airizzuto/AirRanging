@@ -1,8 +1,9 @@
 using FluentValidation;
 
-namespace App.Contracts.V1.Identity
+namespace Entities.DTOs.V1.Identity
 {
-    public class UserRegistrationRequestValidator : AbstractValidator<UserRegistrationRequest>
+    public class UserRegistrationRequestValidator 
+        : AbstractValidator<UserRegistrationDTO>
     {
         public UserRegistrationRequestValidator()
         {

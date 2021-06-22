@@ -1,6 +1,6 @@
 using System;
 
-namespace App.Settings
+namespace Repository.Settings
 {
     public class JwtSettings
     {

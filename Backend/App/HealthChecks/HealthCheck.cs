@@ -1,4 +1,4 @@
-namespace App.Contracts.HealthChecks
+namespace App.HealthChecks
 {
     public class HealthCheck
     {

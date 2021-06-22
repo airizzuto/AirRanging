@@ -1,14 +1,11 @@
 using System;
-using App.Services;
 using Entities.Data;
-using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
-using Contracts;
-using Repository;
 using App.Extensions;
+using Entities.Models.Identity;
 
 namespace App.Injectors
 {
@@ -36,8 +33,6 @@ namespace App.Injectors
                 .AddEntityFrameworkStores<RepositoryContext>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            services.AddScoped<IBookmarkService, BookmarkService>();
 
             services.ConfigureRepositoryWrapper();
         }

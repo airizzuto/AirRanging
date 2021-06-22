@@ -1,6 +1,6 @@
-namespace App.Contracts.V1.Identity
+namespace Entities.DTOs.V1.Identity
 {
-    public class UserLoginRequest
+    public class UserLoginDTO
     {
         // TODO: login with username or email. Switch if @ present?
         // public string UserName { get; set; }

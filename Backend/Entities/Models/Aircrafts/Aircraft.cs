@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using Entities.Models.Enums;
+using Entities.Models.Identity;
 
 namespace Entities.Models.Aircrafts
 {

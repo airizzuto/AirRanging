@@ -1,10 +1,11 @@
 using FluentValidation;
 
-namespace App.Contracts.V1.Identity
+namespace Entities.DTOs.V1.Identity
 {
-    public class UserLoginRequestValidator : AbstractValidator<UserLoginRequest>
+    public class UserLoginDTOValidator 
+        : AbstractValidator<UserLoginDTO>
     {
-        public UserLoginRequestValidator()
+        public UserLoginDTOValidator()
         {
             RuleFor(x => x.Email)
                 .NotNull()
