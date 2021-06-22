@@ -18,11 +18,11 @@ namespace Entities.Data
 
         protected override void OnModelCreating(ModelBuilder builder) 
         {
+            base.OnModelCreating(builder);
+
             builder.ApplyConfiguration(new AircraftConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new BookmarkConfiguration());
-
-            base.OnModelCreating(builder);
         }
     }
 }

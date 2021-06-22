@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace App.Extensions
+namespace App.Extensions.Configurations
 {
-    public static class ApiVersioningExtension
+    public static class ApiVersioningConfiguration
     {
         public static void ConfigureApiVersioning(this IServiceCollection services)
         {

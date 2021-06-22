@@ -4,9 +4,9 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace App.Extensions
+namespace App.Extensions.Configurations
 {
-    public static class SwaggerExtension
+    public static class SwaggerConfiguration
     {
         public static void ConfigureSwagger(this IServiceCollection services)
         {

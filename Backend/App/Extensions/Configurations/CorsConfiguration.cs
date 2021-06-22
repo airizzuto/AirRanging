@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace App.Extensions
+namespace App.Extensions.Configurations
 {
-    public static class CorsExtension
+    public static class CorsConfiguration
     {
         public static void ConfigureCors(this IServiceCollection services)
         {

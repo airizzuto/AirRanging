@@ -1,11 +1,12 @@
 using System;
-using Entities.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Npgsql;
-using App.Extensions;
+using Microsoft.AspNetCore.Identity;
+using App.Extensions.Configurations;
 using Entities.Models.Identity;
+using Entities.Data;
+using Npgsql;
 
 namespace App.Injectors
 {
@@ -27,7 +28,7 @@ namespace App.Injectors
                 )
             );
 
-            services.AddIdentityCore<ApplicationUser>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 // TODO REFACTOR: Review use of default implementation instead of custom token and refresh token 
                 // .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<RepositoryContext>();

@@ -1,9 +1,9 @@
 using App.Middleware;
 using Microsoft.AspNetCore.Builder;
 
-namespace App.Extensions
+namespace App.Extensions.Configurations
 {
-  public static class ExceptionMiddlewareExtensions
+  public static class ExceptionMiddlewareConfiguration
     {
         public static void ConfigureExceptionHandler(this IApplicationBuilder app)
         {

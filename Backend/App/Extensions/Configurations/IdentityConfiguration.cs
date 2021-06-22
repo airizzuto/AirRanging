@@ -9,9 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 using Repository;
 using Repository.Settings;
 
-namespace App.Extensions
+namespace App.Extensions.Configurations
 {
-    public static class IdentityExtension
+    public static class IdentityConfiguration
     {
         public static void ConfigureIdentity(
             this IServiceCollection services, IConfiguration configuration)
