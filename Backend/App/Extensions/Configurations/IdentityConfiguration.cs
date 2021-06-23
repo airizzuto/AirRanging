@@ -42,7 +42,7 @@ namespace App.Extensions.Configurations
             configuration.Bind(nameof(jwtSettings), jwtSettings); // TODO: Review Implementation
             services.AddSingleton(jwtSettings);
 
-            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+            services.AddScoped<IApplicationUserService, ApplicationUserService>();
 
             var tokenValidationParameters = new TokenValidationParameters
             {

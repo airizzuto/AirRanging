@@ -16,26 +16,23 @@ using Repository.Settings;
 
 namespace Repository
 {
-    public class ApplicationUserRepository : IApplicationUserRepository
+    public class ApplicationUserService : IApplicationUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager; // TODO:
 
         private readonly JwtSettings _jwtSettings;
-        private readonly TokenValidationParameters _tokenValidationParameters;
         private readonly RepositoryContext _context;
 
-        public ApplicationUserRepository(
+        public ApplicationUserService(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             JwtSettings jwtSettings,
-            TokenValidationParameters tokenValidationParameters,
             RepositoryContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtSettings = jwtSettings;
-            _tokenValidationParameters = tokenValidationParameters;
             _context = context;
         }
 
@@ -188,10 +185,28 @@ namespace Repository
         private ClaimsPrincipal GetPrincipalFromToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
+            
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ClockSkew = TimeSpan.Zero,
+                IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(_jwtSettings.Key)), // TODO:
+                ValidIssuer = Path.Local.Full + "/airrangingapi",
+                ValidAudience = Path.Local.Full + "/airranginguser", // TODO: to constant aud
+                ValidateIssuerSigningKey = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                RequireExpirationTime = false,
+            };
 
             try
             {
-                var principal = tokenHandler.ValidateToken(token, _tokenValidationParameters, out var claimsPrincipal);
+                var principal = tokenHandler.ValidateToken(
+                    token,
+                    tokenValidationParameters,
+                    out var claimsPrincipal
+                );
+
                 if (!IsJwtWithValidSecurityAlgorithm(claimsPrincipal))
                 {
                     return null;

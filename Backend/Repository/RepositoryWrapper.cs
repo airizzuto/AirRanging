@@ -7,7 +7,6 @@ using Entities.Models.Aircrafts;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using Repository.Settings;
 
 namespace Repository
 {
@@ -21,11 +20,9 @@ namespace Repository
         private IBookmarkRepository _bookmark;
 
         // TODO: resolve coupling of identity
-        private IApplicationUserRepository _applicationUser;
-        private readonly JwtSettings _jwtSettings;
-        private readonly TokenValidationParameters _tokenValidationParameters;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        // // private IApplicationUserService _applicationUser;
+        // private readonly UserManager<ApplicationUser> _userManager;
+        // private readonly RoleManager<IdentityRole> _roleManager;
 
         public IAircraftRepository Aircraft {
             get
@@ -39,23 +36,21 @@ namespace Repository
             }
         }
 
-        public IApplicationUserRepository ApplicationUser {
-            get
-            {
-                if (_applicationUser == null)
-                {
-                    _applicationUser = new ApplicationUserRepository(
-                        _userManager,
-                        _roleManager,
-                        _jwtSettings,
-                        _tokenValidationParameters,
-                        _context
-                    );
-                }
+        // public IApplicationUserService ApplicationUser {
+        //     get
+        //     {
+        //         if (_applicationUser == null)
+        //         {
+        //             _applicationUser = new ApplicationUserService(
+        //                 _userManager,
+        //                 _roleManager,
+        //                 _context
+        //             );
+        //         }
 
-                return _applicationUser;
-            }
-        }
+        //         return _applicationUser;
+        //     }
+        // }
 
         public IBookmarkRepository Bookmark {
             get
@@ -71,16 +66,15 @@ namespace Repository
 
         public RepositoryWrapper(
             RepositoryContext context,
-            ISortHelper<Aircraft> aircraftSortHelper,
-            JwtSettings jwtSettings,
-            UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+            ISortHelper<Aircraft> aircraftSortHelper
+            // UserManager<ApplicationUser> userManager,
+            // RoleManager<IdentityRole> roleManager
+            )
         {
             _context = context;
             _aircraftSortHelper = aircraftSortHelper;
-            _jwtSettings = jwtSettings;
-            _userManager = userManager;
-            _roleManager = roleManager;
+            // _userManager = userManager;
+            // _roleManager = roleManager;
         }
 
         public async Task SaveAsync()

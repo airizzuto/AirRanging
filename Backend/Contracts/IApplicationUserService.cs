@@ -3,7 +3,7 @@ using Entities.Models.Identity;
 
 namespace Contracts
 {
-    public interface IApplicationUserRepository
+    public interface IApplicationUserService
     {
         Task<ApplicationUser> GetUserAsync(string id);
         Task<Authentication> RegisterAsync(ApplicationUser applicationUser, string password);

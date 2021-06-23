@@ -18,16 +18,16 @@ namespace App.Controllers.V1
     [Route("/users")]
     public class UsersController : ControllerBase
     {
-        private readonly IRepositoryWrapper _repository;
+        private readonly IApplicationUserService _userService;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
         public UsersController(
-            IRepositoryWrapper repository,
+            IApplicationUserService service,
             ILoggerManager logger,
             IMapper mapper)
         {
-            _repository = repository;
+            _userService = service;
             _logger = logger;
             _mapper = mapper;
         }
@@ -45,7 +45,7 @@ namespace App.Controllers.V1
 
             var userRegistration = _mapper.Map<ApplicationUser>(request);
 
-            var authResponse = await _repository.ApplicationUser.RegisterAsync(userRegistration, request.Password);
+            var authResponse = await _userService.RegisterAsync(userRegistration, request.Password);
 
             if(!authResponse.Success)
             {
@@ -62,7 +62,7 @@ namespace App.Controllers.V1
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginDTO request)
         {
-            var authResponse = await _repository.ApplicationUser.LoginAsync(request.Email, request.Password);
+            var authResponse = await _userService.LoginAsync(request.Email, request.Password);
 
             if(!authResponse.Success)
             {
@@ -80,7 +80,7 @@ namespace App.Controllers.V1
         [HttpPost("refresh")]
         public async Task<IActionResult> RefreshTokenAsync([FromBody] Authentication request)
         {
-            var authResponse = await _repository.ApplicationUser.RefreshTokenAsync(request.Token, request.RefreshToken);
+            var authResponse = await _userService.RefreshTokenAsync(request.Token, request.RefreshToken);
 
             if(!authResponse.Success)
             {
