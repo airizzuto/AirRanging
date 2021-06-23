@@ -16,6 +16,8 @@ namespace App.Injectors
     {
         public void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.ConfigureLogger();
+
             services.ConfigureCors();  // TODO: SECURITY: Restrict before production
 
             services.ConfigureIISIntegration();
@@ -32,8 +34,6 @@ namespace App.Injectors
                         options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     })
                 .AddFluentValidation();
-
-            services.AddSingleton<ILoggerManager, LoggerManager>();
 
             services.AddControllers(options => {
                 options.Conventions.Add(new GroupingByNamespaceConvention());

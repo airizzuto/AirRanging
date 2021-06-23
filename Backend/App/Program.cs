@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Contracts;
 using Data;
 using Entities.Models.Identity;
 using Logger;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog;
 
 namespace App
 {
@@ -20,7 +22,7 @@ namespace App
             {
                 var services = scope.ServiceProvider;
 
-                var logger = services.GetRequiredService<LoggerManager>();
+                var loggerManager = services.GetRequiredService<ILoggerManager>();
 
                 try
                 {
@@ -31,6 +33,7 @@ namespace App
                 }
                 catch (Exception ex)
                 {
+                    var logger = new LoggerManager();
                     logger.LogError($"An error ocurred seeding the DB: {ex.Message}");
                 }
             }
