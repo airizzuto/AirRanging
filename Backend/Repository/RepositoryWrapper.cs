@@ -1,18 +1,15 @@
 using System.Threading.Tasks;
 using Contracts;
 using Contracts.Aircrafts;
-using Entities.Data;
+using Data;
 using Entities.Helpers;
 using Entities.Models.Aircrafts;
-using Entities.Models.Identity;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Repository
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        private readonly RepositoryContext _context;
+        private readonly ApplicationDbContext _context;
 
         private IAircraftRepository _aircraft;
         private readonly ISortHelper<Aircraft> _aircraftSortHelper;
@@ -65,7 +62,7 @@ namespace Repository
         }
 
         public RepositoryWrapper(
-            RepositoryContext context,
+            ApplicationDbContext context,
             ISortHelper<Aircraft> aircraftSortHelper
             // UserManager<ApplicationUser> userManager,
             // RoleManager<IdentityRole> roleManager

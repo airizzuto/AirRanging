@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using App.Extensions.Configurations;
 using Entities.Models.Identity;
-using Entities.Data;
+using Data;
 using Npgsql;
 
 namespace App.Injectors
@@ -21,17 +21,19 @@ namespace App.Injectors
                 Password = dbPassword
             };
 
-            services.AddDbContext<RepositoryContext>(
-                opt => opt.UseNpgsql(
+            services.AddDbContext<ApplicationDbContext>(opt =>
+                opt.UseNpgsql(
                     builder.ConnectionString,
-                    opt => opt.MigrationsAssembly("App")
-                )
+                    npgsqlOptionsAction: opt => 
+                    {
+                        opt.EnableRetryOnFailure();
+                        opt.MigrationsAssembly("App");
+                    }
+                ).EnableDetailedErrors()
             );
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                // TODO REFACTOR: Review use of default implementation instead of custom token and refresh token 
-                // .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<RepositoryContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

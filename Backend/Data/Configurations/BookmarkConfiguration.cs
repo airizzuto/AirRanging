@@ -2,7 +2,7 @@ using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Entities.Data.Configurations
+namespace Data.Configurations
 {
     public class BookmarkConfiguration : IEntityTypeConfiguration<Bookmark>
     {

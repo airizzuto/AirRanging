@@ -1,51 +1,51 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
-using Contracts;
-using Entities.Data;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Data;
+using Contracts;
 
 namespace Repository
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        protected RepositoryContext RepositoryContext { get; set; }
+        protected ApplicationDbContext DbContext { get; set; }
 
-        public BaseRepository(RepositoryContext repositoryContext)
+        public BaseRepository(ApplicationDbContext dbContext)
         {
-            RepositoryContext = repositoryContext;
+            DbContext = dbContext;
         }
 
         public IQueryable<T> FindAll()
         {
-            return RepositoryContext.Set<T>()
+            return DbContext.Set<T>()
                 .AsNoTracking();
         }
 
         public IQueryable<T> FindByCondition(
             Expression<Func<T, bool>> expression)
         {
-            return RepositoryContext.Set<T>()
+            return DbContext.Set<T>()
                 .Where(expression)
                 .AsNoTracking();
         }
 
         public async Task CreateAsync(T entity)
         {
-            await RepositoryContext.Set<T>()
+            await DbContext.Set<T>()
                 .AddAsync(entity);
         }
 
         public void Update(T entity)
         {
-            RepositoryContext.Set<T>()
+            DbContext.Set<T>()
                 .Update(entity);
         }
 
         public void Delete(T entity)
         {
-            RepositoryContext.Set<T>()
+            DbContext.Set<T>()
                 .Remove(entity);
         }
     }

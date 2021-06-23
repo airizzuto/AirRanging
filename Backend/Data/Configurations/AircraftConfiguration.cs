@@ -2,7 +2,7 @@ using Entities.Models.Aircrafts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Entities.Data.Configurations
+namespace Data.Configurations
 {
   public class AircraftConfiguration : IEntityTypeConfiguration<Aircraft>
     {

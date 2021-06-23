@@ -1,4 +1,4 @@
-using Entities.Data;
+using Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +9,7 @@ namespace App.Injectors
         public void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddHealthChecks()
-                .AddDbContextCheck<RepositoryContext>();
+                .AddDbContextCheck<ApplicationDbContext>();
         }
     }
 }

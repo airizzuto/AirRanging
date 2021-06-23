@@ -7,12 +7,19 @@ using Entities.Models.Enums;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace Entities.Data
+namespace Data
 {
-    public static class DataContextSeeding
+    public static class DataSeeding
     {
-        public static async Task SeedDefaultUser(UserManager<ApplicationUser> userManager)
+        public static async Task SeedDefaultUser(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager)
         {
+            if (context.Users.Any())
+            {
+                return; // Users already seeded
+            }
+
             var defaultUser = new ApplicationUser 
             {
                 UserName = Authorization.default_username,
@@ -28,12 +35,12 @@ namespace Entities.Data
         }
 
         public static async Task SeedExamples(
-            RepositoryContext context,
+            ApplicationDbContext context,
             UserManager<ApplicationUser> userManager)
         {
             if (context.Aircrafts.Any())
             {
-                return;  // Already initialized
+                return;  // Aircrafts already seeded
             }
 
             var aircrafts = new Aircraft[]
@@ -135,11 +142,8 @@ namespace Entities.Data
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 }
             };
-        
-            foreach (var aircraft in aircrafts)
-            {
-                await context.Aircrafts.AddAsync(aircraft);
-            }
+
+            await context.AddRangeAsync(aircrafts);
 
             await context.SaveChangesAsync();
         }

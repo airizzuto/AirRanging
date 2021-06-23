@@ -1,14 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Entities;
-using Entities.Data;
+using Data;
 using Entities.Models.Identity;
 using Logger;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace App
 {
@@ -18,10 +16,6 @@ namespace App
         {
             var host = CreateHostBuilder(args).Build();
 
-            // host.Services.GetRequiredService<ILogger<Program>>();
-
-            host.MigrateDatabase();
-
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -30,10 +24,10 @@ namespace App
 
                 try
                 {
+                    var dbContext = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                    var context = services.GetRequiredService<RepositoryContext>();
-                    await DataContextSeeding.SeedDefaultUser(userManager);
-                    await DataContextSeeding.SeedExamples(context, userManager);
+                    await DataSeeding.SeedDefaultUser(dbContext, userManager);
+                    await DataSeeding.SeedExamples(dbContext, userManager);
                 }
                 catch (Exception ex)
                 {

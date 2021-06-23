@@ -1,20 +1,21 @@
-using Entities.Data.Configurations;
+using Data.Configurations;
 using Entities.Models;
 using Entities.Models.Aircrafts;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Entities.Data
+namespace Data
 {
-    public class RepositoryContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Bookmark> Bookmarks { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
-        public RepositoryContext(DbContextOptions options) : base(options) { }
+        // DbSet<ApplicationUser> already declared on extension with IdentityDbContext<ApplicationUser>
+
+        public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder) 
         {

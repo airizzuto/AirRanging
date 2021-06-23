@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Constants;
 using Contracts;
-using Entities.Data;
+using Data;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +22,13 @@ namespace Repository
         private readonly RoleManager<IdentityRole> _roleManager; // TODO:
 
         private readonly JwtSettings _jwtSettings;
-        private readonly RepositoryContext _context;
+        private readonly ApplicationDbContext _context;
 
         public ApplicationUserService(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             JwtSettings jwtSettings,
-            RepositoryContext context)
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -41,7 +41,6 @@ namespace Repository
             return await _userManager.FindByIdAsync(id);
         }
 
-        // TODO: saved response
         // public async Task SaveAircraftAsync(string userId, Guid aircraftId)
         // { 
         //     var user = await GetUserAsync(userId);
@@ -51,7 +50,6 @@ namespace Repository
         //     );
         // }
 
-        // TODO: Login with username or email. Switch if "@" is present?
         public async Task<Authentication> LoginAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -190,9 +188,9 @@ namespace Repository
             {
                 ClockSkew = TimeSpan.Zero,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(_jwtSettings.Key)), // TODO:
+                    Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
                 ValidIssuer = Path.Local.Full + "/airrangingapi",
-                ValidAudience = Path.Local.Full + "/airranginguser", // TODO: to constant aud
+                ValidAudience = Path.Local.Full + "/airranginguser",
                 ValidateIssuerSigningKey = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
@@ -255,7 +253,7 @@ namespace Repository
                 Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(_jwtSettings.Key)),
+                        Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
                     SecurityAlgorithms.HmacSha256Signature
                 )
             };

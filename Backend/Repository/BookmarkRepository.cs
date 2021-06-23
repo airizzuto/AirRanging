@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Contracts;
-using Entities.Data;
+using Data;
 using Entities.Models;
 using Entities.Models.Aircrafts;
+using Contracts;
 
 namespace Repository
 {
     public class BookmarkRepository 
         : BaseRepository<Bookmark>, IBookmarkRepository
     {
-        public BookmarkRepository(RepositoryContext context) : base(context)
+        public BookmarkRepository(ApplicationDbContext context) : base(context)
         {
 
         }

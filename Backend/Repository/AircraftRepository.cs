@@ -2,12 +2,12 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using Entities.Data;
+using Data;
 using Entities.Models.Aircrafts;
-using Contracts.Aircrafts;
 using Entities.Models.Pagination;
 using Entities.Models.Enums;
 using Entities.Helpers;
+using Contracts.Aircrafts;
 
 namespace Repository
 {
@@ -16,7 +16,7 @@ namespace Repository
         private ISortHelper<Aircraft> _sortHelper;
 
         public AircraftRepository(
-            RepositoryContext context,
+            ApplicationDbContext context,
             ISortHelper<Aircraft> sortHelper) : base(context) 
         {
             _sortHelper = sortHelper;

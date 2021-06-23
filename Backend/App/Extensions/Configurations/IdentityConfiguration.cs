@@ -47,10 +47,9 @@ namespace App.Extensions.Configurations
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ClockSkew = TimeSpan.Zero,
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(jwtSettings.Key)),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
                 ValidIssuer = Path.Local.Full + "/airrangingapi",
-                ValidAudience = Path.Local.Full + "/airranginguser", // TODO: to constant aud
+                ValidAudience = Path.Local.Full + "/airranginguser",
                 ValidateIssuerSigningKey = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,

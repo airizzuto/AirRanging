@@ -22,14 +22,6 @@ namespace App.Injectors
 
             services.ConfigureIdentity(configuration);
 
-            // services.AddSingleton<IUriService>(provider => {
-            //     var accessor = provider.GetRequiredService<IHttpContextAccessor>();
-            //     var request = accessor.HttpContext.Request;
-            //     var absoluteUri = string.Concat(
-            //         request.Scheme, "://", request.Host.ToUriComponent(), "/");
-            //     return new UriService(absoluteUri);
-            // });
-
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddJsonOptions(options => {

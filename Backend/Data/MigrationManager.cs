@@ -1,10 +1,9 @@
 using System;
-using Entities.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Entities
+namespace Data
 {
     public static class MigrationManager
     {
@@ -12,7 +11,7 @@ namespace Entities
         {
             using (var scope = host.Services.CreateScope())
             {
-                using (var appContext = scope.ServiceProvider.GetRequiredService<RepositoryContext>())
+                using (var appContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
                 {
                     try
                     {
