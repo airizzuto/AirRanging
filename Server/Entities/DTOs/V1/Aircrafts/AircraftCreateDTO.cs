@@ -1,6 +1,5 @@
 using System;
 using Entities.Models.Enums;
-using Entities.Models.Identity;
 
 namespace Entities.DTOs.V1.Aircrafts
 {

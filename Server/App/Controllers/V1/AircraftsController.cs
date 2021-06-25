@@ -17,14 +17,15 @@ namespace App.Controllers.V1
 {
     /// <summary>
     /// Aircraft model controller endpoints:
-    /// <para> GetAllAircraft              - GET     api/aircrafts               </para>
-    /// <para> GetAircraftByParameters     - GET     api/aircrafts/search        </para>
-    /// <para> GetAircraftOwnedByUser      - GET     api/aircrafts/owned         </para>
-    /// <para> GetAircraftId               - GET     api/aircrafts/id/5          </para>
-    /// <para> CreateAircraft              - POST    api/aircrafts/create        </para>
-    /// <para> PartialUpdateAircraftId     - PUT     api/aircrafts/id/5          </para>
-    /// <para> FullUpdateAircraftId        - PATCH   api/aircrafts/id/5          </para>
-    /// <para> DeleteAircraftId            - DELETE  api/aircrafts/id/5          </para>
+    /// <para> GetAllAircraft              - GET     api/aircrafts         </para>
+    /// <para> GetAircraftByParameters     - GET     api/aircrafts/search  </para>
+    /// <para> GetAircraftOwnedByUser      - GET     api/aircrafts/owned   </para>
+    /// <para> GetAircraftId               - GET     api/aircrafts/5       </para>
+    /// <para> CreateAircraft              - POST    api/aircrafts/create  </para>
+    /// <para> PartialUpdateAircraftId     - PUT     api/aircrafts/5       </para>
+    /// <para> FullUpdateAircraftId        - PATCH   api/aircrafts/5       </para>
+    /// <para> DeleteAircraftId            - DELETE  api/aircrafts/5       </para>
+    /// <para> SaveAircraftId              - PUT     api/aircrafts/5/save  </para>
     /// </summary>
     [ApiController]
     [Route("/api/aircrafts")]
@@ -171,7 +172,7 @@ namespace App.Controllers.V1
         /// </summary>
         /// <response code="200">Retrieves aircraft (id) in the database</response>
         /// <response code="404">Aircraft (id) not found in the database</response>
-        [HttpGet("id/{id}")]
+        [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAircraftById(Guid id)
         {
@@ -218,7 +219,7 @@ namespace App.Controllers.V1
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
             _logger.LogInfo(
-                $"INFO: User: {aircraftReadDto.AuthorUsername} created aircraft {aircraftReadDto.Id}."
+                $"INFO: User: {userId} created aircraft {aircraftReadDto.Id}."
             );
 
             return CreatedAtAction(
@@ -234,10 +235,10 @@ namespace App.Controllers.V1
         /// </summary>
         /// <response code="204">Aircraft updated successfully in database</response>
         /// <response code="400">Unable to update the aircraft due to validation error</response>
-        /// <response code="401">User not logged in.</response>
-        /// <response code="403">User does not own this aircraft.</response>
+        /// <response code="401">User not logged in</response>
+        /// <response code="403">User does not own this aircraft</response>
         /// <response code="404">Aircraft id not found</response>
-        [HttpPut("id/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAircraft(Guid id, AircraftUpdateDTO aircraftUpdateDTO)
         {
             var userId = HttpContext.GetUserId();
@@ -254,8 +255,7 @@ namespace App.Controllers.V1
                 return NotFound();
             }
 
-            var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
-            if (!userOwnsAircraft)
+            if (existingAircraft.UserId != userId)
             {
                 _logger.LogError($"User does not own this aircraft. Unable to update.");
                 return Forbid();
@@ -266,7 +266,42 @@ namespace App.Controllers.V1
             _repository.Aircraft.UpdateAircraft(existingAircraft);
             await _repository.SaveAsync();
 
-            _logger.LogInfo($"INFO: User {aircraftUpdateDTO.User.UserName} updated aircraft {id}.");
+            _logger.LogInfo($"INFO: User {userId} updated aircraft {id}.");
+
+            return NoContent();
+        }
+
+        // PUT api/aircrafts/id/5/save
+        /// <summary>
+        /// Save aircraft {id} to current user bookmarks
+        /// </summary>
+        /// <response code="204">Aircraft {id} saved to current user bookmarks</response>
+        /// <response code="401">User not logged in</response>
+        /// <response code="404">Aircraft id not found</response>
+        [HttpPut("{id}/save")]
+        public async Task<IActionResult> SaveAircraftId(Guid id)
+        {
+            var userId = HttpContext.GetUserId();
+            if (userId == null)
+            {
+                _logger.LogError($"User not logged in.");
+                return Unauthorized();
+            }
+
+            var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
+            if (existingAircraft == null)
+            {
+                _logger.LogError($"Aircraft id: {id}, not found.");
+                return NotFound();
+            }
+
+            existingAircraft.SavesCount += 1;
+
+            await _repository.Bookmark.SaveToBookmarkAsync(userId, existingAircraft.Id);
+            _repository.Aircraft.UpdateAircraft(existingAircraft);
+            await _repository.SaveAsync();
+
+            _logger.LogInfo($"INFO: User {userId} saved aircraft {id}.");
 
             return NoContent();
         }
@@ -280,9 +315,9 @@ namespace App.Controllers.V1
         /// <response code="401">User not logged in.</response>
         /// <response code="403">User does not own this aircraft.</response>
         /// <response code="404">Aircraft id not found</response>
-        [HttpPatch("id/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> PartialUpdateAircraft(
-            Guid id, JsonPatchDocument<AircraftUpdateDTO> patchDocument)
+            Guid id, JsonPatchDocument<AircraftUpdateDTO> patchDoc)
         {
             var userId = HttpContext.GetUserId();
             if (userId == null)
@@ -305,11 +340,11 @@ namespace App.Controllers.V1
             }
 
             var aircraftToPatch = _mapper.Map<AircraftUpdateDTO>(existingAircraft);
-            patchDocument.ApplyTo(aircraftToPatch, ModelState);
+            patchDoc.ApplyTo(aircraftToPatch, ModelState);
 
             if (!TryValidateModel(aircraftToPatch))
             {
-                _logger.LogError($"Validation error updating aircraft {aircraftToPatch.Id}.");
+                _logger.LogError($"Validation error updating aircraft {existingAircraft.Id}.");
                 return ValidationProblem(ModelState);
             }
 
@@ -318,7 +353,8 @@ namespace App.Controllers.V1
             _repository.Aircraft.UpdateAircraft(existingAircraft);
             await _repository.SaveAsync();
 
-            _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} partially updated aircraft {id}.");
+            _logger.LogInfo(
+                $"INFO: User {userId} partially updated aircraft {id}.");
 
             return NoContent();
         }
@@ -331,7 +367,7 @@ namespace App.Controllers.V1
         /// <response code="401">User not logged in.</response>
         /// <response code="403">User does not own this aircraft.</response>
         /// <response code="404">Aircraft id not found</response>
-        [HttpDelete("id/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAircraft(Guid id)
         {
             var userId = HttpContext.GetUserId();
@@ -347,8 +383,7 @@ namespace App.Controllers.V1
                 return NotFound();
             }
 
-            var userOwnsAircraft = await _repository.Aircraft.UserOwnsAircraftAsync(id, userId);
-            if (!userOwnsAircraft)
+            if (existingAircraft.UserId != userId)
             {
                 _logger.LogError($"User does not own this aircraft. Unable to delete.");
                 return Forbid();
@@ -357,7 +392,7 @@ namespace App.Controllers.V1
             _repository.Aircraft.DeleteAircraft(existingAircraft);
             await _repository.SaveAsync();
 
-            _logger.LogInfo($"INFO: User {existingAircraft.User.UserName} deleted aircraft {id}.");
+            _logger.LogInfo($"INFO: User {userId} deleted aircraft {id}.");
 
             return NoContent();
         }
