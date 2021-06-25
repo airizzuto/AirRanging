@@ -71,7 +71,7 @@ namespace App.Controllers.V1
                 return BadRequest(failedAuth.Errors);
             }
 
-            _logger.LogInfo($"INFO: User {request.Email} logged");
+            _logger.LogInfo($"INFO: User: {request.Email} logged");
 
             var authentication = _mapper.Map<AuthenticationDTO>(authResponse);
             return Ok(authentication);

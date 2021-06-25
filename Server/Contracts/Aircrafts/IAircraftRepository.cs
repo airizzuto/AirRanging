@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities.Models.Aircrafts;
+using Entities.Models.Bookmarks;
 using Entities.Models.Pagination;
 
 namespace Contracts.Aircrafts
@@ -15,9 +17,6 @@ namespace Contracts.Aircrafts
 
         Task<PagedList<Aircraft>> GetAircraftsWithSearchAsync(
             AircraftParameters aircraftParameters);
-
-        // Task<PagedList<Aircraft>> GetAircraftsBookmarked(
-        //     Guid userId, AircraftParameters aircraftParameters);
 
         // Task SaveToUserAsync(string userId, Guid aircraftId);
         Task<Aircraft> GetAircraftByIdAsync(Guid id);

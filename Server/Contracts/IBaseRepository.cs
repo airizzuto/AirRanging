@@ -9,7 +9,7 @@ namespace Contracts
     {
         IQueryable<T> FindAll();
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
-        Task CreateAsync(T entity);
+        void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
     }

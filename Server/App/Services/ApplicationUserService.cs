@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Constants;
 using Contracts;
 using Data;
+using Entities.Models.Aircrafts;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -41,13 +42,11 @@ namespace Repository
             return await _userManager.FindByIdAsync(id);
         }
 
-        // public async Task SaveAircraftAsync(string userId, Guid aircraftId)
+        // public async Task SaveAircraftAsync(string userId, Aircraft aircraft)
         // { 
         //     var user = await GetUserAsync(userId);
 
-        //     _logger.LogInformation(
-        //         $"INFO: saved aircraft {aircraftId} to {user.UserName}"
-        //     );
+        //     user.AircraftsOwned.Add(aircraft);
         // }
 
         public async Task<Authentication> LoginAsync(string email, string password)
@@ -247,8 +246,8 @@ namespace Repository
                     new Claim("uid", user.Id)
                 }.Union(userClaims)
                  .Union(roleClaims)),
-                Issuer = Path.Local.Full + "airrangingapi",
-                Audience = Path.Local.Full + "airranginguser",
+                Issuer = Path.Local.Full + "/airrangingapi",
+                Audience = Path.Local.Full + "/airranginguser",
                 NotBefore = DateTime.Now,
                 Expires = DateTime.UtcNow.Add(_jwtSettings.TokenLifetime),
                 SigningCredentials = new SigningCredentials(

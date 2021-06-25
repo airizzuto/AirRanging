@@ -1,4 +1,4 @@
-using Entities.Models;
+using Entities.Models.Bookmarks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

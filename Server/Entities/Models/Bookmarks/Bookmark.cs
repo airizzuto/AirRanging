@@ -2,7 +2,7 @@ using System;
 using Entities.Models.Aircrafts;
 using Entities.Models.Identity;
 
-namespace Entities.Models
+namespace Entities.Models.Bookmarks
 {
     public class Bookmark
     {

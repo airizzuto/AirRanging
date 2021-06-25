@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Entities.Models;
 using Entities.Models.Aircrafts;
+using Entities.Models.Bookmarks;
 
 namespace Contracts
 {
     public interface IBookmarkRepository : IBaseRepository<Bookmark>
     {
-        Task CreateBookmarkAsync(Bookmark bookmark);
+        Task SaveToBookmarkAsync(string userId, Guid aircraftId);
 
-        Task<IEnumerable<Aircraft>> GetAllOwnedAircraftsAsync();
-        Task<IEnumerable<Aircraft>> GetAllBookmarkedAircraftsAsync();
+        Task<IEnumerable<Aircraft>> GetUserBookmarksAsync(string userId);
     }
 }

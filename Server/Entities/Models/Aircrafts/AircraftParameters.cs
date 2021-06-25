@@ -3,6 +3,9 @@ using Entities.Models.Pagination;
 
 namespace Entities.Models.Aircrafts
 {
+    /// <summary>
+    /// Aircrafts parameters used in search queries
+    /// </summary>
     public class AircraftParameters : QueryStringParameters
     {
         public string IcaoId { get; set; }

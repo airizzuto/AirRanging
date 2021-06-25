@@ -62,6 +62,7 @@ namespace Data
                     FuelCapacity = 26,
                     MaxRange = 415,
                     ServiceCeiling = 14700,
+                    AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
                 new Aircraft
@@ -82,6 +83,7 @@ namespace Data
                     FuelCapacity = 38,
                     MaxRange = 691,
                     ServiceCeiling = 14700,
+                    AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
                 new Aircraft
@@ -101,6 +103,7 @@ namespace Data
                     FuelCapacity = 56,
                     MaxRange = 696,
                     ServiceCeiling = 13500,
+                    AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
                 new Aircraft
@@ -120,6 +123,7 @@ namespace Data
                     FuelCapacity = 6400,
                     MaxRange = 3300,
                     ServiceCeiling = 39100,
+                    AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
                 new Aircraft
@@ -139,6 +143,7 @@ namespace Data
                     FuelCapacity = 6875,
                     MaxRange = 2935,
                     ServiceCeiling = 41000,
+                    AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 }
             };

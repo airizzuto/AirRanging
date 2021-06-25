@@ -13,7 +13,7 @@ namespace Repository
 {
     public class AircraftRepository : BaseRepository<Aircraft>, IAircraftRepository
     {
-        private ISortHelper<Aircraft> _sortHelper;
+        private readonly ISortHelper<Aircraft> _sortHelper;
 
         public AircraftRepository(
             ApplicationDbContext context,
@@ -113,20 +113,13 @@ namespace Repository
                 parameters.PageSize);
         }
 
-        // TODO: response.
-        // public async Task SaveToUserAsync(string userId, Guid Id)
-        // {
-        //     await _bookmarkService.SaveAsync(userId, Id);
-        // }
-
-
         /// <summary>
         /// Passes aircraft to be created by context.
         /// </summary>
         /// <param name="aircraft"></param>
         public async Task CreateAircraftAsync(Aircraft aircraft)
         {
-            await CreateAsync(aircraft);
+            await DbContext.AddAsync(aircraft);
         }
 
         /// <summary>
@@ -147,16 +140,16 @@ namespace Repository
             Delete(aircraft);
         }
 
-        public async Task<bool> UserOwnsAircraftAsync(Guid id, string getAuthorId)
+        public async Task<bool> UserOwnsAircraftAsync(Guid aircraftId, string userId)
         {
-            var aircraft = await GetAircraftByIdAsync(id);
+            var aircraft = await GetAircraftByIdAsync(aircraftId);
             
             if (aircraft == null)
             {
                 return false;
             }
 
-            if (aircraft.User.Id != getAuthorId)
+            if (aircraft.UserId != userId)
             {
                 return false;
             }
@@ -165,7 +158,8 @@ namespace Repository
         }
 
 
-        // TODO: extract to separate file
+        // TODO: extract to separate file?
+        // Search Parameters
         #region Search methods
         private static void SearchByIcaoId(
             ref IQueryable<Aircraft> aircrafts, string icaoId)

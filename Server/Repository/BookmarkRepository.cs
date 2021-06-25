@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Data;
-using Entities.Models;
 using Entities.Models.Aircrafts;
 using Contracts;
+using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Entities.Models.Bookmarks;
 
 namespace Repository
 {
@@ -15,20 +18,29 @@ namespace Repository
 
         }
 
-        public async Task CreateBookmarkAsync(Bookmark bookmark)
+        public async Task SaveToBookmarkAsync(string userId, Guid aircraftId)
         {
-            await CreateAsync(bookmark);
+            var bookmark = new Bookmark
+            {
+                AircraftId = aircraftId,
+                UserId = userId
+            };
+
+            await DbContext.AddAsync(bookmark);
         }
 
-        // TODO: Bookmark implementation
         public async Task<IEnumerable<Aircraft>> GetAllBookmarkedAircraftsAsync()
         {
-            throw new System.NotImplementedException();
+            return await FindAll()
+                .OfType<Aircraft>()
+                .ToListAsync();
         }
 
-        public async Task<IEnumerable<Aircraft>> GetAllOwnedAircraftsAsync()
+        public async Task<IEnumerable<Aircraft>> GetUserBookmarksAsync(string userId) // TODO:
         {
-            throw new System.NotImplementedException();
+            return await FindByCondition(b => b.UserId == userId)
+                .Select(b => b.Aircraft)
+                .ToListAsync();
         }
     }
 }

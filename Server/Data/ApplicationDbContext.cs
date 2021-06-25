@@ -1,5 +1,5 @@
 using Data.Configurations;
-using Entities.Models;
+using Entities.Models.Bookmarks;
 using Entities.Models.Aircrafts;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

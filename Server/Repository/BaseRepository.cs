@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using Contracts;
@@ -31,10 +30,10 @@ namespace Repository
                 .AsNoTracking();
         }
 
-        public async Task CreateAsync(T entity)
+        public void Create(T entity)
         {
-            await DbContext.Set<T>()
-                .AddAsync(entity);
+            DbContext.Set<T>()
+                .Add(entity);
         }
 
         public void Update(T entity)

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
+using Entities.Models.Bookmarks;
 using Entities.Models.Enums;
 using Entities.Models.Identity;
 
@@ -34,15 +33,9 @@ namespace Entities.Models.Aircrafts
         public int SavesCount { get; set; }
 
 
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         public string AuthorUsername { get; set; }
-
-        [DisplayName("AuthorId")]
-        public virtual string UserId { get; set; }
-
-        [ForeignKey(nameof(UserId))]
-        [DisplayName("Author")]
-        public virtual ApplicationUser User { get; set; }
-
 
         public ICollection<Bookmark> Bookmarks { get; set; }
     }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Entities.Models.Aircrafts;
+using Entities.Models.Bookmarks;
 using Microsoft.AspNetCore.Identity;
 
 namespace Entities.Models.Identity
