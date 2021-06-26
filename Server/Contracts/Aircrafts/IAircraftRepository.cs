@@ -23,6 +23,7 @@ namespace Contracts.Aircrafts
         Task CreateAircraftAsync(Aircraft aircraft);
         void UpdateAircraft(Aircraft aircraft);
         void DeleteAircraft(Aircraft aircraft);
+        Aircraft CountAircraftSaved(Aircraft aircraft);
         Task<bool> UserOwnsAircraftAsync(Guid id, string getUserId);
     }
 }

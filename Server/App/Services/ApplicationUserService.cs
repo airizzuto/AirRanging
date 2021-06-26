@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Constants;
 using Contracts;
 using Data;
-using Entities.Models.Aircrafts;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

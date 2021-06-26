@@ -11,12 +11,10 @@ namespace Entities.DTOs.V1.Aircrafts
                 .MaximumLength(4).WithMessage("Maximum length of ICAO code is 4");
 
             RuleFor(x => x.Manufacturer)
-                .NotNull()
                 .NotEmpty().WithMessage("Manufacturer must be provided")
                 .MaximumLength(255);
             
             RuleFor(x => x.Model)
-                .NotNull()
                 .NotEmpty().WithMessage("Model name must be provided")
                 .MaximumLength(255);
 
@@ -35,7 +33,6 @@ namespace Entities.DTOs.V1.Aircrafts
 
             // TODO: Link EngineCount requirement to single or multi engine AircraftType. Ex: SingleEngineLand must have only one engine.
             RuleFor(x => x.EngineCount)
-                .NotNull()
                 .NotEmpty().WithMessage("Aircraft must have an engine")
                 .GreaterThanOrEqualTo((short) 1)
                 .LessThan(short.MaxValue);
@@ -54,7 +51,6 @@ namespace Entities.DTOs.V1.Aircrafts
                 .LessThan(300_000); // TODO: TBD VNO Validation
 
             RuleFor(x => x.FuelCapacity)
-                .NotNull()
                 .NotEmpty().WithMessage(
                     "Fuel capacity is required for calculations"
                     )
@@ -66,7 +62,6 @@ namespace Entities.DTOs.V1.Aircrafts
                 .LessThanOrEqualTo(int.MaxValue);
 
             RuleFor(x => x.MaxRange)
-                .NotNull()
                 .NotEmpty().WithMessage(
                     "Max Range is required for calculations"
                     )

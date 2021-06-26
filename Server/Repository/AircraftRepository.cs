@@ -140,6 +140,13 @@ namespace Repository
             Delete(aircraft);
         }
 
+        public Aircraft CountAircraftSaved(Aircraft aircraft)
+        {
+            aircraft.SavesCount += 1;
+
+            return aircraft;
+        }
+
         public async Task<bool> UserOwnsAircraftAsync(Guid aircraftId, string userId)
         {
             var aircraft = await GetAircraftByIdAsync(aircraftId);

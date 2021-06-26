@@ -23,9 +23,9 @@ namespace App.Controllers.V1
     /// <para> GetAircraftId               - GET     api/aircrafts/5       </para>
     /// <para> CreateAircraft              - POST    api/aircrafts/create  </para>
     /// <para> PartialUpdateAircraftId     - PUT     api/aircrafts/5       </para>
+    /// <para> SaveAircraftId              - PUT     api/aircrafts/5/save  </para>
     /// <para> FullUpdateAircraftId        - PATCH   api/aircrafts/5       </para>
     /// <para> DeleteAircraftId            - DELETE  api/aircrafts/5       </para>
-    /// <para> SaveAircraftId              - PUT     api/aircrafts/5/save  </para>
     /// </summary>
     [ApiController]
     [Route("/api/aircrafts")]
@@ -295,9 +295,9 @@ namespace App.Controllers.V1
                 return NotFound();
             }
 
-            existingAircraft.SavesCount += 1;
-
             await _repository.Bookmark.SaveToBookmarkAsync(userId, existingAircraft.Id);
+            _repository.Aircraft.CountAircraftSaved(existingAircraft);
+
             _repository.Aircraft.UpdateAircraft(existingAircraft);
             await _repository.SaveAsync();
 
