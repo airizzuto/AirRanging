@@ -17,6 +17,7 @@ namespace App.Extensions.Configurations
         public static void ConfigureIdentity(
             this IServiceCollection services, IConfiguration configuration)
         {
+            // TODO: custom username and password validators
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -24,7 +25,7 @@ namespace App.Extensions.Configurations
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
+                options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 1;
 
                 // Lockout settings.

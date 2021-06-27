@@ -13,14 +13,20 @@ namespace Entities.DTOs.V1.Identity
                     @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
                 ).WithMessage("Email must be a valid address");
 
+            // TODO: cascade validation
             RuleFor(x => x.UserName).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Username is required")
-                .Matches(@"^[a-zA-Z0-9_-]{4,16}$").WithMessage("Username must only contain alphanumeric characters.")
-                .MinimumLength(4).WithMessage("Username must between 4 and 16 characters")
-                .MaximumLength(16).WithMessage("Username must between 4 and 16 characters");
+                .MinimumLength(4).WithMessage("Username must contain between 4 and 16 characters")
+                .MaximumLength(16).WithMessage("Username must contain between 4 and 16 characters")
+                .Matches(@"^[a-zA-Z0-9_-]{4,16}$").WithMessage("Username must only contain alphanumeric characters.");
             
             RuleFor(x => x.Password)
-                .NotEmpty().WithMessage("Password is required");
+                .NotEmpty().WithMessage("Password is required")
+                .MinimumLength(8).WithMessage("Password must contain between 8 and 20 characters")
+                .MaximumLength(20).WithMessage("Password must contain between 8 and 20 characters")
+                .Matches(
+                    @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
+                ).WithMessage("Password must contain at least one digit, one uppercase letter and one lowercase letter");
         }
     }
 }
