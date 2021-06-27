@@ -123,6 +123,58 @@ namespace Tests.Validation
             result.ShouldNotHaveValidationErrorFor(u => u.UserName);
         }
 
-        // TODO: password
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("        ")]
+        [InlineData("+-....+-")]
+        [InlineData("*/-+_```")]
+        [InlineData("``````````")]
+        [InlineData("`112")]
+        [InlineData("1      1")]
+        [InlineData("1")]
+        [InlineData("123")]
+        [InlineData("12345678")]
+        [InlineData("a")]
+        [InlineData("abc")]
+        [InlineData("abcdefgh")]
+        [InlineData("ABCde*fgh")]
+        [InlineData("ABCde -fgh123")]
+        [InlineData("ABCDefghijk-123456789")]
+        public async Task UserRegistration_InvalidPassword_ValidationShouldFail(string password)
+        {
+            // Arrange
+            var model = new UserRegistrationDTO {
+                UserName = "testing",
+                Email = "test@testing.com",
+                Password = password
+            };
+
+            // Act
+            var result = await registrationValidator.TestValidateAsync(model);
+
+            // Assert
+            result.ShouldHaveValidationErrorFor(u => u.Password);
+        }
+
+        [Theory]
+        [InlineData("P4ssw0rD")]
+        [InlineData("P4ss+w0rD")]
+        [InlineData("Abcdefghijk123456789")]
+        public async Task UserRegistration_ValidPassword_ValidationShouldPass(string password)
+        {
+            // Arrange
+            var model = new UserRegistrationDTO {
+                UserName = "testing",
+                Email = "test@testing.com",
+                Password = password
+            };
+
+            // Act
+            var result = await registrationValidator.TestValidateAsync(model);
+
+            // Assert
+            result.ShouldNotHaveValidationErrorFor(u => u.Password);
+        }
     }
 }
