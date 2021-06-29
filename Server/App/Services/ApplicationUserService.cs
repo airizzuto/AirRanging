@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Repository.Settings;
 
-namespace Repository
+namespace App
 {
     public class ApplicationUserService : IApplicationUserService
     {

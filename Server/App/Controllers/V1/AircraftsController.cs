@@ -17,7 +17,7 @@ namespace App.Controllers.V1
 {
     /// <summary>
     /// Aircraft model controller endpoints:
-    /// <para> GetAllAircraft              - GET     api/aircrafts         </para>
+    /// <para> GetAllAircrafts             - GET     api/aircrafts         </para>
     /// <para> GetAircraftByParameters     - GET     api/aircrafts/search  </para>
     /// <para> GetAircraftOwnedByUser      - GET     api/aircrafts/owned   </para>
     /// <para> GetAircraftId               - GET     api/aircrafts/5       </para>
@@ -58,7 +58,7 @@ namespace App.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAircrafts(
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts(
             [FromQuery] AircraftParameters aircraftParameters)
         {
             var aircrafts = await _repository.Aircraft

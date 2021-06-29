@@ -20,7 +20,11 @@ namespace Entities.DTOs.V1.Aircrafts
 
             // TODO: Link EngineCount requirement to single or multi engine AircraftType. Ex: SingleEngineLand must have only one engine.
             RuleFor(x => x.AircraftType)  
-                .IsInEnum();
+                .IsInEnum()
+                .NotEqual(EAircraftType.SingleEngineLand).When(
+                    x => x.EngineCount > 1).WithMessage("Aircraft with more than one engine can not be of type Single Engine Land")
+                .NotEqual(EAircraftType.SingleEngineSea).When(
+                    x => x.EngineCount > 1).WithMessage("Aircraft with more than one engine can not be of type Single Engine Sea");
             
             RuleFor(x => x.EngineType)
                 .IsInEnum();
@@ -34,12 +38,11 @@ namespace Entities.DTOs.V1.Aircrafts
             // TODO: Link EngineCount requirement to single or multi engine AircraftType. Ex: SingleEngineLand must have only one engine.
             RuleFor(x => x.EngineCount)
                 .NotEmpty().WithMessage("Aircraft must have an engine")
-                .GreaterThanOrEqualTo((short) 1)
                 .LessThan(short.MaxValue);
-            
+
             RuleFor(x => x.FuelType)
                 .Equal(EFuelType.Electric).When(x => x.EngineType == EEngineType.Electric);
-            
+
             RuleFor(x => x.MaxTakeoffWeight)
                 .GreaterThan(0)
                 .LessThan(int.MaxValue);
@@ -67,7 +70,7 @@ namespace Entities.DTOs.V1.Aircrafts
                     )
                 .GreaterThanOrEqualTo(0)
                 .LessThan(1_000_000); // TODO: TBD MaxRange Validation
-            
+
             RuleFor(x => x.ServiceCeiling)
                 .GreaterThanOrEqualTo(-2000) // TODO: TBD Max Ceiling Validation
                 .LessThan(1_000_000); // TODO: TBD Max Ceiling Validation

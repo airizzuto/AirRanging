@@ -19,7 +19,11 @@ namespace Entities.DTOs.V1.Aircrafts
                 .MaximumLength(255);
             
             RuleFor(x => x.AircraftType)
-                .IsInEnum();
+                .IsInEnum()
+                .NotEqual(EAircraftType.SingleEngineLand).When(
+                    x => x.EngineCount > 1).WithMessage("Aircraft with more than one engine can not be of type Single Engine Land")
+                .NotEqual(EAircraftType.SingleEngineSea).When(
+                    x => x.EngineCount > 1).WithMessage("Aircraft with more than one engine can not be of type Single Engine Sea");
             
             RuleFor(x => x.EngineType)
                 .IsInEnum();
@@ -32,7 +36,6 @@ namespace Entities.DTOs.V1.Aircrafts
 
             RuleFor(x => x.EngineCount)
                 .NotEmpty().WithMessage("Aircraft must have an engine")
-                .GreaterThanOrEqualTo((short) 1)
                 .LessThan(short.MaxValue);
             
             RuleFor(x => x.FuelType)

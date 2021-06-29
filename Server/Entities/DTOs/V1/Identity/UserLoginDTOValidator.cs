@@ -8,12 +8,14 @@ namespace Entities.DTOs.V1.Identity
         public UserLoginDTOValidator()
         {
             RuleFor(x => x.Email)
-                .NotNull()
-                .NotEmpty();
+                .NotEmpty()
+                .Matches(
+                    @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
+                );
             
             RuleFor(x => x.Password)
-                .NotNull()
-                .NotEmpty();
+                .NotEmpty()
+                .Matches(@"^[a-zA-Z0-9_-]{4,16}$");
         }
     }
 }

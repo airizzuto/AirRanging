@@ -10,10 +10,9 @@ namespace Entities.DTOs.V1.Identity
             RuleFor(u => u.Email).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Email is required")
                 .Matches(
-                    @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
+                    @"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
                 ).WithMessage("Email must be a valid address");
 
-            // TODO: cascade validation
             RuleFor(x => x.UserName).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Username is required")
                 .MinimumLength(4).WithMessage("Username must contain between 4 and 16 characters")
