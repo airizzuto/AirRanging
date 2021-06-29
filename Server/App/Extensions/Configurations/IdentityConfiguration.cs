@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Constants;
-using Repository;
 using Repository.Settings;
 
 namespace App.Extensions.Configurations
@@ -17,7 +16,6 @@ namespace App.Extensions.Configurations
         public static void ConfigureIdentity(
             this IServiceCollection services, IConfiguration configuration)
         {
-            // TODO: custom username and password validators
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -40,7 +38,7 @@ namespace App.Extensions.Configurations
             });
 
             var jwtSettings = new JwtSettings();
-            configuration.Bind(nameof(jwtSettings), jwtSettings); // TODO: Review Implementation
+            configuration.Bind(nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
 
             services.AddScoped<IApplicationUserService, ApplicationUserService>();

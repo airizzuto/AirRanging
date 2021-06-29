@@ -1,6 +1,5 @@
-using Contracts;
-using Logger;
 using Microsoft.Extensions.DependencyInjection;
+using Logger;
 
 namespace App.Extensions.Configurations
 {

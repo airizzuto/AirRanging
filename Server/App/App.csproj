@@ -43,6 +43,7 @@
     <ProjectReference Include="..\Repository\Repository.csproj" />
     <ProjectReference Include="..\Constants\Constants.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
+    <ProjectReference Include="..\Emailer\Emailer.csproj" />
   </ItemGroup>
 
 </Project>
