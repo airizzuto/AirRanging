@@ -41,12 +41,10 @@ namespace App
             return await _userManager.FindByIdAsync(id);
         }
 
-        // public async Task SaveAircraftAsync(string userId, Aircraft aircraft)
-        // { 
-        //     var user = await GetUserAsync(userId);
-
-        //     user.AircraftsOwned.Add(aircraft);
-        // }
+        public async Task<ApplicationUser> GetUserByEmailAsync(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
 
         public async Task<Authentication> LoginAsync(string email, string password)
         {
@@ -105,6 +103,12 @@ namespace App
                 user, Authorization.default_role.ToString());
 
             return await GenerateAuthenticationResultForUserASync(user);
+        }
+
+        public async Task<IdentityResult> ResetPasswordAsync(
+            ApplicationUser user, string token, string password)
+        {
+            return await _userManager.ResetPasswordAsync(user, token, password);
         }
 
         public async Task<Authentication> RefreshTokenAsync(string token, string refreshToken)

@@ -13,6 +13,7 @@ namespace App.Controllers.V1
     /// <para> RegisterUser  - POST  api/users/register  </para>
     /// <para> LoginUser     - POST  api/users/login     </para>
     /// <para> RefreshToken  - POST  api/users/refresh   </para>
+    /// <para> ResetPassword - POST  api/users/reset   </para>
     /// </summary>
     [ApiController]
     [Route("/users")]
@@ -90,6 +91,40 @@ namespace App.Controllers.V1
 
             var authentication = _mapper.Map<AuthenticationDTO>(authResponse);
             return Ok(authentication);
+        }
+
+        // TODO: Email confirmation
+
+        // TODO: Email sender implementation
+        [HttpPost("reset")]
+        public async Task<IActionResult> ResetPassword(PasswordReset passwordReset)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Password reset validation error");
+                return BadRequest();
+            }
+
+            var user = await _userService.GetUserByEmailAsync(passwordReset.Email);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var passwordResetResult = await _userService.ResetPasswordAsync(
+                user, passwordReset.Token, passwordReset.Password
+            );
+            if (!passwordResetResult.Succeeded)
+            {
+                foreach (var error in passwordResetResult.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+
+                return BadRequest();
+            }
+
+            return NoContent();
         }
     }
 }
