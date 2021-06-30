@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Contracts;
+using Logger;
 using Entities.Models.Errors;
 using Microsoft.AspNetCore.Http;
 

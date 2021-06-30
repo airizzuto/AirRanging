@@ -1,16 +1,17 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using Contracts;
-using Entities.DTOs.V1.Aircrafts;
 using App.Extensions;
-using System.Linq;
+using Contracts;
+using Logger;
 using Entities.Models.Bookmarks;
 using Entities.Models.Aircrafts;
 using Entities.Models.Pagination;
+using Entities.DTOs.V1.Aircrafts;
 
 namespace App.Controllers.V1
 {

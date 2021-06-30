@@ -21,14 +21,14 @@ namespace App
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager; // TODO:
 
-        private readonly JwtSettings _jwtSettings;
         private readonly ApplicationDbContext _context;
+        private readonly JwtSettings _jwtSettings;
 
         public ApplicationUserService(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            JwtSettings jwtSettings,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            JwtSettings jwtSettings)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -172,7 +172,7 @@ namespace App
 
             storedRefreshToken.Used = true;
             _context.RefreshTokens.Update(storedRefreshToken);
-            await _context.SaveChangesAsync(); // TODO: Unit of work?
+            await _context.SaveChangesAsync(); 
 
             var user = await _userManager.FindByIdAsync(claimsPrincipal.Claims.Single(x => x.Type == "id").Value);
 
@@ -246,7 +246,8 @@ namespace App
                     new Claim(JwtRegisteredClaimNames.Jti,
                         Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                    new Claim("uid", user.Id)
+                    new Claim("uid", user.Id),
+                    new Claim("username", user.UserName)
                 }.Union(userClaims)
                  .Union(roleClaims)),
                 Issuer = Path.Local.Full + "/airrangingapi",

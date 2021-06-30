@@ -1,10 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Entities.DTOs.V1.Identity;
-using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Entities.Models.Identity;
+using Entities.DTOs.V1.Identity;
+using Contracts;
 using AutoMapper;
+using Logger;
+using Emailer;
 
 namespace App.Controllers.V1
 {
@@ -20,17 +22,20 @@ namespace App.Controllers.V1
     public class UsersController : ControllerBase
     {
         private readonly IApplicationUserService _userService;
-        private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+        private readonly ILoggerManager _logger;
+        private readonly IEmailSender _emailSender;
 
         public UsersController(
             IApplicationUserService service,
+            IMapper mapper,
             ILoggerManager logger,
-            IMapper mapper)
+            IEmailSender emailSender)
         {
             _userService = service;
-            _logger = logger;
             _mapper = mapper;
+            _logger = logger;
+            _emailSender = emailSender;
         }
 
         [HttpPost("register")]
