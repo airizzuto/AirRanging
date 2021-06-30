@@ -118,7 +118,7 @@ namespace App.Controllers.V1
             var passwordResetResult = await _userService.ResetPasswordAsync(
                 user, passwordReset.Token, passwordReset.Password
             );
-            if (!passwordResetResult.Succeeded)
+            if (!passwordResetResult.Success)
             {
                 var failedPasswordReset = _mapper.Map<AuthenticationFailedDTO>(passwordResetResult);
                 return BadRequest(failedPasswordReset.Errors);
