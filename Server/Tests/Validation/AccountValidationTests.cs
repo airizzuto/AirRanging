@@ -30,13 +30,14 @@ namespace Tests.Validation
         [InlineData("@test ")]
         [InlineData("test@ ")]
         [InlineData("#.@!$.'")]
+        [InlineData("1234@1234")]
+        [InlineData("a@a")]
+        [InlineData("1@2")]
         public async Task UserRegistration_InvalidEmail_ValidationShouldFail(string email)
         {
             // Arrange
             var model = new UserRegistrationDTO {
-                UserName = "testuser",
-                Email = email,
-                Password = "P4ssw0rd"
+                Email = email
             };
 
             // Act
@@ -47,10 +48,8 @@ namespace Tests.Validation
         }
 
         [Theory]
-        [InlineData("1234@1234")]
+        [InlineData("a@1234.com")]
         [InlineData("abc@1234.com")]
-        [InlineData("a@a")]
-        [InlineData("1@2")]
         [InlineData("test@test.com")]
         [InlineData("Luke.Skywalker@test.com")]
         [InlineData("luke.skywalker@test.com")]
@@ -59,9 +58,7 @@ namespace Tests.Validation
         {
             // Arrange
             var model = new UserRegistrationDTO {
-                UserName = "testuser",
-                Email = email,
-                Password = "P4ssw0rd"
+                Email = email
             };
 
             // Act
@@ -88,9 +85,7 @@ namespace Tests.Validation
         {
             // Arrange
             var model = new UserRegistrationDTO {
-                UserName = username,
-                Email = "test@testing.com",
-                Password = "P4ssw0rd"
+                UserName = username
             };
 
             // Act
@@ -111,9 +106,7 @@ namespace Tests.Validation
         {
             // Arrange
             var model = new UserRegistrationDTO {
-                UserName = username,
-                Email = "test@testing.com",
-                Password = "P4ssw0rd"
+                UserName = username
             };
 
             // Act
@@ -145,8 +138,6 @@ namespace Tests.Validation
         {
             // Arrange
             var model = new UserRegistrationDTO {
-                UserName = "testing",
-                Email = "test@testing.com",
                 Password = password
             };
 
@@ -165,8 +156,6 @@ namespace Tests.Validation
         {
             // Arrange
             var model = new UserRegistrationDTO {
-                UserName = "testing",
-                Email = "test@testing.com",
                 Password = password
             };
 
