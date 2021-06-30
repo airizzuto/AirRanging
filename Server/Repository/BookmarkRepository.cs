@@ -29,18 +29,23 @@ namespace Repository
             await DbContext.AddAsync(bookmark);
         }
 
-        public async Task<IEnumerable<Aircraft>> GetAllBookmarkedAircraftsAsync()
+        public async Task<IEnumerable<Bookmark>> GetAllBookmarksAsync()
         {
-            return await FindAll()
-                .OfType<Aircraft>()
-                .ToListAsync();
+            return await FindAll().ToListAsync();
         }
 
-        public async Task<IEnumerable<Aircraft>> GetUserBookmarksAsync(string userId) // TODO:
+        public async Task<IEnumerable<Aircraft>> GetAircraftsBookmarkedAsync(string userId)
         {
             return await FindByCondition(b => b.UserId == userId)
                 .Select(b => b.Aircraft)
                 .ToListAsync();
+        }
+
+        public async Task<Bookmark> GetBookmarkAsync(string userId, Guid aircraftId)
+        {
+            return await FindByCondition(b =>
+                b.UserId == userId && b.AircraftId == aircraftId
+            ).FirstAsync();
         }
     }
 }

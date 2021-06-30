@@ -9,7 +9,8 @@ namespace Contracts
     public interface IBookmarkRepository : IBaseRepository<Bookmark>
     {
         Task SaveToBookmarkAsync(string userId, Guid aircraftId);
-
-        Task<IEnumerable<Aircraft>> GetUserBookmarksAsync(string userId);
+        Task<IEnumerable<Bookmark>> GetAllBookmarksAsync();
+        Task<IEnumerable<Aircraft>> GetAircraftsBookmarkedAsync(string userId);
+        Task<Bookmark> GetBookmarkAsync(string userId, Guid aircraftId);
     }
 }
