@@ -105,10 +105,19 @@ namespace App
             return await GenerateAuthenticationResultForUserASync(user);
         }
 
-        public async Task<IdentityResult> ResetPasswordAsync(
+        public async Task<Authentication> ResetPasswordAsync(
             ApplicationUser user, string token, string password)
         {
-            return await _userManager.ResetPasswordAsync(user, token, password);
+            var passwordResetResult = await _userManager.ResetPasswordAsync(user, token, password);
+            if (!passwordResetResult.Succeeded)
+            {
+                return new Authentication
+                {
+                    Errors = passwordResetResult.Errors.Select(x => x.Description)
+                };
+            }
+
+            return await GenerateAuthenticationResultForUserASync(user);
         }
 
         public async Task<Authentication> RefreshTokenAsync(string token, string refreshToken)

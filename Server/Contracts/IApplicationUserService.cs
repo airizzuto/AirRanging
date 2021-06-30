@@ -17,7 +17,7 @@ namespace Contracts
 
         Task<Authentication> RefreshTokenAsync(string token, string refreshToken);
 
-        Task<IdentityResult> ResetPasswordAsync(
+        Task<Authentication> ResetPasswordAsync(
             ApplicationUser user, string token, string password);
     }
 }

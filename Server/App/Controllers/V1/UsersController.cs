@@ -100,7 +100,6 @@ namespace App.Controllers.V1
 
         // TODO: Email confirmation
 
-        // TODO: Email sender implementation
         [HttpPost("reset")]
         public async Task<IActionResult> ResetPassword(PasswordReset passwordReset)
         {
@@ -121,12 +120,8 @@ namespace App.Controllers.V1
             );
             if (!passwordResetResult.Succeeded)
             {
-                foreach (var error in passwordResetResult.Errors)
-                {
-                    ModelState.TryAddModelError(error.Code, error.Description);
-                }
-
-                return BadRequest();
+                var failedPasswordReset = _mapper.Map<AuthenticationFailedDTO>(passwordResetResult);
+                return BadRequest(failedPasswordReset.Errors);
             }
 
             return NoContent();
