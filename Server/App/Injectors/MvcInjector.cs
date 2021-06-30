@@ -16,6 +16,8 @@ namespace App.Injectors
         {
             services.ConfigureLogger();
 
+            services.ConfigureEmailerService(configuration);
+
             services.ConfigureCors();  // TODO: SECURITY: Restrict before production
 
             services.ConfigureIISIntegration();
