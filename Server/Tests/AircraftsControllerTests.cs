@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
 using Xunit;
 using FluentAssertions;
 using Entities.Models.Enums;
 using Entities.Models.Aircrafts;
 using Entities.DTOs.V1.Aircrafts;
+using App.Controllers.V1;
 using Tests.Helpers;
 
 namespace Tests
 {
     public class AircraftsControllerTests : IntegrationTest
     {
-        // private MockAPI _mock = new();
+        private MockAPI _mock = new();
         private readonly MockAircraftsData _mockData = new();
 
         // TODO: Refactor to current interfaces
@@ -73,33 +76,40 @@ namespace Tests
         }
         #endregion
 
-        //#region GetAll
-        // [Fact]
-        // public async Task GetAllAircraftsAsync_Returns200OK_WhenDBIsEmpty()
-        // {
-        //     // Arrange
-        //     _mock.repo.Setup(repo => repo.GetAllAircraftsAsync())
-        //         .ReturnsAsync(_mockData.GetAircrafts(0));
+        // #region GetAll
+        [Fact]
+        public async Task GetAllAircraftsAsync_Returns200OK_WhenDBIsEmpty()
+        {
+            // Arrange
+            _mock.repo.Setup(repo => 
+                repo.Aircraft.GetAllAircraftsAsync(_mock.aircraftParameters))
+                .ReturnsAsync(await _mockData.RetrieveAircraftsQuantity(0, _mock.aircraftParameters));
 
-        //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper);
+            var controller = new AircraftsController(
+                _mock.logger.Object,
+                _mock.repo.Object,
+                _mock.mapper
+            );
 
-        //     // Act
-        //     var result = await controller.GetAllAircrafts();
+            // Act
+            var result = await controller.GetAllAircrafts(_mock.aircraftParameters);
 
-        //     // Assert
-        //     Assert.IsType<OkObjectResult>(result.Result);
-        // }
+            // Assert
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
 
         // [Fact]
         // public async Task GetAllAircraftsAsync_ReturnsOneItem_WhenDBHasOneResource()
         // {
         //     // Arrange
-        //     _mock.repo.Setup(repo => repo.GetAllAircraftsAsync())
-        //         .ReturnsAsync(_mockData.GetAircrafts(1));
+        //     _mock.repo.Setup(repo => repo.Aircraft.GetAllAircraftsAsync())
+        //         .ReturnsAsync(_mockData.RetrieveAircraftsQuantity(1));
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper);
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
+        //     );
 
         //     // Act
         //     var result = await controller.GetAllAircrafts();
@@ -116,11 +126,14 @@ namespace Tests
         // public async Task GetAllAircraftsAsync_Returns200OK_WhenDBHasOneResource()
         // {
         //     // Arrange
-        //     _mock.repo.Setup(repo => repo.GetAllAircraftsAsync())
-        //         .ReturnsAsync(_mockData.GetAircrafts(1));
+        //     _mock.repo.Setup(repo => repo.Aircraft.GetAllAircraftsAsync())
+        //         .ReturnsAsync(_mockData.RetrieveAircraftsQuantity(1));
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper);
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
+        //     );
 
         //     // Act
         //     var result = await controller.GetAllAircrafts();
@@ -133,11 +146,13 @@ namespace Tests
         // public async Task GetAllAircraftsAsync_ReturnsCorrectType_WhenDBHasOneResource()
         // {
         //     // Arrange
-        //     _mock.repo.Setup(repo => repo.GetAllAircraftsAsync())
-        //         .ReturnsAsync(_mockData.GetAircrafts(1));
+        //     _mock.repo.Setup(repo => repo.Aircraft.GetAllAircraftsAsync())
+        //         .ReturnsAsync(_mockData.RetrieveAircraftsQuantity(1));
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
         //     );
 
         //     // Act
@@ -155,51 +170,66 @@ namespace Tests
         // public async Task GetAircraftByIdAsync_Returns404NotFound_WhenNonExistentIDProvided()
         // {
         //     // Arrange
-        //     _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(0))
-        //         .Returns(() => null);
+        //     Guid mockGuid = Guid.NewGuid();
+
+        //     _mock.repo.Setup(repo =>
+        //         repo.Aircraft.GetAircraftByIdAsync(mockGuid)
+        //     ).Returns(() => null);
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
         //     );
 
         //     // Act
-        //     var result = await controller.GetAircraftById(1);
+        //     var result = await controller.GetAircraftById(mockGuid);
 
         //     // Assert
-        //     Assert.IsType<NotFoundResult>(result.Result);
+        //     Assert.IsType<NotFoundResult>(result);
         // }
 
         // [Fact]
         // public async Task GetAircraftByIdAsync_Returns200OK_WhenValidIDProvided()
         // {
         //     // Arrange
-        //     _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
-        //         .ReturnsAsync(_mockData.aircraft1);
+        //     var target = _mockData.RetrieveAircraftNum(0);
+
+        //     _mock.repo.Setup(repo =>
+        //         repo.Aircraft.GetAircraftByIdAsync(target.Id)
+        //     ).ReturnsAsync(target);
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
         //     );
 
         //     // Act
-        //     var result = await controller.GetAircraftById(1);
+        //     var result = await controller.GetAircraftById(target.Id);
 
         //     // Assert
-        //     Assert.IsType<OkObjectResult>(result.Result);
+        //     Assert.IsType<OkObjectResult>(result);
         // }
 
         // [Fact]
         // public async Task GetAircraftByIdAsync_ReturnsCorrectType_WhenValidIDProvided()
         // {
         //     // Arrange
-        //     _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
-        //         .ReturnsAsync(_mockData.aircraft1);
+        //     var target = _mockData.RetrieveAircraftNum(1);
+
+        //     _mock.repo.Setup(repo =>
+        //         repo.Aircraft.GetAircraftByIdAsync(target.Id)
+        //     ).ReturnsAsync(target);
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
         //     );
 
         //     // Act
-        //     var result = await controller.GetAircraftById(1);
+        //     var result = await controller.GetAircraftById(target.Id);
 
         //     // Assert
         //     Assert.IsType<ActionResult<AircraftReadDTO>>(result);
@@ -213,11 +243,16 @@ namespace Tests
         // public async Task CreateAircraftAsync_ReturnsCorrectResourceType_WhenValidObjectSubmitted()
         // {
         //     // Arrange
-        //     _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
-        //         .ReturnsAsync(_mockData.aircraft1);
+        //     var target = _mockData.RetrieveAircraftNum(1);
+
+        //     _mock.repo.Setup(repo =>
+        //         repo.Aircraft.GetAircraftByIdAsync(target.Id)
+        //     ).ReturnsAsync(target);
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
         //     );
 
         //     // Act
@@ -231,11 +266,14 @@ namespace Tests
         // public async Task CreateAircraftAsync_Returns201Created_WhenValidObjectSubmitted()
         // {
         //     // Arrange
+            
         //     _mock.repo.Setup(repo => repo.GetAircraftByIdAsync(1))
         //         .ReturnsAsync(_mockData.aircraft1);
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
         //     );
 
         //     // Act
@@ -257,7 +295,9 @@ namespace Tests
         //         .ReturnsAsync(_mockData.aircraft1);
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
         //     );
 
         //     // Act
@@ -275,7 +315,9 @@ namespace Tests
         //         .ReturnsAsync(() => null);
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
         //     );
 
         //     // Act
@@ -297,7 +339,9 @@ namespace Tests
         //         .ReturnsAsync(() => null);
 
         //     var controller = new AircraftsController(
-        //         _mock.repo.Object, _mock.mapper
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
         //     );
 
         //     // Act
@@ -320,7 +364,11 @@ namespace Tests
         //     _mock.repo.Setup(repo => 
         //         repo.GetAircraftByIdAsync(1)).ReturnsAsync(_mockData.aircraft1);
 
-        //     var controller = new AircraftsController(_mock.repo.Object, _mock.mapper);
+        //     var controller = new AircraftsController(
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
+        //     );
 
         //     // Act
         //     var result = await controller.DeleteAircraft(1);
@@ -333,13 +381,19 @@ namespace Tests
         // public async Task DeleteAircraft_Returns404NotFound_WhenNonExistentResourceIDSubmitted()
         // {
         //     // Arrange
-        //     _mock.repo.Setup(repo => 
-        //         repo.GetAircraftByIdAsync(0)).ReturnsAsync(() => null);
+        //     var randomId = Guid.NewGuid();
+        //     _mock.repo.Setup(repo =>
+        //         repo.Aircraft.GetAircraftByIdAsync(randomId))
+        //             .ReturnsAsync((Aircraft)null);
 
-        //     var controller = new AircraftsController(_mock.repo.Object, _mock.mapper);
+        //     var controller = new AircraftsController(
+        //         _mock.logger.Object,
+        //         _mock.repo.Object,
+        //         _mock.mapper
+        //     );
 
         //     // Act
-        //     var result = await controller.DeleteAircraft(0);
+        //     var result = await controller.DeleteAircraft(randomId);
 
         //     // Assert
         //     Assert.IsType<NotFoundResult>(result);

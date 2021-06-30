@@ -40,13 +40,13 @@ namespace Tests
 
         protected async Task<AircraftReadDTO> CreateAircraftAsync(AircraftCreateDTO aircraftCreateDTO)
         {
-            var response = await TestClient.PostAsJsonAsync("/api/aircrafts", aircraftCreateDTO);
+            var response = await TestClient.PostAsJsonAsync("/api/aircrafts/create", aircraftCreateDTO);
             return await response.Content.ReadAsAsync<AircraftReadDTO>();
         }
 
         private async Task<string> GetJwtAsync()
         {
-            var response = await TestClient.PostAsJsonAsync("/account/register", new UserRegistrationDTO
+            var response = await TestClient.PostAsJsonAsync("/api/users/register", new UserRegistrationDTO
             {
                 UserName = "tester",
                 Email = "test@testmail.com",
