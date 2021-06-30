@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using App.Extensions;
 using Entities.Models.Aircrafts;
 using Entities.DTOs.V1.Aircrafts;
+using Logger;
 using Contracts;
 
 namespace App.Controllers.V1
@@ -35,19 +36,15 @@ namespace App.Controllers.V1
     {
         private readonly ILoggerManager _logger;
         private readonly IRepositoryWrapper _repository;
-        private readonly IApplicationUserService _userService;
         private readonly IMapper _mapper;
 
         public AircraftsController(
             ILoggerManager logger,
             IRepositoryWrapper repository,
-            IApplicationUserService userService,
-            IMapper mapper
-            )
+            IMapper mapper)
         {
             _logger = logger;
             _repository = repository;
-            _userService = userService;
             _mapper = mapper;
         }
 
@@ -208,8 +205,8 @@ namespace App.Controllers.V1
 
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
 
-            aircraftModel.User = await _userService.GetUserAsync(userId);
-            aircraftModel.AuthorUsername = aircraftModel.User.UserName;
+            aircraftModel.UserId = userId;
+            aircraftModel.AuthorUsername = HttpContext.GetUserUsername();
 
             await _repository.Aircraft.CreateAircraftAsync(aircraftModel);
 
