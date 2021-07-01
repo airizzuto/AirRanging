@@ -8,7 +8,6 @@ using AutoMapper;
 using Logger;
 using Emailer;
 using Microsoft.AspNetCore.Authorization;
-using Constants;
 
 namespace App.Controllers.V1
 {
@@ -22,7 +21,8 @@ namespace App.Controllers.V1
     /// <para> DeleteUser    - DELETE  api/users/5             </para>
     /// </summary>
     [ApiController]
-    [Route("/users")]
+    [ApiVersion("1.0")]
+    [Route("/api/users")]
     public class UsersController : ControllerBase
     {
         private readonly IApplicationUserService _userService;
@@ -41,8 +41,6 @@ namespace App.Controllers.V1
             _logger = logger;
             _emailSender = emailSender;
         }
-
-        
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] UserRegistrationDTO request)
@@ -112,6 +110,7 @@ namespace App.Controllers.V1
             var user = await _userService.GetUserByEmailAsync(email);
             if (user == null)
             {
+                _logger.LogError($"ERROR: retrieving user.");
                 return BadRequest();
             }
 
@@ -142,8 +141,7 @@ namespace App.Controllers.V1
             }
 
             var passwordResetResult = await _userService.ResetPasswordAsync(
-                user, passwordReset.Token, passwordReset.Password
-            );
+                user, passwordReset.Token, passwordReset.Password);
             if (!passwordResetResult.Success)
             {
                 var failedPasswordReset = _mapper.Map<AuthenticationFailedDTO>(passwordResetResult);
@@ -153,18 +151,30 @@ namespace App.Controllers.V1
             return NoContent();
         }
 
+        // TODO: cascade delete refresh token
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var UserDeletedResult = await _userService.DeleteUserAsync(id);
+            var user = await _userService.GetUserAsync(id);
+            if (user == null)
+            {
+                _logger.LogError($"ERROR: retrieving user.");
+                return BadRequest();
+            }
+            var UserDeletedResult = await _userService.DeleteUserAsync(user);
             if (!UserDeletedResult.Succeeded)
             {
                 _logger.LogError($"ERROR: deleting User {id}.");
                 return BadRequest(UserDeletedResult.Errors.Select(e => e.Description));
             }
+            
+            await _userService.SaveChangesAsync();
+            _logger.LogInfo($"INFO: user {id} deleted.");
 
             return NoContent();
         }
+
+        // TODO: update user
     }
 }
