@@ -7,15 +7,19 @@ using Contracts;
 using AutoMapper;
 using Logger;
 using Emailer;
+using Microsoft.AspNetCore.Authorization;
+using Constants;
 
 namespace App.Controllers.V1
 {
     /// <summary>
     /// Aircraft model controller endpoints:
-    /// <para> RegisterUser  - POST  api/users/register  </para>
-    /// <para> LoginUser     - POST  api/users/login     </para>
-    /// <para> RefreshToken  - POST  api/users/refresh   </para>
-    /// <para> ResetPassword - POST  api/users/reset   </para>
+    /// <para> RegisterUser  - POST    api/users/register      </para>
+    /// <para> LoginUser     - POST    api/users/login         </para>
+    /// <para> RefreshToken  - POST    api/users/refresh       </para>
+    /// <para> ConfirmEmail  - GET     api/users/confirmation  </para>
+    /// <para> ResetPassword - POST    api/users/reset         </para>
+    /// <para> DeleteUser    - DELETE  api/users/5             </para>
     /// </summary>
     [ApiController]
     [Route("/users")]
@@ -38,6 +42,8 @@ namespace App.Controllers.V1
             _emailSender = emailSender;
         }
 
+        
+
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] UserRegistrationDTO request)
         {
@@ -59,7 +65,7 @@ namespace App.Controllers.V1
                 return BadRequest(failedAuth.Errors);
             }
 
-            _logger.LogInfo($"INFO: User: {request.UserName} created");
+            _logger.LogInfo($"INFO: User {request.UserName} created");
 
             var authentication = _mapper.Map<AuthenticationDTO>(authResponse);
             return Ok(authentication);
@@ -73,7 +79,7 @@ namespace App.Controllers.V1
             if(!authResponse.Success)
             {
                 var failedAuth = _mapper.Map<AuthenticationFailedDTO>(authResponse);
-                _logger.LogError($"Login error: {failedAuth.Errors}");
+                _logger.LogError($"ERROR: user login.");
                 return BadRequest(failedAuth.Errors);
             }
 
@@ -90,6 +96,7 @@ namespace App.Controllers.V1
 
             if(!authResponse.Success)
             {
+                _logger.LogError($"ERROR: refreshing token.");
                 var failedAuth = _mapper.Map<AuthenticationFailedDTO>(authResponse);
                 return BadRequest(failedAuth.Errors);
             }
@@ -99,19 +106,38 @@ namespace App.Controllers.V1
         }
 
         // TODO: Email confirmation
+        [HttpGet("confirmation")]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var user = await _userService.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+
+            var result = await _userService.ConfirmUserEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                _logger.LogError($"ERROR: confirming user {user.Id} email.");
+                return BadRequest();
+            }
+
+            return NoContent();
+        }
 
         [HttpPost("reset")]
         public async Task<IActionResult> ResetPassword(PasswordReset passwordReset)
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogError("Password reset validation error");
+                _logger.LogError("ERROR: password reset validation.");
                 return BadRequest();
             }
 
             var user = await _userService.GetUserByEmailAsync(passwordReset.Email);
             if (user == null)
             {
+                _logger.LogError($"ERROR: retrieving user.");
                 return BadRequest();
             }
 
@@ -122,6 +148,20 @@ namespace App.Controllers.V1
             {
                 var failedPasswordReset = _mapper.Map<AuthenticationFailedDTO>(passwordResetResult);
                 return BadRequest(failedPasswordReset.Errors);
+            }
+
+            return NoContent();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var UserDeletedResult = await _userService.DeleteUserAsync(id);
+            if (!UserDeletedResult.Succeeded)
+            {
+                _logger.LogError($"ERROR: deleting User {id}.");
+                return BadRequest(UserDeletedResult.Errors.Select(e => e.Description));
             }
 
             return NoContent();

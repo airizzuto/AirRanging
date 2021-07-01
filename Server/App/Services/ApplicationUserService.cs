@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Constants;
 using Contracts;
 using Data;
+using Emailer;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,16 +25,20 @@ namespace App
         private readonly ApplicationDbContext _context;
         private readonly JwtSettings _jwtSettings;
 
+        private readonly IEmailSender _emailSender;
+
         public ApplicationUserService(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             ApplicationDbContext context,
-            JwtSettings jwtSettings)
+            JwtSettings jwtSettings,
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtSettings = jwtSettings;
             _context = context;
+            _emailSender = emailSender;
         }
 
         public async Task<ApplicationUser> GetUserAsync(string id)
@@ -99,6 +104,16 @@ namespace App
                 };
             }
 
+            // TODO: Email confirmation  // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-5.0&tabs=visual-studio
+            // var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            // var confirmationLink = Url.Action(  // https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-5.0
+            //     "/api/users/confirm",
+            //     new { token, email = user.Email },
+            //     Request.Scheme
+            // );
+            // var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink);
+            // await _emailSender.SendEmailAsync(message);
+
             await _userManager.AddToRoleAsync(
                 user, Authorization.default_role.ToString());
 
@@ -118,6 +133,11 @@ namespace App
             }
 
             return await GenerateAuthenticationResultForUserASync(user);
+        }
+
+        public async Task<IdentityResult> ConfirmUserEmailAsync(ApplicationUser user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
         }
 
         public async Task<Authentication> RefreshTokenAsync(string token, string refreshToken)
@@ -188,7 +208,13 @@ namespace App
             return await GenerateAuthenticationResultForUserASync(user);
         }
 
-        // TODO: user delete
+        public async Task<IdentityResult> DeleteUserAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var result = await _userManager.DeleteAsync(user);
+            return result;
+        }
+
         // TODO: user update
 
         private ClaimsPrincipal GetPrincipalFromToken(string token)

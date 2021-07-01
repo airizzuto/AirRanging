@@ -35,6 +35,8 @@ namespace App.Extensions.Configurations
                 options.User.AllowedUserNameCharacters =
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+";
                 options.User.RequireUniqueEmail = true;
+
+                options.SignIn.RequireConfirmedEmail = true;
             });
 
             var jwtSettings = new JwtSettings();

@@ -17,7 +17,12 @@ namespace Contracts
 
         Task<Authentication> RefreshTokenAsync(string token, string refreshToken);
 
+        Task<IdentityResult> ConfirmUserEmailAsync(
+            ApplicationUser user, string token);
+
         Task<Authentication> ResetPasswordAsync(
             ApplicationUser user, string token, string password);
+
+        Task<IdentityResult> DeleteUserAsync(string userId);
     }
 }
