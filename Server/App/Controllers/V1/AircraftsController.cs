@@ -133,7 +133,7 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"User not logged in. Unable to retrieve user aircrafts.");
+                _logger.LogError($"ERROR: user not logged in.");
 
                 return Unauthorized();
             }
@@ -176,7 +176,7 @@ namespace App.Controllers.V1
             var aircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (aircraft == null)
             {
-                _logger.LogError($"Aircraft id: {id}, not found.");
+                _logger.LogError($"ERROR: aircraft id {id} not found.");
                 return NotFound();
             }
 
@@ -199,7 +199,7 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"User not logged in. Unable to create aircraft.");
+                _logger.LogError($"ERROR: user not logged in.");
                 return Unauthorized();
             }
 
@@ -241,20 +241,20 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"User not logged in.");
+                _logger.LogError($"ERROR: user not logged in.");
                 return Unauthorized();
             }
 
             var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
-                _logger.LogError($"Aircraft id: {id}, not found.");
+                _logger.LogError($"ERROR: aircraft id {id}, not found.");
                 return NotFound();
             }
 
             if (existingAircraft.UserId != userId)
             {
-                _logger.LogError($"User does not own this aircraft. Unable to update.");
+                _logger.LogError($"ERROR: user does not own this aircraft. Unable to update.");
                 return Forbid();
             }
 
@@ -281,14 +281,14 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"User not logged in.");
+                _logger.LogError($"ERROR: user not logged in.");
                 return Unauthorized();
             }
 
             var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
-                _logger.LogError($"Aircraft id: {id}, not found.");
+                _logger.LogError($"ERROR: aircraft id {id}, not found.");
                 return NotFound();
             }
 
@@ -319,20 +319,20 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"User not logged in.");
+                _logger.LogError($"ERROR: user not logged in.");
                 return Unauthorized();
             }
 
             var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
-                _logger.LogError($"Aircraft id: {id}, not found.");
+                _logger.LogError($"ERROR: aircraft {id} not found.");
                 return NotFound();
             }
 
             if (existingAircraft.UserId != userId)
             {
-                _logger.LogError($"User does not own this aircraft. Unable to update.");
+                _logger.LogError($"ERROR: user does not own this aircraft. Unable to update.");
                 return Forbid();
             }
 
@@ -341,7 +341,7 @@ namespace App.Controllers.V1
 
             if (!TryValidateModel(aircraftToPatch))
             {
-                _logger.LogError($"Validation error updating aircraft {existingAircraft.Id}.");
+                _logger.LogError($"ERROR: validating aircraft update.");
                 return ValidationProblem(ModelState);
             }
 
@@ -370,7 +370,7 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"User not logged in.");
+                _logger.LogError($"ERROR: user not logged in. Unable to delete aircraft.");
                 return Unauthorized();
             }
 
@@ -382,7 +382,7 @@ namespace App.Controllers.V1
 
             if (existingAircraft.UserId != userId)
             {
-                _logger.LogError($"User does not own this aircraft. Unable to delete.");
+                _logger.LogError($"ERROR: user does not own this aircraft. Unable to delete aircraft.");
                 return Forbid();
             }
 
