@@ -8,8 +8,6 @@ using AutoMapper;
 using App.Extensions;
 using Contracts;
 using Logger;
-using Entities.Models.Bookmarks;
-using Entities.Models.Aircrafts;
 using Entities.Models.Pagination;
 using Entities.DTOs.V1.Aircrafts;
 using System;
@@ -41,7 +39,6 @@ namespace App.Controllers.V1
             _mapper = mapper;
         }
 
-        // TODO: to AircraftController?
         // GET api/bookmarks
         /// <summary>
         /// Retrieves all user aircrafts bookmarked in the database
@@ -75,7 +72,7 @@ namespace App.Controllers.V1
         /// <response code="204">Bookmark removed successfully</response>
         /// <response code="401">Unauthorized. User not logged in.</response>
         /// <response code="404">Aircraft id not found in bookmark</response>
-        [HttpDelete]
+        [HttpDelete("{aircraftId}")]
         public async Task<IActionResult> DeleteBookmarkedAircraft(Guid aircraftId)
         {
             var userId = HttpContext.GetUserId();
@@ -86,7 +83,7 @@ namespace App.Controllers.V1
                 return Unauthorized();
             }
 
-            var bookmark = await _repository.Bookmark.FindAircraftBookmarkAsync(userId, aircraftId);
+            var bookmark = await _repository.Bookmark.GetBookmarkAsync(userId, aircraftId);
             if (bookmark == null)
             {
                 _logger.LogError($"User {userId}, Aircraft {aircraftId} bookmark not found.");
