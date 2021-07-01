@@ -20,7 +20,6 @@ namespace App
     public class ApplicationUserService : IApplicationUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager; // TODO:
 
         private readonly ApplicationDbContext _context;
         private readonly JwtSettings _jwtSettings;
@@ -29,13 +28,11 @@ namespace App
 
         public ApplicationUserService(
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
             ApplicationDbContext context,
             JwtSettings jwtSettings,
             IEmailSender emailSender)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _jwtSettings = jwtSettings;
             _context = context;
             _emailSender = emailSender;
@@ -208,14 +205,17 @@ namespace App
             return await GenerateAuthenticationResultForUserASync(user);
         }
 
-        public async Task<IdentityResult> DeleteUserAsync(string userId)
+        public async Task<IdentityResult> DeleteUserAsync(ApplicationUser user)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            var result = await _userManager.DeleteAsync(user);
-            return result;
+            return await _userManager.DeleteAsync(user);
         }
 
         // TODO: user update
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
 
         private ClaimsPrincipal GetPrincipalFromToken(string token)
         {

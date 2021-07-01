@@ -23,6 +23,8 @@ namespace Contracts
         Task<Authentication> ResetPasswordAsync(
             ApplicationUser user, string token, string password);
 
-        Task<IdentityResult> DeleteUserAsync(string userId);
+        Task<IdentityResult> DeleteUserAsync(ApplicationUser user);
+
+        Task SaveChangesAsync();
     }
 }
