@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Constants;
 using Repository.Settings;
+using App.Services;
 
 namespace App.Extensions.Configurations
 {
@@ -43,7 +44,7 @@ namespace App.Extensions.Configurations
             configuration.Bind(nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
 
-            services.AddScoped<IApplicationUserService, ApplicationUserService>();
+            services.AddTransient<ITokenService, TokenService>();
 
             var tokenValidationParameters = new TokenValidationParameters
             {

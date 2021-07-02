@@ -1,13 +1,12 @@
-using System.Threading.Tasks;
-using Entities.Models.Identity;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Contracts
 {
     public interface ITokenService
     {
-        Task<Authentication> RefreshTokenAsync(string token, string refreshToken);
-
-        Task<Authentication> GenerateAuthenticationResultForUserAsync(ApplicationUser user);
-
+        string GenerateRefreshToken();
+        string GenerateAccessToken(IEnumerable<Claim> claims);
+        ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
     }
 }

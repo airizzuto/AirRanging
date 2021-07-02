@@ -9,7 +9,9 @@ namespace App.Profiles
         public ApplicationUserProfiles()
         {
             CreateMap<UserRegistrationDTO, ApplicationUser>();
+            CreateMap<UserLoginDTO, ApplicationUser>();
             CreateMap<ApplicationUser, UserLoginDTO>();
+            CreateMap<ApplicationUser, AuthenticationDTO>();
         }
     }
 }

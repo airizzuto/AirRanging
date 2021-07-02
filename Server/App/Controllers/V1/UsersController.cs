@@ -11,14 +11,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Constants;
 using Data;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System;
 
 namespace App.Controllers.V1
 {
     /// <summary>
-    /// Aircraft model controller endpoints:
+    /// Users authentication and registration model controller endpoints:
     /// <para> RegisterUser  - POST    api/users/register      </para>
     /// <para> LoginUser     - POST    api/users/login         </para>
-    /// <para> RefreshToken  - POST    api/users/refresh       </para>
     /// <para> ConfirmEmail  - GET     api/users/confirmation  </para>
     /// <para> ResetPassword - POST    api/users/reset         </para>
     /// <para> DeleteUser    - DELETE  api/users/5             </para>
@@ -49,6 +51,7 @@ namespace App.Controllers.V1
             _context = context;
         }
 
+        // TODO: refactor
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] UserRegistrationDTO request)
         {
@@ -93,37 +96,68 @@ namespace App.Controllers.V1
             return Ok(authentication);
         }
 
+        /// <summary>
+        /// User login authentication controller
+        /// </summary>
+        /// <param name="userLogin"></param>
+        /// <response code="200">User authentication successful</response>
+        ///     <returns>Authentication tokens</returns>
+        /// <response code="400">User login validation error.</response>
+        /// <response code="401">User login credentails invalid.</response>
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] UserLoginDTO request)
+        public async Task<IActionResult> LoginAsync([FromBody] UserLoginDTO userLogin)
         {
-            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (userLogin == null)
+            {
+                _logger.LogError($"ERROR: Invalid client request");
+                return BadRequest("Invalid client request");
+            }
+
+            var user = await _userManager.FindByEmailAsync(userLogin.Email);
             if (user == null)
             {
                 _logger.LogError($"ERROR: user email/password invalid");
-                return BadRequest();
+                return Unauthorized();
             }
 
-            var userHasValidPassword = await _userManager.CheckPasswordAsync(user, request.Password);
+            var userHasValidPassword = await _userManager.CheckPasswordAsync(user, userLogin.Password);
             if(!userHasValidPassword)
             {
                 _logger.LogError($"ERROR: user email/password invalid");
-                return BadRequest();
+                return Unauthorized();
             }
 
-            _logger.LogInfo($"INFO: user {request.Email} logged");
-
-            var authResponse = await _tokenService.GenerateAuthenticationResultForUserAsync(user);
-            if(!authResponse.Success)
+            var userRoles = await _userManager.GetRolesAsync(user);
+            
+            var claims = new List<Claim>
             {
-                var failedAuth = _mapper.Map<AuthenticationFailedDTO>(authResponse);
-                _logger.LogError($"ERROR: user login.");
-                return BadRequest(failedAuth.Errors);
+                new Claim("uid", user.Id),
+                new Claim(ClaimTypes.Name, user.UserName),
+                
+            };
+            foreach (var role in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-            var authentication = _mapper.Map<AuthenticationDTO>(authResponse);
-            return Ok(authentication);
+            var accessToken = _tokenService.GenerateAccessToken(claims); // To client storage?
+            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenCreationTime = DateTime.Now;
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
+
+            await _context.SaveChangesAsync();
+
+            _logger.LogInfo($"INFO: user {user.Id} logged");
+            return Ok(new AuthenticationDTO
+            {
+                Token = accessToken,
+                RefreshToken = refreshToken
+            });
         }
 
+        // TODO: to TokenController
         [HttpPost("refresh")]
         public async Task<IActionResult> RefreshTokenAsync([FromBody] Authentication request)
         {
@@ -161,34 +195,35 @@ namespace App.Controllers.V1
         //     return NoContent();
         // }
 
-        [HttpPost("reset")]
-        public async Task<IActionResult> ResetPassword(PasswordReset passwordReset)
-        {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("ERROR: password reset validation.");
-                return BadRequest();
-            }
+        // TODO: refactor
+        // [HttpPost("reset")]
+        // public async Task<IActionResult> ResetPassword(PasswordReset passwordReset)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         _logger.LogError("ERROR: password reset validation.");
+        //         return BadRequest();
+        //     }
 
-            var user = await _userManager.FindByEmailAsync(passwordReset.Email);
-            if (user == null)
-            {
-                _logger.LogError($"ERROR: retrieving user.");
-                return BadRequest();
-            }
+        //     var user = await _userManager.FindByEmailAsync(passwordReset.Email);
+        //     if (user == null)
+        //     {
+        //         _logger.LogError($"ERROR: retrieving user.");
+        //         return BadRequest();
+        //     }
 
-            var passwordResetResult = await _userManager.ResetPasswordAsync(
-                user, passwordReset.Token, passwordReset.Password);
-            if (!passwordResetResult.Succeeded)
-            {
-                _logger.LogError($"ERROR: password reset failed");
-                return BadRequest(passwordResetResult.Errors.Select(x => x.Description));
-            }
+        //     var passwordResetResult = await _userManager.ResetPasswordAsync(
+        //         user, passwordReset.Token, passwordReset.Password);
+        //     if (!passwordResetResult.Succeeded)
+        //     {
+        //         _logger.LogError($"ERROR: password reset failed");
+        //         return BadRequest(passwordResetResult.Errors.Select(x => x.Description));
+        //     }
 
-            var newAuth = await _tokenService.GenerateAuthenticationResultForUserAsync(user);
-            var authResponse = _mapper.Map<AuthenticationDTO>(newAuth);
-            return Ok(authResponse);
-        }
+        //     var newAuth = await _tokenService.GenerateAuthenticationResultForUserAsync(user);
+        //     var authResponse = _mapper.Map<AuthenticationDTO>(newAuth);
+        //     return Ok(authResponse);
+        // }
 
         // TODO: cascade delete refresh token
         [Authorize(Roles = "Administrator")]
