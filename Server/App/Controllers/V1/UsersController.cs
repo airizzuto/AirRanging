@@ -8,6 +8,9 @@ using AutoMapper;
 using Logger;
 using Emailer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Constants;
+using Data;
 
 namespace App.Controllers.V1
 {
@@ -25,21 +28,25 @@ namespace App.Controllers.V1
     [Route("/api/users")]
     public class UsersController : ControllerBase
     {
-        private readonly IApplicationUserService _userService;
+        private readonly ApplicationDbContext _context;
+        private readonly ITokenService _tokenService;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly ILoggerManager _logger;
         private readonly IEmailSender _emailSender;
 
         public UsersController(
-            IApplicationUserService service,
+            ITokenService tokenService,
             IMapper mapper,
             ILoggerManager logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
-            _userService = service;
+            _tokenService = tokenService;
             _mapper = mapper;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [HttpPost("register")]
@@ -53,35 +60,65 @@ namespace App.Controllers.V1
                 });
             }
 
-            var userRegistration = _mapper.Map<ApplicationUser>(request);
-
-            var authResponse = await _userService.RegisterAsync(userRegistration, request.Password);
-
-            if(!authResponse.Success)
+            var existingUsername = await _userManager.FindByNameAsync(request.UserName);
+            if (existingUsername != null)
             {
-                var failedAuth = _mapper.Map<AuthenticationFailedDTO>(authResponse);
-                return BadRequest(failedAuth.Errors);
+                _logger.LogError($"ERROR: Username already in use");
+                return BadRequest();
             }
+
+            var existingEmail = await _userManager.FindByEmailAsync(request.Email);
+            if (existingEmail != null)
+            {
+                _logger.LogError($"ERROR: Email already in use");
+                return BadRequest();
+            }
+
+            var user = _mapper.Map<ApplicationUser>(request);
+            var createdUser = await _userManager.CreateAsync(user, request.Password);
+            if (!createdUser.Succeeded)
+            {
+                _logger.LogError($"ERROR: creating user");
+                return BadRequest(createdUser.Errors.Select(x => x.Description));
+            }
+
+            await _userManager.AddToRoleAsync(
+                user, Authorization.default_role.ToString());
 
             _logger.LogInfo($"INFO: User {request.UserName} created");
 
-            var authentication = _mapper.Map<AuthenticationDTO>(authResponse);
+            var userAuth = await _tokenService.GenerateAuthenticationResultForUserAsync(user);
+
+            var authentication = _mapper.Map<AuthenticationDTO>(userAuth);
             return Ok(authentication);
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginDTO request)
         {
-            var authResponse = await _userService.LoginAsync(request.Email, request.Password);
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+                _logger.LogError($"ERROR: user email/password invalid");
+                return BadRequest();
+            }
 
+            var userHasValidPassword = await _userManager.CheckPasswordAsync(user, request.Password);
+            if(!userHasValidPassword)
+            {
+                _logger.LogError($"ERROR: user email/password invalid");
+                return BadRequest();
+            }
+
+            _logger.LogInfo($"INFO: user {request.Email} logged");
+
+            var authResponse = await _tokenService.GenerateAuthenticationResultForUserAsync(user);
             if(!authResponse.Success)
             {
                 var failedAuth = _mapper.Map<AuthenticationFailedDTO>(authResponse);
                 _logger.LogError($"ERROR: user login.");
                 return BadRequest(failedAuth.Errors);
             }
-
-            _logger.LogInfo($"INFO: User: {request.Email} logged");
 
             var authentication = _mapper.Map<AuthenticationDTO>(authResponse);
             return Ok(authentication);
@@ -90,7 +127,7 @@ namespace App.Controllers.V1
         [HttpPost("refresh")]
         public async Task<IActionResult> RefreshTokenAsync([FromBody] Authentication request)
         {
-            var authResponse = await _userService.RefreshTokenAsync(request.Token, request.RefreshToken);
+            var authResponse = await _tokenService.RefreshTokenAsync(request.Token, request.RefreshToken);
 
             if(!authResponse.Success)
             {
@@ -103,26 +140,26 @@ namespace App.Controllers.V1
             return Ok(authentication);
         }
 
-        // TODO: Email confirmation
-        [HttpGet("confirmation")]
-        public async Task<IActionResult> ConfirmEmail(string token, string email)
-        {
-            var user = await _userService.GetUserByEmailAsync(email);
-            if (user == null)
-            {
-                _logger.LogError($"ERROR: retrieving user.");
-                return BadRequest();
-            }
+        // // TODO: Email confirmation
+        // [HttpGet("confirmation")]
+        // public async Task<IActionResult> ConfirmEmail(string token, string email)
+        // {
+        //     var user = await _userManager.FindByEmailAsync(email);
+        //     if (user == null)
+        //     {
+        //         _logger.LogError($"ERROR: retrieving user.");
+        //         return BadRequest();
+        //     }
 
-            var result = await _userService.ConfirmUserEmailAsync(user, token);
-            if (!result.Succeeded)
-            {
-                _logger.LogError($"ERROR: confirming user {user.Id} email.");
-                return BadRequest();
-            }
+        //     var result = await _userManager.ConfirmEmailAsync(user, token);
+        //     if (!result.Succeeded)
+        //     {
+        //         _logger.LogError($"ERROR: confirming user {user.Id} email.");
+        //         return BadRequest();
+        //     }
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
         [HttpPost("reset")]
         public async Task<IActionResult> ResetPassword(PasswordReset passwordReset)
@@ -133,22 +170,24 @@ namespace App.Controllers.V1
                 return BadRequest();
             }
 
-            var user = await _userService.GetUserByEmailAsync(passwordReset.Email);
+            var user = await _userManager.FindByEmailAsync(passwordReset.Email);
             if (user == null)
             {
                 _logger.LogError($"ERROR: retrieving user.");
                 return BadRequest();
             }
 
-            var passwordResetResult = await _userService.ResetPasswordAsync(
+            var passwordResetResult = await _userManager.ResetPasswordAsync(
                 user, passwordReset.Token, passwordReset.Password);
-            if (!passwordResetResult.Success)
+            if (!passwordResetResult.Succeeded)
             {
-                var failedPasswordReset = _mapper.Map<AuthenticationFailedDTO>(passwordResetResult);
-                return BadRequest(failedPasswordReset.Errors);
+                _logger.LogError($"ERROR: password reset failed");
+                return BadRequest(passwordResetResult.Errors.Select(x => x.Description));
             }
 
-            return NoContent();
+            var newAuth = await _tokenService.GenerateAuthenticationResultForUserAsync(user);
+            var authResponse = _mapper.Map<AuthenticationDTO>(newAuth);
+            return Ok(authResponse);
         }
 
         // TODO: cascade delete refresh token
@@ -156,20 +195,20 @@ namespace App.Controllers.V1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var user = await _userService.GetUserAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
                 _logger.LogError($"ERROR: retrieving user.");
                 return BadRequest();
             }
-            var UserDeletedResult = await _userService.DeleteUserAsync(user);
+            var UserDeletedResult = await _userManager.DeleteAsync(user);
             if (!UserDeletedResult.Succeeded)
             {
                 _logger.LogError($"ERROR: deleting User {id}.");
                 return BadRequest(UserDeletedResult.Errors.Select(e => e.Description));
             }
             
-            await _userService.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             _logger.LogInfo($"INFO: user {id} deleted.");
 
             return NoContent();

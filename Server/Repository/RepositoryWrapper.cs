@@ -16,11 +16,6 @@ namespace Repository
 
         private IBookmarkRepository _bookmark;
 
-        // TODO: resolve coupling of identity
-        // // private IApplicationUserService _applicationUser;
-        // private readonly UserManager<ApplicationUser> _userManager;
-        // private readonly RoleManager<IdentityRole> _roleManager;
-
         public IAircraftRepository Aircraft {
             get
             {
@@ -32,22 +27,6 @@ namespace Repository
                 return _aircraft;
             }
         }
-
-        // public IApplicationUserService ApplicationUser {
-        //     get
-        //     {
-        //         if (_applicationUser == null)
-        //         {
-        //             _applicationUser = new ApplicationUserService(
-        //                 _userManager,
-        //                 _roleManager,
-        //                 _context
-        //             );
-        //         }
-
-        //         return _applicationUser;
-        //     }
-        // }
 
         public IBookmarkRepository Bookmark {
             get
@@ -64,14 +43,10 @@ namespace Repository
         public RepositoryWrapper(
             ApplicationDbContext context,
             ISortHelper<Aircraft> aircraftSortHelper
-            // UserManager<ApplicationUser> userManager,
-            // RoleManager<IdentityRole> roleManager
             )
         {
             _context = context;
             _aircraftSortHelper = aircraftSortHelper;
-            // _userManager = userManager;
-            // _roleManager = roleManager;
         }
 
         public async Task SaveAsync()

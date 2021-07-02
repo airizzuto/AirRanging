@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Constants;
 using Contracts;
 using Data;
-using Emailer;
 using Entities.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,124 +16,22 @@ using Repository.Settings;
 
 namespace App
 {
-    public class ApplicationUserService : IApplicationUserService
+    // TODO: rename to token service
+    public class TokenService : ITokenService
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
         private readonly ApplicationDbContext _context;
         private readonly JwtSettings _jwtSettings;
 
-        private readonly IEmailSender _emailSender;
-
-        public ApplicationUserService(
+        public TokenService(
             UserManager<ApplicationUser> userManager,
             ApplicationDbContext context,
-            JwtSettings jwtSettings,
-            IEmailSender emailSender)
+            JwtSettings jwtSettings)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings;
             _context = context;
-            _emailSender = emailSender;
-        }
-
-        public async Task<ApplicationUser> GetUserAsync(string id)
-        {
-            return await _userManager.FindByIdAsync(id);
-        }
-
-        public async Task<ApplicationUser> GetUserByEmailAsync(string email)
-        {
-            return await _userManager.FindByEmailAsync(email);
-        }
-
-        public async Task<Authentication> LoginAsync(string email, string password)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                return new Authentication
-                {
-                    Errors = new[] { "Email not found" } 
-                };
-            }
-
-            var userHasValidPassword = await _userManager.CheckPasswordAsync(user, password);
-            if(!userHasValidPassword)
-            {
-                return new Authentication
-                {
-                    Errors = new[] {"User/password invalid"}
-                };
-            }
-
-            return await GenerateAuthenticationResultForUserASync(user);
-        }
-
-        public async Task<Authentication> RegisterAsync(
-            ApplicationUser user, string password)
-        {
-            var existingUsername = await _userManager.FindByNameAsync(user.UserName);
-            if (existingUsername != null)
-            {
-                return new Authentication
-                {
-                    Errors = new[] { "Username already in use" }
-                };
-            }
-
-            var existingEmail = await _userManager.FindByEmailAsync(user.Email);
-            if (existingEmail != null)
-            {
-                return new Authentication
-                {
-                    Errors = new[] { "Email already in use" }
-                };
-            }
-
-            var createdUser = await _userManager.CreateAsync(user, password);
-            if (!createdUser.Succeeded)
-            {
-                return new Authentication
-                {
-                    Errors = createdUser.Errors.Select(x => x.Description)
-                };
-            }
-
-            // TODO: Email confirmation  // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-5.0&tabs=visual-studio
-            // var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            // var confirmationLink = Url.Action(  // https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-5.0
-            //     "/api/users/confirm",
-            //     new { token, email = user.Email },
-            //     Request.Scheme
-            // );
-            // var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink);
-            // await _emailSender.SendEmailAsync(message);
-
-            await _userManager.AddToRoleAsync(
-                user, Authorization.default_role.ToString());
-
-            return await GenerateAuthenticationResultForUserASync(user);
-        }
-
-        public async Task<Authentication> ResetPasswordAsync(
-            ApplicationUser user, string token, string password)
-        {
-            var passwordResetResult = await _userManager.ResetPasswordAsync(user, token, password);
-            if (!passwordResetResult.Succeeded)
-            {
-                return new Authentication
-                {
-                    Errors = passwordResetResult.Errors.Select(x => x.Description)
-                };
-            }
-
-            return await GenerateAuthenticationResultForUserASync(user);
-        }
-
-        public async Task<IdentityResult> ConfirmUserEmailAsync(ApplicationUser user, string token)
-        {
-            return await _userManager.ConfirmEmailAsync(user, token);
         }
 
         public async Task<Authentication> RefreshTokenAsync(string token, string refreshToken)
@@ -160,6 +57,7 @@ namespace App
 
             var storedRefreshToken = await _context.RefreshTokens.SingleOrDefaultAsync(x => x.Token == refreshToken);
 
+            // TODO: environment switch for debugging with detailed token validation error throwing
             #region detailed token validation errors
             // if (storedRefreshToken == null)
             // {
@@ -202,19 +100,7 @@ namespace App
 
             var user = await _userManager.FindByIdAsync(claimsPrincipal.Claims.Single(x => x.Type == "id").Value);
 
-            return await GenerateAuthenticationResultForUserASync(user);
-        }
-
-        public async Task<IdentityResult> DeleteUserAsync(ApplicationUser user)
-        {
-            return await _userManager.DeleteAsync(user);
-        }
-
-        // TODO: user update
-
-        public async Task SaveChangesAsync()
-        {
-            await _context.SaveChangesAsync();
+            return await GenerateAuthenticationResultForUserAsync(user);
         }
 
         private ClaimsPrincipal GetPrincipalFromToken(string token)
@@ -261,7 +147,7 @@ namespace App
                     SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        private async Task<Authentication> GenerateAuthenticationResultForUserASync(ApplicationUser user)
+        public async Task<Authentication> GenerateAuthenticationResultForUserAsync(ApplicationUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
