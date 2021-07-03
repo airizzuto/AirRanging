@@ -11,7 +11,7 @@ namespace App.Profiles
             CreateMap<UserRegistrationDTO, ApplicationUser>();
             CreateMap<UserLoginDTO, ApplicationUser>();
             CreateMap<ApplicationUser, UserLoginDTO>();
-            CreateMap<ApplicationUser, AuthenticationDTO>();
+            CreateMap<ApplicationUser, UserAuthDTO>();
         }
     }
 }

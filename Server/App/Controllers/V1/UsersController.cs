@@ -19,11 +19,11 @@ namespace App.Controllers.V1
 {
     /// <summary>
     /// Users authentication and registration model controller endpoints:
-    /// <para> RegisterUser  - POST    api/users/register      </para>
-    /// <para> LoginUser     - POST    api/users/login         </para>
-    /// <para> ConfirmEmail  - GET     api/users/confirmation  </para>
-    /// <para> ResetPassword - POST    api/users/reset         </para>
-    /// <para> DeleteUser    - DELETE  api/users/5             </para>
+    /// <para> RegisterUser  - POST    api/users/register     </para>
+    /// <para> LoginUser     - POST    api/users/login        </para>
+    /// <para> ConfirmEmail  - GET     api/users/confirmation </para>
+    /// <para> ResetPassword - POST    api/users/reset        </para>
+    /// <para> DeleteUser    - DELETE  api/users/5            </para>
     /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
@@ -57,7 +57,7 @@ namespace App.Controllers.V1
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new AuthenticationFailedDTO {
+                return BadRequest(new UserAuthFailedDTO {
                     Errors = ModelState.Values.SelectMany(x => 
                         x.Errors.Select(xx => xx.ErrorMessage))
                 });
@@ -92,7 +92,7 @@ namespace App.Controllers.V1
 
             var userAuth = await _tokenService.GenerateAuthenticationResultForUserAsync(user);
 
-            var authentication = _mapper.Map<AuthenticationDTO>(userAuth);
+            var authentication = _mapper.Map<UserAuthDTO>(userAuth);
             return Ok(authentication);
         }
 
@@ -131,7 +131,7 @@ namespace App.Controllers.V1
             
             var claims = new List<Claim>
             {
-                new Claim("uid", user.Id),
+                // new Claim("uid", user.Id), // TODO: check if in use in aircrafs
                 new Claim(ClaimTypes.Name, user.UserName),
                 
             };
@@ -150,28 +150,11 @@ namespace App.Controllers.V1
             await _context.SaveChangesAsync();
 
             _logger.LogInfo($"INFO: user {user.Id} logged");
-            return Ok(new AuthenticationDTO
+            return Ok(new UserAuthDTO
             {
                 Token = accessToken,
                 RefreshToken = refreshToken
             });
-        }
-
-        // TODO: to TokenController
-        [HttpPost("refresh")]
-        public async Task<IActionResult> RefreshTokenAsync([FromBody] Authentication request)
-        {
-            var authResponse = await _tokenService.RefreshTokenAsync(request.Token, request.RefreshToken);
-
-            if(!authResponse.Success)
-            {
-                _logger.LogError($"ERROR: refreshing token.");
-                var failedAuth = _mapper.Map<AuthenticationFailedDTO>(authResponse);
-                return BadRequest(failedAuth.Errors);
-            }
-
-            var authentication = _mapper.Map<AuthenticationDTO>(authResponse);
-            return Ok(authentication);
         }
 
         // // TODO: Email confirmation
