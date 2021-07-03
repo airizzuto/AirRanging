@@ -11,9 +11,6 @@ namespace Data
     {
         public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<Bookmark> Bookmarks { get; set; }
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
-
-        // DbSet<ApplicationUser> already declared on extension with IdentityDbContext<ApplicationUser>
 
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 

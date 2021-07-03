@@ -54,7 +54,7 @@ namespace Tests
             });
 
             var registrationResponse = await response.Content
-                .ReadAsAsync<AuthenticationDTO>();
+                .ReadAsAsync<UserAuthDTO>();
             return registrationResponse.Token;
         }
     }

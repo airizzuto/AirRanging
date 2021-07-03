@@ -11,7 +11,7 @@ namespace Tests.Helpers
     public class MockAPI : IDisposable
     {
         public Mock<IRepositoryWrapper> repo;
-        public Mock<IApplicationUserService> userService;
+        public Mock<ITokenService> tokenService;
         public Mock<ILoggerManager> logger;
         public AircraftParameters aircraftParameters;
         public AircraftsProfile aircraftProfile;
@@ -21,7 +21,7 @@ namespace Tests.Helpers
         public MockAPI()
         {
             repo = new Mock<IRepositoryWrapper>();
-            userService = new Mock<IApplicationUserService>();
+            tokenService = new Mock<ITokenService>();
             logger = new Mock<ILoggerManager>();
 
             aircraftParameters = new AircraftParameters();
@@ -35,7 +35,7 @@ namespace Tests.Helpers
         public void Dispose()
         {
             repo = null;
-            userService = null;
+            tokenService = null;
             logger = null;
             aircraftParameters = null;
             aircraftProfile = null;

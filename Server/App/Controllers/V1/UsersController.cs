@@ -31,24 +31,26 @@ namespace App.Controllers.V1
     public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly ITokenService _tokenService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
         private readonly ILoggerManager _logger;
         private readonly IEmailSender _emailSender;
 
         public UsersController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
             ITokenService tokenService,
             IMapper mapper,
             ILoggerManager logger,
-            IEmailSender emailSender,
-            ApplicationDbContext context)
+            IEmailSender emailSender)
         {
+            _context = context;
             _tokenService = tokenService;
+            _userManager = userManager;
             _mapper = mapper;
             _logger = logger;
             _emailSender = emailSender;
-            _context = context;
         }
 
         [HttpPost("register")]
