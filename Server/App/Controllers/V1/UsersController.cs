@@ -51,12 +51,12 @@ namespace App.Controllers.V1
             _context = context;
         }
 
-        // TODO: refactor
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync([FromBody] UserRegistrationDTO request)
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogError($"User registration validation failed.");
                 return BadRequest(new UserAuthFailedDTO {
                     Errors = ModelState.Values.SelectMany(x => 
                         x.Errors.Select(xx => xx.ErrorMessage))
@@ -88,12 +88,10 @@ namespace App.Controllers.V1
             await _userManager.AddToRoleAsync(
                 user, Authorization.default_role.ToString());
 
+            await _context.SaveChangesAsync();
+
             _logger.LogInfo($"INFO: User {request.UserName} created");
-
-            var userAuth = await _tokenService.GenerateAuthenticationResultForUserAsync(user);
-
-            var authentication = _mapper.Map<UserAuthDTO>(userAuth);
-            return Ok(authentication);
+            return Ok();
         }
 
         /// <summary>
@@ -131,7 +129,9 @@ namespace App.Controllers.V1
             
             var claims = new List<Claim>
             {
-                // new Claim("uid", user.Id), // TODO: check if in use in aircrafs
+                // uid claim used with HttpContext in aircrafts controller to check for user authorship creating, updating and deleting aircrafts
+                new Claim("uid", user.Id),
+
                 new Claim(ClaimTypes.Name, user.UserName),
                 
             };
