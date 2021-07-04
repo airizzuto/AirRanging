@@ -147,7 +147,7 @@ namespace App.Controllers.V1
 
             user.RefreshToken = refreshToken;
             user.RefreshTokenCreationTime = DateTime.Now;
-            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(30);
 
             await _context.SaveChangesAsync();
 
