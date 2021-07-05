@@ -1,6 +1,6 @@
 namespace Entities.Models.Identity
 {
-    public class PasswordReset
+    public class PasswordResetModel
     {
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }

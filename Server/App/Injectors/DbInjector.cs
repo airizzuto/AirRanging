@@ -33,7 +33,8 @@ namespace App.Injectors
             );
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

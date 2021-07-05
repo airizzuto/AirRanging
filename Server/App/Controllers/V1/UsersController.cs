@@ -180,37 +180,62 @@ namespace App.Controllers.V1
         //     return NoContent();
         // }
 
-        // TODO: refactor
-        // [HttpPost("reset")]
-        // public async Task<IActionResult> ResetPassword(PasswordReset passwordReset)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         _logger.LogError("ERROR: password reset validation.");
-        //         return BadRequest();
-        //     }
+        // TODO: test
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(PasswordResetForgotDTO forgotPassword)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError($"ERROR: forgot password validation failed.");
+                return BadRequest("Validation failed.");
+            }
 
-        //     var user = await _userManager.FindByEmailAsync(passwordReset.Email);
-        //     if (user == null)
-        //     {
-        //         _logger.LogError($"ERROR: retrieving user.");
-        //         return BadRequest();
-        //     }
+            var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
+            if (user == null)
+            {
+                _logger.LogError($"ERROR: failed retrieving user.");
+                return BadRequest("Invalid user request.");
+            }
 
-        //     var passwordResetResult = await _userManager.ResetPasswordAsync(
-        //         user, passwordReset.Token, passwordReset.Password);
-        //     if (!passwordResetResult.Succeeded)
-        //     {
-        //         _logger.LogError($"ERROR: password reset failed");
-        //         return BadRequest(passwordResetResult.Errors.Select(x => x.Description));
-        //     }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callback = Url.Action(nameof(ResetPassword), "Users", new { token, email = user.Email }, Request.Scheme);
 
-        //     var newAuth = await _tokenService.GenerateAuthenticationResultForUserAsync(user);
-        //     var authResponse = _mapper.Map<AuthenticationDTO>(newAuth);
-        //     return Ok(authResponse);
-        // }
+            var message = new Message(new string[] { user.Email }, "Reset password token", callback);
+            await _emailSender.SendEmailAsync(message);
 
-        // TODO: cascade delete refresh token
+            _logger.LogInfo($"INFO: password reset email sent.");
+            return NoContent();
+        }
+
+        [HttpPost("reset")]
+        public async Task<IActionResult> ResetPassword(PasswordResetModel passwordReset)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("ERROR: password reset validation.");
+                return BadRequest("Password reset validation failed.");
+            }
+
+            var user = await _userManager.FindByEmailAsync(passwordReset.Email);
+            if (user == null)
+            {
+                _logger.LogError($"ERROR: retrieving user.");
+                return BadRequest("Invalid user.");
+            }
+
+            var passwordResetResult = await _userManager.ResetPasswordAsync(
+                user, passwordReset.Token, passwordReset.Password);
+            if (!passwordResetResult.Succeeded)
+            {
+                _logger.LogError($"ERROR: password reset failed.");
+                return BadRequest(passwordResetResult.Errors.Select(x => x.Description));
+            }
+
+            _logger.LogInfo($"INFO: password reset successful");
+            return Ok();
+        }
+
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
