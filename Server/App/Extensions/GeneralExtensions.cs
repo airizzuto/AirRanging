@@ -23,7 +23,7 @@ namespace App.Extensions
                 return string.Empty;
             }
 
-            return httpContext.User.Claims.Single(x => x.Type == "username").Value;
+            return httpContext.User.Identity.Name;
         }
     }
 }
