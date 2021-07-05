@@ -135,7 +135,7 @@ namespace App.Controllers.V1
             {
                 _logger.LogError($"ERROR: user not logged in.");
 
-                return Unauthorized();
+                return Unauthorized("User not logged in.");
             }
 
             var aircrafts = await _repository.Aircraft.GetAircraftsOwnedAsync(userId, parameters);
@@ -177,7 +177,7 @@ namespace App.Controllers.V1
             if (aircraft == null)
             {
                 _logger.LogError($"ERROR: aircraft id {id} not found.");
-                return NotFound();
+                return NotFound("Aircraft id not found.");
             }
 
             _logger.LogInfo($"INFO: Returning aircraft {id}.");
@@ -200,7 +200,7 @@ namespace App.Controllers.V1
             if (userId == null)
             {
                 _logger.LogError($"ERROR: user not logged in.");
-                return Unauthorized();
+                return Unauthorized("User not logged in.");
             }
 
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
@@ -242,20 +242,20 @@ namespace App.Controllers.V1
             if (userId == null)
             {
                 _logger.LogError($"ERROR: user not logged in.");
-                return Unauthorized();
+                return Unauthorized("User not logged in.");
             }
 
             var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
                 _logger.LogError($"ERROR: aircraft id {id}, not found.");
-                return NotFound();
+                return NotFound("Aircraft id not found.");
             }
 
             if (existingAircraft.UserId != userId)
             {
                 _logger.LogError($"ERROR: user does not own this aircraft. Unable to update.");
-                return Forbid();
+                return Forbid("User does not own this aircraft. Unable to update.");
             }
 
             _mapper.Map(aircraftUpdateDTO, existingAircraft);
@@ -282,14 +282,14 @@ namespace App.Controllers.V1
             if (userId == null)
             {
                 _logger.LogError($"ERROR: user not logged in.");
-                return Unauthorized();
+                return Unauthorized("User not logged in.");
             }
 
             var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
                 _logger.LogError($"ERROR: aircraft id {id}, not found.");
-                return NotFound();
+                return NotFound("Aircraft id not found.");
             }
 
             await _repository.Bookmark.SaveToBookmarkAsync(userId, existingAircraft.Id);
@@ -327,13 +327,13 @@ namespace App.Controllers.V1
             if (existingAircraft == null)
             {
                 _logger.LogError($"ERROR: aircraft {id} not found.");
-                return NotFound();
+                return NotFound("Aircraft not found.");
             }
 
             if (existingAircraft.UserId != userId)
             {
                 _logger.LogError($"ERROR: user does not own this aircraft. Unable to update.");
-                return Forbid();
+                return Forbid("User does not own this aircraft. Unable to update.");
             }
 
             var aircraftToPatch = _mapper.Map<AircraftUpdateDTO>(existingAircraft);
@@ -377,13 +377,13 @@ namespace App.Controllers.V1
             var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
-                return NotFound();
+                return NotFound("Aircraft id not found.");
             }
 
             if (existingAircraft.UserId != userId)
             {
-                _logger.LogError($"ERROR: user does not own this aircraft. Unable to delete aircraft.");
-                return Forbid();
+                _logger.LogError("ERROR: user does not own this aircraft. Unable to delete aircraft.");
+                return Forbid("User does not own this aircraft. Unable to delete aircraft.");
             }
 
             _repository.Aircraft.DeleteAircraft(existingAircraft);

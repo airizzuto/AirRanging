@@ -76,10 +76,7 @@ namespace App.Services
                 signingCredentials: signingCredentials
             );
 
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-            return token;
-
-            // TODO: claims uid and username to user controller
+            return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
     }
 }

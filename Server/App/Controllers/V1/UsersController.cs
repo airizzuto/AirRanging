@@ -19,11 +19,12 @@ namespace App.Controllers.V1
 {
     /// <summary>
     /// Users authentication and registration model controller endpoints:
-    /// <para> RegisterUser  - POST    api/users/register     </para>
-    /// <para> LoginUser     - POST    api/users/login        </para>
-    /// <para> ConfirmEmail  - GET     api/users/confirmation </para>
-    /// <para> ResetPassword - POST    api/users/reset        </para>
-    /// <para> DeleteUser    - DELETE  api/users/5            </para>
+    /// <para> RegisterUser    - POST    api/users/register     </para>
+    /// <para> LoginUser       - POST    api/users/login        </para>
+    /// <para> ConfirmEmail    - GET     api/users/confirmation </para>
+    /// <para> ForgotPassword  - POST    api/users/forgot       </para>
+    /// <para> ResetPassword   - POST    api/users/reset        </para>
+    /// <para> DeleteUser      - DELETE  api/users/5            </para>
     /// </summary>
     [ApiController]
     [ApiVersion("1.0")]
@@ -68,22 +69,22 @@ namespace App.Controllers.V1
             var existingUsername = await _userManager.FindByNameAsync(request.UserName);
             if (existingUsername != null)
             {
-                _logger.LogError($"ERROR: Username already in use");
-                return BadRequest();
+                _logger.LogError($"ERROR: Username already in use.");
+                return BadRequest("Username already in use.");
             }
 
             var existingEmail = await _userManager.FindByEmailAsync(request.Email);
             if (existingEmail != null)
             {
-                _logger.LogError($"ERROR: Email already in use");
-                return BadRequest();
+                _logger.LogError($"ERROR: Email already in use.");
+                return BadRequest("Email already in use.");
             }
 
             var user = _mapper.Map<ApplicationUser>(request);
             var createdUser = await _userManager.CreateAsync(user, request.Password);
             if (!createdUser.Succeeded)
             {
-                _logger.LogError($"ERROR: creating user");
+                _logger.LogError($"ERROR: creating user.");
                 return BadRequest(createdUser.Errors.Select(x => x.Description));
             }
 
@@ -93,7 +94,7 @@ namespace App.Controllers.V1
             await _context.SaveChangesAsync();
 
             _logger.LogInfo($"INFO: User {request.UserName} created");
-            return Ok();
+            return Ok("User registered successfully");
         }
 
         /// <summary>
@@ -135,7 +136,7 @@ namespace App.Controllers.V1
                 new Claim("uid", user.Id),
 
                 new Claim(ClaimTypes.Name, user.UserName),
-                
+
             };
             foreach (var role in userRoles)
             {
@@ -181,7 +182,7 @@ namespace App.Controllers.V1
         // }
 
         // TODO: test
-        [HttpPost]
+        [HttpPost("forgot")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(PasswordResetForgotDTO forgotPassword)
         {
@@ -232,8 +233,8 @@ namespace App.Controllers.V1
                 return BadRequest(passwordResetResult.Errors.Select(x => x.Description));
             }
 
-            _logger.LogInfo($"INFO: password reset successful");
-            return Ok();
+            _logger.LogInfo($"INFO: password reset successful.");
+            return Ok("Password reset successfully.");
         }
 
         [Authorize(Roles = "Administrator")]
