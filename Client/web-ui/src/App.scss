@@ -1,7 +1,9 @@
 @import "./styles/globals.scss";
 
 .App {
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 3fr 6fr 1fr;
 }
 
 .App-logo {

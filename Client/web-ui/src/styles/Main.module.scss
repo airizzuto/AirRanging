@@ -1,0 +1,9 @@
+@import "./globals.scss";
+
+.Main {
+  display: grid;
+  grid-area: 2 / 1 / 3 / end;
+
+  background-color: black;
+  height: max-content;
+}

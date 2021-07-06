@@ -1,6 +1,28 @@
 @import "./globals.scss";
 
 .HeaderButton {
+  @include drop-shadow;
+  min-height: 40px;
+  min-width: 200px;
   padding: 10px;
-  color: white;
+  margin: 0rem 1rem ;
+
+  color: $primary-color;
+  background-color: $secondary-color;
+
+  align-content: center;
+  justify-content: center;
+
+  @include text-shadow;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 17.5px;
+
+  border-style: none;
+  border-radius: 10px;
+
+  max-width: auto;
+  max-height: 40px;
+
 };

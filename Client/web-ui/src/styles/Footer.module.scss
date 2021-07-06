@@ -1,0 +1,8 @@
+@import "./styles/globals.scss";
+
+.Footer {
+  @include blurring;
+
+  min-height: 20px;
+  grid-area: 3 / 1 / end / end;
+}
