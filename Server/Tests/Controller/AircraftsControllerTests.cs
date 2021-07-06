@@ -48,13 +48,32 @@ namespace Tests.Controller
             _mock.repo.Setup(repo =>
                 repo.Aircraft.GetAllAircraftsAsync(aircraftParameters)
             ).ReturnsAsync(
-                await _mockData.RetrieveAircraftsQuantity(0, aircraftParameters)
+                await _mockData.RetrieveAircraftsQuantityAsync(0, aircraftParameters)
             );
 
             var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
 
             // Act
-            var result = await controller.GetAllAircrafts(aircraftParameters);
+            var result = controller.GetAllAircrafts(aircraftParameters);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetAllAircrafts_ReturnsCode200Ok_WhenDbHasOneResource()
+        {
+            // Arrange
+            _mock.repo.Setup(repo =>
+                repo.Aircraft.GetAllAircraftsAsync(aircraftParameters)
+            ).ReturnsAsync(
+                await _mockData.RetrieveAircraftsQuantityAsync(1, aircraftParameters)
+            );
+
+            var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
+
+            // Act
+            var result = controller.GetAllAircrafts(aircraftParameters);
 
             // Assert
             Assert.IsType<OkObjectResult>(result.Result);

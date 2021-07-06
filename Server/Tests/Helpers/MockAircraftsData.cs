@@ -11,7 +11,7 @@ namespace Tests.Helpers
 {
     public class MockAircraftsData
     {
-        private readonly IEnumerable<Aircraft> mockAircrafts;
+        private readonly List<Aircraft> mockAircrafts;
 
         public MockAircraftsData()
         {
@@ -50,32 +50,68 @@ namespace Tests.Helpers
                     FuelCapacity = 6875,
                     MaxRange = 2935,
                     ServiceCeiling = 41000
+                },
+                new Aircraft
+                {
+                    Id = Guid.NewGuid(),
+                    IcaoId = "B78X",
+                    Manufacturer = "Boeing",
+                    Model = "787-10",
+                    AircraftType = EAircraftType.MultiEngineLand,
+                    EngineCount = 2,
+                    EngineType = EEngineType.Jet,
+                    WeightCategory = EWeightCategory.Heavy,
+                    IcaoWakeCategory = EIcaoWakeCategory.Heavy,
+                    FuelType = EFuelType.JetA,
+                    MaxTakeoffWeight = 560000,
+                    CruiseSpeed = 488,
+                    FuelCapacity = 223673,
+                    MaxRange = 6430,
+                    ServiceCeiling = 41100
+                },
+                new Aircraft
+                {
+                    Id = Guid.NewGuid(),
+                    IcaoId = "P47",
+                    Manufacturer = "Republic",
+                    Model = "P-47D Thunderbolt",
+                    Variant = "Combat",
+                    AircraftType = EAircraftType.SingleEngineLand,
+                    EngineCount = 1,
+                    EngineType = EEngineType.Piston,
+                    WeightCategory = EWeightCategory.Small,
+                    IcaoWakeCategory = EIcaoWakeCategory.Light,
+                    FuelType = EFuelType.Unknown,
+                    MaxTakeoffWeight = 17500,
+                    CruiseSpeed = 304,
+                    FuelCapacity = 370,
+                    MaxRange = 391,
+                    ServiceCeiling = 42000
                 }
             };
         }
 
         public async Task<PagedList<Aircraft>> RetrieveAllAircraftsAsync(AircraftParameters parameters)
         {
-            var aircrafts = mockAircrafts.AsQueryable();
-            return await PagedList<Aircraft>.ToPagedList(
-                aircrafts, parameters.PageNumber, parameters.PageSize);
+            var aircrafts = mockAircrafts.ToList();
+            var result = new PagedList<Aircraft>(
+                aircrafts, aircrafts.Count,parameters.PageNumber, parameters.PageSize
+            );
+            return await Task.FromResult(result);
         }
 
-        public async Task<PagedList<Aircraft>> RetrieveAircraftsQuantity(int num, AircraftParameters parameters)
+        public async Task<PagedList<Aircraft>> RetrieveAircraftsQuantityAsync(int num, AircraftParameters parameters)
         {
             if (num > 0)
             {
-                var aircrafts = mockAircrafts.Take(num);
-                return await PagedList<Aircraft>.ToPagedList(
-                    aircrafts, parameters.PageNumber, parameters.PageSize);
+                var aircrafts = mockAircrafts.Take(num).ToList();
+                return new PagedList<Aircraft>(aircrafts, aircrafts.Count, parameters.PageNumber, parameters.PageSize);
             }
 
-            var emptyDb = new List<Aircraft> { }.AsQueryable();
+            var emptyDb = new List<Aircraft> { };
+            var result = new PagedList<Aircraft>(emptyDb, emptyDb.Count, 1, num);
 
-            return await PagedList<Aircraft>.ToPagedList( 
-                emptyDb,
-                parameters.PageNumber,
-                parameters.PageSize);
+            return await Task.FromResult(result);
         }
     }
 }
