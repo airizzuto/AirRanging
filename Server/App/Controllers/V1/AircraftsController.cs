@@ -23,6 +23,7 @@ namespace App.Controllers.V1
     /// <para> GetAircraftOwnedByUser      - GET     api/aircrafts/owned   </para>
     /// <para> GetAircraftId               - GET     api/aircrafts/5       </para>
     /// <para> CreateAircraft              - POST    api/aircrafts/create  </para>
+    /// <para> CloneAircraft               - POST    api/aircrafts/5/clone  </para>
     /// <para> PartialUpdateAircraftId     - PUT     api/aircrafts/5       </para>
     /// <para> SaveAircraftId              - PUT     api/aircrafts/5/save  </para>
     /// <para> FullUpdateAircraftId        - PATCH   api/aircrafts/5       </para>
@@ -214,6 +215,46 @@ namespace App.Controllers.V1
             await _repository.SaveAsync();
 
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
+
+            _logger.LogInfo(
+                $"INFO: User: {userId} created aircraft {aircraftReadDto.Id}."
+            );
+
+            return CreatedAtAction(
+                actionName: nameof(GetAircraftById),
+                routeValues: new { id = aircraftReadDto.Id },
+                value: aircraftReadDto
+            );
+        }
+
+        // POST api/aircrafts/{id}/clone
+        /// <summary>
+        /// Creates a copy of an existing aircraft in the database referenced to  a new userId
+        /// </summary>
+        /// <response code="201">Aircraft cloned successfully in database</response>
+        /// <response code="400">Unable to clone the aircraft due to validation error</response>
+        /// <response code="401">Unable to clone the aircraft due to user not logged in</response>
+        [HttpPost("{id}/clone")]
+        public async Task<IActionResult> CloneAircraft(Guid id)
+        {
+            var userId = HttpContext.GetUserId();
+            if (userId == null)
+            {
+                _logger.LogError($"ERROR: user not logged in.");
+                return Unauthorized("User not logged in.");
+            }
+
+            var aircraftCopy = await _repository.Aircraft.GetAircraftByIdAsync(id);
+
+            aircraftCopy.Id = Guid.NewGuid();
+            aircraftCopy.UserId = userId;
+
+            await _repository.Aircraft.CreateAircraftAsync(aircraftCopy);
+
+            await _repository.Bookmark.SaveToBookmarkAsync(userId, aircraftCopy.Id);
+            await _repository.SaveAsync();
+
+            var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftCopy);
 
             _logger.LogInfo(
                 $"INFO: User: {userId} created aircraft {aircraftReadDto.Id}."
