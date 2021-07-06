@@ -13,23 +13,13 @@ namespace Tests.Helpers
         public Mock<IRepositoryWrapper> repo;
         public Mock<ITokenService> tokenService;
         public Mock<ILoggerManager> logger;
-        public AircraftParameters aircraftParameters;
-        public AircraftsProfile aircraftProfile;
-        MapperConfiguration configuration;
-        public IMapper mapper;
+
 
         public MockAPI()
         {
             repo = new Mock<IRepositoryWrapper>();
             tokenService = new Mock<ITokenService>();
             logger = new Mock<ILoggerManager>();
-
-            aircraftParameters = new AircraftParameters();
-            aircraftProfile = new AircraftsProfile();
-
-            configuration = new MapperConfiguration(cfg => 
-                cfg.AddProfile(aircraftProfile));
-            mapper = new Mapper(configuration);
         }
         
         public void Dispose()
@@ -37,10 +27,6 @@ namespace Tests.Helpers
             repo = null;
             tokenService = null;
             logger = null;
-            aircraftParameters = null;
-            aircraftProfile = null;
-            configuration = null;
-            mapper = null;
             GC.SuppressFinalize(this);
         }
 

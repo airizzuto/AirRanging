@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Entities.Models.Aircrafts;
 using Entities.Models.Enums;
 using Entities.Models.Pagination;
+using Microsoft.EntityFrameworkCore;
 
 namespace Tests.Helpers
 {
     public class MockAircraftsData
     {
-        private readonly List<Aircraft> mockAircrafts;
+        private readonly IEnumerable<Aircraft> mockAircrafts;
 
         public MockAircraftsData()
         {
@@ -64,22 +65,17 @@ namespace Tests.Helpers
         {
             if (num > 0)
             {
-                var aircrafts = mockAircrafts.GetRange(0, num).AsQueryable();
+                var aircrafts = mockAircrafts.Take(num);
                 return await PagedList<Aircraft>.ToPagedList(
                     aircrafts, parameters.PageNumber, parameters.PageSize);
             }
 
-            var emptyList = new List<Aircraft> { }.AsQueryable();
+            var emptyDb = new List<Aircraft> { }.AsQueryable();
 
             return await PagedList<Aircraft>.ToPagedList( 
-                emptyList,
+                emptyDb,
                 parameters.PageNumber,
                 parameters.PageSize);
-        }
-
-        public Aircraft RetrieveAircraftNum(int num)
-        {
-            return mockAircrafts[num];
         }
     }
 }
