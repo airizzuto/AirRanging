@@ -7,16 +7,19 @@ namespace Entities.DTOs.V1.Aircrafts
     {
         public AircraftCreateDTOValidator()
         {
-            RuleFor(x => x.IcaoId)
-                .MaximumLength(4).WithMessage("Maximum length of ICAO code is 4");
+            RuleFor(x => x.IcaoId).Cascade(CascadeMode.Stop)
+                .MaximumLength(4).WithMessage("Maximum length of ICAO code is 4")
+                .Matches(@"(?!\s)+^([A-Za-z1-9-]{0,4})$").WithMessage("Only alphanumeric values and - are valid. No spaces allowed.");
 
-            RuleFor(x => x.Manufacturer)
+            RuleFor(x => x.Manufacturer).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Manufacturer must be provided")
-                .MaximumLength(255);
+                .MaximumLength(255)
+                .Matches(@"^[a-zA-Z1-9]+[-\s\w]*[a-zA-Z1-9]$").WithMessage("Only alphanumeric and spaces allowed.");
             
-            RuleFor(x => x.Model)
+            RuleFor(x => x.Model).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Model name must be provided")
-                .MaximumLength(255);
+                .MaximumLength(255)
+                .Matches(@"^[a-zA-Z1-9]+[-\w]*[a-zA-Z1-9]$").WithMessage("Only alphanumeric characters allowed.");
 
             // TODO: Link EngineCount requirement to single or multi engine AircraftType. Ex: SingleEngineLand must have only one engine.
             RuleFor(x => x.AircraftType)  

@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Xunit;
 using FluentValidation.TestHelper;
 using Entities.DTOs.V1.Aircrafts;
+using System.Linq;
 
 namespace Tests.Validation
 {
@@ -14,11 +15,10 @@ namespace Tests.Validation
             aircraftValidator = new AircraftCreateDTOValidator();
         }
 
-        // TODO: IcaoId validation
         [Theory]
         [InlineData(" ")]
-        [InlineData(" ABC")]
-        [InlineData("     ")]
+        [InlineData(" 152")]
+        [InlineData("C15 ")]
         [InlineData("ABCDE")]
         [InlineData("12345")]
         public async Task AircraftCreate_InvalidIcaoId_ValidationShouldFail(string icaoId)
@@ -32,7 +32,7 @@ namespace Tests.Validation
             var result = await aircraftValidator.TestValidateAsync(model);
 
             // Assert
-            result.ShouldHaveValidationErrorFor(u => u.IcaoId);
+            result.ShouldHaveValidationErrorFor(a => a.IcaoId);
         }
 
         [Theory]
@@ -42,6 +42,7 @@ namespace Tests.Validation
         [InlineData("1234")]
         [InlineData("123A")]
         [InlineData("A1")]
+        [InlineData("")]
         public async Task AircraftCreate_ValidIcaoId_ValidationShouldPass(string icaoId)
         {
             // Arrange
@@ -53,9 +54,51 @@ namespace Tests.Validation
             var result = await aircraftValidator.TestValidateAsync(model);
 
             // Assert
-            result.ShouldNotHaveValidationErrorFor(u => u.IcaoId);
+            result.ShouldNotHaveValidationErrorFor(a => a.IcaoId);
         }
 
-        // TODO: tests
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("  ")]
+        [InlineData("Ce$$na")]
+        [InlineData("C.ssna")]
+        [InlineData("-")]
+        [InlineData("Cessna-")]
+        [InlineData("-Cessna")]
+        [InlineData(" Cessna")]
+        [InlineData("Boeing ")]
+        public async Task AircraftCreate_InvalidManufacturer_ValidationShouldFail(string manufacturer)
+        {
+            // Arrange
+            var model = new AircraftCreateDTO {
+                Manufacturer = manufacturer
+            };
+
+            // Act
+            var result = await aircraftValidator.TestValidateAsync(model);
+
+            // Assert
+            result.ShouldHaveValidationErrorFor(a => a.Manufacturer);
+        }
+
+        [Fact]
+        public async Task AircraftCreate_InvalidManufacturerLength_ValidationShouldFail()
+        {
+            // Arrange
+            var model = new AircraftCreateDTO {
+                Manufacturer = Enumerable.Repeat("a", 256).ToString()
+            };
+
+            // Act
+            var result = await aircraftValidator.TestValidateAsync(model);
+
+            // Assert
+            result.ShouldHaveValidationErrorFor(a => a.Manufacturer);
+        }
+
+        // TODO: valid manufacturer
+
+        // TODO: model
     }
 }
