@@ -1,15 +1,24 @@
 import React from "react";
+import { Route, Link, Switch } from "react-router-dom";
 
 import "./App.scss";
 import { Footer } from "./components/Footer";
-import { Header } from "./components/Header";
+import { HeaderHome } from "./components/HeaderHome";
 import { Main } from "./components/Main";
 
 const App = () => {
   return (
     <div className="App">
-      <Header />
-      <Main />
+
+      <Switch>
+        <Route path="/">
+          <HeaderHome />
+          <Main />
+        </Route>
+
+        
+      </Switch>
+
       <Footer />
     </div>
   );
