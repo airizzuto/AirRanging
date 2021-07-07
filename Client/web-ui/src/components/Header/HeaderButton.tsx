@@ -1,8 +1,8 @@
 import React from "react";
-import Style from "../../styles/HeaderButton.module.scss";
+import Style from "./HeaderButton.module.scss";
 
 interface Props {
-  ButtonText: String,
+  ButtonText: string,
   // BackgroundImage: String,
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import Style from "../../styles/FooterButton.module.scss";
 
 interface Props {
-  ButtonText: String,
+  ButtonText: string,
   // BackgroundImage: String,
 }
 
