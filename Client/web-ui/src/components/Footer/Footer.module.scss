@@ -2,7 +2,9 @@
 
 .Footer {
   @include blurring;
-
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
   min-height: 20px;
   grid-area: 3 / 1 / end / end;
 }

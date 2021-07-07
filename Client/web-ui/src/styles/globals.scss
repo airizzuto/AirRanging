@@ -5,7 +5,7 @@ $tertiary-color: hsl(0, 0%, 25%);
 $background-color: rgba(143, 143, 143, 0.60);
 
 @mixin blurring {
-  background-color: hsla(0, 0%, 56%, 0.60);
+  background-color: rgba(85, 85, 85, 0.699);
   backdrop-filter: blur(20px);
 }
 

@@ -1,9 +1,15 @@
 @import "./styles/globals.scss";
 
 .App {
+  position: fixed;
+
+  height: 100%;
+  width: 100%;
+
   display: grid;
+  
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: 3fr 6fr 1fr;
+  grid-template-rows: 2fr 15fr 0.5fr;
 }
 
 .App-logo {
@@ -13,4 +19,11 @@
 
 .App-link {
   color: $tertiary-color;
+}
+
+body {
+  background-image: url("./background.png");
+  background-color: #cccccc;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
