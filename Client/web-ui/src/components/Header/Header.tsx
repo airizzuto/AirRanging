@@ -5,7 +5,7 @@ import Style from "./Header.module.scss";
 import Logo from "./LogoVector.svg";
 import { HeaderButton } from "./HeaderButton";
 
-const Header = () => {
+const Header = (): JSX.Element => {
   return (
     <header className={Style.Header}>
       
@@ -31,8 +31,10 @@ const Header = () => {
 
       <div className={Style.HeaderAccount}>
         <Link to="/sign">
-          <a>Sign Up</a>
+          <a>SignUp</a>
         </Link>
+        
+        <a href="#">Login</a>
       </div>
       
     </header>

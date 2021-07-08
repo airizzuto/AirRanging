@@ -6,10 +6,10 @@ interface Props {
   // BackgroundImage: String,
 }
 
-export const HeaderButton = ({ButtonText}: Props) => {
+export const HeaderButton = ({ButtonText}: Props): JSX.Element => {
   return (
-    <a className={Style.HeaderButton}>
+    <button className={Style.HeaderButton}>
       {ButtonText}
-    </a>
+    </button>
   );
 };

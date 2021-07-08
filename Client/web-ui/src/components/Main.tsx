@@ -1,7 +1,7 @@
 import React from "react";
 import Style from "./Main.module.scss"
 
-const Main = () => {
+const Main = (): JSX.Element => {
   return(
     <div className={Style.Main}>
 

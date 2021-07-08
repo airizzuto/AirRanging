@@ -2,10 +2,12 @@ import React from "react";
 import Style from "./Footer.module.scss";
 
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <div className={Style.Footer}>
-      Contact
+      <a href="/">Help</a>
+      <a href="/">About</a>
+      <a href="/">Contact</a>
     </div>
   );
 };
