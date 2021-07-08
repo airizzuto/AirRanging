@@ -8,8 +8,8 @@ interface Props {
 
 export const HeaderButton = ({ButtonText}: Props): JSX.Element => {
   return (
-    <button className={Style.HeaderButton}>
+    <a className={Style.HeaderButton}>
       {ButtonText}
-    </button>
+    </a>
   );
 };

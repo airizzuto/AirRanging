@@ -1,14 +1,12 @@
 @import "./styles/globals.scss";
 
 .App {
-  position: fixed;
-
   height: 100%;
   width: 100%;
 
   display: grid;
   
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
   grid-template-rows: 2fr 15fr 0.5fr;
 
   font-family: "Roboto";

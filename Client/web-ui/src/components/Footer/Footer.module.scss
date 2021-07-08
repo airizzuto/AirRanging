@@ -2,9 +2,19 @@
 
 .Footer {
   @include blurring;
+  @include hyperlink-behavior;
   display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  min-height: 20px;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-content: center;
+  
   grid-area: 3 / 1 / end / end;
+  
+  min-height: 20px;
+  
+  
+  a {
+    padding: 0 1vw;
+    color: $primary-color;
+  }
 }

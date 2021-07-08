@@ -11,7 +11,7 @@ const Header = (): JSX.Element => {
       
       <div className={Style.HeaderLogo}>
         <Link to="/">
-          <img src={Logo} alt="Logo" height="150" />
+          <img src={Logo} alt="Logo" />
         </Link>
       </div>
 

@@ -3,19 +3,13 @@
 .HeaderButton {
   @include header-font;
   @include drop-shadow;
-  min-height: 40px;
-  min-width: 200px;
-  padding: 10px;
-  margin: 0rem 1rem ;
 
   color: $primary-color;
   background-color: $secondary-color;
-
-  text-align: center;
-  text-justify: center;
+  
+  padding: 10px;
+  margin: 0 1vw;
 
   border-style: none;
   border-radius: 10px;
-
-  max-height: 40px;
 };
