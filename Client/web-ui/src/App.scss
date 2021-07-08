@@ -10,15 +10,9 @@
   
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: 2fr 15fr 0.5fr;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-link {
-  color: $tertiary-color;
+  font-family: "Roboto";
+  @include text-shadow;
 }
 
 body {
@@ -26,4 +20,12 @@ body {
   background-color: #cccccc;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  :hover {
+    color: $tertiary-color;
+  }
 }
