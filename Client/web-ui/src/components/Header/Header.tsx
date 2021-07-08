@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Style from "./Header.module.scss";
+import Logo from "./LogoVector.svg";
 import { HeaderButton } from "./HeaderButton";
 
 const Header = () => {
@@ -10,7 +11,7 @@ const Header = () => {
       
       <div className={Style.HeaderLogo}>
         <Link to="/">
-          <img src="./LogoVector.svg" alt="Logo" height="150" />
+          <img src={Logo} alt="Logo" height="150" />
         </Link>
       </div>
 
@@ -30,7 +31,7 @@ const Header = () => {
 
       <div className={Style.HeaderAccount}>
         <Link to="/sign">
-          SIGNUP
+          <a>Sign Up</a>
         </Link>
       </div>
       

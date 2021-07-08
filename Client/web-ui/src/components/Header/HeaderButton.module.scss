@@ -1,6 +1,7 @@
 @import "../../styles/globals.scss";
 
 .HeaderButton {
+  @include header-font;
   @include drop-shadow;
   min-height: 40px;
   min-width: 200px;
@@ -10,19 +11,11 @@
   color: $primary-color;
   background-color: $secondary-color;
 
-  align-content: center;
-  justify-content: center;
-
-  @include text-shadow;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 17.5px;
+  text-align: center;
+  text-justify: center;
 
   border-style: none;
   border-radius: 10px;
 
-  max-width: auto;
   max-height: 40px;
-
 };

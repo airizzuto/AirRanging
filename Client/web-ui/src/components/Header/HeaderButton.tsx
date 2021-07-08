@@ -8,8 +8,8 @@ interface Props {
 
 export const HeaderButton = ({ButtonText}: Props) => {
   return (
-    <button className={Style.HeaderButton}>
+    <a className={Style.HeaderButton}>
       {ButtonText}
-    </button>
+    </a>
   );
 };

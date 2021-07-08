@@ -3,7 +3,7 @@
 .Header {
   @include blurring;
   display: grid;
-  padding: 2vh 0;
+  padding: 1vh 0;
 
   min-height: 60px;
 
@@ -16,20 +16,34 @@
     grid-area: "logo";
     align-self: center;
     justify-self: center;
+
+    padding: 0vw 3vw;
+
+    img {
+      max-height: 40px;
+    }
   }
 
   .HeaderNav {
     grid-area: "nav";
-    flex-direction: row;
+    flex-flow: row;
+    flex-wrap: nowrap;
     align-self: center;
     justify-self: flex-start;
+    align-items: center;
+    justify-items: center;
+
   }
 
   .HeaderAccount {
+    @include header-font;
+
+    padding: 0vw 3vw;
     grid-area: "user";
-    flex-direction: row;
-    flex-flow: row-reverse;
+    flex-direction: row-reverse;
+
     align-self: center;
     justify-self: center;
+    
   }
 }
