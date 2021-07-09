@@ -2,19 +2,33 @@
 
 .Footer {
   @include blurring;
-  @include hyperlink-behavior;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "copyright center links";
+
   align-content: center;
-  
-  grid-area: 3 / 1 / end / end;
   
   min-height: 20px;
   
-  
-  a {
-    padding: 0 1vw;
+  .Copyright{
+    @include text-shadow;
     color: $primary-color;
+    grid-area: "copyright";
   }
+
+  .Links{
+    @include text-shadow;
+    @include hyperlink-behavior;
+    grid-area: "links";
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    a {
+      padding: 0 1vw;
+      color: $primary-color;
+    }
+  }
+
 }
