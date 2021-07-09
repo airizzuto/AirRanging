@@ -3,24 +3,26 @@
 .Footer {
   @include blurring;
 
+  grid-area: 3 / 1 / end / end;
+
+  min-height: 20px;
+
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "copyright center links";
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: "copyright . links";
 
   align-content: center;
-  
-  min-height: 20px;
-  
+
   .Copyright{
     @include text-shadow;
     color: $primary-color;
-    grid-area: "copyright";
+    grid-area: copyright;
   }
 
   .Links{
     @include text-shadow;
-    @include hyperlink-behavior;
-    grid-area: "links";
+    @include hyperlink-text;
+    grid-area: links;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -31,4 +33,5 @@
     }
   }
 
+  z-index: 10;
 }

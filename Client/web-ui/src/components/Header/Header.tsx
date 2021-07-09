@@ -7,27 +7,32 @@ import { HeaderButton } from "./HeaderButton";
 
 const Header = (): JSX.Element => {
   return (
-    <header className={Style.Header}>
-      
+    <nav className={Style.Header}>
+
       <div className={Style.HeaderLogo}>
         <Link to="/">
           <img src={Logo} alt="Logo" />
         </Link>
       </div>
 
-      <div className={Style.HeaderNav}>
-        <HeaderButton ButtonText={"AIRCRAFT SELECT"} />
-
-        <HeaderButton ButtonText={"PLANNING"} />
-
-        <Link to="/aircrafts">
-          <HeaderButton ButtonText={"AIRCRAFT EDIT"} />
-        </Link>
-
-        <Link to="/">
-          <HeaderButton ButtonText={"AIRPORT EDIT"} />
-        </Link>
-      </div>
+      <ul className={Style.HeaderNav}>
+        <li>
+          <HeaderButton ButtonText={"AIRCRAFT SELECT"} />
+        </li>
+        <li>
+          <HeaderButton ButtonText={"PLANNING"} />
+        </li>
+        <li>
+          <Link to="/aircrafts">
+            <HeaderButton ButtonText={"AIRCRAFT EDIT"} />
+          </Link>
+        </li>
+        <li>
+          <Link to="/">
+            <HeaderButton ButtonText={"AIRPORT EDIT"} />
+          </Link>
+        </li>
+      </ul>
 
       <div className={Style.HeaderAccount}>
         <Link to="/sign">
@@ -37,7 +42,7 @@ const Header = (): JSX.Element => {
         <a href="#">Login</a>
       </div>
       
-    </header>
+    </nav>
   );
 };
 

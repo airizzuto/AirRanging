@@ -2,17 +2,20 @@
 
 .Header {
   @include blurring;
-  display: grid;
+  @include text-shadow;
+
+  position: static;
+  grid-area: 1 / 1 / 2 / end;
 
   min-height: 90px;
 
-  grid-template-areas: "logo nav user";
+  display: grid;
   grid-template-columns: 1fr 4fr 1fr;
-  
-  grid-area: 1 / 1 / 2 / end;
+  grid-template-areas: "logo nav user";
 
   .HeaderLogo {
-    grid-area: "logo";
+    grid-area: logo;
+
     align-self: center;
     justify-self: center;
     align-content: center;
@@ -33,7 +36,10 @@
   }
 
   .HeaderNav {
-    grid-area: "nav";
+    @include hyperlink-text;
+    grid-area: nav;
+
+    display: flex;
     flex-flow: row;
     align-self: center;
     justify-self: flex-start;
@@ -44,8 +50,10 @@
 
   .HeaderAccount {
     @include header-font;
+    @include hyperlink-text;
 
-    grid-area: "user";
+    grid-area: user;
+
     display: flex;
     flex-direction: row;
 
@@ -53,7 +61,20 @@
     justify-self: center;
 
     a {
+      color: $primary-color;
       padding: 0 1vw;
     }
   }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline;
+  }
+
+  z-index: 10;
 }

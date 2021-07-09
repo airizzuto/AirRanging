@@ -18,7 +18,7 @@ $text-size-0: 0.8em;
 
 @mixin blurring {
   background-color: rgba(85, 85, 85, 0.699);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(4px);
 }
 
 @mixin drop-shadow {
@@ -29,7 +29,8 @@ $text-size-0: 0.8em;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.75);
 }
 
-@mixin hyperlink-behavior {
+@mixin hyperlink-text {
+  text-decoration: none;
   :hover {
     color: $tertiary-color;
   }

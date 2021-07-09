@@ -4,7 +4,7 @@ import Style from "./Footer.module.scss";
 
 const Footer = (): JSX.Element => {
   return (
-    <div className={Style.Footer}>
+    <footer className={Style.Footer}>
 
       <div className={Style.Copyright}>
         Copyright
@@ -16,7 +16,7 @@ const Footer = (): JSX.Element => {
         <a href="/">Contact</a>
       </div>
 
-    </div>
+    </footer>
   );
 };
 
