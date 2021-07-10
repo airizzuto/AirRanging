@@ -12,16 +12,13 @@
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
   grid-template-areas: "logo nav user";
+  row-gap: 1vw;
 
   .HeaderLogo {
     grid-area: logo;
 
     align-self: center;
     justify-self: center;
-    align-content: center;
-    justify-content: center;
-
-    padding: 0vw 1vw;
 
     img {
       max-height: 2vw;
@@ -43,8 +40,8 @@
     flex-flow: row;
     align-self: center;
     justify-self: flex-start;
-    align-items: space-around;
-    justify-items: space-around;
+    align-items: center;
+    justify-items: flex-start;
     padding: 0vw 2vw;
   }
 
@@ -60,8 +57,14 @@
     align-self: center;
     justify-self: center;
 
+    align-content: flex-start;
+    justify-content: flex-start;
+
     a {
       color: $primary-color;
+    }
+    
+    li {
       padding: 0 1vw;
     }
   }

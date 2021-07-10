@@ -35,11 +35,16 @@ const Header = (): JSX.Element => {
       </ul>
 
       <div className={Style.HeaderAccount}>
-        <Link to="/sign">
-          <a>SignUp</a>
-        </Link>
-        
-        <a href="#">Login</a>
+        <ul>
+          <li>
+            <Link to="/sign">
+              Sign Up
+            </Link>
+          </li>
+          <li>
+            <a href="#">Login</a>
+          </li>
+        </ul>
       </div>
       
     </nav>
