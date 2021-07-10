@@ -17,6 +17,11 @@
     @include text-shadow;
     color: $primary-color;
     grid-area: copyright;
+    padding: 0 1vw;
+
+    #faCopyright {
+      filter: drop-shadow(1px 1px 1px #000000)
+    }
   }
 
   .Links{
