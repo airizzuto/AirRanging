@@ -1,8 +1,9 @@
 @import "../../styles/globals.scss";
 
 .HeaderButton {
-  @include header-font;
+  @include button-font;
   @include drop-shadow;
+  @include text-shadow;
 
   color: $primary-color;
   background-color: $secondary-color;

@@ -16,6 +16,11 @@ $text-size-0: 0.8em;
   font-size: $text-size-2;
 }
 
+@mixin button-font {
+  font-weight: 600;
+  font-size: $text-size-2;
+}
+
 @mixin blurring {
   background-color: rgba(51, 51, 51, 0.7);
   backdrop-filter: saturate(180%) blur(4px);

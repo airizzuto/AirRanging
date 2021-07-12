@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import Style from "./Header.module.scss";
 import Logo from "./LogoVector.svg";
-import { HeaderButton } from "./HeaderButton";
+import { HeaderButton } from "../Buttons/HeaderButton";
 
 const Header = (): JSX.Element => {
   return (
@@ -38,7 +38,7 @@ const Header = (): JSX.Element => {
         <ul>
           <li>
             <Link to="/sign">
-              Sign Up
+              Sign In
             </Link>
           </li>
           <li>

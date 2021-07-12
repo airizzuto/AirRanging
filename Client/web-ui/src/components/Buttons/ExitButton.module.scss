@@ -1,0 +1,15 @@
+@import "../../styles/globals.scss";
+
+.ExitButton {
+  @include button-font;
+  @include drop-shadow;
+
+  color: $primary-color;
+  background-color: $secondary-color;
+  
+  padding: 10px;
+  margin: 0 1vw;
+
+  border-style: none;
+  border-radius: 10px;
+};
