@@ -4,10 +4,14 @@ import { Link } from "react-router-dom";
 import Style from "./Header.module.scss";
 import Logo from "./LogoVector.svg";
 import { HeaderButton } from "../Buttons/HeaderButton";
+import Menu from "../Menu/Menu";
 
 const Header = (): JSX.Element => {
   return (
     <nav className={Style.Header}>
+      <div className={Style.Menu}>
+        <Menu />
+      </div>
 
       <div className={Style.HeaderLogo}>
         <Link to="/">
@@ -38,11 +42,11 @@ const Header = (): JSX.Element => {
         <ul>
           <li>
             <Link to="/sign">
-              Sign In
+              SIGN IN
             </Link>
           </li>
           <li>
-            <a href="#">Login</a>
+            <a href="#">LOG IN</a>
           </li>
         </ul>
       </div>
