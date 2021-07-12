@@ -2,7 +2,7 @@ import React from "react";
 import { GoogleMap, InfoWindow, useJsApiLoader  } from "@react-google-maps/api";
 
 import Style from "./MapView.module.scss"
-import { containerStyle, center, options } from "../settings/google-maps/settings";
+import { containerStyle, center, options } from "../../settings/google-maps/settings";
 
 const MapView = (): JSX.Element => {
 
