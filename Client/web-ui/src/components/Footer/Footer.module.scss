@@ -8,8 +8,8 @@
   min-height: 18px;
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas: "copyright . links";
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: "copyright links";
 
   align-content: center;
 
