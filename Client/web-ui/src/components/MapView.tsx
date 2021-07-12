@@ -2,6 +2,7 @@ import React from "react";
 import { GoogleMap, InfoWindow, useJsApiLoader  } from "@react-google-maps/api";
 
 import Style from "./MapView.module.scss"
+import { containerStyle, center, options } from "../settings/google-maps/settings";
 
 const MapView = (): JSX.Element => {
 
@@ -18,13 +19,28 @@ const MapView = (): JSX.Element => {
     mapRef.current = map;
   }
 
-  const unMount = (): void => {
+  const onUnmount = (): void => {
     mapRef.current = null;
   }
 
-  return(
-    <div className={Style.MapView} id="map">
+  if (!isLoaded) { //TODO: loading spinner
+    return <div>Map loading...</div>
+  }
 
+  return(
+    // <div className={Style.MapView} id="map">
+    //   <GoogleMap 
+    //     mapContainerStyle={containerStyle}
+    //     options={options as google.maps.MapOptions}
+    //     center={center}
+    //     zoom={5}
+    //     onLoad={onLoad}
+    //     onUnmount={onUnmount}
+    //   />
+    // </div>
+
+    <div>
+      
     </div>
   )
 }

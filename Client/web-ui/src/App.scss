@@ -19,6 +19,8 @@
     "footer footer footer";
 
   font-family: "Roboto";
+
+  overflow: auto;
 }
 
 a {
@@ -29,10 +31,5 @@ a {
 }
 
 @media (max-width: 600px) {
-  .App {
-    grid-template-areas: 
-      "header"
-      "main"
-      "footer";
-  }
+
 }
