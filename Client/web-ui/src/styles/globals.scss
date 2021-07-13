@@ -11,6 +11,12 @@ $text-size-2: 1.25em;
 $text-size-1: 1em;
 $text-size-0: 0.8em;
 
+@mixin title-font {
+  font-style: normal;
+  font-weight: 400;
+  font-size: $text-size-4;
+}
+
 @mixin header-font {
   font-weight: 600;
   font-size: $text-size-2;
