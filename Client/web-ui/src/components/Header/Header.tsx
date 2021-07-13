@@ -1,12 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
-import Style from "./Header.module.scss";
-import Logo from "./LogoVector.svg";
 import { HeaderButton } from "../Buttons/HeaderButton";
 import Menu from "../Menu/Menu";
 
+import Style from "./Header.module.scss";
+import Logo from "./LogoVector.svg";
+
 const Header = (): JSX.Element => {
+  const match = useRouteMatch();
+
   return (
     <nav className={Style.Header}>
       <div className={Style.Menu}>
@@ -32,7 +35,7 @@ const Header = (): JSX.Element => {
           </Link>
         </li>
         <li>
-          <Link to="/">
+          <Link to="/airports">
             <HeaderButton ButtonText={"AIRPORT EDIT"} />
           </Link>
         </li>

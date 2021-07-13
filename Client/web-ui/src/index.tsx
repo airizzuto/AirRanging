@@ -7,9 +7,9 @@ import App from "./App";
 import "./index.scss";
 
 ReactDOM.render(
-  <Router >
+  <Router>
     <App />
-  </Router >,
+  </Router>,
   document.getElementById("root")
 );
 

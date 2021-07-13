@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 
 import "./App.scss";
 import AircraftEditView from "./components/AircraftEditView/AircraftEditView";
@@ -8,13 +8,19 @@ import Header from "./components/Header/Header";
 import MapView from "./components/MapView/MapView";
 
 const App = (): JSX.Element => {
+  const aircrafts = null;
+
   return (
     <div className={"App"}>
       <Header />
   
       <Switch>
-          <Route path="/" component={MapView} />
-          <Route path="aircrafts" component={AircraftEditView} />
+          <Route exact path="/">
+            <MapView/>
+          </Route>
+          <Route exact path="/aircrafts">
+            <AircraftEditView />
+          </Route>
       </Switch>
 
       <Footer />
