@@ -1,0 +1,24 @@
+@import "../../styles/globals.scss";
+
+.Table {
+  width: 100%;
+
+  table {
+
+  }
+
+  thead {
+  }
+
+  th {
+    color: black;
+    border-bottom: solid 3px black;
+    font-weight: 400;
+    font-size: $text-size-2;
+  }
+
+  td {
+    text-align: center;
+    padding: 10px;
+  }
+}
