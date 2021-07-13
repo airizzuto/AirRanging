@@ -12,7 +12,7 @@
   min-height: 90px;
 
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 4fr 1fr;
   grid-template-areas: "logo nav user";
   row-gap: 1vw;
 
