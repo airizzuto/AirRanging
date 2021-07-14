@@ -24,12 +24,6 @@ const Header = (): JSX.Element => {
 
       <ul className={Style.HeaderNav}>
         <li>
-          <HeaderButton ButtonText={"AIRCRAFT SELECT"} />
-        </li>
-        <li>
-          <HeaderButton ButtonText={"PLANNING"} />
-        </li>
-        <li>
           <Link to="/aircrafts">
             <HeaderButton ButtonText={"AIRCRAFT EDIT"} />
           </Link>
