@@ -3,6 +3,7 @@ import { GoogleMap, InfoWindow, useJsApiLoader  } from "@react-google-maps/api";
 
 import Style from "./MapView.module.scss"
 import { containerStyle, center, options } from "../../settings/google-maps/settings";
+import PlanningModal from "../Modals/PlanningModal";
 
 const MapView = (): JSX.Element => {
 
@@ -23,24 +24,29 @@ const MapView = (): JSX.Element => {
     mapRef.current = null;
   }
 
-  if (!isLoaded) { //TODO: loading spinner
-    return <div>Map loading...</div>
+  if (!isLoaded) { //FIXME: loading spinner
+    return (
+      <div className={Style.Loading}></div>
+    )
   }
 
   return(
-    // <div className={Style.MapView} id="map">
-    //   <GoogleMap 
-    //     mapContainerStyle={containerStyle}
-    //     options={options as google.maps.MapOptions}
-    //     center={center}
-    //     zoom={5}
-    //     onLoad={onLoad}
-    //     onUnmount={onUnmount}
-    //   />
-    // </div>
-
-    <div>
-      
+    <div className={Style.MapView} id="mainview">
+      <div className={Style.Loading}>
+      </div>
+      <div className={Style.Map}>
+        {/* <GoogleMap id="map"
+          mapContainerStyle={containerStyle}
+          options={options as google.maps.MapOptions}
+          center={center}
+          zoom={5}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+        /> */}
+      </div>
+      <div className={Style.PlanningModal}>
+        <PlanningModal />
+      </div>
     </div>
   )
 }
