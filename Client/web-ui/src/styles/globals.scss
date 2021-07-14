@@ -1,8 +1,8 @@
 
 $primary-color: white;
-$secondary-color: hsl(191, 100%, 47%);
+$secondary-color: hsl(191, 100%, 44%);
 $tertiary-color: hsl(39, 100%, 70%);
-$background-color: rgba(143, 143, 143, 0.60);
+$background-color: rgba(0, 0, 0, 0.5);
 
 $text-size-5: 2.44em;
 $text-size-4: 1.953em;
@@ -33,17 +33,17 @@ $text-size-0: 0.8em;
 }
 
 @mixin blurring {
-  background-color: rgba(51, 51, 51, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: saturate(180%) blur(4px);
   -webkit-backdrop-filter: saturate(180%) blur(4px);
 }
 
 @mixin drop-shadow {
-  filter: drop-shadow(2px 3px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.70));
 }
 
 @mixin text-shadow {
-  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.75);
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.70);
 }
 
 @mixin hyperlink-text {
