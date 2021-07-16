@@ -9,7 +9,7 @@ interface Props {
 
 const ModalTab = ({label, handleTabClick}: Props): JSX.Element => {
   return (
-      <button onClick={handleTabClick} className={Style.Tabs}>
+      <button onClick={handleTabClick} className={Style.Tab}>
         {label}
         <div className={Style.Arrow}>&#9658;</div>
       </button>

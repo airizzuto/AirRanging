@@ -1,7 +1,7 @@
 
 @import "../../styles/globals.scss";
 
-.Tabs {
+.Tab {
   @include blurring;
   @include drop-shadow;
 
@@ -11,7 +11,9 @@
   margin: 2vh 0;
   display: grid;
   grid-template-columns: 3fr 1fr;
-  grid-template-areas: "label arrow";
+  grid-template-areas: "tab-label tab-arrow";
+
+  z-index: 3;
 }
 
 button {
@@ -22,19 +24,18 @@ button {
   border-radius: 0 10px 10px 0;
 
   color: $primary-color;
-  grid-area: label;
+  grid-area: tab-label;
 
   padding: 15px 5px;
   border-style: none;
-
-  
 }
 
 .Arrow {
   @include button-font;
   @include text-shadow;
 
-  grid-area: arrow;
+  grid-area: tab-arrow;
   color: $primary-color;
   padding-left: 10px;
+  place-self: center;
 }

@@ -4,15 +4,23 @@
   @include blurring;
 
   display: grid;
+  grid-template-rows: 1fr 9fr;
+  grid-template-areas: "modal-header" "modal-content";
   position: fixed;
   margin: 15px;
-  
-  max-width: 30vw;
-  max-height: 80vh;
 
-  height: fit-content;
-  width: fit-content;
+  max-width: 40%;
+  max-height: 50%h;
 
+  .ModalHeader {
+    grid-area: modal-header;
+  }
+
+  .ModalContent {
+    grid-area: modal-content;
+  }
+
+  z-index: 3;
 }
 
 .display-block {
