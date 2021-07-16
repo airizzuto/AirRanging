@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { HeaderButton } from "../Buttons/HeaderButton";
 import Menu from "../Menu/Menu";
@@ -8,7 +8,6 @@ import Style from "./Header.module.scss";
 import Logo from "./LogoVector.svg";
 
 const Header = (): JSX.Element => {
-  const match = useRouteMatch();
 
   return (
     <nav className={Style.Header}>
