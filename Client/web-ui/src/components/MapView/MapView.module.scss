@@ -1,30 +1,38 @@
 @import "../../styles/globals.scss";
-@import "../../styles/_spinner.scss";
 
 .MapView {
+  display: grid;
+  
   grid-area: 1 / 1 / 3 / end;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 7fr min-content;
+  grid-template-areas: 
+    "header header"
+    "tabs ."
+    "info info";
 
   height: 100%;
   width: 100%;
 
   z-index: 1;
 
-  .Map {
-    height: 100%;
-
-    z-index: 2;
-  }
-
-  .PlanningModal {
-    grid-area: 2 / 1 / 3 / 2;
-
+  .ModalTabs {
+    grid-area: tabs;
+    grid-template-rows: auto;
+    row-gap: 10vh;
     z-index: 3;
   }
 
-  .Loading {
-    @include spinner;
-    place-self: center;
-    place-content: center;
-    place-items: center;
+  .Modals {
+    margin: 30px;
+    grid-area: 2 / 1 / 3 / end;
+    z-index: 4;
+  }
+
+  .InfoFooter {
+    @include blurring;
+    max-height: 15px;
+    grid-area: info;
+    z-index: 4;
   }
 }

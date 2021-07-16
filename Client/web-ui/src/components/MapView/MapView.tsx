@@ -1,51 +1,60 @@
 import React from "react";
-import { GoogleMap, InfoWindow, useJsApiLoader  } from "@react-google-maps/api";
 
 import Style from "./MapView.module.scss"
-import { containerStyle, center, options } from "../../settings/google-maps/settings";
-import PlanningModal from "../Modals/PlanningModal";
+import ModalTab from "./ModalTab";
+import Modal from "../Modals/Modal";
 
 const MapView = (): JSX.Element => {
+  const [displayPlanningModal, setDisplayPlanningModal] = React.useState(true);
+  const [displayAircraftsModal, setDisplayAircraftsModal] = React.useState(false);
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY!
-  })
-
-  // Save map in ref if we want to access the map
-  const mapRef = React.useRef<google.maps.Map | null>(null);
-
-  const onLoad = (map: google.maps.Map): void => {
-    mapRef.current = map;
+  const handleModalDisplay = (
+    setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
+    display: boolean
+  ) => {
+    setDisplayModal(display ? false : true);
   }
 
-  const onUnmount = (): void => {
-    mapRef.current = null;
-  }
-
-  if (!isLoaded) { //FIXME: loading spinner
-    return (
-      <div className={Style.Loading}></div>
-    )
+  const handleModalClose = (
+    setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    setDisplayModal(false);
   }
 
   return(
     <div className={Style.MapView} id="mainview">
-      <div className={Style.Loading}>
+      <div className={Style.ModalTabs}>
+        <ModalTab
+          label={"Planning"}
+          handleTabClick={() => handleModalDisplay(
+            setDisplayPlanningModal, displayPlanningModal
+          )}
+        />
+        <ModalTab
+          label={"Aircrafts"}
+          handleTabClick={() => handleModalDisplay(
+            setDisplayAircraftsModal, displayAircraftsModal
+          )} 
+        />
+        
       </div>
-      <div className={Style.Map}>
-        {/* <GoogleMap id="map"
-          mapContainerStyle={containerStyle}
-          options={options as google.maps.MapOptions}
-          center={center}
-          zoom={5}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-        /> */}
-      </div>
-      <div className={Style.PlanningModal}>
-        <PlanningModal />
+      
+      <div className={Style.Modals}>
+        <Modal 
+          show={displayPlanningModal}
+          label="Planning"
+          handleClose={() => handleModalClose(setDisplayPlanningModal)} 
+          children={
+            <div>PLANNING PLACEHOLDER</div>
+          }
+        />
+        <Modal 
+          show={displayPlanningModal}
+          label="Aircrafts"
+          handleClose={() => handleModalClose(setDisplayAircraftsModal)} 
+          children={
+            <div>AIRCRAFTS PLACEHOLDER</div>
+          }/>
       </div>
     </div>
   )
