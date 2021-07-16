@@ -53,3 +53,9 @@ $text-size-0: 0.8em;
   }
 }
 
+@mixin button-behavior {
+  text-decoration: none;
+  :hover {
+    color: $tertiary-color;
+  }
+}
