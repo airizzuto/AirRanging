@@ -1,0 +1,39 @@
+
+@import "../../styles/globals.scss";
+
+.Tabs {
+  @include blurring;
+  @include drop-shadow;
+
+  margin: 2vh 0;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-areas: "label arrow";
+}
+
+button {
+  @include button-font;
+  @include text-shadow;
+  @include button-behavior;
+
+  border-radius: 0 10px 10px 0;
+
+  max-width: 160px;
+  max-height: 50px;
+
+  color: $primary-color;
+  grid-area: label;
+
+  padding: 15px 5px;
+  border-style: none;
+
+  .Arrow {
+    @include button-font;
+    @include text-shadow;
+  
+    grid-area: arrow;
+    color: $primary-color;
+    padding-left: 10px;
+  }
+}
+
