@@ -2,7 +2,7 @@ import React from "react";
 
 import ExitButton from "../Buttons/ExitButton";
 
-import "./Modal.module.scss";
+import Style from "./Modal.module.scss";
 
 interface Props {
   label: string,
@@ -11,12 +11,13 @@ interface Props {
   children: JSX.Element
 }
 
+
 const Modal = ({ label, handleClose, show, children }: Props): JSX.Element => {
-  const showHideClassName = show ? "modal display-block" : "modal display-none";
+  const showHideClassName = show ? {display: "block"} : {display: "none"};
 
   return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
+    <div className={Style.Modal} style={showHideClassName}>
+      <section className={Style.main}>
         <ExitButton handleClick={handleClose}/>
         <h1>{label}</h1>
         {children}

@@ -5,19 +5,21 @@ import ModalTab from "./ModalTab";
 import Modal from "../Modals/Modal";
 
 const MapView = (): JSX.Element => {
-  const [displayPlanningModal, setDisplayPlanningModal] = React.useState(true);
+  const [displayPlanningModal, setDisplayPlanningModal] = React.useState(false);
   const [displayAircraftsModal, setDisplayAircraftsModal] = React.useState(false);
 
   const handleModalDisplay = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
     display: boolean
   ) => {
+    console.log("Tab modal clicked");
     setDisplayModal(display ? false : true);
   }
 
   const handleModalClose = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
+    console.log("Close modal button clicked");
     setDisplayModal(false);
   }
 
@@ -49,12 +51,16 @@ const MapView = (): JSX.Element => {
           }
         />
         <Modal 
-          show={displayPlanningModal}
+          show={displayAircraftsModal}
           label="Aircrafts"
           handleClose={() => handleModalClose(setDisplayAircraftsModal)} 
           children={
             <div>AIRCRAFTS PLACEHOLDER</div>
           }/>
+      </div>
+
+      <div className={Style.InfoFooter}>
+        INFO PLACEHOLDER
       </div>
     </div>
   )

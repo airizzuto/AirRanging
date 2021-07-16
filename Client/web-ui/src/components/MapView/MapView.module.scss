@@ -3,7 +3,7 @@
 .MapView {
   display: grid;
   
-  grid-area: 1 / 1 / 3 / end;
+  grid-area: 2 / 1 / 3 / end;
   grid-template-columns: 1fr 3fr;
   grid-template-rows: 1fr 7fr min-content;
   grid-template-areas: 
@@ -31,8 +31,12 @@
 
   .InfoFooter {
     @include blurring;
-    max-height: 15px;
     grid-area: info;
+
+    max-height: 15px;
+
+    text-align: center;
+
     z-index: 4;
   }
 }
