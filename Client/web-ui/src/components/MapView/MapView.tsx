@@ -1,10 +1,13 @@
 import React from "react";
 
 import Style from "./MapView.module.scss"
+
+import Map from "./Map";
 import ModalTab from "./ModalTab";
 import Modal from "../Modals/Modal";
 
 const MapView = (): JSX.Element => {
+  const [isModalActive, setIsModalActive] = React.useState(false); // TODO
   const [displayPlanningModal, setDisplayPlanningModal] = React.useState(false);
   const [displayAircraftsModal, setDisplayAircraftsModal] = React.useState(false);
 
@@ -24,7 +27,12 @@ const MapView = (): JSX.Element => {
   }
 
   return(
-    <div className={Style.MapView} id="mainview">
+    <div className={Style.MapView} id="mapview">
+            
+      {/*<div className={Style.Map}>
+        <Map />
+      </div>*/}
+
       <div className={Style.ModalTabs}>
         <ModalTab
           label={"Planning"}
@@ -38,9 +46,9 @@ const MapView = (): JSX.Element => {
             setDisplayAircraftsModal, displayAircraftsModal
           )} 
         />
-        
       </div>
-      
+
+
       <div className={Style.Modals}>
         <Modal 
           show={displayPlanningModal}

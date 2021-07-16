@@ -3,12 +3,12 @@
 .MapView {
   display: grid;
   
-  grid-area: 2 / 1 / 3 / end;
+  grid-area: 1 / 1 / 3 / end;
   grid-template-columns: 1fr 3fr;
   grid-template-rows: 1fr 7fr min-content;
   grid-template-areas: 
     "header header"
-    "tabs ."
+    "main-content main-content"
     "info info";
 
   height: 100%;
@@ -16,17 +16,21 @@
 
   z-index: 1;
 
+
+  .Map {
+    grid-area: 1 / 1 / end / end;
+    z-index: 1
+  }
+
   .ModalTabs {
-    grid-area: tabs;
     grid-template-rows: auto;
     row-gap: 10vh;
-    z-index: 3;
+    z-index: 2;
   }
 
   .Modals {
     margin: 30px;
-    grid-area: 2 / 1 / 3 / end;
-    z-index: 4;
+    grid-area: main-content;
   }
 
   .InfoFooter {
