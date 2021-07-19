@@ -15,14 +15,12 @@ const MapView = (): JSX.Element => {
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
     display: boolean
   ) => {
-    console.log("Tab modal clicked");
     setDisplayModal(display ? false : true);
   }
 
   const handleModalClose = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    console.log("Close modal button clicked");
     setDisplayModal(false);
   }
 
@@ -30,7 +28,7 @@ const MapView = (): JSX.Element => {
     <div className={Style.MapView} id="mapview">
             
       <div className={Style.Map}>
-        {/* <Map /> */}
+        {/*<Map />*/}
       </div>
 
       <div className={Style.ModalTabs}>
@@ -56,6 +54,8 @@ const MapView = (): JSX.Element => {
           handleClose={() => handleModalClose(setDisplayPlanningModal)} 
           children={
             <div>PLANNING PLACEHOLDER</div>
+
+            /*TODO: Form */
           }
         />
         <Modal 
