@@ -4,43 +4,42 @@
   display: grid;
   
   grid-area: 1 / 1 / 3 / end;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr 7fr min-content;
   grid-template-areas: 
-    "header header"
-    "main-content main-content"
-    "info info";
+    "header"
+    "main-content"
+    "info";
 
   height: 100%;
   width: 100%;
 
   z-index: 1;
+}
 
+.Map {
+  grid-area: 1 / 1 / end / end;
+  z-index: 1;
+}
 
-  .Map {
-    grid-area: 1 / 1 / end / end;
-    z-index: 1
-  }
+.ModalTabs {
+  grid-area: main-content;
+  position: relative;
+  grid-auto-rows: auto;
+  z-index: 2;
+}
 
-  .ModalTabs {
-    grid-template-rows: auto;
-    row-gap: 10vh;
-    z-index: 2;
-  }
+.Modals {
+  grid-area: main-content;
+}
 
-  .Modals {
-    margin: 30px;
-    grid-area: main-content;
-  }
+.InfoFooter {
+  @include blurring;
+  @include info-font;
+  @include text-shadow;
 
-  .InfoFooter {
-    @include blurring;
-    grid-area: info;
+  grid-area: info;
+  color: $primary-color;
 
-    max-height: 15px;
-
-    text-align: center;
-
-    z-index: 4;
-  }
+  z-index: 4;
 }

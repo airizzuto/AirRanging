@@ -2,25 +2,32 @@
 
 .Modal {
   @include blurring;
+  position: fixed;
 
   display: grid;
   grid-template-rows: 1fr 9fr;
   grid-template-areas: "modal-header" "modal-content";
-  position: fixed;
-  margin: 15px;
+  padding: 1rem 1rem;
+  border-radius: 10px;
 
-  max-width: 40%;
-  max-height: 50%h;
+  z-index: 3;
 
   .ModalHeader {
+    display: grid;
     grid-area: modal-header;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: none;
+    grid-template-areas: "modal-title modal-exit";
+
+    .ModalTitle {
+      grid-area: modal-title;
+    }
   }
 
   .ModalContent {
+    display: grid;
     grid-area: modal-content;
   }
-
-  z-index: 3;
 }
 
 .display-block {

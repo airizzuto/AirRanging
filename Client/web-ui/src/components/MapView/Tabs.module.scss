@@ -4,38 +4,32 @@
 .Tab {
   @include blurring;
   @include drop-shadow;
-
-  max-width: 160px;
-  max-height: 50px;
-
-  margin: 2vh 0;
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-areas: "tab-label tab-arrow";
-
-  z-index: 3;
-}
-
-button {
   @include button-font;
   @include text-shadow;
-  @include button-behavior;
 
   border-radius: 0 10px 10px 0;
 
   color: $primary-color;
-  grid-area: tab-label;
 
   padding: 15px 5px;
+  margin: 3vh 0;
   border-style: none;
+
+  min-width: 140px;
+  max-height: 50px;
+
+  display: grid;
+
+  grid-template-columns: 3fr 1fr;
+  grid-template-areas: "tab-label tab-arrow";
+
+  align-content: center;
+
+  .Arrow {
+    align-self: center;
+  }
 }
 
-.Arrow {
-  @include button-font;
-  @include text-shadow;
-
-  grid-area: tab-arrow;
-  color: $primary-color;
-  padding-left: 10px;
-  place-self: center;
+.Tab:hover {
+  color: $tertiary-color;
 }

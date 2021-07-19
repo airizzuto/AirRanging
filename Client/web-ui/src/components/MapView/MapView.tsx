@@ -1,6 +1,6 @@
 import React from "react";
 
-import Style from "./MapView.module.scss"
+import Style from "./MapView.module.scss";
 
 import Map from "./Map";
 import ModalTab from "./ModalTab";
@@ -29,9 +29,9 @@ const MapView = (): JSX.Element => {
   return(
     <div className={Style.MapView} id="mapview">
             
-      {/*<div className={Style.Map}>
-        <Map />
-      </div>*/}
+      <div className={Style.Map}>
+        {/* <Map /> */}
+      </div>
 
       <div className={Style.ModalTabs}>
         <ModalTab
@@ -40,6 +40,7 @@ const MapView = (): JSX.Element => {
             setDisplayPlanningModal, displayPlanningModal
           )}
         />
+
         <ModalTab
           label={"Aircrafts"}
           handleTabClick={() => handleModalDisplay(
@@ -47,7 +48,6 @@ const MapView = (): JSX.Element => {
           )} 
         />
       </div>
-
 
       <div className={Style.Modals}>
         <Modal 
