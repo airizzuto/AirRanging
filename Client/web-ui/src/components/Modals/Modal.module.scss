@@ -2,13 +2,18 @@
 
 .Modal {
   @include blurring;
+  @include text-shadow;
+  
   position: fixed;
+
+  color: $primary-color;
 
   display: grid;
   grid-template-rows: 1fr 9fr;
   grid-template-areas: "modal-header" "modal-content";
-  padding: 1rem 1rem;
   border-radius: 10px;
+
+  padding: 1rem 1rem;
 
   z-index: 3;
 
@@ -20,13 +25,30 @@
     grid-template-areas: "modal-title modal-exit";
 
     .ModalTitle {
+      @include title-font;
       grid-area: modal-title;
+      justify-self: left;
+    }
+
+    button {
+      grid-area: modal-exit;
     }
   }
 
+  hr {
+    @include drop-shadow-strong;
+    margin-top: 0vh;
+    margin-bottom: 3vh;
+    border-top: 2px solid $primary-color;
+    border-radius: 2px;
+  }
+
   .ModalContent {
+    @include main-font;
+
     display: grid;
     grid-area: modal-content;
+
   }
 }
 
