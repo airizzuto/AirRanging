@@ -2,6 +2,7 @@ import React from 'react'
 import Style from "./Map.module.scss"
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { containerStyle, options, center } from '../../settings/google-maps/settings';
+import Spinner from "../../styles/_spinner.module.scss";
 
 const Map = (): JSX.Element => {
   const { isLoaded } = useJsApiLoader({
@@ -21,9 +22,10 @@ const Map = (): JSX.Element => {
     mapRef.current = null;
   }
 
-  if (!isLoaded) { //FIXME: loading spinner
+  if (!isLoaded) { //FIXME: spinner position
     return (
-      <div className={Style.Loading}></div>
+      <div className={Spinner.spinner}>
+      </div>
     )
   }
 

@@ -28,7 +28,7 @@ const MapView = (): JSX.Element => {
     <div className={Style.MapView} id="mapview">
             
       <div className={Style.Map}>
-        {/*<Map />*/}
+        <Map />
       </div>
 
       <div className={Style.ModalTabs}>

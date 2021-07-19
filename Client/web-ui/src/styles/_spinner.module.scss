@@ -1,0 +1,19 @@
+@import "../styles/globals.scss";
+
+.spinner {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid $secondary-color;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
