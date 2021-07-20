@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { HeaderButton } from "../Buttons/HeaderButton";
+import { HeaderButton } from "./HeaderButton";
 import Menu from "../Menu/Menu";
 
 import Style from "./Header.module.scss";
