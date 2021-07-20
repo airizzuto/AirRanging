@@ -15,7 +15,13 @@ const MapView = (): JSX.Element => {
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
     display: boolean
   ) => {
+    if (isModalActive) {
+      setDisplayPlanningModal(false);
+      setDisplayAircraftsModal(false);
+    }
+
     setDisplayModal(display ? false : true);
+    setIsModalActive(true);
   }
 
   const handleModalClose = (
