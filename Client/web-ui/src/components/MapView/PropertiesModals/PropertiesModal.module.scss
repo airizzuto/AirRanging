@@ -1,4 +1,4 @@
-@import "../../styles/globals.scss";
+@import "../../../styles/globals.scss";
 
 .Modal {
   @include blurring;
@@ -21,8 +21,8 @@
     display: grid;
     grid-area: modal-header;
     grid-template-columns: 3fr 1fr;
-    grid-template-rows: none;
     grid-template-areas: "modal-title modal-exit";
+    height: fit-content;
 
     .ModalTitle {
       @include title-font;
@@ -30,8 +30,9 @@
       justify-self: left;
     }
 
-    button {
+    .CloseButton {
       grid-area: modal-exit;
+      place-self: center;
     }
   }
 

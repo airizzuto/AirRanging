@@ -43,9 +43,9 @@ $text-size-0: 0.8rem;
 }
 
 @mixin blurring {
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: saturate(180%) blur(4px);
-  -webkit-backdrop-filter: saturate(180%) blur(4px);
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: saturate(180%) blur(2px);
+  -webkit-backdrop-filter: saturate(180%) blur(2px);
 }
 
 @mixin drop-shadow {

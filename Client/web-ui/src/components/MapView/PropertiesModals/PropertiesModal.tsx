@@ -1,9 +1,9 @@
 import React from "react";
 import Draggable from "react-draggable";
 
-import ExitButton from "../Buttons/ExitButton";
+import ExitButton from "../../Buttons/ExitButton";
 
-import Style from "./Modal.module.scss";
+import Style from "./PropertiesModal.module.scss";
 
 interface Props {
   label: string,
@@ -23,7 +23,9 @@ const Modal = ({ label, handleClose, show, children }: Props): JSX.Element => {
       <div className={Style.Modal} style={showHideClassName}>
         <div className={Style.ModalHeader}>
           <h1 className={Style.ModalTitle}>{label}</h1>
-          <ExitButton handleClick={handleClose}/>
+          <div className={Style.CloseButton}>
+            <ExitButton handleClick={handleClose} />
+          </div>
         </div>
         <hr />
         <div className={Style.ModalContent}>

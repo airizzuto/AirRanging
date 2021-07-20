@@ -4,7 +4,7 @@ import Style from "./MapView.module.scss";
 
 import Map from "./Map";
 import ModalTab from "./ModalTab";
-import Modal from "../Modals/Modal";
+import Modal from "./PropertiesModals/PropertiesModal";
 
 const MapView = (): JSX.Element => {
   const [isModalActive, setIsModalActive] = React.useState(false); // TODO
@@ -28,19 +28,19 @@ const MapView = (): JSX.Element => {
     <div className={Style.MapView} id="mapview">
             
       <div className={Style.Map}>
-        <Map />
+        {/* <Map /> */}
       </div>
 
       <div className={Style.ModalTabs}>
         <ModalTab
-          label={"Planning"}
+          label={"Plan"}
           handleTabClick={() => handleModalDisplay(
             setDisplayPlanningModal, displayPlanningModal
           )}
         />
 
         <ModalTab
-          label={"Aircrafts"}
+          label={"Acft"}
           handleTabClick={() => handleModalDisplay(
             setDisplayAircraftsModal, displayAircraftsModal
           )} 

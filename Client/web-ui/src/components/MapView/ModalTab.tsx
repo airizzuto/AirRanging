@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Style from "./Tabs.module.scss";
+import Style from "./ModalTab.module.scss";
 
 interface Props {
   label: string,

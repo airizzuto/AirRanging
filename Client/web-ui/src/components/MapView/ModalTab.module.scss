@@ -3,7 +3,6 @@
 
 .Tab {
   @include blurring;
-  @include drop-shadow;
   @include button-font;
   @include text-shadow;
 
@@ -14,8 +13,8 @@
   padding: 15px 5px;
   border-style: none;
 
-  min-width: 140px;
-  max-height: 50px;
+  min-width: 100px;
+  max-height: 40px;
 
   display: grid;
 
@@ -31,4 +30,5 @@
 
 .Tab:hover {
   color: $tertiary-color;
+  cursor: pointer;
 }
