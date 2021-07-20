@@ -1,0 +1,9 @@
+@import "../../styles/globals.scss";
+
+.Button {
+  @include text-shadow;
+};
+
+a:hover {
+  cursor: pointer;
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import Style from "./Button.module.scss"
 
 interface Props {
   buttonText: string,
@@ -7,8 +8,8 @@ interface Props {
 
 export default function Button({ buttonText, handleClick }: Props): JSX.Element {
   return (
-    <button onClick={handleClick}>
+    <a onClick={handleClick} className={Style.Button}>
       {buttonText}
-    </button>
+    </a>
   );
 }
