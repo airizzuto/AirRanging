@@ -1,6 +1,7 @@
 import React from "react";
 
 import FixedModal from "../Modals/FixedModal";
+import Style from "./Login.module.scss";
 
 interface Props {
   showLogin: boolean,
@@ -13,19 +14,18 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
   return (
     <FixedModal
       label="User Login"
-      showModal={showLogin}
+      visible={showLogin}
       handleModalClose={handleClose}
     >
-      <form>
-        <ul>
-          <li>
-            <label>User email</label>
-            <input></input>
-          </li>
-          <li>
-            <label>Password</label>
-          </li>
-        </ul>
+      <form className={Style.LoginForm}>
+        <div>
+          <label>User email </label>
+          <input></input>
+        </div>
+        <div>
+          <label>Password </label>
+          <input></input>
+        </div>
       </form>
     </FixedModal>
   );

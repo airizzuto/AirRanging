@@ -6,15 +6,15 @@ import Style from "./FixedModal.module.scss";
 
 interface Props {
   label: string,
-  showModal: boolean,
+  visible: boolean,
   handleModalClose: () => void,
   children: JSX.Element
 }
 
 export default function Modal({
-  label, showModal, handleModalClose, children
+  label, visible, handleModalClose, children
 }: Props): JSX.Element {
-  const showHideClassName = showModal ? { display: "block" } : { display: "none" };
+  const showHideClassName = visible ? { display: "block" } : { display: "none" };
 
   return (
     <div className={Style.Modal} style={showHideClassName}>

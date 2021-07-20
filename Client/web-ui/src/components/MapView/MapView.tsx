@@ -49,7 +49,7 @@ const MapView = (): JSX.Element => {
           label={"Acft"}
           handleTabClick={() => handleModalDisplay(
             setDisplayAircraftsModal, displayAircraftsModal
-          )} 
+          )}
         />
       </div>
 
