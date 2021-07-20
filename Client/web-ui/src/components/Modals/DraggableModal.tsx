@@ -1,9 +1,9 @@
 import React from "react";
 import Draggable from "react-draggable";
 
-import ExitButton from "../../Buttons/ExitButton";
+import ExitButton from "../Buttons/ExitButton";
 
-import Style from "./PropertiesModal.module.scss";
+import Style from "./DraggableModal.module.scss";
 
 interface Props {
   label: string,

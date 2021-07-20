@@ -1,0 +1,78 @@
+@import "../../styles/globals.scss";
+
+.Modal {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+
+  background-color: hsla(0, 0%, 0%, 0.6);
+}
+
+.ModalMain {
+  @include blurring;
+  @include text-shadow;
+
+  position:fixed;
+
+  color: $primary-color;
+
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+
+  display: grid;
+  grid-template-rows: 1fr 9fr;
+  grid-template-areas: "modal-header" "modal-content";
+  border-radius: 10px;
+
+  padding: 1rem 1rem;
+
+  z-index: 3;
+
+  .ModalHeader {
+    display: grid;
+    grid-area: modal-header;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: "modal-title modal-exit";
+    height: fit-content;
+
+    .ModalTitle {
+      @include title-font;
+      grid-area: modal-title;
+      justify-self: left;
+    }
+
+    .CloseButton {
+      grid-area: modal-exit;
+      place-self: center;
+    }
+  }
+
+  hr {
+    @include drop-shadow-strong;
+    margin-top: 0vh;
+    margin-bottom: 3vh;
+    border-top: 2px solid $primary-color;
+    border-radius: 2px;
+  }
+
+  .ModalContent {
+    @include main-font;
+
+    display: grid;
+    grid-area: modal-content;
+
+  }
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}

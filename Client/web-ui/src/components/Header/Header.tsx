@@ -1,13 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { HeaderButton } from "./HeaderButton";
+import HeaderButton from "./HeaderButton";
+import Button from "../Buttons/Button";
 import Menu from "../Menu/Menu";
 
 import Style from "./Header.module.scss";
 import Logo from "./LogoVector.svg";
 
-const Header = (): JSX.Element => {
+interface Props {
+  loginHandler: () => void
+}
+
+const Header = ({loginHandler}: Props): JSX.Element => {
 
   return (
     <nav className={Style.Header}>
@@ -42,11 +47,10 @@ const Header = (): JSX.Element => {
             </Link>
           </li>
           <li>
-            <a href="#">LOG IN</a>
+            <Button buttonText="Login" handleClick={loginHandler}/>
           </li>
         </ul>
       </div>
-      
     </nav>
   );
 };

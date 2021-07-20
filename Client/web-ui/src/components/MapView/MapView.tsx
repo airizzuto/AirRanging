@@ -4,7 +4,7 @@ import Style from "./MapView.module.scss";
 
 import Map from "./Map";
 import ModalTab from "./ModalTab";
-import Modal from "./PropertiesModals/PropertiesModal";
+import DraggableModal from "../Modals/DraggableModal";
 
 const MapView = (): JSX.Element => {
   const [isModalActive, setIsModalActive] = React.useState(false); // TODO
@@ -54,23 +54,20 @@ const MapView = (): JSX.Element => {
       </div>
 
       <div className={Style.Modals}>
-        <Modal 
+        <DraggableModal 
           show={displayPlanningModal}
           label="Planning"
-          handleClose={() => handleModalClose(setDisplayPlanningModal)} 
-          children={
-            <div>PLANNING PLACEHOLDER</div>
-
-            /*TODO: Form */
-          }
-        />
-        <Modal 
+          handleClose={() => handleModalClose(setDisplayPlanningModal)}
+        >
+          <div>PLANNING PLACEHOLDER</div>
+        </DraggableModal>
+        <DraggableModal 
           show={displayAircraftsModal}
           label="Aircrafts"
-          handleClose={() => handleModalClose(setDisplayAircraftsModal)} 
-          children={
-            <div>AIRCRAFTS PLACEHOLDER</div>
-          }/>
+          handleClose={() => handleModalClose(setDisplayAircraftsModal)}
+        > 
+          <div>AIRCRAFTS PLACEHOLDER</div>
+        </DraggableModal>
       </div>
 
       <div className={Style.InfoFooter}>
