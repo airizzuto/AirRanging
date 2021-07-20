@@ -2,8 +2,10 @@
 
 .spinner {
   position: fixed;
-  top: 60%;
-  left: 50%;
+
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
 
   border: 10px solid #f3f3f3;
   border-top: 10px solid $secondary-color;

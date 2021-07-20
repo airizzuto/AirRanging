@@ -22,7 +22,7 @@ const Map = (): JSX.Element => {
     mapRef.current = null;
   }
 
-  if (!isLoaded) { //FIXME: spinner position
+  if (!isLoaded) {
     return (
       <div className={Spinner.spinner}>
       </div>
