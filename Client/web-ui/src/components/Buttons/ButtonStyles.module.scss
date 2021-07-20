@@ -1,0 +1,45 @@
+@import "../../styles/globals.scss";
+
+.PrimaryButton {
+  @include button-font;
+  @include drop-shadow;
+  @include text-shadow;
+
+  color: $primary-color;
+  background-color: $secondary-color;
+
+  text-align: center;
+  
+  height: max-content;
+  min-width: 10rem;
+  padding: 10px;
+
+  border-style: none;
+  border-radius: 10px;
+};
+
+.ExitButton {
+  @include drop-shadow;
+  @include button-behavior;
+
+  button {
+    @include button-font;
+    @include text-shadow;
+
+    color: $primary-color;
+    background-color: $secondary-color;
+
+    padding: 5px 10px;
+
+    border-style: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+  }
+};
+
+.Undecorated {
+  a:hover {
+    cursor: pointer;
+  }
+}

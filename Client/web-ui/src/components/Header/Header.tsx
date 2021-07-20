@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import HeaderButton from "./HeaderButton";
+import HeaderButton from "../Buttons/DecoratedButton";
 import Button from "../Buttons/Button";
 import Menu from "../Menu/Menu";
 
@@ -42,12 +42,12 @@ const Header = ({loginHandler}: Props): JSX.Element => {
       <div className={Style.HeaderAccount}>
         <ul>
           <li>
-            <Link to="/sign">
+            <Link to="/registration">
               SIGN IN
             </Link>
           </li>
           <li>
-            <Button buttonText="Login" handleClick={loginHandler}/>
+            <Button buttonText="LOGIN" handleClick={loginHandler}/>
           </li>
         </ul>
       </div>

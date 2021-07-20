@@ -1,15 +1,17 @@
 import React from 'react'
-import Style from "./Button.module.scss"
+import Style from "./ButtonStyles.module.scss"
 
 interface Props {
   buttonText: string,
-  handleClick: () => void
+  handleClick?: () => void
 }
 
 export default function Button({ buttonText, handleClick }: Props): JSX.Element {
   return (
-    <a onClick={handleClick} className={Style.Button}>
-      {buttonText}
-    </a>
+    <div className={Style.Undecorated}>
+      <a onClick={handleClick}>
+        {buttonText}
+      </a>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import Style from "./HeaderButton.module.scss";
+import Style from "../Buttons/ButtonStyles.module.scss";
 
 interface Props {
   ButtonText: string,
@@ -8,7 +8,7 @@ interface Props {
 
 export default function HeaderButton({ ButtonText }: Props): JSX.Element {
   return (
-    <div className={Style.HeaderButton}>
+    <div className={Style.PrimaryButton}>
       {ButtonText}
     </div>
   );
