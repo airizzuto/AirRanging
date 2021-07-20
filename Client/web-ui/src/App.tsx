@@ -28,7 +28,7 @@ const App = (): JSX.Element => {
     <div className={"App"}>
       <Header loginHandler={() => handleModalDisplay(setShowLogin, showLogin)} />
 
-      <Login showLogin={showLogin} handleClose={() => handleModalClose(setShowLogin)}/>
+      <Login showLogin={showLogin} handleClose={() => handleModalClose(setShowLogin)} />
 
       <Switch>
           <Route exact path="/">
@@ -36,6 +36,12 @@ const App = (): JSX.Element => {
           </Route>
           <Route exact path="/aircrafts">
             <AircraftEditView />
+          </Route>
+          <Route exact path="/airports">
+            {/* <AirportsEditView /> */}
+          </Route>
+          <Route exact path="/registration">
+            {/* <UserSignup /> */}
           </Route>
       </Switch>
 
