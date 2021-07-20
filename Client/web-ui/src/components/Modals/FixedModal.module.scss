@@ -9,16 +9,18 @@
   height: 100%;
   width: 100%;
 
-  background-color: hsla(0, 0%, 0%, 0.6);
+  background-color: hsla(0, 0%, 0%, 0.4);
+
+  z-index: 10;
 }
 
 .ModalMain {
-  @include blurring;
   @include text-shadow;
-
+  
   position:fixed;
-
+  
   color: $primary-color;
+  background-color: rgb(0, 0, 0);
 
   top:50%;
   left:50%;
@@ -31,7 +33,7 @@
 
   padding: 1rem 1rem;
 
-  z-index: 3;
+  z-index: 10;
 
   .ModalHeader {
     display: grid;
