@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="LogoVector.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 42.69614 8.4771594"
+   height="8.4771595mm"
+   width="42.69614mm">
+  <title
+     id="title875">Logo</title>
+  <defs
+     id="defs2">
+    <rect
+       id="rect835"
+       height="58.964287"
+       width="105.83333"
+       y="33.261906"
+       x="21.922619" />
+    <rect
+       x="21.922619"
+       y="33.261906"
+       width="105.83333"
+       height="58.964287"
+       id="rect835-1" />
+    <rect
+       x="21.922619"
+       y="33.261906"
+       width="105.83333"
+       height="58.964287"
+       id="rect848" />
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="1592"
+     inkscape:window-height="1017"
+     inkscape:window-width="1920"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="65.119548"
+     inkscape:cx="137.85708"
+     inkscape:zoom="2.8"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#666666"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Logo</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-22.738579,-37.186975)"
+     inkscape:label="Drop"
+     id="layer2"
+     inkscape:groupmode="layer">
+    <text
+       transform="translate(2.1096734,3.2283032)"
+       xml:space="preserve"
+       id="text833-7"
+       style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';white-space:pre;shape-inside:url(#rect835-1);fill:#000000;"><tspan
+         x="21.921875"
+         y="40.670055"><tspan
+           style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto, Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000">AirRanging</tspan></tspan></text>
+  </g>
+  <g
+     transform="translate(-22.738579,-37.186975)"
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <text
+       transform="translate(1.2466518,2.7680885)"
+       style="font-size:4.93889px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';white-space:pre;shape-inside:url(#rect835);fill:#ffffff;"
+       id="text833"
+       xml:space="preserve"><tspan
+         x="21.921875"
+         y="40.670055"><tspan
+           style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:8.46667px;font-family:Roboto;-inkscape-font-specification:'Roboto, Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff">AirRanging</tspan></tspan></text>
+  </g>
+</svg>

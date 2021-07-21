@@ -1,0 +1,78 @@
+@import "../../styles/globals.scss";
+
+.Modal {
+  @include blurring;
+  position: fixed;
+  display: grid;
+  place-items: center;
+  height: 100%;
+  width: 100%;
+
+  z-index: 12;
+
+  .ModalMain {
+    @include text-shadow;
+    @include drop-shadow-strong;
+
+    position: fixed;
+    color: $primary-color;
+    background-color: $background-color-solid;
+
+    max-height: 70%;
+    height: fit-content;
+    width: max-content;
+    padding: 0 1rem 1rem 1rem;
+
+    display: grid;
+    grid-template-rows: 1fr auto minmax(1fr, max-content);
+    grid-template-areas: "modal-header" "separator" "modal-content";
+
+    border-radius: 10px;
+
+    z-index: 13;
+
+    .ModalHeader {
+      display: grid;
+      grid-area: modal-header;
+      grid-template-columns: 3fr 1fr;
+      grid-template-areas: "modal-title modal-exit";
+
+      .ModalTitle {
+        @include title-font;
+        grid-area: modal-title;
+        place-self: left center;
+
+      }
+
+      .CloseButton {
+        grid-area: modal-exit;
+        place-self: center right;
+      }
+    }
+
+    .Separator {
+      @include drop-shadow-strong;
+      grid-area: separator;
+      width: 95%;
+      margin: 0 0 1rem 0;
+      border-top: 1px solid $primary-color;
+      border-radius: 2px;
+      place-self: center;
+    }
+
+    .ModalContent {
+      @include main-font;
+
+      display: grid;
+      grid-area: modal-content;
+    }
+  }
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}

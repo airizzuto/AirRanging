@@ -1,0 +1,38 @@
+@import "../../styles/globals.scss";
+@import "../Modals/FixedModal.module.scss";
+
+.LoginForm {
+  @include text-shadow;
+  @include button-behavior;
+
+  display: grid;
+  height: auto;
+  grid-auto-rows: 3rem;
+  row-gap: 0.5rem;
+
+  margin-top: 0.5rem;
+
+  .ForgotPass {
+    @include hyperlink-behavior;
+    align-self: center;
+    justify-self: center;
+    a {
+      font-size: $text-size-1;
+      color: $primary-color;
+    }
+  }
+}
+
+label {
+  display: grid;
+
+  place-self: center;
+  grid-template-columns: 1fr 2fr;
+  column-gap: 1rem;
+}
+
+input {
+  border: 3px solid $secondary-color;
+  border-radius: 3px;
+}
+

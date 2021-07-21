@@ -1,0 +1,107 @@
+@import "../../styles/globals.scss";
+@import "../Menu/Menu.module.scss";
+@import "../Buttons/ButtonStyles.module.scss";
+
+.Header {
+  @include blurring;
+  @include text-shadow;
+
+  grid-area: 1 / 1 / 2 / end;
+
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+  grid-template-areas: "logo nav user";
+  row-gap: 1rem;
+  z-index: 10;
+
+  .HeaderLogo {
+    max-height: 2rem;
+
+    grid-area: logo;
+
+    place-self: center;
+  }
+
+  .HeaderNav {
+    @include hyperlink-behavior;
+    grid-area: nav;
+    height: 100%;
+
+    display: grid;
+    grid-auto-columns: max-content;
+    grid-auto-flow: column;
+    grid-template-rows: none;
+    column-gap: 2rem;
+
+    align-self: center;
+    align-items: center;
+
+    margin: 0 3rem;
+
+    li {
+      max-width: max-content;
+    }
+  }
+
+  .HeaderAccount {
+    @include header-font;
+    @include hyperlink-behavior;
+
+    grid-area: user;
+    align-self: center;
+    justify-self: center;
+
+    ul {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 1rem;
+    }
+
+    a {
+      color: $primary-color;
+    }
+
+    li {
+      place-self: center;
+      min-width: max-content;
+    }
+  }
+
+  .MenuButton {
+    display: none;
+    grid-area: logo;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline;
+  }
+
+}
+
+@media screen and (max-width: 600px) {
+  .Header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "menu user";
+
+    .HeaderNav {
+      display: none;
+    }
+
+    .HeaderLogo {
+      display: none;
+    }
+  
+    .MenuButton {
+      display: flex;
+      content-visibility: visible;
+      grid-area: menu;
+    }
+  }
+}
