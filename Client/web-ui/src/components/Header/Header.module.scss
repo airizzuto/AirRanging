@@ -12,7 +12,7 @@
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
   grid-template-areas: "logo nav user";
-  row-gap: 1vw;
+  row-gap: 1rem;
   z-index: 10;
 
   .HeaderLogo {
@@ -30,11 +30,11 @@
     display: grid;
     grid-template-columns:repeat(4, 1fr);
     grid-template-rows: none;
-    column-gap: 3vw;
+    column-gap: 3rem;
 
     align-self: center;
 
-    margin: 0 3vw;
+    margin: 0 3rem;
 
     li {
       height: 100%;
@@ -53,7 +53,7 @@
     ul {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      column-gap: 1vw;
+      column-gap: 1rem;
     }
 
     a {

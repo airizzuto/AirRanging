@@ -6,7 +6,7 @@
   
   grid-area: 3 / 1 / end / end;
 
-  min-height: 18px;
+  min-height: 1.25rem;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -18,7 +18,7 @@
     @include text-shadow;
     color: $primary-color;
     grid-area: copyright;
-    padding: 0 1vw;
+    padding: 0 1rem;
 
     #faCopyright {
       filter: drop-shadow(1px 1px 1px #000000)
@@ -34,7 +34,7 @@
     justify-content: flex-end;
 
     a {
-      padding: 0 1vw;
+      padding: 0 1rem;
       color: $primary-color;
     }
   }
