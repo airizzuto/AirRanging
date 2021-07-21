@@ -32,11 +32,11 @@ const MapView = (): JSX.Element => {
 
   return(
     <div className={Style.MapView}>
-            
-      <div className={Style.Map} id="mapview">
-        {/* <Map /> */}
-      </div>
 
+      {/* Main Map View */}
+      {/* <Map /> */}
+
+      {/* Properties Modals Activation Tabs */}
       <div className={Style.ModalTabs}>
         <ModalTab
           label={"Plan"}
@@ -53,6 +53,7 @@ const MapView = (): JSX.Element => {
         />
       </div>
 
+      {/* Map View Properties Modals */}
       <DraggableModal 
         show={displayPlanningModal}
         label="Planning"
@@ -64,13 +65,15 @@ const MapView = (): JSX.Element => {
         show={displayAircraftsModal}
         label="Aircrafts"
         handleClose={() => handleModalClose(setDisplayAircraftsModal)}
-      > 
+      >
         <div>AIRCRAFTS PLACEHOLDER</div>
       </DraggableModal>
 
+      {/* Map Information Footer */}
       <div className={Style.InfoFooter}>
         INFO PLACEHOLDER
       </div>
+
     </div>
   );
 };
