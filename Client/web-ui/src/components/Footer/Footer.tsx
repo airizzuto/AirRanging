@@ -14,8 +14,12 @@ const Footer = (): JSX.Element => {
       </div>
 
       <div className={Style.Links}>
-        <a href="/">Help</a>
-        <a href="/">About</a>
+        <Link to="/help">
+          Help
+        </Link>
+        <Link to="/about">
+          About
+        </Link>
         <Link to="/contact">
           Contact
         </Link>
