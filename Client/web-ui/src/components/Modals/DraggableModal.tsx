@@ -17,16 +17,18 @@ const Modal = ({ label, handleClose, show, children }: Props): JSX.Element => {
 
   return (
     <Draggable
-      defaultPosition={{x: 200, y: 60}}
+      bounds="parent"
+      handle="#modalHeader"
+      defaultPosition={{x: 200, y: 50}}
     >
       <div className={Style.Modal} style={showHideClassName}>
-        <div className={Style.ModalHeader}>
+        <div className={Style.ModalHeader} id="modalHeader">
           <h1 className={Style.ModalTitle}>{label}</h1>
           <div className={Style.CloseButton}>
             <ExitButton handleClick={handleClose} />
           </div>
         </div>
-        <hr />
+        <hr className={Style.Separator}/>
         <div className={Style.ModalContent}>
           {children}
         </div>

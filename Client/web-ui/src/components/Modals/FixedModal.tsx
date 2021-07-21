@@ -1,7 +1,5 @@
 import React from "react";
-
 import useOnClickOutside from "../../hooks/useClickOutside";
-import DecoratedButton from "../Buttons/DecoratedButton";
 
 import ExitButton from "../Buttons/ExitButton";
 
@@ -37,10 +35,6 @@ export default function Modal({
 
         <div className={Style.ModalContent}>
           {children}
-        </div>
-
-        <div>
-          <DecoratedButton ButtonText="Accept" />
         </div>
       </div>
     </div>
