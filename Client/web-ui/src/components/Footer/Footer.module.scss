@@ -27,13 +27,15 @@
 
   .Links{
     @include text-shadow;
-    @include hyperlink-text;
+    @include hyperlink-behavior;
+
     grid-area: links;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 
     a {
+      text-decoration: none;
       padding: 0 1rem;
       color: $primary-color;
     }

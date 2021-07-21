@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-import HeaderButton from "../Buttons/DecoratedButton";
 import Button from "../Buttons/Button";
 import Menu from "../Menu/Menu";
 
 import Style from "./Header.module.scss";
+import ButtonStyle from "../Buttons/ButtonStyles.module.scss";
 import Logo from "./LogoVector.svg";
 
 interface Props {
@@ -27,13 +27,13 @@ const Header = ({loginHandler}: Props): JSX.Element => {
 
       <ul className={Style.HeaderNav}>
         <li>
-          <Link to="/aircrafts">
-            <HeaderButton ButtonText={"AIRCRAFT EDIT"} />
+          <Link to="/aircrafts" className={ButtonStyle.PrimaryButton}>
+            AIRCRAFT EDIT
           </Link>
         </li>
         <li>
-          <Link to="/airports">
-            <HeaderButton ButtonText={"AIRPORT EDIT"} />
+          <Link to="/airports" className={ButtonStyle.PrimaryButton}>
+            AIRPORT EDIT
           </Link>
         </li>
       </ul>

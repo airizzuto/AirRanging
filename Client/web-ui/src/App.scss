@@ -16,16 +16,7 @@
 
   grid-template-areas: "header main footer";
 
-  font-family: "Roboto";
-
   overflow: auto;
-}
-
-a {
-  @include hyperlink-text;
-  :hover {
-    color: $tertiary-color;
-  }
 }
 
 @media (max-width: 600px) {

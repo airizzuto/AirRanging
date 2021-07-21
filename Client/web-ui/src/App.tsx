@@ -31,6 +31,9 @@ const App = (): JSX.Element => {
           <Route exact path="/registration">
             {/* <UserSignup /> */}
           </Route>
+          <Route exact path="/forgotpass">
+            {/* <ForgotPassword /> */}
+          </Route>
       </Switch>
 
       <Footer />

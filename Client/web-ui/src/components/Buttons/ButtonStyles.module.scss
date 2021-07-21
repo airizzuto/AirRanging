@@ -2,6 +2,7 @@
 
 .PrimaryButton {
   @include button-font;
+  @include button-behavior;
   @include drop-shadow;
   @include text-shadow;
 
@@ -9,9 +10,6 @@
   background-color: $secondary-color;
 
   text-align: center;
-  
-  height: max-content;
-  min-width: 10rem;
   padding: 0.75rem;
 
   border-style: none;

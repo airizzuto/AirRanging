@@ -36,10 +36,8 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
             Forgot Password?
           </Link>
         </div>
-        <div className={Style.LoginButton} id="loginButton">
-          {/* TODO: Adjust button size */}
-          <DecoratedButton buttonText="Login" handleClick={() => handleClick}/>
-        </div>
+        {/* TODO: Adjust button size */}
+        <DecoratedButton buttonText="Login" handleClick={() => handleClick}/>
       </form>
     </FixedModal>
   );

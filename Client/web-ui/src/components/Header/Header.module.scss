@@ -23,27 +23,29 @@
   }
 
   .HeaderNav {
-    @include hyperlink-text;
+    @include hyperlink-behavior;
     grid-area: nav;
+    height: 100%;
 
     display: grid;
-    grid-template-columns:repeat(4, 1fr);
+    grid-auto-columns: max-content;
+    grid-auto-flow: column;
     grid-template-rows: none;
-    column-gap: 3rem;
+    column-gap: 2rem;
 
     align-self: center;
+    align-items: center;
 
     margin: 0 3rem;
 
     li {
-      height: 100%;
-      min-width: fit-content;
+      max-width: max-content;
     }
   }
 
   .HeaderAccount {
     @include header-font;
-    @include hyperlink-text;
+    @include hyperlink-behavior;
 
     grid-area: user;
     align-self: center;
@@ -61,6 +63,7 @@
 
     li {
       place-self: center;
+      min-width: max-content;
     }
   }
 

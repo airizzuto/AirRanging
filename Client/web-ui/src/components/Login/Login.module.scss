@@ -15,16 +15,11 @@
   .ForgotPass {
     @include hyperlink-behavior;
     align-self: center;
-    justify-self: end;
+    justify-self: center;
     a {
       font-size: $text-size-1;
       color: $primary-color;
     }
-  }
-  
-  .LoginButton {
-    display: flex;
-    justify-self: flex-end;
   }
 }
 
