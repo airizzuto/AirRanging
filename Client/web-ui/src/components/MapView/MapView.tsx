@@ -1,16 +1,18 @@
 import React from "react";
-
-import Style from "./MapView.module.scss";
+import { useModalClose } from "../../hooks/useModalClose";
 
 // import Map from "./Map";
 import ModalTab from "./ModalTab";
 import DraggableModal from "../Modals/DraggableModal";
+
+import Style from "./MapView.module.scss";
 
 const MapView = (): JSX.Element => {
   const [isModalActive, setIsModalActive] = React.useState(false); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = React.useState(false);
   const [displayAircraftsModal, setDisplayAircraftsModal] = React.useState(false);
 
+  // TODO: abstract modal toggle states parameters (array of states?)
   const handleModalDisplay = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
     display: boolean
@@ -24,13 +26,7 @@ const MapView = (): JSX.Element => {
     setIsModalActive(true);
   };
 
-  const handleModalClose = (
-    setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
-    setDisplayModal(false);
-  };
-
-  return(
+  return (
     <div className={Style.MapView}>
 
       {/* Main Map View */}
@@ -57,15 +53,18 @@ const MapView = (): JSX.Element => {
       <DraggableModal 
         show={displayPlanningModal}
         label="Planning"
-        handleClose={() => handleModalClose(setDisplayPlanningModal)}
+        handleClose={() => useModalClose(setDisplayPlanningModal)}
       >
+        {/* TODO: PLANNING COMPONENT */}
         <div>PLANNING PLACEHOLDER</div>
       </DraggableModal>
+
       <DraggableModal 
         show={displayAircraftsModal}
         label="Aircrafts"
-        handleClose={() => handleModalClose(setDisplayAircraftsModal)}
+        handleClose={() => useModalClose(setDisplayAircraftsModal)}
       >
+        {/* TODO: AIRCRAFT SELECT COMPONENT */}
         <div>AIRCRAFTS PLACEHOLDER</div>
       </DraggableModal>
 
