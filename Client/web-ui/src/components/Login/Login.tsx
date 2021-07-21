@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import DecoratedButton from "../Buttons/DecoratedButton";
 import FixedModal from "../Modals/FixedModal";
 import Style from "./Login.module.scss";
 
@@ -8,6 +10,7 @@ interface Props {
 
 export default function LoginModal({ showLogin, handleClose }: Props): JSX.Element {
 
+  const handleClick = () => { return; };
 
   return (
     <FixedModal
@@ -19,14 +22,23 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
         <div>
           <label>
             Email:
-            <input />
+            <input type="email" name="email"/>
           </label>
         </div>
         <div>
           <label>
             Password:
-            <input />
+            <input type="password" name="password"/>
           </label>
+        </div>
+        <div className={Style.ForgotPass}>
+          <Link to="/forgotpass" onClick={handleClose}>
+            Forgot Password?
+          </Link>
+        </div>
+        <div className={Style.LoginButton} id="loginButton">
+          {/* TODO: Adjust button size */}
+          <DecoratedButton buttonText="Login" handleClick={() => handleClick}/>
         </div>
       </form>
     </FixedModal>

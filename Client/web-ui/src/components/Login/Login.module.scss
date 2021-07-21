@@ -3,12 +3,29 @@
 
 .LoginForm {
   @include text-shadow;
+  @include button-behavior;
 
   display: grid;
+  height: auto;
   grid-auto-rows: 3rem;
   row-gap: 0.5rem;
 
   margin-top: 0.5rem;
+
+  .ForgotPass {
+    @include hyperlink-behavior;
+    align-self: center;
+    justify-self: end;
+    a {
+      font-size: $text-size-1;
+      color: $primary-color;
+    }
+  }
+  
+  .LoginButton {
+    display: flex;
+    justify-self: flex-end;
+  }
 }
 
 label {
@@ -23,3 +40,4 @@ input {
   border: 3px solid $secondary-color;
   border-radius: 3px;
 }
+
