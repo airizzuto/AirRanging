@@ -19,6 +19,7 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
       handleModalClose={handleClose}
     >
       <form className={Style.LoginForm}>
+
         <div>
           <label>
             Email:
@@ -31,12 +32,13 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
             <input type="password" name="password"/>
           </label>
         </div>
+
         <div className={Style.ForgotPass}>
           <Link to="/forgotpass" onClick={handleClose}>
             Forgot Password?
           </Link>
         </div>
-        {/* TODO: Adjust button size */}
+
         <DecoratedButton buttonText="Login" handleClick={() => handleClick}/>
       </form>
     </FixedModal>
