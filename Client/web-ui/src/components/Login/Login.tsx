@@ -19,12 +19,16 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
     >
       <form className={Style.LoginForm}>
         <div>
-          <label>User email </label>
-          <input></input>
+          <label>
+            Email:
+            <input />
+          </label>
         </div>
         <div>
-          <label>Password </label>
-          <input></input>
+          <label>
+            Password:
+            <input />
+          </label>
         </div>
       </form>
     </FixedModal>

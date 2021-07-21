@@ -1,4 +1,5 @@
 import React from "react";
+import DecoratedButton from "../Buttons/DecoratedButton";
 
 import ExitButton from "../Buttons/ExitButton";
 
@@ -14,7 +15,7 @@ interface Props {
 export default function Modal({
   label, visible, handleModalClose, children
 }: Props): JSX.Element {
-  const showHideClassName = visible ? { display: "block" } : { display: "none" };
+  const showHideClassName = visible ? { display: "grid" } : { display: "none" };
 
   return (
     <div className={Style.Modal} style={showHideClassName}>
@@ -25,9 +26,15 @@ export default function Modal({
             <ExitButton handleClick={handleModalClose} />
           </div>
         </div>
-        <hr />
+
+        <hr className={Style.Separator}/>
+
         <div className={Style.ModalContent}>
           {children}
+        </div>
+
+        <div>
+          <DecoratedButton ButtonText="Accept" />
         </div>
       </div>
     </div>
