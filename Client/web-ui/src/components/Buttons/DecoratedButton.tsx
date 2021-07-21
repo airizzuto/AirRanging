@@ -1,4 +1,3 @@
-import React from "react";
 import Style from "../Buttons/ButtonStyles.module.scss";
 
 interface Props {

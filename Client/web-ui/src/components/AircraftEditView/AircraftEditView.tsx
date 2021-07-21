@@ -1,25 +1,25 @@
 import React from 'react';
 
-import { AircraftType, EngineType } from "../../models/enums/AircraftEnums";
+// import { AircraftType, EngineType } from "../../models/enums/AircraftEnums";
 import Table from '../Table/Table';
 import Style from "./AircraftEditView.module.scss";
 
-interface IAircraftDetails {
-  icaoId: string;
-  manufacturer: string;
-  model: string;
-  variant: string;
-  aircraftType: AircraftType;
-  engineType: EngineType;
-  engineCount: number;
-  maxRange: number;
-}
+// interface IAircraftDetails {
+//   icaoId: string;
+//   manufacturer: string;
+//   model: string;
+//   variant: string;
+//   aircraftType: AircraftType;
+//   engineType: EngineType;
+//   engineCount: number;
+//   maxRange: number;
+// }
 
 const AircraftEditView = (): JSX.Element => {
   const data = React.useMemo(
     () => [],
     []
-  )
+  );
 
   const columns = React.useMemo(
     () => [
@@ -57,7 +57,7 @@ const AircraftEditView = (): JSX.Element => {
       },
     ],
     []
-  )
+  );
 
   return (
     <div className={Style.AircraftEditView}>
@@ -66,7 +66,7 @@ const AircraftEditView = (): JSX.Element => {
       <br/>
       <Table columns={columns} data={data} />
     </div>
-  )
-}
+  );
+};
 
-export default AircraftEditView
+export default AircraftEditView;

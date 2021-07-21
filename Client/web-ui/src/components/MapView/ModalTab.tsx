@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Style from "./ModalTab.module.scss";
 
 interface Props {
@@ -13,7 +11,7 @@ const ModalTab = ({label, handleTabClick}: Props): JSX.Element => {
       <p>{label}</p>
       <div className={Style.Arrow}>&#9658;</div>
     </button>
-  )
-}
+  );
+};
 
 export default ModalTab;

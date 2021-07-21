@@ -1,4 +1,3 @@
-import React from "react";
 import Draggable from "react-draggable";
 
 import ExitButton from "../Buttons/ExitButton";

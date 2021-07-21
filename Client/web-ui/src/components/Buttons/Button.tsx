@@ -1,5 +1,4 @@
-import React from 'react'
-import Style from "./ButtonStyles.module.scss"
+import Style from "./ButtonStyles.module.scss";
 
 interface Props {
   buttonText: string,

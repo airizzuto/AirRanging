@@ -1,5 +1,3 @@
-import React from "react";
-
 import FixedModal from "../Modals/FixedModal";
 import Style from "./Login.module.scss";
 

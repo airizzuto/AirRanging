@@ -16,13 +16,13 @@ const App = (): JSX.Element => {
     display: boolean
   ) => {
     setDisplayModal(display ? false : true);
-  }
+  };
 
   const handleModalClose = (
     setShowModal: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
     setShowModal(false);
-  }
+  };
 
   return (
     <div className={"App"}>

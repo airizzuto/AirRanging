@@ -1,7 +1,6 @@
-import React from "react";
 import { useTable } from "react-table";
 
-import Style from "./Table.module.scss"
+import Style from "./Table.module.scss";
 
 interface Props {
   data: any,
@@ -16,7 +15,7 @@ const Table = ({columns, data}: Props): JSX.Element => {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data})
+  } = useTable({ columns, data});
 
   return (
     // Apply the table props
@@ -43,7 +42,7 @@ const Table = ({columns, data}: Props): JSX.Element => {
         { // Loop over the table rows
         rows.map(row => {
           // Prepare the row for display
-          prepareRow(row)
+          prepareRow(row);
           return (
             // Apply the row props
             <tr {...row.getRowProps()}>
@@ -56,14 +55,14 @@ const Table = ({columns, data}: Props): JSX.Element => {
                       cell.render("Cell")
                     }
                   </td>
-                )
+                );
               })}
             </tr>
-          )
+          );
         })}
       </tbody>
     </table>
-  )
+  );
 };
 
 export default Table;

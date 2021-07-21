@@ -2,7 +2,7 @@ import React from "react";
 
 import Style from "./MapView.module.scss";
 
-import Map from "./Map";
+// import Map from "./Map";
 import ModalTab from "./ModalTab";
 import DraggableModal from "../Modals/DraggableModal";
 
@@ -22,13 +22,13 @@ const MapView = (): JSX.Element => {
 
     setDisplayModal(display ? false : true);
     setIsModalActive(true);
-  }
+  };
 
   const handleModalClose = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
     setDisplayModal(false);
-  }
+  };
 
   return(
     <div className={Style.MapView} id="mapview">
@@ -74,7 +74,7 @@ const MapView = (): JSX.Element => {
         INFO PLACEHOLDER
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default MapView;

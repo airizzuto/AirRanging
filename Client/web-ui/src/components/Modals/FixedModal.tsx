@@ -1,4 +1,3 @@
-import React from "react";
 import DecoratedButton from "../Buttons/DecoratedButton";
 
 import ExitButton from "../Buttons/ExitButton";
