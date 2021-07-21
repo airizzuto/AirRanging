@@ -1,6 +1,6 @@
 
 $primary-color: hsl(0, 0%, 100%);
-$secondary-color: hsl(191, 100%, 44%);
+$secondary-color: hsl(190, 70%, 50%);
 $tertiary-color: hsl(39, 100%, 70%);
 $background-color: hsla(0, 0%, 0%, 0.5);
 $background-color-solid: hsl(0, 0%, 25%);
@@ -15,7 +15,7 @@ $text-size-0: 0.8rem;
 @mixin title-font {
   font-style: normal;
   font-weight: 400;
-  font-size: $text-size-4;
+  font-size: $text-size-3;
 }
 
 @mixin header-font {
@@ -24,8 +24,8 @@ $text-size-0: 0.8rem;
 }
 
 @mixin main-font {
-  font-weight: 400;
-  font-size: $text-size-2;
+  font-weight: 300;
+  font-size: $text-size-1;
 }
 
 @mixin button-font {
@@ -35,7 +35,7 @@ $text-size-0: 0.8rem;
 
 @mixin info-font {
   font-weight: 400;
-  font-size: $text-size-2;
+  font-size: $text-size-1;
 }
 
 @mixin footer-font {
@@ -61,16 +61,20 @@ $text-size-0: 0.8rem;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.70);
 }
 
-@mixin hyperlink-text {
-  text-decoration: none;
-  :hover {
+@mixin hyperlink-behavior {
+  a {
+    text-decoration: none
+  };
+
+  a:hover {
     color: $tertiary-color;
   }
 }
 
 @mixin button-behavior {
   text-decoration: none;
-  :hover {
+  
+  button:hover {
     color: $tertiary-color;
   }
 }
