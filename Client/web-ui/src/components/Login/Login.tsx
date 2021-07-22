@@ -19,7 +19,7 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
       handleModalClose={handleClose}
     >
       <form className={Style.LoginForm}>
-        <div className={Style.FormFields}>
+        <div className={Style.LoginFields}>
 
           <div className={Style.FormGroup}>
             <label>Email:</label>
