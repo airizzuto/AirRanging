@@ -1,17 +1,69 @@
 @import "../../styles/globals.scss";
 
-.RegistrationForm {
+.RegistrationView {
+  @include blurring;
   @include text-shadow;
-  @include button-behavior;
+  @include separator-style;
 
-  .FormGroup {
-    label {
+  padding: 1rem 5rem;
+  grid-template-rows: 1fr 1fr 5fr 1fr;
+  grid-template-areas: "title" "separator" "form" "submit";
 
+  h1{
+    @include title-font;
+    color: $primary-color;
+    grid-area: title;
+  }
+  
+  .RegistrationForm {
+    .RegistrationFields {
+      display: grid;
+      grid-auto-rows: 3rem;
+      grid-area: form;
+  
+      .FormGroup {
+        display: grid;
+
+        padding: 0 2rem;
+        grid-template-columns: 1fr 2fr;
+        grid-template-areas: "label input";
+        column-gap: 2rem;
+  
+        label {
+          @include main-font;
+          color: $primary-color;
+          grid-area: label;
+  
+          text-align: start;
+          text-justify: center;
+          justify-self: start;
+          align-self: center;
+          height: max-content;
+          width: max-content;
+        }
+        
+        input {
+          $size: 60px;
+          grid-area: input;
+        
+          display: flex;
+        
+          border: 2px solid $secondary-color;
+          border-radius: 5px;
+          height: 1.8rem;
+          width: 80%;
+          place-self: center;
+          justify-content: flex-end;
+        }
+      }
     }
-
-    input {
-
-    }
-
+  }
+  
+  .SubmitButton {
+    @include button-behavior;
+    width: 30%;
+    grid-area: submit;
   }
 }
+
+/* TODO: responsive. Move input below label*/
