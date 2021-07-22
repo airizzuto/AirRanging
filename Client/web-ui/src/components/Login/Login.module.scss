@@ -24,6 +24,10 @@
       
       text-align: start;
       text-justify: center;
+      justify-self: start;
+      align-self: center;
+      height: max-content;
+      width: max-content;
     }
     
     input {
@@ -34,8 +38,8 @@
       border: 2px solid $secondary-color;
       border-radius: 5px;
       height: 1.8rem;
-    
-      padding-left: 1rem;
+      width: 100%;
+      place-self: center;
       justify-content: flex-end;
     }
   }
