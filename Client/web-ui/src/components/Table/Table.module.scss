@@ -4,8 +4,8 @@
   width: 100%;
 
   th {
-    color: black;
-    border-bottom: solid 3px black;
+    color: $primary-color;
+    border-bottom: solid 3px $secondary-color;
     font-weight: 400;
     font-size: $text-size-2;
   }

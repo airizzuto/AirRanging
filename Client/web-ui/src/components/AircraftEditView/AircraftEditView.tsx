@@ -63,8 +63,10 @@ const AircraftEditView = (): JSX.Element => {
     <div className={Style.AircraftEditView}>
       {/*TODO: Search bar*/}
       <h1>Browse Aircrafts</h1>
-      <br/>
-      <Table columns={columns} data={data} />
+      <hr />
+      <div className={Style.AircraftsTable}>
+        <Table columns={columns} data={data} />
+      </div>
     </div>
   );
 };
