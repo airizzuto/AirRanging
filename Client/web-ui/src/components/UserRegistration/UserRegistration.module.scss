@@ -1,0 +1,17 @@
+@import "../../styles/globals.scss";
+
+.RegistrationForm {
+  @include text-shadow;
+  @include button-behavior;
+
+  .FormGroup {
+    label {
+
+    }
+
+    input {
+
+    }
+
+  }
+}
