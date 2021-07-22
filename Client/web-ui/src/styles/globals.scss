@@ -15,7 +15,7 @@ $text-size-0: 0.8rem;
 @mixin title-font {
   font-style: normal;
   font-weight: 400;
-  font-size: $text-size-3;
+  font-size: $text-size-4;
 }
 
 @mixin header-font {
@@ -24,8 +24,8 @@ $text-size-0: 0.8rem;
 }
 
 @mixin main-font {
-  font-weight: 300;
-  font-size: $text-size-1;
+  font-weight: 400;
+  font-size: $text-size-2;
 }
 
 @mixin button-font {
@@ -76,5 +76,14 @@ $text-size-0: 0.8rem;
   
   button:hover {
     color: $tertiary-color;
+  }
+}
+
+@mixin separator-style {
+  hr {
+    @include drop-shadow-strong;
+    border-bottom: 2px solid $primary-color;
+    color: $primary-color;
+    grid-area: separator;
   }
 }
