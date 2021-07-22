@@ -4,6 +4,7 @@
 .Modal {
   @include blurring;
   @include text-shadow;
+  box-shadow: 1px 2px 1px hsla(0, 0%, 0%, 0.75);
   
   position: fixed;
 
@@ -39,12 +40,11 @@
   }
 
   .Separator {
-    @include drop-shadow-strong;
+    @include drop-shadow;
+    @include separator-style;
     grid-area: separator;
     width: 90%;
     margin: 0 0 1rem 0;
-    border-top: 1px solid $primary-color;
-    border-radius: 2px;
     place-self: center;
   }
 

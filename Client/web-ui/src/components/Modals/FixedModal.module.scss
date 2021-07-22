@@ -12,7 +12,7 @@
 
   .ModalMain {
     @include text-shadow;
-    @include drop-shadow-strong;
+    @include drop-shadow;
 
     position: fixed;
     color: $primary-color;
@@ -51,12 +51,10 @@
     }
 
     .Separator {
-      @include drop-shadow-strong;
+      @include separator-style;
       grid-area: separator;
       width: 95%;
       margin: 0 0 1rem 0;
-      border-top: 1px solid $primary-color;
-      border-radius: 2px;
       place-self: center;
     }
 

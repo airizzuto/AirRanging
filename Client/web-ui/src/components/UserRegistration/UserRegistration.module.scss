@@ -43,6 +43,7 @@
         }
         
         input {
+          @include drop-shadow;
           $size: 60px;
           grid-area: input;
         
