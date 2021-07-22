@@ -19,14 +19,19 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
       handleModalClose={handleClose}
     >
       <form className={Style.LoginForm}>
+        <div className={Style.FormFields}>
 
-        <div className={Style.InputField}>
-          <label>Email:</label>
-          <input type="email" name="email"/>
-          <label>Password:</label>
-          <input type="password" name="password"/>
+          <div className={Style.FormGroup}>
+            <label>Email:</label>
+            <input type="email" name="email"/>
+          </div>
+          <div className={Style.FormGroup}>
+            <label>Password:</label>
+            <input type="password" name="password"/>
+          </div>
+
         </div>
-
+        
         <div className={Style.LoginButton}>
           <DecoratedButton buttonText="Login" handleClick={() => handleClick}/>
         </div>

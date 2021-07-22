@@ -6,41 +6,48 @@
   @include button-behavior;
 
   display: grid;
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: 3fr 1fr 1fr;
   row-gap: 1rem;
   grid-template-areas: "input-fields" "login-button" "redirections";
   height: auto;
 
   margin-top: 0.5rem;
 
-  .InputField {
+  .FormFields {
     display: grid;
     grid-auto-rows: 3rem;
-    grid-template-columns: 1fr 2fr;
-    column-gap: 2rem;
 
-    label {
-      @include button-font;
+    .FormGroup {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      grid-template-areas: "label input";
+      column-gap: 2rem;
+
+      label {
+        @include button-font;
+        grid-area: label;
+
+        text-align: start;
+        text-justify: center;
+        justify-self: start;
+        align-self: center;
+        height: max-content;
+        width: max-content;
+      }
       
-      text-align: start;
-      text-justify: center;
-      justify-self: start;
-      align-self: center;
-      height: max-content;
-      width: max-content;
-    }
-    
-    input {
-      $size: 60px;
-    
-      display: flex;
-    
-      border: 2px solid $secondary-color;
-      border-radius: 5px;
-      height: 1.8rem;
-      width: 100%;
-      place-self: center;
-      justify-content: flex-end;
+      input {
+        $size: 60px;
+        grid-area: input;
+      
+        display: flex;
+      
+        border: 2px solid $secondary-color;
+        border-radius: 5px;
+        height: 1.8rem;
+        width: 100%;
+        place-self: center;
+        justify-content: flex-end;
+      }
     }
   }
 
