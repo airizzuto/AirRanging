@@ -6,7 +6,8 @@
   @include blurring;
   @include text-shadow;
 
-  grid-area: 1 / 1 / 2 / end;
+  height: 100%;
+  align-items: center;
 
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;

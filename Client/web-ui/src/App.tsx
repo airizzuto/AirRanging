@@ -18,28 +18,36 @@ const App = (): JSX.Element => {
   
   return (
     <div className={"App"}>
-      <Header loginHandler={() => useModalToggle(setShowLogin, showLogin)} />
-      <Login showLogin={showLogin} handleClose={() => useModalClose(setShowLogin)} />
+      <div className="Header">
+        <Header loginHandler={() => useModalToggle(setShowLogin, showLogin)} />
+      </div>
 
-      <Switch>
-          <Route exact path="/">
-            <MapView/>
-          </Route>
-          <Route exact path="/aircrafts">
-            <AircraftEditView />
-          </Route>
-          <Route exact path="/airports">
-            {/* <AirportsEditView /> */}
-          </Route>
-          <Route exact path="/registration">
-            <UserRegistrationView />
-          </Route>
-          <Route exact path="/forgotpass">
-            {/* <ForgotPassword /> */}
-          </Route>
-      </Switch>
+      <div className="Main">
+        <Login showLogin={showLogin} handleClose={() => useModalClose(setShowLogin)} />
 
-      <Footer />
+        <Switch>
+            <Route exact path="/">
+              <MapView/>
+            </Route>
+            <Route exact path="/aircrafts">
+              <AircraftEditView />
+            </Route>
+            <Route exact path="/airports">
+              {/* <AirportsEditView /> */}
+            </Route>
+            <Route exact path="/registration">
+              <UserRegistrationView />
+            </Route>
+            <Route exact path="/forgotpass">
+              {/* <ForgotPassword /> */}
+            </Route>
+        </Switch>
+      </div>
+      
+
+      <div className="Footer">
+        <Footer />
+      </div>
     </div>
   );
 };

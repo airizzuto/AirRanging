@@ -6,6 +6,7 @@ import ModalTab from "./ModalTab";
 import DraggableModal from "../Modals/DraggableModal";
 
 import Style from "./MapView.module.scss";
+import InfoFooter from "./InfoFooter";
 
 const MapView = (): JSX.Element => {
   const [isModalActive, setIsModalActive] = React.useState(false); // One active modal at once
@@ -68,9 +69,8 @@ const MapView = (): JSX.Element => {
         <div>AIRCRAFTS PLACEHOLDER</div>
       </DraggableModal>
 
-      {/* Map Information Footer */}
-      <div className={Style.InfoFooter}>
-        INFO PLACEHOLDER
+      <div className={Style.Info}>
+        <InfoFooter />
       </div>
 
     </div>

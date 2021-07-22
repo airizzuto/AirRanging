@@ -52,11 +52,11 @@ $text-size-0: 0.8rem;
 }
 
 @mixin drop-shadow {
-  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.70));
+  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.75));
 }
 
 @mixin text-shadow {
-  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.70);
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.75);
 }
 
 @mixin hyperlink-behavior {
@@ -78,10 +78,10 @@ $text-size-0: 0.8rem;
 }
 
 @mixin separator-style {
-  hr {
-    @include drop-shadow;
-    border-bottom: 2px solid $primary-color;
-    color: $primary-color;
-    grid-area: separator;
-  }
+  color: $primary-color;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.75);
+
+  border-bottom: 2px solid $primary-color;
+  width: 90%;
+  max-height: 2px;
 }
