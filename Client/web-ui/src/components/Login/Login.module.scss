@@ -6,33 +6,59 @@
   @include button-behavior;
 
   display: grid;
+  grid-template-rows: auto 1fr 1fr;
+  row-gap: 1rem;
+  grid-template-areas: "input-fields" "login-button" "redirections";
   height: auto;
-  grid-auto-rows: 3rem;
-  row-gap: 0.5rem;
 
   margin-top: 0.5rem;
 
-  .ForgotPass {
+  .InputField {
+    display: grid;
+    grid-auto-rows: 3rem;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 2rem;
+
+    label {
+      @include button-font;
+      
+      text-align: start;
+      text-justify: center;
+    }
+    
+    input {
+      $size: 60px;
+    
+      display: flex;
+    
+      border: 2px solid $secondary-color;
+      border-radius: 5px;
+      height: 1.8rem;
+    
+      padding-left: 1rem;
+      justify-content: flex-end;
+    }
+  }
+
+  .LoginButton {
+    grid-area: login-button;
+  }
+  
+  .Redirection {
     @include hyperlink-behavior;
-    align-self: center;
-    justify-self: center;
+    display: grid;
+    grid-area: redirections;
+
+    margin-top: 0.5rem;
+    grid-auto-rows: max-content;
+    row-gap: 0.5rem;
+
+    text-align: center;
+    text-justify: center;
+
     a {
       font-size: $text-size-1;
       color: $primary-color;
     }
   }
 }
-
-label {
-  display: grid;
-
-  place-self: center;
-  grid-template-columns: 1fr 2fr;
-  column-gap: 1rem;
-}
-
-input {
-  border: 3px solid $secondary-color;
-  border-radius: 3px;
-}
-
