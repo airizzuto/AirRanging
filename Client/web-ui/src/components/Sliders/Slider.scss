@@ -1,0 +1,53 @@
+@use "../../styles/colors" as color;
+@use "../../styles/mixins" as *;
+
+.Slider {
+  width: 100%; /* Width of the outside container */
+
+  /* The slider itself */
+  .slider {
+    @include drop-shadow;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 10px; /* Specified height */
+    background: color.$background-solid; /* Grey background */
+    outline: none; /* Remove outline */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 500px;
+  }
+
+  /* Mouse-over effects */
+  .slider:hover {
+    opacity: 0.8; /* Fully shown on mouse-over */
+  }
+
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    
+    width: 16px; /* Set a specific slider handle width */
+    height: 16px; /* Slider handle height */
+
+    background: color.$primary; /* background */
+
+    border: 4px solid color.$secondary;
+    border-radius: 500px;
+
+    cursor: pointer; /* Cursor on hover */
+  }
+
+  .slider::-moz-range-thumb {
+    width: 16px; /* Set a specific slider handle width */
+    height: 16px; /* Slider handle height */
+
+    background: color.$primary; /* background */
+
+    border: 4px solid color.$secondary;
+    border-radius: 500px;
+
+    cursor: pointer; /* Cursor on hover */
+  }
+}
