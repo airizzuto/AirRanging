@@ -63,7 +63,8 @@
 @mixin button-behavior {
   decoration: none;
   
-  button:hover {
+  :hover {
+    cursor: pointer;
     color: color.$tertiary;
   }
 }

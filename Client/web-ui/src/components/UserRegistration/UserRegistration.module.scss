@@ -3,7 +3,6 @@
 
 .RegistrationView {
   @include blurring;
-  @include text-shadow;
   display: grid;
   grid-area: 2 / 1 / 3 / end;
 
@@ -15,6 +14,8 @@
 
   .RegistrationTitle {
     @include title-font;
+    @include text-shadow;
+
     color: color.$primary;
     grid-area: title;
   }
@@ -27,6 +28,7 @@
   }
 
   .RegistrationForm {
+    @include text-shadow;
     display: grid;
     grid-area: form;
     grid-template-rows: max-content min-content;
