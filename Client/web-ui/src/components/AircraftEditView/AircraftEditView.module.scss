@@ -4,30 +4,30 @@
 .AircraftEditView {
   @include blurring;
   @include text-shadow;
-  @include separator-style;
   display: grid;
   grid-area: 2 / 1 / 3 / end;
 
   height: 100%;
-  padding: 1rem 5rem;
+  padding: 0 5rem;
+  grid-template-rows: auto min-content 8fr;
+  grid-template-columns: 1fr;
+  grid-template-areas: "title" "separator" "table";
 
-  h1 {
+  .AircraftEditTitle {
     @include title-font;
     color: color.$primary;
+    grid-area: title;
   }
 
-  hr {
-    align-self: center;
-    justify-self: center;
-    width: 90%;
-    margin: 1rem 0 1rem 0;
+  .Separator {
+    @include separator-style;
+    grid-area: separator;
+    width: 95%;
+    place-self: center;
+    margin: 1rem 0 2rem 0;
   }
 
   .AircraftTable {
-    @include text-shadow;
-
-    table{ 
-      color: color.$primary;
-    }
+    grid-area: table;
   }
 }

@@ -62,8 +62,10 @@ const AircraftEditView = (): JSX.Element => {
   return (
     <div className={Style.AircraftEditView}>
       {/*TODO: Search bar*/}
-      <h1>Browse Aircrafts</h1>
-      <hr />
+      <h1 className={Style.AircraftEditTitle}>Browse Aircrafts</h1>
+
+      <hr className={Style.Separator} />
+
       <div className={Style.AircraftsTable}>
         <Table columns={columns} data={data} />
       </div>
