@@ -1,14 +1,16 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as mixin;
 
 .Table {
-  @include text-shadow;
+  @include mixin.text-shadow;
   width: 100%;
 
   th {
-    color: $primary-color;
-    border-bottom: solid 3px $secondary-color;
+    color: color.$primary;
+    border-bottom: solid 3px color.$secondary;
     font-weight: 400;
-    font-size: $text-size-2;
+    font-size: font.$size-2;
   }
 
   td {

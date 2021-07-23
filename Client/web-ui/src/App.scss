@@ -1,4 +1,4 @@
-@import "./styles/globals.scss";
+@use "./styles/colors" as color;
 
 .App {
   position: fixed;
@@ -6,7 +6,7 @@
   width: 100%;
 
   background-image: url("./topography.svg");
-  background-color: hsl(0, 0%, 100%);
+  background-color: color.$primary;
   background-repeat: repeat;
   background-size: cover;
 

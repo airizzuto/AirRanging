@@ -1,4 +1,7 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as *;
+
 @import "../Modals/FixedModal.module.scss";
 
 .LoginForm {
@@ -42,7 +45,7 @@
       
         display: flex;
       
-        border: 2px solid $secondary-color;
+        border: 2px solid color.$secondary;
         border-radius: 5px;
         height: 1.8rem;
         width: 100%;
@@ -69,8 +72,8 @@
     text-justify: center;
 
     a {
-      font-size: $text-size-1;
-      color: $primary-color;
+      font-size: font.$size-1;
+      color: color.$primary;
     }
   }
 }

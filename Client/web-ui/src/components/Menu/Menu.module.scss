@@ -1,4 +1,5 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/mixins" as *;
 
 .MenuButton {
   position: fixed;
@@ -12,7 +13,7 @@
       height: 4px;
       width: 35px;
       border-radius: 2px;
-      background-color: $primary-color;
+      background-color: color.$primary;
       position: relative;
       display: block;
       transition: all .2s ease-in-out;
@@ -27,14 +28,14 @@
           height: 4px;
           width: 35px;
           border-radius: 2px;
-          background-color: $primary-color;
+          background-color: color.$primary;
           position: absolute;
           content: "";
           transition: all .2s ease-in-out;
       }
     }
     &:hover span, &:hover span:before, &:hover span:after {
-      background: $secondary-color;
+      background: color.$secondary;
     }
 }
 
@@ -70,7 +71,7 @@
   left: 0px;
   height: 100vh;
   width: 100vw;
-  background: $background-color;
+  background: color.$background;
   opacity: 0.8;
   z-index: 9;
   &.active {
@@ -91,14 +92,14 @@
       width: 100%;
       padding: 5em 0em;
       &:hover {
-        background-color: $secondary-color;
+        background-color: color.$secondary;
       }
       a {
         @include header-font;
-        color: $primary-color;
+        color: color.$primary;
         text-decoration: none;
         &:hover {
-          color: $tertiary-color;
+          color: color.$tertiary;
         }
         &:active {
           .Menu {

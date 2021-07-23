@@ -1,10 +1,11 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/mixins" as mixin;
 
 .InfoFooter {
-  @include blurring;
-  @include info-font;
-  @include text-shadow;
+  @include mixin.blurring;
+  @include mixin.info-font;
+  @include mixin.text-shadow;
   display: flex;
   
-  color: $primary-color;
+  color: color.$primary;
 }

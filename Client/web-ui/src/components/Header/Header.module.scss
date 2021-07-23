@@ -1,4 +1,6 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/mixins" as *;
+
 @import "../Menu/Menu.module.scss";
 @import "../Buttons/ButtonStyles.module.scss";
 
@@ -59,7 +61,7 @@
     }
 
     a {
-      color: $primary-color;
+      color: color.$primary;
     }
 
     li {

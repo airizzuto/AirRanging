@@ -1,4 +1,5 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/mixins" as *;
 
 .RegistrationView {
   @include blurring;
@@ -14,7 +15,7 @@
 
   .RegistrationTitle {
     @include title-font;
-    color: $primary-color;
+    color: color.$primary;
     grid-area: title;
   }
   
@@ -56,7 +57,7 @@
   
         label {
           @include main-font;
-          color: $primary-color;
+          color: color.$primary;
           grid-area: label;
 
           text-align: center;
@@ -70,7 +71,7 @@
           @include drop-shadow;
           grid-area: input;
   
-          border: 2px solid $secondary-color;
+          border: 2px solid color.$secondary;
           border-radius: 5px;
           height: 1.8rem;
           width: 90%;

@@ -1,8 +1,9 @@
-@import "../../styles/globals.scss";
+@use "../../styles/mixins" as mixin;
+@use "../../styles/colors" as color;
 
 .Footer {
-  @include blurring;
-  @include footer-font;
+  @include mixin.blurring;
+  @include mixin.footer-font;
   
   grid-area: 3 / 1 / 4 / end;
 
@@ -15,8 +16,8 @@
   align-content: center;
 
   .Copyright{
-    @include text-shadow;
-    color: $primary-color;
+    @include mixin.text-shadow;
+    color: color.$primary;
     grid-area: copyright;
     padding: 0 1rem;
 
@@ -26,8 +27,8 @@
   }
 
   .Links{
-    @include text-shadow;
-    @include hyperlink-behavior;
+    @include mixin.text-shadow;
+    @include mixin.hyperlink-behavior;
 
     grid-area: links;
     display: flex;
@@ -37,7 +38,7 @@
     a {
       text-decoration: none;
       padding: 0 1rem;
-      color: $primary-color;
+      color: color.$primary;
     }
   }
 

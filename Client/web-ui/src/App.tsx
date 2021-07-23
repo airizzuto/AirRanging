@@ -22,8 +22,9 @@ const App = (): JSX.Element => {
         <Header loginHandler={() => useModalToggle(setShowLogin, showLogin)} />
       </div>
 
+      <Login showLogin={showLogin} handleClose={() => useModalClose(setShowLogin)} />
+  
       <div className="Main">
-        <Login showLogin={showLogin} handleClose={() => useModalClose(setShowLogin)} />
 
         <Switch>
             <Route exact path="/">

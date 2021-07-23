@@ -1,48 +1,35 @@
-
-$primary-color: #FFFFFF;
-$secondary-color: #2db7d2;
-$tertiary-color: #f3b61f;
-$quartiary-color: #694a38;
-$accent-color: #a61c3c;
-$background-color: rgba(0, 0, 0, 0.5);
-$background-color-solid: #37393a;
-
-$text-size-5: 2.44rem;
-$text-size-4: 1.953rem;
-$text-size-3: 1.563rem;
-$text-size-2: 1.25rem;
-$text-size-1: 1rem;
-$text-size-0: 0.8rem;
+@use "./colors" as color;
+@use "./fonts" as font;
 
 @mixin title-font {
   font-style: normal;
   font-weight: 400;
-  font-size: $text-size-4;
+  font-size: font.$size-4;
 }
 
 @mixin header-font {
   font-weight: 600;
-  font-size: $text-size-2;
+  font-size: font.$size-2;
 }
 
 @mixin main-font {
   font-weight: 400;
-  font-size: $text-size-2;
+  font-size: font.$size-2;
 }
 
 @mixin button-font {
   font-weight: 600;
-  font-size: $text-size-2;
+  font-size: font.$size-2;
 }
 
 @mixin info-font {
   font-weight: 400;
-  font-size: $text-size-1;
+  font-size: font.$size-1;
 }
 
 @mixin footer-font {
   font-weight: 300;
-  font-size: $text-size-1;
+  font-size: font.$size-1;
 }
 
 @mixin blurring {
@@ -55,6 +42,10 @@ $text-size-0: 0.8rem;
   filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.75));
 }
 
+@mixin shadow {
+  shadow: 2px 2px 1px rgba(0, 0, 0, 0.75);
+}
+
 @mixin text-shadow {
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.75);
 }
@@ -65,22 +56,22 @@ $text-size-0: 0.8rem;
   };
 
   a:hover {
-    color: $tertiary-color;
+    color: color.$tertiary;
   }
 }
 
 @mixin button-behavior {
-  text-decoration: none;
+  decoration: none;
   
   button:hover {
-    color: $tertiary-color;
+    color: color.$tertiary;
   }
 }
 
 @mixin separator-style {
-  color: $primary-color;
+  color: color.$primary;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.75);
 
-  border-bottom: 2px solid $primary-color;
+  border-bottom: 2px solid color.$primary;
   max-height: 2px;
 }

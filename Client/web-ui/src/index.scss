@@ -1,4 +1,4 @@
-@import "./styles/globals.scss";
+@use "./styles/colors" as color;
 
 body {
   min-height: 100%;
@@ -24,12 +24,12 @@ code {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px $primary-color;
+  box-shadow: inset 0 0 5px color.$primary;
   border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: $secondary-color;
+  background: color.$secondary;
   border-radius: 10px;
 } 

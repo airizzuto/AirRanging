@@ -1,5 +1,5 @@
-
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/mixins" as *;
 
 .Tab {
   @include blurring;
@@ -9,7 +9,7 @@
   border-radius: 0 10px 10px 0;
   box-shadow: 1px 2px 1px hsla(0, 0%, 0%, 0.75);
 
-  color: $primary-color;
+  color: color.$primary;
 
   padding: 1rem 0.25rem;
   border-style: none;
@@ -30,6 +30,6 @@
 }
 
 .Tab:hover {
-  color: $tertiary-color;
+  color: color.$tertiary;
   cursor: pointer;
 }
