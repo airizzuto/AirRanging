@@ -26,13 +26,13 @@
     grid-area: modal-header;
     grid-template-columns: 3fr 1fr;
     grid-template-areas: "modal-title modal-exit";
+    column-gap: 2rem;
     height: fit-content;
 
     .ModalTitle {
       @include title-font;
       grid-area: modal-title;
       place-self: left center;
-
     }
 
     .CloseButton {
@@ -46,6 +46,7 @@
 
     grid-area: separator;
     place-self: center;
+    margin: 1rem 0;
   }
 
   .ModalContent {
