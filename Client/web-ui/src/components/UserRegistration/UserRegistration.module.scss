@@ -24,7 +24,6 @@
     grid-area: separator;
     width: 95%;
     place-self: center;
-    padding: 0 1rem;
   }
 
   .RegistrationForm {
@@ -32,7 +31,7 @@
     grid-area: form;
     grid-template-rows: max-content min-content;
     grid-template-areas: "fields" "submit" ;
-    padding: 2rem 0rem;
+    padding: 1rem 0rem;
     row-gap: 1rem;
 
     .SubmitButton {
