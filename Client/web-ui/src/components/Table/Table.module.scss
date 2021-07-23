@@ -1,9 +1,9 @@
 @use "../../styles/colors" as color;
 @use "../../styles/fonts" as font;
-@use "../../styles/mixins" as mixin;
+@use "../../styles/mixins" as *;
 
 .Table {
-  @include mixin.text-shadow;
+  @include text-shadow;
   width: 100%;
 
   th {
