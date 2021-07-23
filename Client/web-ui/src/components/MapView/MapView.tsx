@@ -7,6 +7,7 @@ import DraggableModal from "../Modals/DraggableModal";
 
 import Style from "./MapView.module.scss";
 import InfoFooter from "./InfoFooter";
+import PlanningModal from "./Planning";
 
 const MapView = (): JSX.Element => {
   const [isModalActive, setIsModalActive] = React.useState(false); // One active modal at once
@@ -56,8 +57,7 @@ const MapView = (): JSX.Element => {
         label="Planning"
         handleClose={() => useModalClose(setDisplayPlanningModal)}
       >
-        {/* TODO: PLANNING COMPONENT */}
-        <div>PLANNING PLACEHOLDER</div>
+        <PlanningModal />
       </DraggableModal>
 
       <DraggableModal 

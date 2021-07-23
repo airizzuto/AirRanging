@@ -1,0 +1,52 @@
+@use "../../styles/colors" as color;
+@use "../../styles/mixins" as *;
+
+.Planning {
+  display: grid;
+  grid-template-rows: 1fr min-content 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas: "properties" "separator" "results";
+  row-gap: 1rem;
+  height: 100%;
+
+  .PropertiesGroup {
+    display: grid;
+    grid-area: properties;
+    grid-auto-rows: max-content;
+    row-gap: 1rem;
+    grid-template-columns: 1fr;
+
+    .Selected {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "label selected";
+
+      label {
+        grid-area: label;
+      }
+    }
+
+    .Fuel {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: "label modifier";
+
+      label {
+        grid-area: label;
+      }
+    }
+  }
+
+  .Separator {
+    @include separator-style;
+    grid-area: separator;
+    width: 95%;
+  }
+
+  .ResultsGroup {
+    display: grid;
+    grid-area: results;
+
+  }
+}
