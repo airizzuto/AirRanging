@@ -72,7 +72,7 @@
   left: 0px;
   height: 100vh;
   width: 100vw;
-  background: color.$background;
+  background: color.$bg-semitransparent;
   opacity: 0.8;
   z-index: 9;
   &.active {
@@ -100,7 +100,7 @@
         color: color.$primary;
         text-decoration: none;
         &:hover {
-          color: color.$tertiary;
+          color: color.$accent1;
         }
         &:active {
           .Menu {
