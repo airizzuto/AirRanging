@@ -1,9 +1,10 @@
 @use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
 @use "../../styles/mixins" as *;
 
 .Tab {
   @include blurring;
-  @include button-font;
+  @include font.button;
   @include text-shadow;
 
   border-radius: 0 10px 10px 0;

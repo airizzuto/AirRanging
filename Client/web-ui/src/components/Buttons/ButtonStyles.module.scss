@@ -1,8 +1,9 @@
 @use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
 @use "../../styles/mixins" as *;
 
 .PrimaryButton {
-  @include button-font;
+  @include font.button;
   @include button-behavior;
   @include drop-shadow;
   @include text-shadow;
@@ -22,7 +23,7 @@
   @include button-behavior;
 
   button {
-    @include button-font;
+    @include font.button;
     @include text-shadow;
 
     color: color.$primary;

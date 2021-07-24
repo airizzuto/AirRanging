@@ -1,9 +1,10 @@
-@use "../../styles/mixins" as mixin;
 @use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as *;
 
 .Footer {
-  @include mixin.blurring;
-  @include mixin.footer-font;
+  @include blurring;
+  @include font.footer;
   
   grid-area: 3 / 1 / 4 / end;
 
@@ -16,7 +17,7 @@
   align-content: center;
 
   .Copyright{
-    @include mixin.text-shadow;
+    @include text-shadow;
     color: color.$primary;
     grid-area: copyright;
     padding: 0 1rem;
@@ -27,8 +28,8 @@
   }
 
   .Links{
-    @include mixin.text-shadow;
-    @include mixin.hyperlink-behavior;
+    @include text-shadow;
+    @include hyperlink-behavior;
 
     grid-area: links;
     display: flex;

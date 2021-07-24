@@ -1,37 +1,6 @@
 @use "./colors" as color;
 @use "./fonts" as font;
 
-@mixin title-font {
-  font-weight: 400;
-  font-size: font.$size-4;
-}
-
-@mixin header-font {
-  font-weight: 600;
-  font-size: font.$size-3;
-}
-
-@mixin main-font {
-  font-style: normal;
-  font-weight: 400;
-  font-size: font.$size-1;
-}
-
-@mixin button-font {
-  font-weight: 600;
-  font-size: font.$size-3;
-}
-
-@mixin info-font {
-  font-weight: 400;
-  font-size: font.$size-1;
-}
-
-@mixin footer-font {
-  font-weight: 300;
-  font-size: font.$size-1;
-}
-
 @mixin blurring {
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: saturate(180%) blur(2px);

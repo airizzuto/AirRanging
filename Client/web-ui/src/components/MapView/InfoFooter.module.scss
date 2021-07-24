@@ -1,10 +1,11 @@
 @use "../../styles/colors" as color;
-@use "../../styles/mixins" as mixin;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as *;
 
 .InfoFooter {
-  @include mixin.blurring;
-  @include mixin.info-font;
-  @include mixin.text-shadow;
+  @include blurring;
+  @include font.info;
+  @include text-shadow;
   display: flex;
   
   color: color.$primary;

@@ -1,4 +1,5 @@
 @use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
 @use "../../styles/mixins" as *;
 
 .RegistrationView {
@@ -13,7 +14,7 @@
   grid-template-areas: "title" "separator" "form";
 
   .RegistrationTitle {
-    @include title-font;
+    @include font.header-1;
     @include text-shadow;
 
     color: color.$primary;
@@ -57,7 +58,7 @@
         grid-template-areas: "label input validation";
   
         label {
-          @include main-font;
+          @include font.main;
           color: color.$primary;
           grid-area: label;
 
