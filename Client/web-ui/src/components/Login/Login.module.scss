@@ -8,12 +8,12 @@
   @include text-shadow;
 
   display: grid;
-  grid-template-rows: 3fr 1fr 1fr;
-  row-gap: 1rem;
-  grid-template-areas: "input-fields" "login-button" "redirections";
+  grid-auto-rows: auto;
+  grid-template-areas: "input-fields" "options" "buttons";
+
   height: auto;
 
-  margin-top: 0.5rem;
+  margin: 0.5rem 1rem;
 
   .LoginFields {
     display: grid;
@@ -53,25 +53,50 @@
     }
   }
 
-  .LoginButton {
-    @include button-behavior;
-    grid-area: login-button;
-  }
-  
-  .Redirection {
-    @include hyperlink-behavior;
+  .Options {
+    margin-top: 1rem;
+
     display: grid;
-    grid-area: redirections;
+    grid-area: options;
+    height: 100%;
 
-    margin-top: 0.5rem;
-    grid-auto-rows: max-content;
-    row-gap: 0.5rem;
-
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
     text-align: center;
 
-    a {
-      font-size: font.$size-1;
-      color: color.$primary;
+    .RememberMe {
+      @include checkbox-style;
+    }
+
+    .ForgotPassword {
+      @include hyperlink-behavior;
+      a {
+        color: color.$primary;
+      }
+    }
+  }
+
+  .Buttons {
+    grid-area: buttons;
+    margin-top: 5rem;
+
+    display: grid;
+    grid-auto-rows: max-content;
+    place-items: center;
+
+    .LoginButton {
+      @include button-behavior;
+      width: 100%;
+    }
+    
+    .RegistrationButton {
+      @include hyperlink-behavior;
+      text-align: center;
+
+      a {
+        @include font.nav;
+        color: color.$primary;
+      }
     }
   }
 }
