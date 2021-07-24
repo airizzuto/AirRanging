@@ -30,7 +30,6 @@
         grid-area: label;
 
         text-align: start;
-        text-justify: center;
         justify-self: start;
         align-self: center;
         height: max-content;
@@ -69,7 +68,6 @@
     row-gap: 0.5rem;
 
     text-align: center;
-    text-justify: center;
 
     a {
       font-size: font.$size-1;
