@@ -23,12 +23,14 @@ export default function Planning() {
         <h2>Properties</h2>
         <div className={Style.Selected}>
           <label>Selected Aircraft:</label>
-          *AIRCRAFT SELECTED*
+          {/*TODO:*/}*AIRCRAFT SELECTED*
         </div>
-        <div className={Style.Fuel}>
+        <div className={Style.SliderProp}>
           <label>Fuel Loaded:</label>
-          <div className={Style.Output}>{aircraftState.fuel} %</div>
-          <div className={Style.Range}>
+          <div className={Style.output}>
+            {/*TODO:*/}{aircraftState.fuel} %
+          </div>
+          <div className={Style.range}>
             <Slider name="fuel"
               min={0}
               max={100}
@@ -45,11 +47,11 @@ export default function Planning() {
         <h2>Information</h2>
           <div className={Style.Results}>
             <label>Max Range:</label>
-            <span className={Style.output}>*CALCULATED RESULT*</span>
+            <span className={Style.output}>{/*TODO:*/}*CALCULATED RESULT*</span>
           </div>
           <div className={Style.Results}>
             <label>Radius of Action:</label>
-            <span className={Style.output}>*CALCULATED RESULT*</span>
+            <span className={Style.output}>{/*TODO:*/}*CALCULATED RESULT*</span>
           </div>
       </div>
     </div>
