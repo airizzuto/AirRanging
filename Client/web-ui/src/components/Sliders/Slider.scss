@@ -1,7 +1,7 @@
 @use "../../styles/colors" as color;
 @use "../../styles/mixins" as *;
 
-.Slider {
+.SliderContainer {
   width: 100%; /* Width of the outside container */
 
   /* The slider itself */
@@ -9,9 +9,11 @@
     @include drop-shadow;
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
-    width: 100%; /* Full-width */
+    margin: 0.5rem 0rem;
+    width: 80%; /* Full-width */
     height: 10px; /* Specified height */
     background: color.$bg-dark1; /* Grey background */
+    opacity: 0.8; /* Fully shown on mouse-over */
     outline: none; /* Remove outline */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
@@ -20,7 +22,7 @@
 
   /* Mouse-over effects */
   .slider:hover {
-    opacity: 0.8; /* Fully shown on mouse-over */
+    opacity: 1; /* Fully shown on mouse-over */
   }
 
   /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */

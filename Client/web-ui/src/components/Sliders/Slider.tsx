@@ -11,7 +11,7 @@ interface Props {
 export default function Slider({name, min, max, value, handler }:Props): JSX.Element {
 
   return (
-    <div className="Slider">
+    <div className="SliderContainer">
       <input 
         type="range"
         className="slider" 
