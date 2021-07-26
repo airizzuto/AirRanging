@@ -12,7 +12,7 @@
     margin: 0.5rem 0rem;
     width: 80%; /* Full-width */
     height: 10px; /* Specified height */
-    background: color.$bg-dark1; /* Grey background */
+    background: color.$dark1; /* Grey background */
     opacity: 0.8; /* Fully shown on mouse-over */
     outline: none; /* Remove outline */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
@@ -33,9 +33,9 @@
     width: 16px; /* Set a specific slider handle width */
     height: 16px; /* Slider handle height */
 
-    background: color.$primary; /* background */
+    background: color.$light1; /* background */
 
-    border: 4px solid color.$secondary;
+    border: 4px solid color.$light2;
     border-radius: 500px;
 
     cursor: pointer; /* Cursor on hover */
@@ -45,9 +45,9 @@
     width: 16px; /* Set a specific slider handle width */
     height: 16px; /* Slider handle height */
 
-    background: color.$primary; /* background */
+    background: color.$light1; /* background */
 
-    border: 4px solid color.$secondary;
+    border: 4px solid color.$light2;
     border-radius: 500px;
 
     cursor: pointer; /* Cursor on hover */

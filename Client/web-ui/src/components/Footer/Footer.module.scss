@@ -18,7 +18,7 @@
 
   .Copyright{
     @include text-shadow;
-    color: color.$primary;
+    color: color.$light1;
     grid-area: copyright;
     padding: 0 1rem;
 
@@ -39,7 +39,7 @@
     a {
       text-decoration: none;
       padding: 0 1rem;
-      color: color.$primary;
+      color: color.$light1;
     }
   }
 

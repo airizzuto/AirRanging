@@ -17,7 +17,7 @@
     @include font.header-1;
     @include text-shadow;
 
-    color: color.$primary;
+    color: color.$light1;
     grid-area: title;
   }
   
@@ -59,7 +59,7 @@
   
         label {
           @include font.main;
-          color: color.$primary;
+          color: color.$light1;
           grid-area: label;
 
           text-align: center;
@@ -73,7 +73,7 @@
           @include drop-shadow;
           grid-area: input;
   
-          border: 2px solid color.$secondary;
+          border: 2px solid color.$light2;
           border-radius: 5px;
           height: 1.8rem;
           width: 90%;

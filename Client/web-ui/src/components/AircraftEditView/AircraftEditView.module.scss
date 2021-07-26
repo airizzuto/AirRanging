@@ -16,7 +16,7 @@
   .AircraftEditTitle {
     @include text-shadow;
     @include font.header-1;
-    color: color.$primary;
+    color: color.$light1;
     grid-area: title;
   }
 

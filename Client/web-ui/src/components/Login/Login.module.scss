@@ -43,7 +43,7 @@
       
         display: flex;
       
-        border: 2px solid color.$secondary;
+        border: 2px solid color.$light2;
         border-radius: 5px;
         height: 1.8rem;
         width: 100%;
@@ -71,7 +71,7 @@
     .ForgotPassword {
       @include hyperlink-behavior;
       a {
-        color: color.$primary;
+        color: color.$light1;
       }
     }
   }
@@ -95,7 +95,7 @@
 
       a {
         @include font.nav;
-        color: color.$primary;
+        color: color.$light1;
       }
     }
   }

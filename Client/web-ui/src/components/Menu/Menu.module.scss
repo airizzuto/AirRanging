@@ -14,7 +14,7 @@
       height: 4px;
       width: 35px;
       border-radius: 2px;
-      background-color: color.$primary;
+      background-color: color.$light1;
       position: relative;
       display: block;
       transition: all .2s ease-in-out;
@@ -29,14 +29,14 @@
           height: 4px;
           width: 35px;
           border-radius: 2px;
-          background-color: color.$primary;
+          background-color: color.$light1;
           position: absolute;
           content: "";
           transition: all .2s ease-in-out;
       }
     }
     &:hover span, &:hover span:before, &:hover span:after {
-      background: color.$secondary;
+      background: color.$light2;
     }
 }
 
@@ -93,11 +93,11 @@
       width: 100%;
       padding: 5em 0em;
       &:hover {
-        background-color: color.$secondary;
+        background-color: color.$light2;
       }
       a {
         @include font.nav;
-        color: color.$primary;
+        color: color.$light1;
         text-decoration: none;
         &:hover {
           color: color.$accent1;

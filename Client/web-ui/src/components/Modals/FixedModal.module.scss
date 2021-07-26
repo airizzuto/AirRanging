@@ -17,8 +17,8 @@
     @include drop-shadow;
 
     position: fixed;
-    color: color.$primary;
-    background-color: color.$bg-dark1;
+    color: color.$light1;
+    background-color: color.$dark1;
 
     max-height: 70%;
     height: fit-content;
