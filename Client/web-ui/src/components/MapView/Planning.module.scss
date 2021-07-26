@@ -1,4 +1,5 @@
 @use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
 @use "../../styles/mixins" as *;
 
 .Planning {
@@ -19,21 +20,31 @@
     .Selected {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-areas: "label selected";
+      grid-template-areas: "properties-label selected";
 
       label {
-        grid-area: label;
+        grid-area: properties-label;
       }
     }
 
     .Fuel {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr;
-      grid-template-areas: "label modifier";
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: 
+        "properties-label properties-output"
+        "modifier modifier";
+
+      .Range {
+        grid-area: modifier;
+      }
+
+      .output {
+        grid-area: properties-output;
+      }
 
       label {
-        grid-area: label;
+        grid-area: properties-label;
       }
     }
   }
@@ -48,5 +59,28 @@
     display: grid;
     grid-area: results;
 
+    grid-auto-rows: max-content;
+    row-gap: 1rem;
+    grid-template-columns: 1fr;
+
+    .Results {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "results-label results-output";
+
+      label {
+        grid-area: results-label;
+      }
+
+      .output {
+        place-self: center;
+        grid-area: results-output;
+      }
+    }
+  }
+
+  h2 {
+    @include font.header-2;
+    margin: 0;
   }
 }

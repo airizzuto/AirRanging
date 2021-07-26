@@ -20,25 +20,37 @@ export default function Planning() {
   return (
     <div className={Style.Planning}>
       <div className={Style.PropertiesGroup}>
+        <h2>Properties</h2>
         <div className={Style.Selected}>
           <label>Selected Aircraft:</label>
           *AIRCRAFT SELECTED*
         </div>
         <div className={Style.Fuel}>
           <label>Fuel Loaded:</label>
-          <Slider name="fuel"
-            min={0}
-            max={100}
-            value={aircraftState.fuel}
-            handler={handleChange}
-          />
+          <div className={Style.Output}>{aircraftState.fuel} %</div>
+          <div className={Style.Range}>
+            <Slider name="fuel"
+              min={0}
+              max={100}
+              value={aircraftState.fuel}
+              handler={handleChange}
+            />
+          </div>
         </div>
       </div>
 
       <hr className={Style.Separator} />
 
       <div className={Style.ResultsGroup}>
-        PLACEHOLDER
+        <h2>Information</h2>
+          <div className={Style.Results}>
+            <label>Max Range:</label>
+            <span className={Style.output}>*CALCULATED RESULT*</span>
+          </div>
+          <div className={Style.Results}>
+            <label>Radius of Action:</label>
+            <span className={Style.output}>*CALCULATED RESULT*</span>
+          </div>
       </div>
     </div>
   );
