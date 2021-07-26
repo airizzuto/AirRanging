@@ -1,8 +1,11 @@
 @use "../../styles/colors" as color;
 @use "../../styles/fonts" as font;
+@use "../../styles/components/separators" as separator;
+@use "../../styles/components/boxes" as box;
 @use "../../styles/mixins" as *;
 
 .Planning {
+  @include box-shadow;
   display: grid;
   grid-template-rows: 1fr min-content 1fr;
   grid-template-columns: 1fr;
@@ -11,13 +14,16 @@
   height: 100%;
 
   .PropertiesGroup {
-    display: grid;
     grid-area: properties;
+
+    display: grid;
     grid-auto-rows: max-content;
-    row-gap: 1rem;
     grid-template-columns: 1fr;
+    row-gap: 1.5rem;
 
     .Selected {
+      @include text-shadow;
+
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-areas: "properties-label selected";
@@ -34,6 +40,7 @@
       grid-template-areas: 
         "properties-label properties-output"
         "modifier modifier";
+      row-gap: 1rem;
 
       .range {
         grid-area: modifier;
@@ -46,22 +53,24 @@
 
       label {
         grid-area: properties-label;
+        align-self: center;
       }
     }
   }
 
   .Separator {
-    @include separator-style;
+    @include separator.style;
     grid-area: separator;
+
     width: 95%;
   }
 
   .ResultsGroup {
-    display: grid;
     grid-area: results;
 
+    display: grid;
     grid-auto-rows: max-content;
-    row-gap: 1rem;
+    row-gap: 1.5rem;
     grid-template-columns: 1fr;
 
     .Results {
@@ -71,6 +80,7 @@
 
       label {
         grid-area: results-label;
+        align-self: center;
       }
 
       .output {
@@ -80,15 +90,16 @@
     }
   }
 
+  label {
+    @include text-shadow;
+  }
+
   .output {
-    color: color.$dark1;
-    background-color: color.$light1;
-    border: 3px solid color.$light2;
-    border-radius: 10px;
-    padding: 0.5rem;
+    @include box.light;
   }
 
   h2 {
+    @include text-shadow;
     @include font.header-2;
     margin: 0;
   }

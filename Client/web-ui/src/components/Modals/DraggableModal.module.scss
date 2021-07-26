@@ -1,12 +1,12 @@
 @use "../../styles/colors" as color;
 @use "../../styles/fonts" as font;
+@use "../../styles/components/separators" as separator;
 @use "../../styles/mixins" as *;
 
 @import "../MapView/Map.module.scss";
 
 .Modal {
   @include blurring;
-  @include text-shadow;
   box-shadow: 1px 2px 1px hsla(0, 0%, 0%, 0.75);
   
   position: fixed;
@@ -23,6 +23,7 @@
   z-index: 3;
 
   .ModalHeader {
+    @include text-shadow;
     display: grid;
     grid-area: modal-header;
     grid-template-columns: 3fr 1fr;
@@ -43,7 +44,7 @@
   }
 
   .Separator {
-    @include separator-style;
+    @include separator.style;
 
     grid-area: separator;
     place-self: center;

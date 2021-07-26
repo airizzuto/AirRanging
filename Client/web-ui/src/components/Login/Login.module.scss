@@ -1,5 +1,7 @@
 @use "../../styles/colors" as color;
 @use "../../styles/fonts" as font;
+@use "../../styles/components/checkbox";
+@use "../../styles/components/boxes" as box;
 @use "../../styles/mixins" as *;
 
 @import "../Modals/FixedModal.module.scss";
@@ -37,18 +39,12 @@
       }
       
       input {
-        @include drop-shadow;
-        $size: 60px;
+        @include box.light;
         grid-area: input;
       
-        display: flex;
-      
-        border: 2px solid color.$light2;
-        border-radius: 5px;
-        height: 1.8rem;
+        height: 1rem;
         width: 100%;
         place-self: center;
-        justify-content: flex-end;
       }
     }
   }
@@ -65,7 +61,7 @@
     text-align: center;
 
     .RememberMe {
-      @include checkbox-style;
+      @include checkbox.style;
     }
 
     .ForgotPassword {
