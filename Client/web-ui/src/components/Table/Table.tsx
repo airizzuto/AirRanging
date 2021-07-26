@@ -3,8 +3,8 @@ import { useTable } from "react-table";
 import Style from "./Table.module.scss";
 
 interface Props {
-  data: any,
-  columns: {Header: string, accessor: string}[]
+  data: any;
+  columns: {Header: string, accessor: string}[];
 }
 
 const Table = ({columns, data}: Props): JSX.Element => {
