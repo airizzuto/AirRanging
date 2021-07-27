@@ -20,26 +20,41 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
     >
       <form className={Style.LoginForm}>
 
-        <div>
-          <label>
-            Email:
+        <div className={Style.LoginFields}>
+          <div className={Style.FormGroup}>
+            <label>Email:</label>
             <input type="email" name="email"/>
-          </label>
-        </div>
-        <div>
-          <label>
-            Password:
+          </div>
+          <div className={Style.FormGroup}>
+            <label>Password:</label>
             <input type="password" name="password"/>
-          </label>
+          </div>
         </div>
 
-        <div className={Style.ForgotPass}>
-          <Link to="/forgotpass" onClick={handleClose}>
-            Forgot Password?
-          </Link>
+        <div className={Style.Options}>
+          <div className={Style.RememberMe}>
+            <input type="checkbox" id="rememberMe"/>
+            <label htmlFor="rememberMe">Remember me</label>
+          </div>
+          <div className={Style.ForgotPassword}>
+            <Link to="/forgotpass" onClick={handleClose}>
+              Forgot Password?
+            </Link>
+          </div>
+        </div>
+        
+        <div className={Style.Buttons}>
+          <div className={Style.LoginButton}>
+            <DecoratedButton buttonText="Login" onClick={() => handleClick}/>
+          </div>
+          <p>OR</p>
+          <div className={Style.RegistrationButton}>
+            <Link to="/registration" onClick={handleClose}>
+              Register
+            </Link>
+          </div>
         </div>
 
-        <DecoratedButton buttonText="Login" handleClick={() => handleClick}/>
       </form>
     </FixedModal>
   );

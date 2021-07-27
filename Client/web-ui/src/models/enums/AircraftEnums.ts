@@ -1,6 +1,6 @@
 
-export enum AircraftType {
-  Unknown = "Other",
+export enum EAircraftType {
+  Unknown = "Unknown",
   AutonomousUnmannedAircraft = "Autonomous Unmanned Aircraft",
   SingleEngineLand = "Single Engine Land",
   SingleEngineSea = "Single Engine Sea",
@@ -12,8 +12,8 @@ export enum AircraftType {
   TiltRotor = "Tilt Rotor"
 }
 
-export enum EngineType {
-  Unknown = "Other",
+export enum EEngineType {
+  Unknown = "Unknown",
   Electric = "Electric",
   Piston = "Piston",
   TurbopropTurboshaft = "Turboprop Turboshaft",
@@ -23,7 +23,7 @@ export enum EngineType {
 }
 
 export enum EFuelType {
-  Unknown = "Other",
+  Unknown = "Unknown",
   AvGas = "AvGas",
   JetA = "JetA",
   Diesel = "Diesel",
@@ -32,7 +32,7 @@ export enum EFuelType {
 
 export enum EIcaoWakeCategory
 {
-  Unknown = "Other",
+  Unknown = "Unknown",
   Heavy = "Heavy",
   Medium = "Medium",
   Light = "Light",
@@ -40,7 +40,7 @@ export enum EIcaoWakeCategory
 
 export enum EWeightCategory
 {
-  Unknown = "Other",
+  Unknown = "Unknown",
   Super = "Super",
   Heavy = "Heavy",
   Large = "Large",

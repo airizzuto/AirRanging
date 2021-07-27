@@ -1,4 +1,6 @@
 import React from 'react';
+import aircrafts from '../../data/aircrafts-mock';
+import { Aircraft } from '../../models/Aircraft';
 
 // import { AircraftType, EngineType } from "../../models/enums/AircraftEnums";
 import Table from '../Table/Table';
@@ -15,9 +17,12 @@ import Style from "./AircraftEditView.module.scss";
 //   maxRange: number;
 // }
 
+const mockData: Aircraft[] = aircrafts;
+
 const AircraftEditView = (): JSX.Element => {
+
   const data = React.useMemo(
-    () => [],
+    () => mockData,
     []
   );
 
@@ -40,19 +45,23 @@ const AircraftEditView = (): JSX.Element => {
         accessor: 'variant',
       },
       {
-        Header: 'AircraftType',
+        Header: 'Aircraft Type',
         accessor: 'aircraftType',
       },
       {
-        Header: 'EngineType',
+        Header: 'Engine Type',
         accessor: 'engineType',
       },
       {
-        Header: 'EngineCount',
+        Header: 'Engine Count',
         accessor: 'engineCount',
       },
       {
-        Header: 'MaxRange',
+        Header: 'Weight Category',
+        accessor: 'weightCategory',
+      },
+      {
+        Header: 'Max Range',
         accessor: 'maxRange',
       },
     ],
@@ -62,9 +71,13 @@ const AircraftEditView = (): JSX.Element => {
   return (
     <div className={Style.AircraftEditView}>
       {/*TODO: Search bar*/}
-      <h1>Browse Aircrafts</h1>
-      <br/>
-      <Table columns={columns} data={data} />
+      <h1 className={Style.AircraftEditTitle}>Browse Aircrafts</h1>
+
+      <hr className={Style.Separator} />
+
+      <div className={Style.AircraftsTable}>
+        <Table columns={columns} data={data} />
+      </div>
     </div>
   );
 };

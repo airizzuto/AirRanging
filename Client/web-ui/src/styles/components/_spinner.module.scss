@@ -1,4 +1,4 @@
-@import "../styles/globals.scss";
+@use "../styles/colors" as color;
 
 .spinner {
   position: fixed;
@@ -7,8 +7,8 @@
   left:50%;
   transform: translate(-50%,-50%);
 
-  border: 10px solid #f3f3f3;
-  border-top: 10px solid $secondary-color;
+  border: 10px solid color.$light1;
+  border-top: 10px solid color.$light2;
   border-radius: 50%;
   width: 30px;
   height: 30px;

@@ -1,4 +1,7 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/components/separators" as separator;
+@use "../../styles/mixins" as *;
 
 .Modal {
   @include blurring;
@@ -12,16 +15,16 @@
 
   .ModalMain {
     @include text-shadow;
-    @include drop-shadow-strong;
+    @include drop-shadow;
 
     position: fixed;
-    color: $primary-color;
-    background-color: $background-color-solid;
+    color: color.$light1;
+    background-color: color.$dark1;
 
     max-height: 70%;
     height: fit-content;
     width: max-content;
-    padding: 0 1rem 1rem 1rem;
+    padding: 1rem 2rem 3rem 2rem;
 
     display: grid;
     grid-template-rows: 1fr auto minmax(1fr, max-content);
@@ -38,7 +41,7 @@
       grid-template-areas: "modal-title modal-exit";
 
       .ModalTitle {
-        @include title-font;
+        @include font.header-1;
         grid-area: modal-title;
         place-self: left center;
 
@@ -51,17 +54,15 @@
     }
 
     .Separator {
-      @include drop-shadow-strong;
+      @include separator.style;
       grid-area: separator;
       width: 95%;
       margin: 0 0 1rem 0;
-      border-top: 1px solid $primary-color;
-      border-radius: 2px;
       place-self: center;
     }
 
     .ModalContent {
-      @include main-font;
+      @include font.main;
 
       display: grid;
       grid-area: modal-content;

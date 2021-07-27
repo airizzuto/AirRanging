@@ -6,11 +6,15 @@ import ModalTab from "./ModalTab";
 import DraggableModal from "../Modals/DraggableModal";
 
 import Style from "./MapView.module.scss";
+import InfoFooter from "./InfoFooter";
+import PlanningModal from "./Planning";
 
 const MapView = (): JSX.Element => {
   const [isModalActive, setIsModalActive] = React.useState(false); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = React.useState(false);
   const [displayAircraftsModal, setDisplayAircraftsModal] = React.useState(false);
+
+  /* TODO: Aircraft selected states here */
 
   // TODO: abstract modal toggle states parameters (array of states?)
   const handleModalDisplay = (
@@ -55,8 +59,7 @@ const MapView = (): JSX.Element => {
         label="Planning"
         handleClose={() => useModalClose(setDisplayPlanningModal)}
       >
-        {/* TODO: PLANNING COMPONENT */}
-        <div>PLANNING PLACEHOLDER</div>
+        <PlanningModal />
       </DraggableModal>
 
       <DraggableModal 
@@ -68,9 +71,8 @@ const MapView = (): JSX.Element => {
         <div>AIRCRAFTS PLACEHOLDER</div>
       </DraggableModal>
 
-      {/* Map Information Footer */}
-      <div className={Style.InfoFooter}>
-        INFO PLACEHOLDER
+      <div className={Style.Info}>
+        <InfoFooter />
       </div>
 
     </div>

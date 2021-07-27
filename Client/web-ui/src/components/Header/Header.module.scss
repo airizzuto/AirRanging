@@ -1,4 +1,7 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as *;
+
 @import "../Menu/Menu.module.scss";
 @import "../Buttons/ButtonStyles.module.scss";
 
@@ -6,12 +9,14 @@
   @include blurring;
   @include text-shadow;
 
-  grid-area: 1 / 1 / 2 / end;
+  height: 100%;
+  width: 100%;
 
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
   grid-template-areas: "logo nav user";
-  row-gap: 1rem;
+  column-gap: 3rem;
+
   z-index: 10;
 
   .HeaderLogo {
@@ -36,15 +41,13 @@
     align-self: center;
     align-items: center;
 
-    margin: 0 3rem;
-
     li {
       max-width: max-content;
     }
   }
 
   .HeaderAccount {
-    @include header-font;
+    @include font.nav;
     @include hyperlink-behavior;
 
     grid-area: user;
@@ -58,7 +61,7 @@
     }
 
     a {
-      color: $primary-color;
+      color: color.$light1;
     }
 
     li {

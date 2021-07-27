@@ -1,8 +1,10 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as *;
 
 .Footer {
   @include blurring;
-  @include footer-font;
+  @include font.footer;
   
   grid-area: 3 / 1 / 4 / end;
 
@@ -16,7 +18,7 @@
 
   .Copyright{
     @include text-shadow;
-    color: $primary-color;
+    color: color.$light1;
     grid-area: copyright;
     padding: 0 1rem;
 
@@ -37,7 +39,7 @@
     a {
       text-decoration: none;
       padding: 0 1rem;
-      color: $primary-color;
+      color: color.$light1;
     }
   }
 

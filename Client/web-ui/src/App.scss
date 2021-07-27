@@ -1,4 +1,4 @@
-@import "./styles/globals.scss";
+@use "./styles/colors" as color;
 
 .App {
   position: fixed;
@@ -6,7 +6,7 @@
   width: 100%;
 
   background-image: url("./topography.svg");
-  background-color: hsl(0, 0%, 100%);
+  background-color: color.$light1;
   background-repeat: repeat;
   background-size: cover;
 
@@ -14,9 +14,21 @@
   grid-template-rows: 6rem 1fr min-content;
   grid-template-columns: 1fr;
 
-  grid-template-areas: "header main footer";
+  grid-template-areas: "header-nav" "main" "footer";
 
   overflow: auto;
+}
+
+.Header {
+  grid-area: header-nav;
+}
+
+.Main {
+  grid-area: main;
+}
+
+.Footer {
+  grid-area: footer;
 }
 
 @media (max-width: 600px) {

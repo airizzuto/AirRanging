@@ -1,0 +1,39 @@
+@use "./colors" as color;
+@use "./fonts" as font;
+
+@mixin blurring {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: saturate(180%) blur(2px);
+  -webkit-backdrop-filter: saturate(180%) blur(2px);
+}
+
+@mixin box-shadow {
+  filter: box-shadow(2px 2px 1px rgba(0, 0, 0, 0.75));
+}
+
+@mixin drop-shadow {
+  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.75));
+}
+
+@mixin text-shadow {
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.75);
+}
+
+@mixin hyperlink-behavior {
+  a {
+    text-decoration: none
+  };
+
+  a:hover {
+    color: color.$accent1;
+  }
+}
+
+@mixin button-behavior {
+  decoration: none;
+  
+  :hover {
+    cursor: pointer;
+    color: color.$accent1;
+  }
+}

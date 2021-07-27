@@ -1,13 +1,15 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as *;
 
 .PrimaryButton {
-  @include button-font;
+  @include font.button;
   @include button-behavior;
   @include drop-shadow;
   @include text-shadow;
 
-  color: $primary-color;
-  background-color: $secondary-color;
+  color: color.$light1;
+  background-color: color.$light2;
 
   text-align: center;
   padding: 0.75rem;
@@ -21,11 +23,11 @@
   @include button-behavior;
 
   button {
-    @include button-font;
+    @include font.button;
     @include text-shadow;
 
-    color: $primary-color;
-    background-color: $secondary-color;
+    color: color.$light1;
+    background-color: color.$light2;
 
     padding: 5px 10px;
 

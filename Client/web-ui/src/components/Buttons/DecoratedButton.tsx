@@ -3,12 +3,14 @@ import Style from "../Buttons/ButtonStyles.module.scss";
 interface Props {
   buttonText: string,
   backgroundImage?: string,
-  handleClick: () => void
+  onClick: () => void
 }
 
-export default function DecoratedButton({ buttonText, handleClick }: Props): JSX.Element {
+export default function DecoratedButton(
+  { buttonText, onClick }: Props
+): JSX.Element {
   return (
-    <div className={Style.PrimaryButton} onClick={handleClick}>
+    <div className={Style.PrimaryButton} onClick={onClick}>
       {buttonText}
     </div>
   );

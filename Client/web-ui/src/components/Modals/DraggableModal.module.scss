@@ -1,13 +1,17 @@
-@import "../../styles/globals.scss";
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/components/separators" as separator;
+@use "../../styles/mixins" as *;
+
 @import "../MapView/Map.module.scss";
 
 .Modal {
   @include blurring;
-  @include text-shadow;
+  box-shadow: 1px 2px 1px hsla(0, 0%, 0%, 0.75);
   
   position: fixed;
 
-  color: $primary-color;
+  color: color.$light1;
 
   display: grid;
   grid-template-rows: 1fr auto 9fr;
@@ -19,17 +23,18 @@
   z-index: 3;
 
   .ModalHeader {
+    @include text-shadow;
     display: grid;
     grid-area: modal-header;
     grid-template-columns: 3fr 1fr;
     grid-template-areas: "modal-title modal-exit";
+    column-gap: 2rem;
     height: fit-content;
 
     .ModalTitle {
-      @include title-font;
+      @include font.header-1;
       grid-area: modal-title;
       place-self: left center;
-
     }
 
     .CloseButton {
@@ -39,17 +44,15 @@
   }
 
   .Separator {
-    @include drop-shadow-strong;
+    @include separator.style;
+
     grid-area: separator;
-    width: 90%;
-    margin: 0 0 1rem 0;
-    border-top: 1px solid $primary-color;
-    border-radius: 2px;
     place-self: center;
+    margin: 1rem 0;
   }
 
   .ModalContent {
-    @include main-font;
+    @include font.main;
 
     display: grid;
     grid-area: modal-content;
