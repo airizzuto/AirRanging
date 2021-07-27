@@ -7,7 +7,6 @@ $size-2: 1.2rem;
 $size-1: 1rem;
 $size-0: 0.833rem;
 
-
 @mixin header-1 {
   font-weight: 400;
   font-size: $size-4;
@@ -16,6 +15,11 @@ $size-0: 0.833rem;
 @mixin header-2 {
   font-weight: 400;
   font-size: $size-3;
+}
+
+@mixin header-3 {
+  font-weight: 400;
+  font-size: $size-2;
 }
 
 @mixin nav {
