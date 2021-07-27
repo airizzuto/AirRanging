@@ -51,13 +51,15 @@ const Table = ({columns, data}: Props): JSX.Element => {
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   { /* Render the header */ }
                   { column.render("Header") }
-                  { /* Adds sort indicator */ }
+                  { /* TODO: sort icons 
+                    Adds sort indicator */ }
                   <span>
                       {column.isSorted
                         ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
+                          ? " ↑"
+                          : " ↓"
+                        : " ↨"
+                      }
                     </span>
                 </th>
               ))}

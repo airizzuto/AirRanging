@@ -4,7 +4,8 @@
 
 .Table {
   @include text-shadow;
-  height: 50%;
+  display: block;
+  height: 55%;
   width: 100%;
   padding: 2rem;
   background-color: rgba(#000000, 0.5);
@@ -12,14 +13,11 @@
   border-spacing: 0;
   border-radius: 10px;
 
+  overflow: hidden scroll;
+
   thead {
     @include font.header-3;
     color: color.$light1;
-
-    tr::after {
-      content: normal;
-      border-bottom: 1px solid color.$light1;
-    }
   }
 
   td {
@@ -32,12 +30,14 @@
     overflow: auto;
     border-radius: 10px;
 
+
     tr:hover {
-      background-color: rgba(color.$light2, 0.5);
+      background-color: rgba(color.$light2, 0.7);
       cursor: pointer;
 
       td{
-        color: color.$accent1;
+        // TODO: On select change letters colors
+        // color: color.$accent1;
       }
     }
   
