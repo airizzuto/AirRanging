@@ -1,10 +1,15 @@
+// import SelectDropdown from "../Filters/SelectDropdown";
 
-/* React select documentation https://react-select.com/home */
-// TODO:
+// import aircrafts from "../../data/aircrafts-mock";
+
+// TODO: data
 
 const AircraftSelect = () => {
   return (
     <div>
+      <div>
+        {/* <SelectDropdown options={}/> */}
+      </div>
       {/* TODO: table selection */}
       {/* TODO: search bar */}
       {/* TODO: confirm selection */}

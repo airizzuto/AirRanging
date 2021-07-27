@@ -14,6 +14,8 @@ const MapView = (): JSX.Element => {
   const [displayPlanningModal, setDisplayPlanningModal] = React.useState(false);
   const [displayAircraftsModal, setDisplayAircraftsModal] = React.useState(false);
 
+  /* TODO: Aircraft selected states here */
+
   // TODO: abstract modal toggle states parameters (array of states?)
   const handleModalDisplay = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
