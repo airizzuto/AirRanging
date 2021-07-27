@@ -9,11 +9,17 @@
   padding: 2rem;
   background-color: rgba(#000000, 0.5);
   border: 0.5px solid rgba(color.$light1, 0.5);
+  border-spacing: 0;
   border-radius: 10px;
 
   thead {
     @include font.header-3;
     color: color.$light1;
+
+    tr::after {
+      content: normal;
+      border-bottom: 1px solid color.$light1;
+    }
   }
 
   td {
@@ -36,7 +42,13 @@
     }
   
     tr::after {
+      content: none;
+      color: color.$light1;
       border-bottom: 1px solid color.$light1;
     }
+  }
+
+  .Pagination { // TODO: styles
+    padding: 1rem;
   }
 }
