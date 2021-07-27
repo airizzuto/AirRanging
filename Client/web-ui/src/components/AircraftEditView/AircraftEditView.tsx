@@ -1,4 +1,6 @@
 import React from 'react';
+import aircrafts from '../../data/aircrafts-mock';
+import { Aircraft } from '../../models/Aircraft';
 
 // import { AircraftType, EngineType } from "../../models/enums/AircraftEnums";
 import Table from '../Table/Table';
@@ -15,9 +17,12 @@ import Style from "./AircraftEditView.module.scss";
 //   maxRange: number;
 // }
 
+const mockData: Aircraft[] = aircrafts;
+
 const AircraftEditView = (): JSX.Element => {
+
   const data = React.useMemo(
-    () => [],
+    () => mockData,
     []
   );
 
