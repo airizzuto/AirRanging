@@ -25,7 +25,6 @@ const App = (): JSX.Element => {
       <Login showLogin={showLogin} handleClose={() => useModalClose(setShowLogin)} />
   
       <div className="Main">
-
         <Switch>
             <Route exact path="/">
               <MapView/>

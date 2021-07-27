@@ -19,17 +19,17 @@
   overflow: auto;
 }
 
+.Header {
+  grid-area: header-nav;
+}
+
 .Main {
   grid-area: main;
 }
 
-.Header {
-  grid-area: header-nav;
-}
 .Footer {
   grid-area: footer;
 }
-
 
 @media (max-width: 600px) {
 
