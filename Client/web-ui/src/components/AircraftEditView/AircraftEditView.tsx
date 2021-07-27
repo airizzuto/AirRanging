@@ -45,19 +45,23 @@ const AircraftEditView = (): JSX.Element => {
         accessor: 'variant',
       },
       {
-        Header: 'AircraftType',
+        Header: 'Aircraft Type',
         accessor: 'aircraftType',
       },
       {
-        Header: 'EngineType',
+        Header: 'Engine Type',
         accessor: 'engineType',
       },
       {
-        Header: 'EngineCount',
+        Header: 'Engine Count',
         accessor: 'engineCount',
       },
       {
-        Header: 'MaxRange',
+        Header: 'Weight Category',
+        accessor: 'weightCategory',
+      },
+      {
+        Header: 'Max Range',
         accessor: 'maxRange',
       },
     ],
