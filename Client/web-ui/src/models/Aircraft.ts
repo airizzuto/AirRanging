@@ -10,12 +10,12 @@ export interface Aircraft {
   model: string;
   variant?: string;
   registration?: string;
-  aircraftType: EAircraftType | string | number;
-  engineType: EEngineType | string | number;
-  engineCount: number;
-  weightCategory: EWeightCategory | string | number;
-  icaoWakeCategory: EIcaoWakeCategory | string | number;
-  fuelType: EFuelType | string | number;
+  aircraftType: EAircraftType | string;
+  engineType: EEngineType | string;
+  engineCount: number | string;
+  weightCategory: EWeightCategory | string;
+  icaoWakeCategory: EIcaoWakeCategory | string;
+  fuelType: EFuelType | string;
   maxTakeoffWeight: number | string;
   cruiseSpeed: number | string;
   fuelCapacity: number | string;
