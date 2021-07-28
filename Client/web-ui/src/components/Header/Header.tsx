@@ -27,12 +27,12 @@ const Header = ({loginHandler}: Props): JSX.Element => {
 
       <ul className={Style.HeaderNav}>
         <li>
-          <Link to="/aircrafts" className={ButtonStyle.PrimaryButton}>
+          <Link to="/aircrafts" className={ButtonStyle.Decorated}>
             AIRCRAFT EDIT
           </Link>
         </li>
         <li>
-          <Link to="/airports" className={ButtonStyle.PrimaryButton}>
+          <Link to="/airports" className={ButtonStyle.Decorated}>
             AIRPORT EDIT
           </Link>
         </li>
