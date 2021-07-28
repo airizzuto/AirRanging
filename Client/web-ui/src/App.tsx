@@ -4,7 +4,7 @@ import { useModalClose } from "./hooks/useModalClose";
 import { useModalToggle } from "./hooks/useModalToggle";
 
 import MapView from "./components/MapView/MapView";
-import AircraftEditView from "./components/AircraftEditView/AircraftEditView";
+import AircraftsView from "./components/AircraftEditView/AircraftsView";
 import UserRegistrationView from "./components/UserRegistration/UserRegistrationView";
 
 import Header from "./components/Header/Header";
@@ -15,7 +15,15 @@ import "./App.scss";
 
 const App = (): JSX.Element => {
   const [showLogin, setShowLogin] = React.useState(false);
-  
+  // TODO: aircrafts state
+  // TODO: user state
+
+  // TODO: route matching
+  // const match = useRouteMatch("/aircrafts/:id");
+  // const aircraftSelected = null; // TODO: service get aircraft by id
+
+  // aircrafts state effect
+
   return (
     <div className={"App"}>
       <div className="Header">
@@ -27,10 +35,13 @@ const App = (): JSX.Element => {
       <div className="Main">
         <Switch>
             <Route exact path="/">
-              <MapView/>
+              <MapView />
             </Route>
             <Route exact path="/aircrafts">
-              <AircraftEditView />
+              <AircraftsView />
+            </Route>
+            <Route exact path="/aircrafts/:id">
+              {/* <AircraftDetail aircraft={aircraftSelected}/> */}
             </Route>
             <Route exact path="/airports">
               {/* <AirportsEditView /> */}

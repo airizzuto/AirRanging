@@ -1,28 +1,20 @@
 import React from 'react';
 import aircrafts from '../../data/aircrafts-mock';
-import { Aircraft } from '../../models/Aircraft';
+import { Aircraft } from '../../types/Aircraft';
+import AircraftsTable from '../Table/AircraftsTable';
 
-// import { AircraftType, EngineType } from "../../models/enums/AircraftEnums";
-import Table from '../Table/Table';
-import Style from "./AircraftEditView.module.scss";
+import Style from "./AircraftsView.module.scss";
+import LinkedButton from '../Buttons/LinkedButton';
 
-// interface IAircraftDetails {
-//   icaoId: string;
-//   manufacturer: string;
-//   model: string;
-//   variant: string;
-//   aircraftType: AircraftType;
-//   engineType: EngineType;
-//   engineCount: number;
-//   maxRange: number;
-// }
 
-const mockData: Aircraft[] = aircrafts;
 
-const AircraftEditView = (): JSX.Element => {
+const mockAircrafts: Aircraft[] = aircrafts;
 
+const AircraftsView = (): JSX.Element => {
+
+  // Data search filter in this level
   const data = React.useMemo(
-    () => mockData,
+    () => mockAircrafts,
     []
   );
 
@@ -70,14 +62,25 @@ const AircraftEditView = (): JSX.Element => {
 
   return (
     <div className={Style.AircraftEditView}>
-      {/*TODO: Search bar*/}
-      <h1 className={Style.AircraftEditTitle}>Browse Aircrafts</h1>
+
+      <div className={Style.SubHeader}>
+        <h1 className={Style.Title}>Browse Aircrafts</h1>
+  
+        <input className={Style.SearchBar}></input>
+
+        <div className={Style.CreateNew}>
+          <LinkedButton path="/aircrafts/create">Create Aircraft</LinkedButton>
+        </div>
+      </div>
+
+      <hr />
 
       <div className={Style.AircraftsTable}>
-        <Table columns={columns} data={data} />
+        <AircraftsTable columns={columns} data={data} />
       </div>
+
     </div>
   );
 };
 
-export default AircraftEditView;
+export default AircraftsView;
