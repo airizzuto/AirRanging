@@ -1,7 +1,6 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePagination, useSortBy, useTable } from "react-table";
 
-import Style from "./Table.module.scss";
+import Style from "./AircraftsTable.module.scss";
 
 // Documentation: https://react-table.tanstack.com/docs/overview
 
@@ -10,7 +9,7 @@ interface Props {
   columns: {Header: string, accessor: string}[];
 }
 
-const Table = ({columns, data}: Props): JSX.Element => {
+const AircraftsTable = ({columns, data}: Props): JSX.Element => {
 
   const {
     getTableProps,
@@ -57,9 +56,9 @@ const Table = ({columns, data}: Props): JSX.Element => {
                   <span>
                       {column.isSorted
                         ? column.isSortedDesc
-                          ? <FontAwesomeIcon icon={["fas", "sort-up"]}/>
-                          : <FontAwesomeIcon icon={["fas", "sort-down"]}/>
-                        : <FontAwesomeIcon icon={["fas", "sort"]}/>
+                          ? " ↑"
+                          : " ↓"
+                        : "  "
                       }
                     </span>
                 </th>
@@ -141,4 +140,4 @@ const Table = ({columns, data}: Props): JSX.Element => {
   );
 };
 
-export default Table;
+export default AircraftsTable;

@@ -15,10 +15,7 @@
 
   .Table {
     grid-area: table-view;
-    background-color: rgba(#000000, 0.5);
-    border: 0.5px solid rgba(color.$light1, 0.5);
     border-spacing: 0;
-    border-radius: 10px;
   
     overflow: hidden scroll;
   
@@ -26,6 +23,9 @@
       @include font.header-3;
       height: 5rem;
       color: color.$light1;
+      th {
+        width: 15rem;
+      }
     }
   
     td {
@@ -36,32 +36,29 @@
   
     tbody {
       overflow: auto;
-      border-radius: 10px;
-  
-  
+
       tr:hover {
         background-color: rgba(color.$light2, 0.7);
         cursor: pointer;
   
         td{
           // TODO: On select change letters colors
-          // color: color.$accent1;
+          color: rgba(color.$accent1, 1.0);
         }
-      }
-    
-      tr::after {
-        content: none;
-        color: color.$light1;
-        border-bottom: 1px solid color.$light1;
       }
     }
   }
 
   .Pagination { // TODO: styles
     @include text-shadow;
-    color: color.$light1;
-
     grid-area: pagination;
+
+    display: flex;
+    width: 100%;
+    justify-self: start;
+    align-items: center;
+    gap: 1rem;
+    color: color.$light1;
     padding: 1rem;
 
     input {
