@@ -1,6 +1,8 @@
 @use "./styles/colors" as color;
 
 .App {
+  display: grid;
+
   position: fixed;
   height: 100%;
   width: 100%;
@@ -16,7 +18,7 @@
 
   grid-template-areas: "header-nav" "main" "footer";
 
-  overflow: auto;
+  overflow: hidden auto;
 }
 
 .Header {
