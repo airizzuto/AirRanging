@@ -45,7 +45,7 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
         
         <div className={Style.Buttons}>
           <div className={Style.LoginButton}>
-            <DecoratedButton buttonText="Login" onClick={() => handleClick}/>
+            <DecoratedButton text="Login" onClick={() => handleClick}/>
           </div>
           <p>OR</p>
           <div className={Style.RegistrationButton}>

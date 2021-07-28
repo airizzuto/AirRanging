@@ -59,7 +59,7 @@ const MapView = (): JSX.Element => {
         label="Planning"
         handleClose={() => useModalClose(setDisplayPlanningModal)}
       >
-        <PlanningModal />
+        <PlanningModal handleAccept={() => useModalClose(setDisplayPlanningModal)}/>
       </DraggableModal>
 
       <DraggableModal 

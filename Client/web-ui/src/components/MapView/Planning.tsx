@@ -1,9 +1,14 @@
 import React from "react";
+import DecoratedButton from "../Buttons/DecoratedButton";
 import Slider from "../Sliders/Slider";
 
 import Style from "./Planning.module.scss";
 
-export default function Planning() {
+interface Props {
+  handleAccept: () => void,
+}
+
+export default function Planning({ handleAccept }: Props) {
   const [aircraftState, setAircraftState] = React.useState({
     fuel: 0,
   });
@@ -53,6 +58,10 @@ export default function Planning() {
             <label>Radius of Action:</label>
             <span className={Style.output}>{/*TODO:*/}*CALCULATED RESULT*</span>
           </div>
+      </div>
+
+      <div className={Style.AcceptButton}>
+        <DecoratedButton text="Accept" onClick={handleAccept} />
       </div>
     </div>
   );

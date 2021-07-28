@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-import Button from "../Buttons/Button";
 import Menu from "../Menu/Menu";
 
 import Style from "./Header.module.scss";
 import ButtonStyle from "../Buttons/ButtonStyles.module.scss";
 import Logo from "./LogoVector.svg";
+import UndecoratedButton from "../Buttons/UndecoratedButton";
 
 interface Props {
   loginHandler: () => void
@@ -46,7 +46,7 @@ const Header = ({loginHandler}: Props): JSX.Element => {
             </Link>
           </li>
           <li>
-            <Button buttonText="LOGIN" handleClick={loginHandler}/>
+            <UndecoratedButton text="LOGIN" onClick={loginHandler}/>
           </li>
         </ul>
       </div>
