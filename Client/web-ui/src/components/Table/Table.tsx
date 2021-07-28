@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePagination, useSortBy, useTable } from "react-table";
 
 import Style from "./Table.module.scss";
@@ -30,17 +31,17 @@ const Table = ({columns, data}: Props): JSX.Element => {
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0, pageSize: 5 },
     },
     useSortBy,
     usePagination,
   );
 
   return (
-    <>
+    <div  className={Style.TableView}>
     {/* Apply the table props */}
       <table {...getTableProps()} className={Style.Table}>
-        <thead>
+        <thead className={Style.TableHeader}>
           { // Loops over the header rows
           headerGroups.map(headerGroup => (
             /* Apply the header row props */
@@ -56,9 +57,9 @@ const Table = ({columns, data}: Props): JSX.Element => {
                   <span>
                       {column.isSorted
                         ? column.isSortedDesc
-                          ? " ↑"
-                          : " ↓"
-                        : " ↨"
+                          ? <FontAwesomeIcon icon={["fas", "sort-up"]}/>
+                          : <FontAwesomeIcon icon={["fas", "sort-down"]}/>
+                        : <FontAwesomeIcon icon={["fas", "sort"]}/>
                       }
                     </span>
                 </th>
@@ -92,7 +93,7 @@ const Table = ({columns, data}: Props): JSX.Element => {
         </tbody>
       </table>
 
-      <div className="Pagination">
+      <div className={Style.Pagination}>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}
@@ -129,14 +130,14 @@ const Table = ({columns, data}: Props): JSX.Element => {
             setPageSize(Number(e.target.value));
           }}
         >
-          {[10, 20, 30, 40, 50].map(pageSize => (
+          {[5, 10, 20, 30, 40, 50].map(pageSize => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
           ))}
         </select>
       </div>
-    </>
+    </div>
   );
 };
 

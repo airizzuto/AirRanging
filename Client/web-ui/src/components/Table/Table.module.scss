@@ -1,54 +1,79 @@
 @use "../../styles/colors" as color;
 @use "../../styles/fonts" as font;
+@use "../../styles/components/boxes" as box;
+@use "../../styles/components/buttons" as button;
 @use "../../styles/mixins" as *;
 
-.Table {
+.TableView {
   @include text-shadow;
-  display: block;
-  height: 55%;
-  width: 100%;
-  padding: 2rem;
-  background-color: rgba(#000000, 0.5);
-  border: 0.5px solid rgba(color.$light1, 0.5);
-  border-spacing: 0;
-  border-radius: 10px;
 
-  overflow: hidden scroll;
+  display: grid;
+  grid-template-rows: 1fr min-content;
+  grid-column: 1fr;
+  grid-template-areas: "table-view" "pagination";
+  place-self: center;
 
-  thead {
-    @include font.header-3;
-    color: color.$light1;
-  }
-
-  td {
-    color: color.$light1;
-    text-align: center;
-    padding: 1rem;
-  }
-
-  tbody {
-    overflow: auto;
+  .Table {
+    grid-area: table-view;
+    background-color: rgba(#000000, 0.5);
+    border: 0.5px solid rgba(color.$light1, 0.5);
+    border-spacing: 0;
     border-radius: 10px;
-
-
-    tr:hover {
-      background-color: rgba(color.$light2, 0.7);
-      cursor: pointer;
-
-      td{
-        // TODO: On select change letters colors
-        // color: color.$accent1;
-      }
+  
+    overflow: hidden scroll;
+  
+    .TableHeader {
+      @include font.header-3;
+      height: 5rem;
+      color: color.$light1;
     }
   
-    tr::after {
-      content: none;
+    td {
       color: color.$light1;
-      border-bottom: 1px solid color.$light1;
+      text-align: center;
+      padding: 1rem;
+    }
+  
+    tbody {
+      overflow: auto;
+      border-radius: 10px;
+  
+  
+      tr:hover {
+        background-color: rgba(color.$light2, 0.7);
+        cursor: pointer;
+  
+        td{
+          // TODO: On select change letters colors
+          // color: color.$accent1;
+        }
+      }
+    
+      tr::after {
+        content: none;
+        color: color.$light1;
+        border-bottom: 1px solid color.$light1;
+      }
     }
   }
 
   .Pagination { // TODO: styles
+    @include text-shadow;
+    color: color.$light1;
+
+    grid-area: pagination;
     padding: 1rem;
+
+    input {
+      @include box.light;
+    }
+
+    select {
+      @include box.light;
+    }
+
+    button {
+      @include button.controls;
+    }
   }
 }
