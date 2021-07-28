@@ -10,8 +10,8 @@ export default function DecoratedButton(
   { text, onClick }: Props
 ): JSX.Element {
   return (
-    <div className={Style.PrimaryButton} onClick={onClick}>
+    <button className={Style.Decorated} onClick={onClick}>
       {text}
-    </div>
+    </button>
   );
 }
