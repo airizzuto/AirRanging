@@ -1,5 +1,5 @@
 
-import { Aircraft } from "../models/Aircraft";
+import { Aircraft } from "../types/Aircraft";
 
 const aircrafts: Aircraft[] = [
   {

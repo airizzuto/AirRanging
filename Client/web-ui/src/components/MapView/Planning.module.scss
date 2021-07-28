@@ -91,7 +91,6 @@
   }
 
   .AcceptButton {
-    @include button-behavior;
     display: flex;
     grid-area: accept;
     justify-content: flex-end;

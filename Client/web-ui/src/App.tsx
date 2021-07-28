@@ -54,7 +54,6 @@ const App = (): JSX.Element => {
             </Route>
         </Switch>
       </div>
-      
 
       <div className="Footer">
         <Footer />
