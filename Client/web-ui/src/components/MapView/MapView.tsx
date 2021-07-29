@@ -1,5 +1,6 @@
 import React from "react";
 import { useModalClose } from "../../hooks/useModalClose";
+import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
 // import Map from "./Map";
 import ModalTab from "./ModalTab";
@@ -39,14 +40,14 @@ const MapView = (): JSX.Element => {
       {/* Properties Modals Activation Tabs */}
       <div className={Style.ModalTabs}>
         <ModalTab
-          label={"Plan"}
+          icon={faMap}
           handleTabClick={() => handleModalDisplay(
             setDisplayPlanningModal, displayPlanningModal
           )}
         />
 
         <ModalTab
-          label={"Acft"}
+          icon={faPaperPlane}
           handleTabClick={() => handleModalDisplay(
             setDisplayAircraftsModal, displayAircraftsModal
           )}
