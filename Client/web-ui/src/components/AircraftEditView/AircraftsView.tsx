@@ -61,7 +61,7 @@ const AircraftsView = (): JSX.Element => {
   );
 
   return (
-    <div className={Style.AircraftEditView}>
+    <div className={Style.AircraftsView}>
 
       <div className={Style.SubHeader}>
         <h1 className={Style.Title}>Browse Aircrafts</h1>
