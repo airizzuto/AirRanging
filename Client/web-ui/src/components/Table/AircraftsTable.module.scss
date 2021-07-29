@@ -49,7 +49,7 @@
     }
   }
 
-  .Pagination { // TODO: styles
+  .Pagination {
     @include text-shadow;
     grid-area: pagination;
 

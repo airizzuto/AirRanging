@@ -26,7 +26,7 @@
 };
 
 @mixin small-light {
-  @include font.button;
+  @include font.button-2;
   @include drop-shadow;
   @include text-shadow;
   @include button-behavior;

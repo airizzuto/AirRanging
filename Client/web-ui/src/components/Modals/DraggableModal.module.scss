@@ -32,7 +32,7 @@
     height: fit-content;
 
     .ModalTitle {
-      @include font.header-1;
+      @include font.header-2;
       grid-area: modal-title;
       place-self: left center;
     }
@@ -45,10 +45,10 @@
 
   .Separator {
     @include separator.style;
-
     grid-area: separator;
+
     place-self: center;
-    margin: 1rem 0;
+    width: 95%;
   }
 
   .ModalContent {
