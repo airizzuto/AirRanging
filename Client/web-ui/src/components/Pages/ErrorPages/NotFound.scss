@@ -1,0 +1,16 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/mixins" as *;
+
+.NotFound {
+  @include blurring;
+
+  display: grid;
+  place-content: center;
+  height: 100%;
+
+  h1 {
+    @include text-shadow;
+    color: color.$light1;
+  }
+}

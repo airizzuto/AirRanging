@@ -3,15 +3,16 @@ import { Route, Switch } from "react-router-dom";
 import { useModalClose } from "./hooks/useModalClose";
 import { useModalToggle } from "./hooks/useModalToggle";
 
-import MapView from "./components/MapView/MapView";
-import AircraftsView from "./components/AircraftEditView/AircraftsView";
-import UserRegistrationView from "./components/UserRegistration/UserRegistrationView";
+import MapView from "./components/Pages/MapView/MapView";
+import AircraftsView from "./components/Pages/AircraftEditView/AircraftsView";
+import UserRegistrationView from "./components/Pages/UserRegistration/UserRegistrationView";
 
 import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
 import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
+import NotFound from "./components/Pages/ErrorPages/NotFound";
 
 const App = (): JSX.Element => {
   const [showLogin, setShowLogin] = React.useState(false);
@@ -51,6 +52,9 @@ const App = (): JSX.Element => {
             </Route>
             <Route exact path="/forgotpass">
               {/* <ForgotPassword /> */}
+            </Route>
+            <Route path="*">
+              <NotFound />
             </Route>
         </Switch>
       </div>
