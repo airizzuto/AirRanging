@@ -5,11 +5,11 @@
 @use "../../styles/components/boxes" as box;
 @use "../../styles/mixins" as *;
 
-.AircraftEditView {
+.AircraftsView {
   @include blurring;
   display: grid;
   height: 100%;
-  padding: 0 10rem;
+  padding: 0 15rem;
   grid-template-rows: min-content min-content max-content;
   grid-template-areas: 
     "sub-header"
@@ -18,11 +18,13 @@
   row-gap: 1rem;
 
   .SubHeader {
+    grid-area: sub-header;
+
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "title search-bar buttons";
-    grid-area: sub-header;
+    column-gap: 1rem;
 
     .Title {
       @include text-shadow;
@@ -40,6 +42,8 @@
     .CreateNew {
       grid-area: buttons;
       place-self: center;
+      min-width: 100%;
+      overflow: none;
     }
   }
 
@@ -53,5 +57,19 @@
   .AircraftsTable {
     grid-area: aircraft-table;
     z-index: 4;
+  }
+}
+
+@media (max-width: 600px) {
+  .AircraftsView {
+    padding: 0 0;
+
+    .SubHeader {
+      grid-template-columns:1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: 
+        "title buttons"
+        "search-bar search-bar" ;
+    }
   }
 }
