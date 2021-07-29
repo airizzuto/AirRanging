@@ -21,30 +21,29 @@
   
     .TableHeader {
       @include font.header-3;
-      height: 5rem;
+      height: 2rem;
       color: color.$light1;
       th {
-        width: 15rem;
+        width: 20rem;
       }
     }
   
     td {
       color: color.$light1;
       text-align: center;
-      padding: 1rem;
+      padding: 0.5rem 1rem;
     }
   
+    tr {
+      border-radius: 10px;
+    }
+
     tbody {
       overflow: auto;
 
       tr:hover {
-        background-color: rgba(color.$light2, 0.7);
+        background-color: rgba(color.$light2, 0.5);
         cursor: pointer;
-  
-        td{
-          // TODO: On select change letters colors
-          color: rgba(color.$accent1, 1.0);
-        }
       }
     }
   }

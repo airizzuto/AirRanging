@@ -91,9 +91,11 @@
   }
 
   .AcceptButton {
+    display: flex;
     grid-area: accept;
     height: fit-content;
-    width: fit-content;
+    align-self: flex-end;
+    width: 50%;
   }
 
   label {
