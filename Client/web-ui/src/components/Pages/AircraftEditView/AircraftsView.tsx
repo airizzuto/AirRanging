@@ -1,10 +1,10 @@
 import React from 'react';
-import aircrafts from '../../data/aircrafts-mock';
-import { Aircraft } from '../../types/Aircraft';
-import AircraftsTable from '../Table/AircraftsTable';
+import aircrafts from '../../../data/aircrafts-mock';
+import { Aircraft } from '../../../types/Aircraft';
+import AircraftsTable from '../../Table/AircraftsTable';
 
 import Style from "./AircraftsView.module.scss";
-import LinkedButton from '../Buttons/LinkedButton';
+import LinkedButton from '../../Buttons/LinkedButton';
 
 
 

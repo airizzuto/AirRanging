@@ -3,8 +3,6 @@
 @use "../../styles/components/separators" as separator;
 @use "../../styles/mixins" as *;
 
-@import "../MapView/Map.module.scss";
-
 .Modal {
   @include blurring;
   box-shadow: 1px 2px 1px hsla(0, 0%, 0%, 0.75);

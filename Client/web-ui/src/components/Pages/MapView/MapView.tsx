@@ -1,10 +1,10 @@
 import React from "react";
-import { useModalClose } from "../../hooks/useModalClose";
+import { useModalClose } from "../../../hooks/useModalClose";
 import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
 // import Map from "./Map";
-import ModalTab from "./ModalTab";
-import DraggableModal from "../Modals/DraggableModal";
+import ModalTab from "../../Buttons/ModalTab";
+import DraggableModal from "../../Modals/DraggableModal";
 
 import Style from "./MapView.module.scss";
 import InfoFooter from "./InfoFooter";

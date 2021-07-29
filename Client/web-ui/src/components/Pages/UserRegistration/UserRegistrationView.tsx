@@ -1,4 +1,4 @@
-import DecoratedButton from '../Buttons/DecoratedButton';
+import DecoratedButton from '../../Buttons/DecoratedButton';
 
 import Style from "./UserRegistration.module.scss";
 

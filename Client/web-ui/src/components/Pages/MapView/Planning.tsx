@@ -1,6 +1,6 @@
 import React from "react";
-import Slider from "../Sliders/Slider";
-import DecoratedButton from "../Buttons/DecoratedButton";
+import Slider from "../../Sliders/Slider";
+import DecoratedButton from "../../Buttons/DecoratedButton";
 
 import Style from "./Planning.module.scss";
 

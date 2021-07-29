@@ -1,8 +1,8 @@
-@use "../../styles/colors" as color;
-@use "../../styles/fonts" as font;
-@use "../../styles/components/separators" as separator;
-@use "../../styles/components/boxes" as box;
-@use "../../styles/mixins" as *;
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/components/separators" as separator;
+@use "../../../styles/components/boxes" as box;
+@use "../../../styles/mixins" as *;
 
 .Planning {
   @include box-shadow;
@@ -94,7 +94,7 @@
     display: flex;
     grid-area: accept;
     height: fit-content;
-    align-self: flex-end;
+    justify-self: flex-end;
     width: 50%;
   }
 

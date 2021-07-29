@@ -1,7 +1,7 @@
 import React from 'react';
 import Style from "./Map.module.scss";
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { containerStyle, options, center } from '../../settings/google-maps/settings';
+import { containerStyle, options, center } from '../../../settings/google-maps/settings';
 import Spinner from "../../styles/components/_spinner.module.scss";
 
 const Map = (): JSX.Element => {

@@ -21,12 +21,13 @@
     display: grid;
     grid-auto-rows: auto;
     row-gap: 1rem;
+
     z-index: 2;
   }
   
   .Info {
     grid-area: info;
-    z-index: 4;
+    z-index: 2;
   }
 }
 
