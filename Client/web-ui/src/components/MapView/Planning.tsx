@@ -63,7 +63,7 @@ export default function Planning({ handleAccept }: Props) {
       </div>
 
       <div className={Style.AcceptButton}>
-        <DecoratedButton text="Accept" onClick={handleAccept} />
+        <DecoratedButton onClick={handleAccept}>Accept</DecoratedButton>
       </div>
     </div>
   );

@@ -45,10 +45,9 @@ const UserRegistrationView = () => {
         </div>
 
         <div className={Style.SubmitButton}>
-          <DecoratedButton 
-            text="Submit"
-            onClick={() => handleClick}
-          />
+          <DecoratedButton onClick={() => handleClick}>
+            Submit
+          </DecoratedButton>
         </div>
       </form>
     </div>

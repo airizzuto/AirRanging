@@ -1,17 +1,17 @@
 import Style from "../Buttons/ButtonStyles.module.scss";
 
 interface Props {
-  text: string,
+  children: JSX.Element | string,
   backgroundImage?: string,
   onClick: () => void
 }
 
 export default function DecoratedButton(
-  { text, onClick }: Props
+  { children, onClick }: Props
 ): JSX.Element {
   return (
     <button className={Style.Decorated} onClick={onClick}>
-      {text}
+      {children}
     </button>
   );
 }
