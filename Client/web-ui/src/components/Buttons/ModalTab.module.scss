@@ -28,4 +28,5 @@
 .Tab:hover {
   color: color.$accent1;
   cursor: pointer;
+  transition: color 0.4s;
 }

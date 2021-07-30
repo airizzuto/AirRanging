@@ -26,6 +26,7 @@
 
   a:hover {
     color: color.$accent1;
+    transition: color 0.4s;
   }
 }
 
@@ -36,5 +37,6 @@
   :hover {
     cursor: pointer;
     color: color.$accent1;
+    transition: color 0.4s;
   }
 }
