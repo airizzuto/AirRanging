@@ -1,6 +1,5 @@
 @use "../../styles/colors" as color;
 @use "../../styles/fonts" as font;
-@use "../../styles/components/checkbox";
 @use "../../styles/components/boxes" as box;
 @use "../../styles/mixins" as *;
 
@@ -61,7 +60,18 @@
     text-align: center;
 
     .RememberMe {
-      @include checkbox.style;
+      // FIXME: position
+      display: flex;
+      place-self: center;
+      
+      label {
+        @include font.main;
+      }
+
+      label:hover {
+        color: color.$accent1;
+        transition: color 0.4s;
+      }
     }
 
     .ForgotPassword {

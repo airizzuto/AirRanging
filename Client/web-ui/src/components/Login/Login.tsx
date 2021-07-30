@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import DecoratedButton from "../Buttons/DecoratedButton";
 import FixedModal from "../Modals/FixedModal";
+
 import Style from "./Login.module.scss";
+import CheckboxStyle from "../../styles/components/_checkbox.module.scss";
 
 interface Props {
   showLogin: boolean,
@@ -33,8 +35,10 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
 
         <div className={Style.Options}>
           <div className={Style.RememberMe}>
-            <input type="checkbox" id="rememberMe"/>
-            <label htmlFor="rememberMe">Remember me</label>
+            <label className={CheckboxStyle.checkbox}>Remember Me
+              <input type="checkbox"/>
+              <span className={CheckboxStyle.checkmark}></span>
+            </label>
           </div>
           <div className={Style.ForgotPassword}>
             <Link to="/forgotpass" onClick={handleClose}>
