@@ -1,4 +1,8 @@
+import React from "react";
 import { Link } from "react-router-dom";
+import userService from "../../services/userService";
+import aircraftService from "../../services/aircraftService";
+
 import DecoratedButton from "../Buttons/DecoratedButton";
 import FixedModal from "../Modals/FixedModal";
 
@@ -11,8 +15,45 @@ interface Props {
 }
 
 export default function LoginModal({ showLogin, handleClose }: Props): JSX.Element {
-
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const handleClick = () => { return; };
+
+  const handleEmailChange = (event: { 
+    preventDefault: () => void; target: { value: React.SetStateAction<string>; }; 
+  }) => {
+    event.preventDefault();
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event: { 
+    preventDefault: () => void; target: { value: React.SetStateAction<string>; };
+  }) => {
+    event.preventDefault();
+    setPassword(event.target.value);
+  };
+
+  const handleLogin = async (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+
+    try {
+      const user = await userService.login({
+        email, password
+      });
+
+      window.localStorage.setItem(
+        "userToken", JSON.stringify(user)
+      );
+      aircraftService.setToken(user.token);  // For aircraft requests with authentication requirements
+      handleLogin(user);
+      // Resets fields
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      // TODO: user error notification
+      console.log(error.message);
+    }
+  };
 
   return (
     <FixedModal
@@ -20,16 +61,24 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
       visible={showLogin}
       handleModalClose={handleClose}
     >
-      <form className={Style.LoginForm}>
+      <form className={Style.LoginForm} onSubmit={handleLogin}>
 
         <div className={Style.LoginFields}>
           <div className={Style.FormGroup}>
             <label>Email:</label>
-            <input type="email" name="email"/>
+            <input type="email"
+              name="email"
+              value={email}
+              onChange={handleEmailChange}
+            />
           </div>
           <div className={Style.FormGroup}>
             <label>Password:</label>
-            <input type="password" name="password"/>
+            <input type="password"
+              name="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
           </div>
         </div>
 

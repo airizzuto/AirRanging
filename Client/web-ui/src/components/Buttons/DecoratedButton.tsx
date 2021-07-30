@@ -1,9 +1,9 @@
 import Style from "../Buttons/ButtonStyles.module.scss";
 
 interface Props {
-  children: JSX.Element | string,
-  backgroundImage?: string,
-  onClick: () => void
+  children: JSX.Element | string;
+  backgroundImage?: string;
+  onClick: () => void;
 }
 
 export default function DecoratedButton(

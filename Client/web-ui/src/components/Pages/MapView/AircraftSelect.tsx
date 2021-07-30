@@ -20,6 +20,7 @@ const AircraftSelect = () => {
             <col>details</>
           </row>
       */}
+      {/* TODO: pagination controls */}
       {/* TODO: buttons
         accept closes modal
         details opens aircraft id page

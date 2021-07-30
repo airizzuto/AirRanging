@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useModalClose } from "./hooks/useModalClose";
 import { useModalToggle } from "./hooks/useModalToggle";
@@ -13,9 +13,12 @@ import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
 import NotFound from "./components/Pages/ErrorPages/NotFound";
+import aircraftService from "./services/aircraftService";
 
 const App = (): JSX.Element => {
-  const [showLogin, setShowLogin] = React.useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [user, setUser] = useState(null);
+
   // TODO: aircrafts state
   // TODO: user state
 
@@ -25,10 +28,22 @@ const App = (): JSX.Element => {
 
   // aircrafts state effect
 
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("userToken");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      aircraftService.setToken(user.token);
+    }
+  }, []);
+
   return (
     <div className={"App"}>
       <div className="Header">
-        <Header loginHandler={() => useModalToggle(setShowLogin, showLogin)} />
+        <Header 
+          loginHandler={() => useModalToggle(setShowLogin, showLogin)}
+          user={user}
+        />
       </div>
 
       <Login showLogin={showLogin} handleClose={() => useModalClose(setShowLogin)} />

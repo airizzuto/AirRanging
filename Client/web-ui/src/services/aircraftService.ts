@@ -1,7 +1,12 @@
 import axios from "axios";
 
 const baseUrl = process.env.REACT_APP_BASEURL;
-//let token = null;
+
+let token: string | null = null;
+
+const setToken = (newToken: string) => {
+  token = `bearer ${newToken}`;
+};
 
 /*
 /// <summary>
@@ -24,6 +29,15 @@ const getAllAircrafts = async () => {
   return response.data;
 };
 
+const getAircraftsOwnedByUser = async () => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.get(baseUrl + "/api/aircrafts/owned", config);
+
+  return response.data;
+};
+
 export default {
-  getAllAircrafts
+  getAllAircrafts, getAircraftsOwnedByUser, setToken
 };

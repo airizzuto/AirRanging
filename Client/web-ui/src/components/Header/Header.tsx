@@ -6,12 +6,14 @@ import Style from "./Header.module.scss";
 import ButtonStyle from "../Buttons/ButtonStyles.module.scss";
 import Logo from "./LogoVector.svg";
 import UndecoratedButton from "../Buttons/UndecoratedButton";
+import { User } from "../../types/User/User";
 
 interface Props {
-  loginHandler: () => void
+  loginHandler: () => void;
+  user: User | null;
 }
 
-const Header = ({loginHandler}: Props): JSX.Element => {
+const Header = ({loginHandler, user}: Props): JSX.Element => {
 
   return (
     <nav className={Style.Header}>
@@ -41,12 +43,15 @@ const Header = ({loginHandler}: Props): JSX.Element => {
       <div className={Style.HeaderAccount}>
         <ul>
           <li>
+          { !user
+            ? <UndecoratedButton text="LOGIN" onClick={loginHandler}/>
+            : user.username
+          }
+          </li>
+          <li>
             <Link to="/registration">
               SIGN IN
             </Link>
-          </li>
-          <li>
-            <UndecoratedButton text="LOGIN" onClick={loginHandler}/>
           </li>
         </ul>
       </div>
