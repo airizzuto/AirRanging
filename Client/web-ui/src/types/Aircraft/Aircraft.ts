@@ -1,6 +1,6 @@
 /* TODO REMOVE: https://fullstackopen.com/en/part9/typing_the_express_app#utility-types */
 
-import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "./enums/AircraftEnums";
+import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../enums/AircraftEnums";
 
 // TODO IMPORTANT: PARSE OR DEFINE ONE TYPE
 export interface Aircraft {

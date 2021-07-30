@@ -1,6 +1,6 @@
 import React from 'react';
 import aircrafts from '../../../data/aircrafts-mock';
-import { Aircraft } from '../../../types/Aircraft';
+import { Aircraft } from '../../../types/Aircraft/Aircraft';
 import AircraftsTable from '../../Table/AircraftsTable';
 
 import Style from "./AircraftsView.module.scss";

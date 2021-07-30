@@ -9,6 +9,7 @@ const AircraftSelect = () => {
       {/* TODO: search bar
         queries data
       */}
+      {/* TODO: toggle owned */}
       {/* TODO: table selection
         foreach aircraft in res
           <row>
