@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
+import { UserInfo } from "../../types/User/User";
 
 import Menu from "../Menu/Menu";
 
 import Style from "./Header.module.scss";
 import ButtonStyle from "../Buttons/ButtonStyles.module.scss";
-import Logo from "./LogoVector.svg";
 import UndecoratedButton from "../Buttons/UndecoratedButton";
-import { User } from "../../types/User/User";
+import Logo from "./LogoVector.svg";
 
 interface Props {
   loginHandler: () => void;
-  user: User | null;
+  user: UserInfo | null;
 }
 
 const Header = ({loginHandler, user}: Props): JSX.Element => {
