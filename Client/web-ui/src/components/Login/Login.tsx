@@ -10,11 +10,12 @@ import Style from "./Login.module.scss";
 import CheckboxStyle from "../../styles/components/_checkbox.module.scss";
 
 interface Props {
-  showLogin: boolean,
-  handleClose: () => void
+  showLogin: boolean;
+  handleClose: () => void;
+  setUser: React.Dispatch<React.SetStateAction<null>>;
 }
 
-export default function LoginModal({ showLogin, handleClose }: Props): JSX.Element {
+export default function LoginModal({ showLogin, handleClose, setUser }: Props): JSX.Element {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const handleClick = () => { return; };
@@ -45,7 +46,7 @@ export default function LoginModal({ showLogin, handleClose }: Props): JSX.Eleme
         "userToken", JSON.stringify(user)
       );
       aircraftService.setToken(user.token);  // For aircraft requests with authentication requirements
-      handleLogin(user);
+      setUser(user);
       // Resets fields
       setEmail("");
       setPassword("");

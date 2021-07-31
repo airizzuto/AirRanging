@@ -16,6 +16,8 @@ const baseUrl = process.env.REACT_APP_BASEURL;
 /// </summary>
 */
 
+// TODO: logout removes token in cache
+
 const login = async (credentials: UserLogin) => {
   const response = await axios.post(baseUrl + "/api/users/login", credentials);
   return response.data;
