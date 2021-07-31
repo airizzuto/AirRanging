@@ -21,9 +21,13 @@ export interface Aircraft {
   fuelCapacity: number | string;
   maxRange: number | string;
   serviceCeiling: number | string;
+}
+
+export interface AircraftData extends Aircraft{
+  savesCount: number;
   author?: string; // TODO: Remove optional
 }
 
-export interface AircraftState extends Aircraft {
+export interface AircraftState extends AircraftData {
   loadedFuel: number;
 }
