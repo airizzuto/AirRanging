@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import userService from "../../services/userService";
 import aircraftService from "../../services/aircraftService";
 
-import DecoratedButton from "../Buttons/DecoratedButton";
 import FixedModal from "../Modals/FixedModal";
 
 import Style from "./Login.module.scss";
@@ -18,7 +17,6 @@ interface Props {
 export default function LoginModal({ showLogin, handleClose, setUser }: Props): JSX.Element {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const handleClick = () => { return; };
 
   const handleEmailChange = (event: { 
     preventDefault: () => void; target: { value: React.SetStateAction<string>; }; 
@@ -34,7 +32,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
     setPassword(event.target.value);
   };
 
-  const handleLogin = async (event: { preventDefault: () => void; }) => {
+  const handleSubmitLogin = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
 
     try {
@@ -62,7 +60,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
       visible={showLogin}
       handleModalClose={handleClose}
     >
-      <form className={Style.LoginForm} onSubmit={handleLogin}>
+      <form className={Style.LoginForm} onSubmit={handleSubmitLogin}>
 
         <div className={Style.LoginFields}>
           <div className={Style.FormGroup}>
@@ -99,7 +97,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
         
         <div className={Style.Buttons}>
           <div className={Style.LoginButton}>
-            <DecoratedButton onClick={() => handleClick}>Login</DecoratedButton>
+            <button type="submit" className={Style.LoginButton}>Login</button>
           </div>
           <p>OR</p>
           <div className={Style.RegistrationButton}>

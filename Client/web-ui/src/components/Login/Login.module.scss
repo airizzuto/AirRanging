@@ -1,6 +1,7 @@
 @use "../../styles/colors" as color;
 @use "../../styles/fonts" as font;
 @use "../../styles/components/boxes" as box;
+@use "../../styles/components/buttons" as button;
 @use "../../styles/mixins" as *;
 
 @import "../Modals/FixedModal.module.scss";
@@ -91,6 +92,9 @@
     place-items: center;
 
     .LoginButton {
+      button {
+        @include button.primary-light;
+      }
       @include button-behavior;
       width: 100%;
     }
