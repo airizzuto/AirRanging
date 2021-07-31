@@ -1,4 +1,8 @@
 
+export interface UserInfo {
+  username: string;
+}
+
 export interface UserLogin {
   email: string;
   password: string;
