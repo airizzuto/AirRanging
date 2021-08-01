@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Formik, Form, Field, FormikHelpers } from 'formik';
+import { Formik, Form, Field, FormikHelpers, ErrorMessage } from 'formik';
 
 import userService from "../../services/userService";
 import aircraftService from "../../services/aircraftService";
@@ -57,12 +57,14 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
             <div className={Style.LoginFields}>
               <div className={Style.FormGroup}>
                 <label htmlFor="email">Email:</label>
+                <ErrorMessage component="span" name="email" />
                 <Field type="email" name="email"
                   placeholder={"useremail@emailprovider.com"}
                 />
               </div>
               <div className={Style.FormGroup}>
                 <label htmlFor="password">Password:</label>
+                <ErrorMessage component="span" name="password" />
                 <Field type="password" name="password" />
               </div>
             </div>
@@ -70,7 +72,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
             <div className={Style.Options}>
               <div className={Style.RememberMe}>
                 <label className={CheckboxStyle.checkbox}>Remember Me
-                  <Field type="checkbox" name="rememberme"/>
+                  <p><Field type="checkbox" name="rememberme"/></p>
                   <span className={CheckboxStyle.checkmark}></span>
                 </label>
               </div>
