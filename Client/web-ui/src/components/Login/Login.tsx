@@ -23,7 +23,8 @@ interface Values {
 }
 
 export default function LoginModal({ showLogin, handleClose, setUser }: Props): JSX.Element {
-
+  // TODO: const [notifyError, setNotifyError] = React.useState(false);
+  // TODO: error show effect and timeout
   const handleSubmit = async ({email, password}: Values) => {
     try {
       const user = await userService.login({ email, password });
@@ -59,20 +60,22 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
                 <label htmlFor="email">Email:</label>
                 <ErrorMessage component="span" name="email" />
                 <Field type="email" name="email"
-                  placeholder={"useremail@emailprovider.com"}
+                  placeholder={"Email"}
                 />
               </div>
               <div className={Style.FormGroup}>
                 <label htmlFor="password">Password:</label>
                 <ErrorMessage component="span" name="password" />
-                <Field type="password" name="password" />
+                <Field type="password" name="password"
+                  placeholder={"Password"}
+                />
               </div>
             </div>
 
             <div className={Style.Options}>
               <div className={Style.RememberMe}>
-                <label className={CheckboxStyle.checkbox}>Remember Me
-                  <p><Field type="checkbox" name="rememberme"/></p>
+                <label className={CheckboxStyle.checkbox}>
+                  <p><Field type="checkbox" name="rememberme"/>Remember Me</p>
                   <span className={CheckboxStyle.checkmark}></span>
                 </label>
               </div>
@@ -82,6 +85,8 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
                 </Link>
               </div>
             </div>
+
+            {/* TODO: Error notification component */}
 
             <div className={Style.Buttons}>
               <div className={Style.LoginButton}>
@@ -93,7 +98,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
                   Login
                 </button>
               </div>
-              <p>OR</p>
+              <span>- OR -</span>
               <div className={Style.RegistrationButton}>
                 <Link to="/registration" onClick={handleClose}>
                   Register

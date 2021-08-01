@@ -11,7 +11,11 @@
 
   display: grid;
   grid-auto-rows: auto;
-  grid-template-areas: "input-fields" "options" "buttons";
+  grid-template-areas: 
+    "input-fields"
+    "options"
+    "error-notification"
+    "buttons";
 
   height: fit-content;
 
@@ -79,8 +83,7 @@
       
       label {
         @include font.main;
-        display: flex;
-        align-self: center;
+        text-align: center;
       }
 
       label:hover {
@@ -99,20 +102,28 @@
     }
   }
 
+  .ErrorNotification {
+    grid-area: "error-notification"
+  }
+
   .Buttons {
     grid-area: buttons;
-    margin-top: 2rem;
+    margin-top: 4rem;
 
     display: grid;
     grid-auto-rows: max-content;
+    row-gap: 0.5rem;
     place-items: center;
 
     .LoginButton {
+      @include button-behavior;
+      width: 100%;
+      
+      place-self: center;
+
       button {
         @include button.primary-light;
       }
-      @include button-behavior;
-      width: 100%;
     }
     
     .RegistrationButton {
