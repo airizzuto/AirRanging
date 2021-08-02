@@ -1,11 +1,11 @@
-import yup, { string, object, SchemaOf } from 'yup';
+import { string, object, SchemaOf } from 'yup';
 import { UserLogin, UserRegistration } from '../types/User/User';
 
 // TODO: Yup docs https://github.com/jquense/yup
 
 // TODO: test validators
 
-const isValidEmail = yup.string()
+const isValidEmail = string()
   .email("Invalid email format")
   .defined("Email is required");
 
