@@ -51,3 +51,8 @@ $size-0: 0.833rem;
   font-weight: 300;
   font-size: $size-1;
 }
+
+@mixin error-alert {
+  @include info;
+  color: color.$accent2;
+}
