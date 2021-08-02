@@ -5,7 +5,8 @@
 .checkbox {
   display: block;
   position: relative;
-  padding-left: 40px;
+  padding-left: 35px;
+  padding-right: 1rem;
   cursor: pointer;
   font-size: 16px;
   -webkit-user-select: none;
@@ -26,7 +27,7 @@
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: 0;
+  top: -4px;
   left: 0;
   height: 20px;
   width: 20px;

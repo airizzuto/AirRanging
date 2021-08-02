@@ -74,8 +74,8 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
 
             <div className={Style.Options}>
               <div className={Style.RememberMe}>
-                <label className={CheckboxStyle.checkbox}>
-                  <p><Field type="checkbox" name="rememberme"/>Remember Me</p>
+                <label className={CheckboxStyle.checkbox}>Remember Me
+                  <Field type="checkbox" name="rememberme"/>
                   <span className={CheckboxStyle.checkmark}></span>
                 </label>
               </div>

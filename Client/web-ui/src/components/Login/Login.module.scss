@@ -11,6 +11,7 @@
 
   display: grid;
   grid-auto-rows: auto;
+  row-gap: 0.5rem;
   grid-template-areas: 
     "input-fields"
     "options"
@@ -22,35 +23,39 @@
   margin: 0.5rem 1rem;
 
   .LoginFields {
+    grid-area: input-fields;
     display: grid;
-    grid-auto-rows: 5rem;
+    grid-auto-rows: max-content;
+    row-gap: 1rem;
+    height: fit-content;
 
     .FormGroup {
       display: grid;
-      grid-template-rows: max-content auto;
+      grid-template-rows: max-content 1fr;
       grid-template-columns: 1fr 2fr;
       grid-template-areas: 
-        "input-label error" "input input";
+        "input-label error-alert" 
+        "input input";
       column-gap: 1rem;
-
+      row-gap: 1rem;
+      
       width: 100%;
+      height: fit-content;
 
       label {
         @include font.info;
         grid-area: input-label;
-
+        display: flex;
         text-align: start;
         justify-self: start;
-        height: max-content;
-        width: max-content;
       }
 
       span {
         @include font.info;
-        grid-area: error;
+        grid-area: error-alert;
         display: flex;
         color: color.$accent2;
-        justify-self: center;
+        justify-self: end;
         text-align: center;
       }
       
@@ -79,7 +84,7 @@
     .RememberMe {
       // FIXME: position
       display: flex;
-      place-self: center;
+      place-self: start;
       
       label {
         @include font.main;
