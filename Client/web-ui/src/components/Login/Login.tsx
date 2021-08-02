@@ -10,6 +10,7 @@ import FixedModal from "../Modals/FixedModal";
 import Style from "./Login.module.scss";
 import CheckboxStyle from "../../styles/components/_checkbox.module.scss";
 import { userLoginSchema } from "../../validators/userValidators";
+import AlertBox from "../Alerts/AlertBox";
 
 interface Props {
   showLogin: boolean;
@@ -23,8 +24,14 @@ interface Values {
 }
 
 export default function LoginModal({ showLogin, handleClose, setUser }: Props): JSX.Element {
-  // TODO: const [alert, setAlert] = React.useState(false);
-  // TODO: alert show effect and timeout
+  const [alert, setAlert] = React.useState("");
+  
+  React.useEffect(() => {
+    if (alert) {
+      setAlert("");
+    }
+  }, []);
+
   const handleSubmit = async ({email, password}: Values) => {
     try {
       const user = await userService.login({ email, password });
@@ -33,7 +40,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
       aircraftService.setToken(user.token);  // For aircraft requests with authentication requirements
       setUser(user);
     } catch (error) {
-      // TODO: user error alert
+      setAlert("User email or password combination incorrect.");
       console.log(error.message);
     }
   };
@@ -86,7 +93,9 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
               </div>
             </div>
 
-            {/* TODO: Alert component */}
+            <div className={Style.ErrorNotification}>
+              <AlertBox alertText={alert}/>
+            </div>
 
             <div className={Style.Buttons}>
               <div className={Style.LoginButton}>

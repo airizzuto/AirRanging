@@ -11,7 +11,7 @@
 
   display: grid;
   grid-auto-rows: auto;
-  row-gap: 0.5rem;
+  row-gap: 2rem;
   grid-template-areas: 
     "input-fields"
     "options"
@@ -51,10 +51,9 @@
       }
 
       span {
-        @include font.info;
+        @include font.error-alert;
         grid-area: error-alert;
         display: flex;
-        color: color.$accent2;
         justify-self: end;
         text-align: center;
       }
@@ -108,12 +107,13 @@
   }
 
   .ErrorNotification {
-    grid-area: "error-notification"
+    grid-area: "error-notification";
+    display: grid;
+    place-content: center;
   }
 
   .Buttons {
     grid-area: buttons;
-    margin-top: 4rem;
 
     display: grid;
     grid-auto-rows: max-content;
