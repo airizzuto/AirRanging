@@ -25,15 +25,10 @@ interface Values {
 
 export default function LoginModal({ showLogin, handleClose, setUser }: Props): JSX.Element {
   const [alert, setAlert] = React.useState("");
-  
-  React.useEffect(() => {
-    if (alert) {
-      setAlert("");
-    }
-  }, []);
 
   const handleSubmit = async ({email, password}: Values) => {
     try {
+      setAlert("");
       const user = await userService.login({ email, password });
 
       window.localStorage.setItem("userToken", JSON.stringify(user));
@@ -42,6 +37,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
     } catch (error) {
       setAlert("User email or password combination incorrect.");
       console.log(error.message);
+      setTimeout(() => setAlert(""), 10000);
     }
   };
 

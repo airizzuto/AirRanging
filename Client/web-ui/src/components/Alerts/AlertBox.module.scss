@@ -3,9 +3,14 @@
 @use "../../styles/mixins" as *;
 
 .AlertBox {
-  @include font.error-alert;
+  background-color: transparent;
   border: 2px solid color.$light1;
   border-radius: 10px;
   padding: 0.5rem;
   height: fit-content;
+
+  span{
+    @include font.error-alert;
+    @include text-shadow;
+  }
 }
