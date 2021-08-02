@@ -23,8 +23,8 @@ interface Values {
 }
 
 export default function LoginModal({ showLogin, handleClose, setUser }: Props): JSX.Element {
-  // TODO: const [notifyError, setNotifyError] = React.useState(false);
-  // TODO: error show effect and timeout
+  // TODO: const [alert, setAlert] = React.useState(false);
+  // TODO: alert show effect and timeout
   const handleSubmit = async ({email, password}: Values) => {
     try {
       const user = await userService.login({ email, password });
@@ -33,7 +33,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
       aircraftService.setToken(user.token);  // For aircraft requests with authentication requirements
       setUser(user);
     } catch (error) {
-      // TODO: user error notification
+      // TODO: user error alert
       console.log(error.message);
     }
   };
@@ -86,7 +86,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
               </div>
             </div>
 
-            {/* TODO: Error notification component */}
+            {/* TODO: Alert component */}
 
             <div className={Style.Buttons}>
               <div className={Style.LoginButton}>
