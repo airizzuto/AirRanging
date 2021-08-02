@@ -1,23 +1,23 @@
-import { string, object, SchemaOf } from 'yup';
+import yup, { string, object, SchemaOf } from 'yup';
 import { UserLogin, UserRegistration } from '../types/User/User';
 
 // TODO: Yup docs https://github.com/jquense/yup
 
 // TODO: test validators
 
+const isValidEmail = yup.string()
+  .email("Invalid email format")
+  .defined("Email is required");
+
 export const userLoginSchema: SchemaOf<UserLogin> = object({
-  email: string()
-    .email("Invalid email format")
-    .defined("Email is required"),
+  email: isValidEmail,
   password: string()
     .matches(new RegExp("^[a-zA-Z0-9_-]{4,16}$"), "Invalid password format")
     .defined("Password is required"),
 }).defined();
 
 export const userRegistrationSchema: SchemaOf<UserRegistration> = object({
-  email: string()
-    .email("Invalid email format")
-    .defined("Email is required"),
+  email: isValidEmail,
   username: string()
     .min(4, "Username must be of at least 4 characters")
     .max(16, "Username must be of no more than 16 characters")
