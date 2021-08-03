@@ -3,7 +3,6 @@ import { UserLogin, UserRegistration } from "../types/User/User";
 
 const baseUrl = process.env.REACT_APP_BASEURL;
 
-
 /*
 /// <summary>
 /// Users authentication and registration model controller endpoints:
@@ -16,17 +15,23 @@ const baseUrl = process.env.REACT_APP_BASEURL;
 /// </summary>
 */
 
-// TODO: logout removes token in cache
-
 const register = async ({...newUser}: UserRegistration) => {
   return await axios.post(baseUrl + "/api/users/register", newUser);
 };
 
 const login = async (credentials: UserLogin) => {
   const response = await axios.post(baseUrl + "/api/users/login", credentials);
+  window.localStorage.setItem("userToken", JSON.stringify(response.data));
+
   return response.data;
 };
 
+const logout = () => {
+  window.localStorage.removeItem("userToken");
+};
+
 export default {
-  login, register
+  register,
+  login,
+  logout
 };
