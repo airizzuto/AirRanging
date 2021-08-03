@@ -11,16 +11,17 @@ import UserRegistrationView from "./components/Pages/UserRegistration/UserRegist
 import NotFound from "./components/Pages/ErrorPages/NotFound";
 
 import Header from "./components/Header/Header";
-import Login from "./components/Login/Login";
+import Login from "./components/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
 
 const App = (): JSX.Element => {
+  // TODO: refactor to global states to useContext
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState(null);
 
-  // TODO: aircrafts state
+  // TODO: aircraftSelected state
 
   // TODO: route matching
   // const matchAircraftRoute = useRouteMatch("/aircrafts/:id");
