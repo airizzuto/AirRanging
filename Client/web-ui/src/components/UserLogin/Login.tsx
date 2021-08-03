@@ -63,14 +63,14 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
                 <label htmlFor="email">Email:</label>
                 <ErrorMessage component="span" name="email" />
                 <Field type="email" name="email"
-                  placeholder={"Email"}
+                  placeholder="Email"
                 />
               </div>
               <div className={Style.FormGroup}>
                 <label htmlFor="password">Password:</label>
                 <ErrorMessage component="span" name="password" />
                 <Field type="password" name="password"
-                  placeholder={"Password"}
+                  placeholder="Password"
                 />
               </div>
             </div>
