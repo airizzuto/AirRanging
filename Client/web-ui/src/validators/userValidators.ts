@@ -1,4 +1,4 @@
-import { string, object, SchemaOf } from 'yup';
+import { string, object, SchemaOf, ref } from 'yup';
 import { UserLogin, UserRegistration } from '../types/User/User';
 
 // TODO: Yup docs https://github.com/jquense/yup
@@ -16,7 +16,7 @@ export const userLoginSchema: SchemaOf<UserLogin> = object({
     .defined("Password is required"),
 }).defined();
 
-export const userRegistrationSchema: SchemaOf<UserRegistration> = object({
+export const userRegistrationSchema: SchemaOf<UserRegistration> = object().shape({
   email: isValidEmail,
   username: string()
     .min(4, "Username must be of at least 4 characters")
@@ -30,4 +30,5 @@ export const userRegistrationSchema: SchemaOf<UserRegistration> = object({
     .matches(new RegExp("^[a-zA-Z0-9_-]{4,16}$"),
       "Password must contain at least one digit, one uppercase letter and one lowercase letter")
     .defined("Password is required"),
+  confirmPassword: string().equals([ref("password")], "Passwords do not match").defined("Password confirmation is required"),
 }).defined();
