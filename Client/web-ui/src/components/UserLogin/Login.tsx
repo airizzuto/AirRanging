@@ -30,8 +30,6 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
     try {
       setAlert("");
       const user = await userService.login({ email, password });
-
-      window.localStorage.setItem("userToken", JSON.stringify(user));
       aircraftService.setToken(user.token);  // For aircraft requests with authentication requirements
       setUser(user);
     } catch (error) {
