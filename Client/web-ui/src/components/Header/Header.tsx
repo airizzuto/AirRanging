@@ -13,6 +13,8 @@ interface Props {
   user: UserInfo | null;
 }
 
+// TODO: Logout
+
 const Header = ({loginHandler, user}: Props): JSX.Element => {
 
   return (
