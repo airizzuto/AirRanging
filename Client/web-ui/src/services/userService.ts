@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserLogin } from "../types/User/User";
+import { UserLogin, UserRegistration } from "../types/User/User";
 
 const baseUrl = process.env.REACT_APP_BASEURL;
 
@@ -18,11 +18,15 @@ const baseUrl = process.env.REACT_APP_BASEURL;
 
 // TODO: logout removes token in cache
 
+const register = async ({...newUser}: UserRegistration) => {
+  return await axios.post(baseUrl + "/api/users/register", newUser);
+};
+
 const login = async (credentials: UserLogin) => {
   const response = await axios.post(baseUrl + "/api/users/login", credentials);
   return response.data;
 };
 
 export default {
-  login,
+  login, register
 };
