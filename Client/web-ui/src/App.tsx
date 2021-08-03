@@ -15,6 +15,7 @@ import Login from "./components/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
+import userService from "./services/userService";
 
 const App = (): JSX.Element => {
   // TODO: refactor to global states to useContext
@@ -30,7 +31,6 @@ const App = (): JSX.Element => {
 
   // aircrafts state effect
 
-  // TODO: token service
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("userToken");
     if (loggedUserJSON) {
@@ -41,11 +41,17 @@ const App = (): JSX.Element => {
     }
   }, []);
 
+  const userLogout = () => {
+    userService.logout();
+    setUser(null);
+  };
+
   return (
     <div className={"App"}>
       <div className="Header">
         <Header 
-          loginHandler={() => useModalToggle(setShowLogin, showLogin)}
+          handleLogin={() => useModalToggle(setShowLogin, showLogin)}
+          handleLogout={userLogout}
           user={user}
         />
       </div>

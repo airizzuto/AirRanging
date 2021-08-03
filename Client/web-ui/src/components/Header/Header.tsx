@@ -9,13 +9,13 @@ import UndecoratedButton from "../Buttons/UndecoratedButton";
 import Logo from "./LogoVector.svg";
 
 interface Props {
-  loginHandler: () => void;
+  handleLogin: () => void;
+  handleLogout: () => void;
   user: UserInfo | null;
 }
 
-// TODO: Logout
+const Header = ({handleLogin, handleLogout, user}: Props): JSX.Element => {
 
-const Header = ({loginHandler, user}: Props): JSX.Element => {
 
   return (
     <nav className={Style.Header}>
@@ -43,19 +43,27 @@ const Header = ({loginHandler, user}: Props): JSX.Element => {
       </ul>
 
       <div className={Style.HeaderAccount}>
-        <ul>
-          <li>
-          { !user
-            ? <UndecoratedButton text="LOGIN" onClick={loginHandler}/>
-            : user.username
+          {
+            !user
+            ? <ul>
+                <li>
+                  <UndecoratedButton text="LOGIN" onClick={handleLogin}/>
+                </li>
+                <li>
+                  <Link to="/registration">
+                    SIGN IN
+                  </Link>
+                </li>
+              </ul>
+            : <ul>
+                <li>
+                  {user.username}
+                </li>
+                <li>
+                  <UndecoratedButton text="LOGOUT" onClick={handleLogout}/>
+                </li>
+              </ul>
           }
-          </li>
-          <li>
-            <Link to="/registration">
-              SIGN IN
-            </Link>
-          </li>
-        </ul>
       </div>
     </nav>
   );

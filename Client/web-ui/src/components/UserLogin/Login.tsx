@@ -32,6 +32,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
       const user = await userService.login({ email, password });
       aircraftService.setToken(user.token);  // For aircraft requests with authentication requirements
       setUser(user);
+      handleClose();
     } catch (error) {
       setAlert("User email or password combination incorrect.");
       console.log(error.message);
