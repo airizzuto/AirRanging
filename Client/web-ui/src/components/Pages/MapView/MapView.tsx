@@ -7,7 +7,7 @@ import ModalTab from "../../Buttons/ModalTab";
 import DraggableModal from "../../Modals/DraggableModal";
 
 import Style from "./MapView.module.scss";
-import InfoFooter from "./InfoFooter";
+// import InfoFooter from "./InfoFooter";
 import PlanningModal from "./Planning";
 
 const MapView = (): JSX.Element => {
@@ -72,9 +72,9 @@ const MapView = (): JSX.Element => {
         <div>AIRCRAFTS PLACEHOLDER</div>
       </DraggableModal>
 
-      <div className={Style.Info}>
+      {/* <div className={Style.Info}>
         <InfoFooter />
-      </div>
+      </div> */}
 
     </div>
   );
