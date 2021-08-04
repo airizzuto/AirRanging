@@ -1,6 +1,6 @@
 # AirRanging
 
-Web application for flight fuel planning, with aircraft database.
+Web application for flight fuel planning, with aircraft management and user account.
 
 ## Description
 
@@ -8,7 +8,7 @@ Calculate max. ranges and endurance based on aircraft parameters and visualize i
 
 Create, edit and save aircrafts to user account.
 
-Rapid search for the users most popular aircraft
+Aircraft sorting by popularity
 
 ---
 
