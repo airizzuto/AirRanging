@@ -1,0 +1,16 @@
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as *;
+
+.AlertBox {
+  background-color: transparent;
+  border: 2px solid color.$light1;
+  border-radius: 10px;
+  padding: 0.5rem;
+  height: fit-content;
+
+  span{
+    @include font.error-alert;
+    @include text-shadow;
+  }
+}

@@ -22,8 +22,8 @@
     grid-area: copyright;
     padding: 0 1rem;
 
-    #faCopyright {
-      filter: drop-shadow(1px 1px 1px #000000)
+    svg {
+      @include drop-shadow;
     }
   }
 

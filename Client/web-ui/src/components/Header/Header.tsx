@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom";
+import { UserInfo } from "../../types/User/User";
 
-import Button from "../Buttons/Button";
 import Menu from "../Menu/Menu";
 
 import Style from "./Header.module.scss";
 import ButtonStyle from "../Buttons/ButtonStyles.module.scss";
+import UndecoratedButton from "../Buttons/UndecoratedButton";
 import Logo from "./LogoVector.svg";
 
 interface Props {
-  loginHandler: () => void
+  handleLogin: () => void;
+  handleLogout: () => void;
+  user: UserInfo | null;
 }
 
-const Header = ({loginHandler}: Props): JSX.Element => {
+const Header = ({handleLogin, handleLogout, user}: Props): JSX.Element => {
+
 
   return (
     <nav className={Style.Header}>
@@ -27,28 +31,42 @@ const Header = ({loginHandler}: Props): JSX.Element => {
 
       <ul className={Style.HeaderNav}>
         <li>
-          <Link to="/aircrafts" className={ButtonStyle.PrimaryButton}>
+          <Link to="/aircrafts" className={ButtonStyle.Decorated}>
             AIRCRAFT EDIT
           </Link>
         </li>
         <li>
-          <Link to="/airports" className={ButtonStyle.PrimaryButton}>
+          <Link to="/airports" className={ButtonStyle.Decorated}>
             AIRPORT EDIT
           </Link>
         </li>
       </ul>
 
       <div className={Style.HeaderAccount}>
-        <ul>
-          <li>
-            <Link to="/registration">
-              SIGN IN
-            </Link>
-          </li>
-          <li>
-            <Button buttonText="LOGIN" handleClick={loginHandler}/>
-          </li>
-        </ul>
+          {
+            !user
+            ? <ul>
+                <li>
+                  <UndecoratedButton text="LOGIN" onClick={handleLogin}/>
+                </li>
+                <li>
+                  <Link to="/registration">
+                    SIGN IN
+                  </Link>
+                </li>
+              </ul>
+            : <ul>
+                <li className={Style.UserDisplay}>
+                  <label>
+                    USER
+                  </label>
+                  <span>{user.username}</span>
+                </li>
+                <li>
+                  <UndecoratedButton text="LOGOUT" onClick={handleLogout}/>
+                </li>
+              </ul>
+          }
       </div>
     </nav>
   );

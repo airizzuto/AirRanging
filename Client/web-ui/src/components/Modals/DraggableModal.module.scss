@@ -3,21 +3,28 @@
 @use "../../styles/components/separators" as separator;
 @use "../../styles/mixins" as *;
 
-@import "../MapView/Map.module.scss";
-
 .Modal {
   @include blurring;
   box-shadow: 1px 2px 1px hsla(0, 0%, 0%, 0.75);
   
-  position: fixed;
+  position: relative;
+  max-width: 100%;
+  min-height: 85%;
+  height: fit-content;
+  width: fit-content;
+  min-width: 20%;
 
   color: color.$light1;
 
-  display: grid;
   grid-template-rows: 1fr auto 9fr;
-  grid-template-areas: "modal-header" "separator" "modal-content";
-  border-radius: 10px;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "modal-header"
+    "separator"
+    "modal-content";
 
+  border-radius: 10px;
+  
   padding: 0 1rem 1rem 1rem;
 
   z-index: 3;
@@ -32,7 +39,7 @@
     height: fit-content;
 
     .ModalTitle {
-      @include font.header-1;
+      @include font.header-2;
       grid-area: modal-title;
       place-self: left center;
     }
@@ -45,10 +52,10 @@
 
   .Separator {
     @include separator.style;
-
     grid-area: separator;
+
     place-self: center;
-    margin: 1rem 0;
+    width: 95%;
   }
 
   .ModalContent {

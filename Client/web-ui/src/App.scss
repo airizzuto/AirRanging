@@ -1,11 +1,13 @@
 @use "./styles/colors" as color;
 
 .App {
+  display: grid;
+
   position: fixed;
   height: 100%;
   width: 100%;
 
-  background-image: url("./topography.svg");
+  background-image: url("./MiamiCropped4k.png");
   background-color: color.$light1;
   background-repeat: repeat;
   background-size: cover;
@@ -16,7 +18,7 @@
 
   grid-template-areas: "header-nav" "main" "footer";
 
-  overflow: auto;
+  overflow: hidden auto;
 }
 
 .Header {

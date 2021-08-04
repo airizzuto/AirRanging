@@ -1,0 +1,12 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/mixins" as *;
+
+.InfoFooter {
+  @include blurring;
+  @include font.info;
+  @include text-shadow;
+  display: flex;
+  
+  color: color.$light1;
+}

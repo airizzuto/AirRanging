@@ -1,0 +1,32 @@
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as *;
+
+.Tab {
+  @include blurring;
+  @include font.button;
+  @include text-shadow;
+  @include box-shadow;
+
+  border-radius: 500px;
+
+  color: color.$light1;
+
+  margin-right: 1.5rem;
+  border-style: none;
+
+  width: 2.5rem;
+  height: 2.5rem;
+
+  place-items: center;
+
+  svg {
+    @include drop-shadow;
+  }
+}
+
+.Tab:hover {
+  color: color.$accent1;
+  cursor: pointer;
+  transition: color 0.4s;
+}

@@ -18,7 +18,7 @@ $size-0: 0.833rem;
 }
 
 @mixin header-3 {
-  font-weight: 400;
+  font-weight: 500;
   font-size: $size-2;
 }
 
@@ -28,13 +28,18 @@ $size-0: 0.833rem;
 }
 
 @mixin main {
-  font-weight: 400;
+  font-weight: 500;
   font-size: $size-1;
 }
 
 @mixin button {
   font-weight: 600;
   font-size: $size-3;
+}
+
+@mixin button-2 {
+  font-weight: 600;
+  font-size: $size-2;
 }
 
 @mixin info {
@@ -45,4 +50,9 @@ $size-0: 0.833rem;
 @mixin footer {
   font-weight: 300;
   font-size: $size-1;
+}
+
+@mixin error-alert {
+  @include info;
+  color: color.$accent2;
 }

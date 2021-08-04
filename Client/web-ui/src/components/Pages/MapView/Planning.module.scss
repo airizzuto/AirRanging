@@ -1,0 +1,114 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/components/separators" as separator;
+@use "../../../styles/components/boxes" as box;
+@use "../../../styles/mixins" as *;
+
+.Planning {
+  @include box-shadow;
+  display: grid;
+  grid-template-rows: 1fr min-content 1fr min-content;
+  grid-template-columns: 1fr;
+  grid-template-areas: "properties" "separator" "results" "accept";
+  row-gap: 1rem;
+  height: 100%;
+
+  .PropertiesGroup {
+    grid-area: properties;
+
+    display: grid;
+    grid-auto-rows: max-content;
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+
+    .Selected {
+      @include text-shadow;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "properties-label selected";
+
+      label {
+        grid-area: properties-label;
+      }
+    }
+
+    .SliderProp {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      grid-template-areas: 
+        "properties-label properties-output"
+        "modifier modifier";
+      row-gap: 1rem;
+
+      .range {
+        grid-area: modifier;
+      }
+
+      .output {
+        grid-area: properties-output;
+        width: fit-content;
+      }
+
+      label {
+        grid-area: properties-label;
+        align-self: center;
+      }
+    }
+  }
+
+  .Separator {
+    @include separator.style;
+    grid-area: separator;
+
+    width: 95%;
+  }
+
+  .ResultsGroup {
+    grid-area: results;
+
+    display: grid;
+    grid-auto-rows: max-content;
+    row-gap: 1rem;
+    grid-template-columns: 1fr;
+
+    .Results {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "results-label results-output";
+
+      label {
+        grid-area: results-label;
+        align-self: center;
+      }
+
+      .output {
+        place-self: center;
+        grid-area: results-output;
+      }
+    }
+  }
+
+  .AcceptButton {
+    display: flex;
+    grid-area: accept;
+    height: fit-content;
+    justify-self: flex-end;
+    width: 50%;
+  }
+
+  label {
+    @include text-shadow;
+  }
+
+  .output {
+    @include box.light;
+  }
+
+  h2 {
+    @include text-shadow;
+    @include font.header-3;
+    margin: 0;
+  }
+}

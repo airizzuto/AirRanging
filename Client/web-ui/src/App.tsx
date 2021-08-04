@@ -1,36 +1,78 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useModalClose } from "./hooks/useModalClose";
 import { useModalToggle } from "./hooks/useModalToggle";
 
-import MapView from "./components/MapView/MapView";
-import AircraftEditView from "./components/AircraftEditView/AircraftEditView";
-import UserRegistrationView from "./components/UserRegistration/UserRegistrationView";
+import aircraftService from "./services/aircraftService";
+
+import MapView from "./components/Pages/MapView/MapView";
+import AircraftsView from "./components/Pages/AircraftEditView/AircraftsView";
+import UserRegistrationView from "./components/Pages/UserRegistration/UserRegistrationView";
+import NotFound from "./components/Pages/ErrorPages/NotFound";
 
 import Header from "./components/Header/Header";
-import Login from "./components/Login/Login";
+import Login from "./components/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
+import userService from "./services/userService";
+import { isUserAuthenticated } from "./helpers/tokenHelper";
 
-const App = (): JSX.Element => {
-  const [showLogin, setShowLogin] = React.useState(false);
-  
+const App = (): JSX.Element =>{
+  // TODO: refactor to global states to useContext
+  const [showLogin, setShowLogin] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // TODO: aircraftSelected state
+
+  // TODO: route matching
+  // const matchAircraftRoute = useRouteMatch("/aircrafts/:id");
+  // const matchUserRoute = useRouteMatch("/users/:id");
+  // const aircraftSelected = null; // TODO: service get aircraft by id
+
+  // aircrafts state effect
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("user");
+    if (loggedUserJSON && isUserAuthenticated()) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      /* Send user token to services needing authentication for requests */
+      aircraftService.setToken(user.token);
+    }
+  }, []);
+
+  const userLogout = () => {
+    userService.logout();
+    setUser(null);
+  };
+
   return (
     <div className={"App"}>
       <div className="Header">
-        <Header loginHandler={() => useModalToggle(setShowLogin, showLogin)} />
+        <Header 
+          handleLogin={() => useModalToggle(setShowLogin, showLogin)}
+          handleLogout={userLogout}
+          user={user}
+        />
       </div>
 
-      <Login showLogin={showLogin} handleClose={() => useModalClose(setShowLogin)} />
+      <Login 
+        showLogin={showLogin} 
+        handleClose={() => useModalClose(setShowLogin)}
+        setUser={setUser}
+      />
   
       <div className="Main">
         <Switch>
             <Route exact path="/">
-              <MapView/>
+              <MapView />
             </Route>
             <Route exact path="/aircrafts">
-              <AircraftEditView />
+              <AircraftsView />
+            </Route>
+            <Route exact path="/aircrafts/:id">
+              {/* <AircraftDetail aircraft={aircraftSelected}/> */}
             </Route>
             <Route exact path="/airports">
               {/* <AirportsEditView /> */}
@@ -41,9 +83,11 @@ const App = (): JSX.Element => {
             <Route exact path="/forgotpass">
               {/* <ForgotPassword /> */}
             </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
         </Switch>
       </div>
-      
 
       <div className="Footer">
         <Footer />

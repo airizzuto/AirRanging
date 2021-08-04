@@ -1,0 +1,75 @@
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/components/boxes" as box;
+@use "../../styles/components/buttons" as button;
+@use "../../styles/mixins" as *;
+
+.TableView {
+  @include text-shadow;
+
+  display: grid;
+  grid-template-rows: 1fr min-content;
+  grid-column: 1fr;
+  grid-template-areas: "table-view" "pagination";
+  place-self: center;
+
+  .Table {
+    grid-area: table-view;
+    border-spacing: 0;
+  
+    overflow: hidden scroll;
+  
+    .TableHeader {
+      @include font.header-3;
+      height: 2rem;
+      color: color.$light1;
+      th {
+        width: 20rem;
+      }
+    }
+  
+    td {
+      color: color.$light1;
+      text-align: center;
+      padding: 0.5rem 1rem;
+    }
+  
+    tr {
+      border-radius: 10px;
+    }
+
+    tbody {
+      overflow: auto;
+
+      tr:hover {
+        background-color: rgba(color.$light2, 0.5);
+        cursor: pointer;
+      }
+    }
+  }
+
+  .Pagination {
+    @include text-shadow;
+    grid-area: pagination;
+
+    display: flex;
+    width: 100%;
+    justify-self: start;
+    align-items: center;
+    gap: 1rem;
+    color: color.$light1;
+    padding: 1rem;
+
+    input {
+      @include box.light;
+    }
+
+    select {
+      @include box.light;
+    }
+
+    button {
+      @include button.controls;
+    }
+  }
+}

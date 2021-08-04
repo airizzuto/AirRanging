@@ -17,9 +17,9 @@ const Modal = ({ label, handleClose, show, children }: Props): JSX.Element => {
 
   return (
     <Draggable
-      bounds="parent"
+      bounds=""
       handle="#modalHeader"
-      defaultPosition={{x: 200, y: 50}}
+      defaultPosition={{x: 100, y: 50}}
     >
       <div className={Style.Modal} style={showHideClassName}>
         <div className={Style.ModalHeader} id="modalHeader">

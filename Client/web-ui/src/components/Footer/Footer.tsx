@@ -10,7 +10,7 @@ const Footer = (): JSX.Element => {
     <footer className={Style.Footer}>
 
       <div className={Style.Copyright}>
-        <FontAwesomeIcon icon={faCopyright} id="faCopyright"/> AIRIZZUTO - 2021
+        <FontAwesomeIcon icon={faCopyright} /> AIRIZZUTO - 2021
       </div>
 
       <div className={Style.Links}>
