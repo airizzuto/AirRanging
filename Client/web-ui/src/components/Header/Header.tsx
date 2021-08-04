@@ -56,8 +56,11 @@ const Header = ({handleLogin, handleLogout, user}: Props): JSX.Element => {
                 </li>
               </ul>
             : <ul>
-                <li>
-                  {user.username}
+                <li className={Style.UserDisplay}>
+                  <label>
+                    USER
+                  </label>
+                  <span>{user.username}</span>
                 </li>
                 <li>
                   <UndecoratedButton text="LOGOUT" onClick={handleLogout}/>
