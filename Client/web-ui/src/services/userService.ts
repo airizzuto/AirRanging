@@ -1,5 +1,6 @@
 import axios from "axios";
 import { UserLogin, UserRegistration } from "../types/User/User";
+import { isTokenExpired } from "../helpers/tokenHelper";
 
 const baseUrl = process.env.REACT_APP_BASEURL;
 
@@ -21,13 +22,23 @@ const register = async ({...newUser}: UserRegistration) => {
 
 const login = async (credentials: UserLogin) => {
   const response = await axios.post(baseUrl + "/api/users/login", credentials);
-  window.localStorage.setItem("userToken", JSON.stringify(response.data));
+  window.localStorage.setItem("user", JSON.stringify(response.data));
 
   return response.data;
 };
 
+const isUserAuthenticated = () => {
+  const token = localStorage.getItem("user.token");
+
+  if (token && !isTokenExpired(token)) {
+    return true;
+  }
+
+  return false;
+};
+
 const logout = () => {
-  window.localStorage.removeItem("userToken");
+  window.localStorage.removeItem("user");
 };
 
 export default {

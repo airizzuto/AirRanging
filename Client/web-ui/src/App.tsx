@@ -17,7 +17,7 @@ import Footer from "./components/Footer/Footer";
 import "./App.scss";
 import userService from "./services/userService";
 
-const App = (): JSX.Element => {
+const App = (): JSX.Element =>{
   // TODO: refactor to global states to useContext
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState(null);
@@ -32,7 +32,7 @@ const App = (): JSX.Element => {
   // aircrafts state effect
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("userToken");
+    const loggedUserJSON = window.localStorage.getItem("user");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
