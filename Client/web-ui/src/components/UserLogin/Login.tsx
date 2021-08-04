@@ -34,7 +34,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
       setUser(user);
       handleClose();
     } catch (error) {
-      setAlert("User email or password combination incorrect.");
+      setAlert("User email/password combination invalid");
       console.log(error.message);
       setTimeout(() => setAlert(""), 10000);
     }
