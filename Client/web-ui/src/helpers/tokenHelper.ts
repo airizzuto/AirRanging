@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import {refreshToken} from "../services/userService";
 
-export const isTokenExpired = (token: string) => {
+export const isTokenExpired = (token: string): boolean => {
   try {
     const { exp } = jwt.decode(token) as {
         exp: number;
@@ -11,4 +12,14 @@ export const isTokenExpired = (token: string) => {
   } catch {
     return true;
   }
+};
+
+export const isUserAuthenticated = async () => {
+  const token = localStorage.getItem("user.token");
+
+  if (token && !isTokenExpired(token)) {
+    return true;
+  }
+
+  return await refreshToken(JSON.stringify(token));
 };

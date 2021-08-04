@@ -16,6 +16,7 @@ import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
 import userService from "./services/userService";
+import { isUserAuthenticated } from "./helpers/tokenHelper";
 
 const App = (): JSX.Element =>{
   // TODO: refactor to global states to useContext
@@ -33,7 +34,7 @@ const App = (): JSX.Element =>{
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("user");
-    if (loggedUserJSON) {
+    if (loggedUserJSON && isUserAuthenticated()) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
       /* Send user token to services needing authentication for requests */

@@ -157,7 +157,8 @@ namespace App.Controllers.V1
             {
                 Username = user.UserName,
                 Token = accessToken,
-                RefreshToken = refreshToken
+                RefreshToken = user.RefreshToken,
+                RefreshTokenExpiryTime = user.RefreshTokenExpiryTime
             });
         }
 
