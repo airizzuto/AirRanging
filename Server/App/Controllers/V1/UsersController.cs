@@ -155,6 +155,7 @@ namespace App.Controllers.V1
             _logger.LogInfo($"INFO: user {user.Id} logged");
             return Ok(new UserAuthDTO
             {
+                Username = user.UserName,
                 Token = accessToken,
                 RefreshToken = refreshToken
             });
