@@ -38,6 +38,16 @@ const getAircraftsOwnedByUser = async () => {
   return response.data;
 };
 
+const searchAircraftByModel = async (query: string) => {
+  const response = await axios.get(baseUrl + `/api/aircrafts/search?Model=${query}`);
+
+  return response.data;
+};
+
+
 export default {
-  getAllAircrafts, getAircraftsOwnedByUser, setToken
+  getAllAircrafts,
+  getAircraftsOwnedByUser,
+  searchAircraftByModel,
+  setToken
 };
