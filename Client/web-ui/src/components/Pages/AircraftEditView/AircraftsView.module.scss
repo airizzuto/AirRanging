@@ -9,7 +9,7 @@
   @include blurring;
   display: grid;
   height: 100%;
-  padding: 0 15rem;
+  padding: 0 10vw;
   grid-template-rows: min-content min-content max-content;
   grid-template-areas: 
     "sub-header"
