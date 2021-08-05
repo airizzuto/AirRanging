@@ -1,7 +1,11 @@
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import userService from '../../../services/userService';
 import { UserRegistration } from '../../../types/User/User';
 import { userRegistrationSchema } from '../../../validators/userValidators';
+
+import AlertBox from '../../Alerts/AlertBox';
 
 import Style from "./UserRegistration.module.scss";
 
@@ -13,15 +17,22 @@ interface Values {
 }
 
 const UserRegistrationView = () => {
+  const [alert, setAlert] = React.useState("");
+
+  const history = useHistory();
+
   const handleSubmit = async ({
     username, email, password
   }: UserRegistration) => { 
     try {
+      setAlert("");
       await userService.register({ username, email, password });
-
-      // TODO: redirect to confirmation?
+      await userService.login({ email, password });
+      history.push("/");
     } catch(error) {
       console.log(error.message);
+      setAlert(error.message);
+      setTimeout(() => setAlert(""), 10000);
     }
   }; 
 
@@ -71,9 +82,13 @@ const UserRegistrationView = () => {
             </div>
           </div>
 
+          <div className={Style.Alert}>
+            <AlertBox alertText={alert}/>
+          </div>
+
           <div className={Style.SubmitButton}>
             <button type="submit" disabled={isSubmitting}>
-              Login
+              Submit
             </button>
           </div>
         </Form>
