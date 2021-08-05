@@ -51,7 +51,7 @@ const Header = ({handleLogin, handleLogout, user}: Props): JSX.Element => {
                 </li>
                 <li>
                   <Link to="/registration">
-                    SIGN IN
+                    SIGN UP
                   </Link>
                 </li>
               </ul>
