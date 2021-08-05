@@ -38,18 +38,27 @@
     grid-area: form;
 
     display: grid;
-    grid-template-rows: max-content min-content;
-    grid-template-areas: "fields" "submit" ;
+    grid-template-rows: max-content fit-content min-content;
+    grid-template-areas: "fields" "alert" "submit" ;
     padding: 1rem 0rem;
     row-gap: 1rem;
+
+    .Alert {
+      grid-area: alert;
+
+      display: grid;
+      place-content: center;
+    }
 
     .SubmitButton {
       @include button-behavior;
       grid-area: submit;
 
       align-self: center;
+      align-content: center;
       justify-self: right;
       width: 15%;
+      min-width: 8rem;
 
       button {
         @include button.primary-light;
