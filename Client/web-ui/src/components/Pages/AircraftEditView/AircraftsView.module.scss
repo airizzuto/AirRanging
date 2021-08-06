@@ -6,10 +6,8 @@
 @use "../../../styles/mixins" as *;
 
 .AircraftsView {
-  @include blurring;
+  @include main-component;
   display: grid;
-  height: 100%;
-  padding: 0 10vw;
   grid-template-rows: min-content min-content max-content;
   grid-template-areas: 
     "sub-header"
