@@ -1,64 +1,22 @@
-import React from 'react';
-import aircrafts from '../../../data/aircrafts-mock';
-import { Aircraft } from '../../../types/Aircraft/Aircraft';
 import AircraftsTable from '../../Table/AircraftsTable';
 
 import Style from "./AircraftsView.module.scss";
 import LinkedButton from '../../Buttons/LinkedButton';
+import { Aircraft } from '../../../types/Aircraft/Aircraft';
+import React from 'react';
 
+interface Props {
+  aircrafts: Aircraft[];
+}
 
+const AircraftsView = ({aircrafts}: Props): JSX.Element => {
 
-const mockAircrafts: Aircraft[] = aircrafts;
-
-const AircraftsView = (): JSX.Element => {
-
-  // Data search filter in this level
-  const data = React.useMemo(
-    () => mockAircrafts,
-    []
-  );
-
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'ICAO',
-        accessor: 'icaoId',
-      },
-      {
-        Header: 'Manufacturer',
-        accessor: 'manufacturer',
-      },
-      {
-        Header: 'Model',
-        accessor: 'model',
-      },
-      {
-        Header: 'Variant',
-        accessor: 'variant',
-      },
-      {
-        Header: 'Aircraft Type',
-        accessor: 'aircraftType',
-      },
-      {
-        Header: 'Engine Type',
-        accessor: 'engineType',
-      },
-      {
-        Header: 'Engine Count',
-        accessor: 'engineCount',
-      },
-      {
-        Header: 'Weight Category',
-        accessor: 'weightCategory',
-      },
-      {
-        Header: 'Max Range',
-        accessor: 'maxRange',
-      },
-    ],
-    []
-  );
+  const [filterInput, setFilterInput] = React.useState("");
+  
+  const handleFilterChange = (e: any) => {
+    const value = e.target.value || undefined;
+    setFilterInput(value);
+  };
 
   return (
     <div className={Style.AircraftsView}>
@@ -66,7 +24,11 @@ const AircraftsView = (): JSX.Element => {
       <div className={Style.SubHeader}>
         <h1 className={Style.Title}>Browse Aircrafts</h1>
   
-        <input className={Style.SearchBar}></input>
+        <input className={Style.SearchBar}
+          value={filterInput}
+          onChange={handleFilterChange}
+          placeholder={"Search aircraft model"}
+        />
 
         <div className={Style.CreateNew}>
           <LinkedButton path="/aircrafts/create">Create Aircraft</LinkedButton>
@@ -76,7 +38,7 @@ const AircraftsView = (): JSX.Element => {
       <hr />
 
       <div className={Style.AircraftsTable}>
-        <AircraftsTable columns={columns} data={data} />
+        <AircraftsTable data={aircrafts} />
       </div>
 
     </div>
