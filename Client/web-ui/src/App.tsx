@@ -4,19 +4,20 @@ import { useModalClose } from "./hooks/useModalClose";
 import { useModalToggle } from "./hooks/useModalToggle";
 
 import aircraftService from "./services/aircraftService";
+import userService from "./services/userService";
+import { isUserAuthenticated } from "./helpers/tokenHelper";
 
-import MapView from "./components/Pages/MapView/MapView";
+import Home from "./components/Pages/Home/Home";
 import AircraftsView from "./components/Pages/AircraftEditView/AircraftsView";
 import UserRegistrationView from "./components/Pages/UserRegistration/UserRegistrationView";
 import NotFound from "./components/Pages/ErrorPages/NotFound";
+import TermsAndConditions from "./components/Pages/TermsAndConditions/TermsAndConditions";
 
 import Header from "./components/Header/Header";
 import Login from "./components/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
-import userService from "./services/userService";
-import { isUserAuthenticated } from "./helpers/tokenHelper";
 
 const App = (): JSX.Element =>{
   // TODO: refactor to global states to useContext
@@ -66,7 +67,7 @@ const App = (): JSX.Element =>{
       <div className="Main">
         <Switch>
             <Route exact path="/">
-              <MapView />
+              <Home />
             </Route>
             <Route exact path="/aircrafts">
               <AircraftsView />
@@ -82,6 +83,9 @@ const App = (): JSX.Element =>{
             </Route>
             <Route exact path="/forgotpass">
               {/* <ForgotPassword /> */}
+            </Route>
+            <Route exact path="/terms">
+              <TermsAndConditions />
             </Route>
             <Route path="*">
               <NotFound />

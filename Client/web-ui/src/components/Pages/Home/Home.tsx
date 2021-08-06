@@ -6,11 +6,11 @@ import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import ModalTab from "../../Buttons/ModalTab";
 import DraggableModal from "../../Modals/DraggableModal";
 
-import Style from "./MapView.module.scss";
+import Style from "./Home.module.scss";
 // import InfoFooter from "./InfoFooter";
 import PlanningModal from "./Planning";
 
-const MapView = (): JSX.Element => {
+const Home = (): JSX.Element => {
   const [isModalActive, setIsModalActive] = React.useState(false); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = React.useState(false);
   const [displayAircraftsModal, setDisplayAircraftsModal] = React.useState(false);
@@ -32,7 +32,7 @@ const MapView = (): JSX.Element => {
   };
 
   return (
-    <div className={Style.MapView}>
+    <div className={Style.Home}>
 
       {/* Main Map View */}
       {/* <Map /> */}
@@ -80,4 +80,4 @@ const MapView = (): JSX.Element => {
   );
 };
 
-export default MapView;
+export default Home;
