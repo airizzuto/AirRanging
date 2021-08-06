@@ -111,6 +111,12 @@
       }
     }
   }
+
+  .Terms {
+    p {
+      @include font.info;
+    }
+  }
 }
 
 /* TODO: responsive. Move input below label*/

@@ -1,0 +1,8 @@
+@use "../../../styles/fonts" as font;
+
+.TermsAndConditions {
+  
+  h2{
+    @include font.header-1;
+  }
+}

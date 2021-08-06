@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import userService from '../../../services/userService';
 import { UserRegistration } from '../../../types/User/User';
@@ -42,7 +42,7 @@ const UserRegistrationView = () => {
 
       <hr className={Style.Separator}/>
       <Formik 
-        initialValues={{ 
+        initialValues={{
           username: "",
           email: "",
           password: "",
@@ -88,12 +88,18 @@ const UserRegistrationView = () => {
 
           <div className={Style.SubmitButton}>
             <button type="submit" disabled={isSubmitting}>
-              Submit
+              Sing up
             </button>
           </div>
         </Form>
         }
       </Formik>
+
+      <div className={Style.Terms}>
+        <p>
+          By clicking "Sign up", you agree to our <Link to="/terms">Terms of Use and Privacy Policy.</Link>
+        </p>
+      </div>
     </div>
   );
 };
