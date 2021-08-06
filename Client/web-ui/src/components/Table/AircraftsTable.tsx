@@ -1,4 +1,5 @@
-import { usePagination, useSortBy, useTable } from "react-table";
+import React from "react";
+import { usePagination, useRowSelect, useSortBy, useTable } from "react-table";
 
 import Style from "./AircraftsTable.module.scss";
 
@@ -6,10 +7,58 @@ import Style from "./AircraftsTable.module.scss";
 
 interface Props {
   data: any;
-  columns: {Header: string, accessor: string}[];
 }
 
-const AircraftsTable = ({columns, data}: Props): JSX.Element => {
+const AircraftsTable = ({data}: Props): JSX.Element => {
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'ICAO',
+        accessor: 'icaoId',
+      },
+      {
+        Header: 'Manufacturer',
+        accessor: 'manufacturer',
+      },
+      {
+        Header: 'Model',
+        accessor: 'model',
+      },
+      {
+        Header: 'Variant',
+        accessor: 'variant',
+      },
+      {
+        Header: 'Aircraft Type',
+        accessor: 'aircraftType',
+      },
+      {
+        Header: 'Engine Type',
+        accessor: 'engineType',
+      },
+      {
+        Header: 'Engine Count',
+        accessor: 'engineCount',
+      },
+      {
+        Header: 'Weight Category',
+        accessor: 'weightCategory',
+      },
+      {
+        Header: 'Max Range',
+        accessor: 'maxRange',
+      },
+      {
+        Header: 'Author',
+        accessor: 'authorUsername',
+      },
+      {
+        Header: 'Saved Times',
+        accessor: 'savesCount',
+      },
+    ],
+    []
+  );
 
   const {
     getTableProps,
@@ -34,10 +83,11 @@ const AircraftsTable = ({columns, data}: Props): JSX.Element => {
     },
     useSortBy,
     usePagination,
+    useRowSelect,
   );
 
   return (
-    <div  className={Style.TableView}>
+    <div className={Style.TableView}>
     {/* Apply the table props */}
       <table {...getTableProps()} className={Style.Table}>
         <thead className={Style.TableHeader}>
@@ -92,6 +142,7 @@ const AircraftsTable = ({columns, data}: Props): JSX.Element => {
         </tbody>
       </table>
 
+      {/* Table Pagination Controls */}
       <div className={Style.Pagination}>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}

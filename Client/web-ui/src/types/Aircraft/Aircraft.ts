@@ -25,9 +25,11 @@ export interface Aircraft {
 
 export interface AircraftData extends Aircraft{
   savesCount: number;
-  author?: string; // TODO: Remove optional
+  authorUsername?: string; // TODO: Remove optional
 }
 
 export interface AircraftState extends AircraftData {
   loadedFuel: number;
 }
+
+// TODO: paginated AircraftData

@@ -7,6 +7,8 @@ import aircraftService from "./services/aircraftService";
 import userService from "./services/userService";
 import { isUserAuthenticated } from "./helpers/tokenHelper";
 
+import { UserPublic } from "./types/User/User";
+
 import Home from "./components/Pages/Home/Home";
 import AircraftsView from "./components/Pages/AircraftEditView/AircraftsView";
 import UserRegistrationView from "./components/Pages/UserRegistration/UserRegistrationView";
@@ -18,20 +20,23 @@ import Login from "./components/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
+import { Aircraft } from "./types/Aircraft/Aircraft";
 
 const App = (): JSX.Element =>{
   // TODO: refactor to global states to useContext
   const [showLogin, setShowLogin] = useState(false);
-  const [user, setUser] = useState(null);
-
-  // TODO: aircraftSelected state
+  const [user, setUser] = useState<UserPublic | null>(null);
+  
+  const [aircrafts, setAircrafts] = useState<Aircraft[]>([]);
+  // const [selected, setSelected] = useState([]);
 
   // TODO: route matching
   // const matchAircraftRoute = useRouteMatch("/aircrafts/:id");
   // const matchUserRoute = useRouteMatch("/users/:id");
-  // const aircraftSelected = null; // TODO: service get aircraft by id
 
-  // aircrafts state effect
+  useEffect(() => {
+    refreshAircrafts();
+  }, []);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("user");
@@ -42,6 +47,11 @@ const App = (): JSX.Element =>{
       aircraftService.setToken(user.token);
     }
   }, []);
+
+  const refreshAircrafts = async () => {
+    const aircrafts = await aircraftService.getAllAircrafts();
+    setAircrafts(aircrafts);
+  };
 
   const userLogout = () => {
     userService.logout();
@@ -70,7 +80,7 @@ const App = (): JSX.Element =>{
               <Home />
             </Route>
             <Route exact path="/aircrafts">
-              <AircraftsView />
+              <AircraftsView aircrafts={aircrafts}/>
             </Route>
             <Route exact path="/aircrafts/:id">
               {/* <AircraftDetail aircraft={aircraftSelected}/> */}
