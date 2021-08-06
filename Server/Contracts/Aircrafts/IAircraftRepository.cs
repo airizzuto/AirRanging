@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Entities.Models.Aircrafts;
 using Entities.Models.Bookmarks;
@@ -9,7 +10,10 @@ namespace Contracts.Aircrafts
 {
     public interface IAircraftRepository : IBaseRepository<Aircraft>
     {
-        Task<PagedList<Aircraft>> GetAllAircraftsAsync(
+        IQueryable<Aircraft> GetAllAircrafts(
+            AircraftParameters aircraftParameters);
+
+        Task<PagedList<Aircraft>> GetAllAircraftsPaginatedAsync(
             AircraftParameters aircraftParameters);
 
         Task<PagedList<Aircraft>> GetAircraftsOwnedAsync(
