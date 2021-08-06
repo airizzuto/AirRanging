@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { UserInfo } from "../../types/User/User";
+import { UserPublic } from "../../types/User/User";
 
 import Menu from "../Menu/Menu";
 
@@ -11,7 +11,7 @@ import Logo from "./LogoVector.svg";
 interface Props {
   handleLogin: () => void;
   handleLogout: () => void;
-  user: UserInfo | null;
+  user: UserPublic | null;
 }
 
 const Header = ({handleLogin, handleLogout, user}: Props): JSX.Element => {

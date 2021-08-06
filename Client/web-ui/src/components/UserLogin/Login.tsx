@@ -11,11 +11,12 @@ import Style from "./Login.module.scss";
 import CheckboxStyle from "../../styles/components/_checkbox.module.scss";
 import { userLoginSchema } from "../../validators/userValidators";
 import AlertBox from "../Alerts/AlertBox";
+import { UserPublic } from "../../types/User/User";
 
 interface Props {
   showLogin: boolean;
   handleClose: () => void;
-  setUser: React.Dispatch<React.SetStateAction<null>>;
+  setUser: React.Dispatch<React.SetStateAction<UserPublic | null>>;
 }
 
 interface Values {
@@ -111,7 +112,6 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
             </div>
 
           </Form>
-
         )}
       </Formik>
       
