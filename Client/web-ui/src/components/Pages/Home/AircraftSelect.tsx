@@ -1,17 +1,18 @@
 // import SelectDropdown from "../Filters/SelectDropdown";
 
+// import SearchbarDropdown from "../../Filters/SearchbarDropdown"
+
 
 // import aircrafts from "../../data/aircrafts-mock";
 
 const AircraftSelect = () => {
   return (
     <div>
-      {/* TODO: search bar
-        queries data
-      */}
+      <div>
+        {/* <SearchbarDropdown /> */}
+      </div>
       {/* TODO: toggle owned */}
-      {/* TODO: table selection
-        foreach aircraft in res
+      {/* TODO: selected info
           <row>
             <col>aircraft.icao</col>
             <col>aircraft.manufacturer</col>
