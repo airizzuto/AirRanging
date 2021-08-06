@@ -86,20 +86,21 @@ const UserRegistrationView = () => {
             <AlertBox alertText={alert}/>
           </div>
 
+          <div className={Style.Terms}>
+            <p>
+              By clicking "Sign up", you agree to our <Link to="/terms">Terms of Use and Privacy Policy.</Link>
+            </p>
+          </div>
+
           <div className={Style.SubmitButton}>
             <button type="submit" disabled={isSubmitting}>
-              Sing up
+              Sign up
             </button>
           </div>
         </Form>
         }
       </Formik>
 
-      <div className={Style.Terms}>
-        <p>
-          By clicking "Sign up", you agree to our <Link to="/terms">Terms of Use and Privacy Policy.</Link>
-        </p>
-      </div>
     </div>
   );
 };

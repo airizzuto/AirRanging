@@ -1,8 +1,10 @@
 import "./TermsAndConditions.scss";
 
+// TODO BEFORE PRODUCTION: website domain replacement
+
 const TermsAndConditions = () => {
   return (
-    <div className={".TermsAndConditions"}>
+    <div className={"TermsAndConditions"}>
       <h2>
         <b>TERMS AND CONDITIONS</b>
       </h2>

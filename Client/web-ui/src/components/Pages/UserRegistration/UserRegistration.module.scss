@@ -39,7 +39,7 @@
 
     display: grid;
     grid-template-rows: max-content fit-content min-content;
-    grid-template-areas: "fields" "alert" "submit" ;
+    grid-template-areas: "fields" "alert" "submit" "terms";
     padding: 1rem 0rem;
     row-gap: 1rem;
 
@@ -110,13 +110,21 @@
         }
       }
     }
-  }
 
-  .Terms {
-    p {
+    .Terms {
+      grid-area: terms;
       @include font.info;
+      @include text-shadow;
+      @include hyperlink-behavior;
+      color: color.$light1;
+      place-self: center;
+
+      a {
+        color: color.$light2;
+      }
     }
   }
+
 }
 
 /* TODO: responsive. Move input below label*/
