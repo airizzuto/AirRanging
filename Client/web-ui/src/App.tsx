@@ -11,7 +11,7 @@ import { UserPublic } from "./types/User/User";
 import { Aircraft } from "./types/Aircraft/Aircraft";
 
 import Home from "./components/Pages/Home";
-import AircraftsView from "./components/Pages/AircraftsView";
+import AircraftsView from "./components/Pages/Aircrafts";
 import UserRegistrationView from "./components/Pages/UserRegistration";
 import NotFound from "./components/Pages/ErrorPages/NotFound";
 import TermsAndConditions from "./components/Pages/TermsAndConditions";
@@ -22,14 +22,25 @@ import Login from "./components/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = (): JSX.Element =>{
-  // TODO: refactor to global states to useContext
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState<UserPublic | null>(null);
-  
+
+  const userLogout = () => {
+    userService.logout();
+    setUser(null);
+  };
+
   const [aircrafts, setAircrafts] = useState<Aircraft[]>([]);
-  // const [selected, setSelected] = useState([]);
+  
+  const refreshAircrafts = async () => {
+    const aircrafts = await aircraftService.getAllAircrafts();
+    setAircrafts(aircrafts);
+  };
+
+
 
   // TODO: route matching
   // const matchAircraftRoute = useRouteMatch("/aircrafts/:id");
@@ -49,15 +60,9 @@ const App = (): JSX.Element =>{
     }
   }, []);
 
-  const refreshAircrafts = async () => {
-    const aircrafts = await aircraftService.getAllAircrafts();
-    setAircrafts(aircrafts);
-  };
 
-  const userLogout = () => {
-    userService.logout();
-    setUser(null);
-  };
+
+  
 
   return (
     <div className={"App"}>
@@ -86,9 +91,9 @@ const App = (): JSX.Element =>{
             <Route exact path="/aircrafts/:id">
               {/* <AircraftDetail aircraft={aircraftSelected}/> */}
             </Route>
-            <Route exact path="/aircrafts/create">
+            <ProtectedRoute exact path="/aircrafts/create" authenticationPath="/login">
               <AircraftCreate />
-            </Route>
+            </ProtectedRoute>
             <Route exact path="/airports">
               {/* <AirportsEditView /> */}
             </Route>
