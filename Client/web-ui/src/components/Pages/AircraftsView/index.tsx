@@ -1,9 +1,9 @@
+import React from 'react';
+import { Aircraft } from '../../../types/Aircraft/Aircraft';
 import AircraftsTable from '../../Table/AircraftsTable';
+import LinkedButton from '../../Buttons/LinkedButton';
 
 import Style from "./AircraftsView.module.scss";
-import LinkedButton from '../../Buttons/LinkedButton';
-import { Aircraft } from '../../../types/Aircraft/Aircraft';
-import React from 'react';
 
 interface Props {
   aircrafts: Aircraft[];

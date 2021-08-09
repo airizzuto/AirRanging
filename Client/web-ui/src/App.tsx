@@ -8,20 +8,20 @@ import userService from "./services/userService";
 import { isUserAuthenticated } from "./helpers/tokenHelper";
 
 import { UserPublic } from "./types/User/User";
+import { Aircraft } from "./types/Aircraft/Aircraft";
 
-import Home from "./components/Pages/Home/Home";
-import AircraftsView from "./components/Pages/AircraftEditView/AircraftsView";
-import UserRegistrationView from "./components/Pages/UserRegistration/UserRegistrationView";
+import Home from "./components/Pages/Home";
+import AircraftsView from "./components/Pages/AircraftsView";
+import UserRegistrationView from "./components/Pages/UserRegistration";
 import NotFound from "./components/Pages/ErrorPages/NotFound";
-import TermsAndConditions from "./components/Pages/TermsAndConditions/TermsAndConditions";
+import TermsAndConditions from "./components/Pages/TermsAndConditions";
+import AircraftCreate from "./components/Pages/AircraftCreate";
 
 import Header from "./components/Header/Header";
 import Login from "./components/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
-import { Aircraft } from "./types/Aircraft/Aircraft";
-import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreate";
 
 const App = (): JSX.Element =>{
   // TODO: refactor to global states to useContext
@@ -86,7 +86,7 @@ const App = (): JSX.Element =>{
             <Route exact path="/aircrafts/:id">
               {/* <AircraftDetail aircraft={aircraftSelected}/> */}
             </Route>
-            <Route exact path="aircrafts/create">
+            <Route exact path="/aircrafts/create">
               <AircraftCreate />
             </Route>
             <Route exact path="/airports">

@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { UserPublic } from "../../types/User/User";
 
 import Menu from "../Menu/Menu";
+import LinkedButton from "../Buttons/LinkedButton";
+import UndecoratedButton from "../Buttons/UndecoratedButton";
 
 import Style from "./Header.module.scss";
-import ButtonStyle from "../Buttons/ButtonStyles.module.scss";
-import UndecoratedButton from "../Buttons/UndecoratedButton";
 import Logo from "./LogoVector.svg";
 
 interface Props {
@@ -31,14 +31,14 @@ const Header = ({handleLogin, handleLogout, user}: Props): JSX.Element => {
 
       <ul className={Style.HeaderNav}>
         <li>
-          <Link to="/aircrafts" className={ButtonStyle.Decorated}>
-            AIRCRAFT EDIT
-          </Link>
+          <LinkedButton path="/aircrafts">
+            AIRCRAFTS
+          </LinkedButton>
         </li>
         <li>
-          <Link to="/airports" className={ButtonStyle.Decorated}>
-            AIRPORT EDIT
-          </Link>
+          <LinkedButton path="/airports">
+            AIRPORTS
+          </LinkedButton>
         </li>
       </ul>
 

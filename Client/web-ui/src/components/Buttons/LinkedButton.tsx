@@ -10,7 +10,7 @@ export default function LinkedButton(
   { children, path }: Props
 ): JSX.Element {
   return (
-    <Link to={path} className={Style.Decorated}>
+    <Link to={path} className={Style.Decorated} >
       {children}
     </Link>
   );

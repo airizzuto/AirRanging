@@ -38,7 +38,7 @@
     grid-area: form;
 
     display: grid;
-    grid-template-rows: max-content fit-content min-content;
+    grid-template-rows: max-content fit-content min-content min-content;
     grid-template-areas: "fields" "alert" "submit" "terms";
     padding: 1rem 0rem;
     row-gap: 1rem;
@@ -124,7 +124,6 @@
       }
     }
   }
-
 }
 
 /* TODO: responsive. Move input below label*/
