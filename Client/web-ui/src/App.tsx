@@ -21,6 +21,7 @@ import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
 import { Aircraft } from "./types/Aircraft/Aircraft";
+import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreate";
 
 const App = (): JSX.Element =>{
   // TODO: refactor to global states to useContext
@@ -84,6 +85,9 @@ const App = (): JSX.Element =>{
             </Route>
             <Route exact path="/aircrafts/:id">
               {/* <AircraftDetail aircraft={aircraftSelected}/> */}
+            </Route>
+            <Route exact path="aircrafts/create">
+              <AircraftCreate />
             </Route>
             <Route exact path="/airports">
               {/* <AirportsEditView /> */}

@@ -1,4 +1,3 @@
-import React from "react";
 import { usePagination, useRowSelect, useSortBy, useTable } from "react-table";
 
 import Style from "./AircraftsTable.module.scss";
@@ -7,59 +6,11 @@ import Style from "./AircraftsTable.module.scss";
 
 interface Props {
   data: any;
+  columns: any;
 }
 
-const AircraftsTable = ({data}: Props): JSX.Element => {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'ICAO',
-        accessor: 'icaoId',
-      },
-      {
-        Header: 'Manufacturer',
-        accessor: 'manufacturer',
-      },
-      {
-        Header: 'Model',
-        accessor: 'model',
-      },
-      {
-        Header: 'Variant',
-        accessor: 'variant',
-      },
-      {
-        Header: 'Aircraft Type',
-        accessor: 'aircraftType',
-      },
-      {
-        Header: 'Engine Type',
-        accessor: 'engineType',
-      },
-      {
-        Header: 'Engine Count',
-        accessor: 'engineCount',
-      },
-      {
-        Header: 'Weight Category',
-        accessor: 'weightCategory',
-      },
-      {
-        Header: 'Max Range',
-        accessor: 'maxRange',
-      },
-      {
-        Header: 'Author',
-        accessor: 'authorUsername',
-      },
-      {
-        Header: 'Saved Times',
-        accessor: 'savesCount',
-      },
-    ],
-    []
-  );
-
+const AircraftsTable = ({data, columns}: Props): JSX.Element => {
+  
   const {
     getTableProps,
     getTableBodyProps,

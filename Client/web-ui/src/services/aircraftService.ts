@@ -1,4 +1,5 @@
 import axios from "axios";
+import { NewAircraft } from "../types/Aircraft/Aircraft";
 
 const baseUrl = process.env.REACT_APP_BASEURL;
 
@@ -50,11 +51,25 @@ const searchAircraftByModel = async (query: string) => {
   return response.data;
 };
 
+const createAircraft = async (newAircraft: NewAircraft) => {
+  const config = {
+    headers: { Authorization: token }
+  };
+  const response = await axios.post(
+    baseUrl + "/api/aircrafts/create",
+    newAircraft,
+    config
+  );
+
+  return response.data;
+};
+
 
 export default {
   getAllAircrafts,
   getAllAircraftsPaginated,
   getAircraftsOwnedByUser,
   searchAircraftByModel,
+  createAircraft,
   setToken
 };
