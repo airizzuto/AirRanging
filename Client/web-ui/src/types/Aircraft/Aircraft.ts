@@ -31,6 +31,17 @@ export interface AircraftState extends AircraftData {
   loadedFuel: number;
 }
 
+// TODO: Implement paginated model
+export interface AircraftsPaginated {
+  aircrafts: AircraftData[];
+  totalCount: number;
+  pageSize: number;
+  currentPage: number;
+  totalPages: number;
+  hasNext: boolean;
+  nasPrevious: boolean;
+}
+
 // Define special omit for unions
 type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
 
