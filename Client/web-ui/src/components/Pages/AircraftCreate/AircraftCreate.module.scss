@@ -71,7 +71,7 @@
       display: grid;
       grid-auto-rows: max-content;
       row-gap: 1rem;
-  
+
       .FieldGroup {
         display: grid;
 
@@ -104,6 +104,16 @@
           grid-area: field-input;
 
           height: 1.5rem;
+          width: 100%;
+          align-self: center;
+          justify-self: center;
+        }
+
+        select{
+          @include box.light;
+          grid-area: field-input;
+
+          height: 3rem;
           width: 100%;
           align-self: center;
           justify-self: center;

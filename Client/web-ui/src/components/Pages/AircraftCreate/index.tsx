@@ -10,8 +10,6 @@ import AlertBox from "../../Alerts/AlertBox";
 import Style from "./AircraftCreate.module.scss";
 import EnumSelector from "./EnumSelector";
 
-// FIXME: not rendering
-
 const AircraftCreate: React.FC = () => {
   const [alert, setAlert] = React.useState("");
 

@@ -6,12 +6,7 @@ interface Props {
   name: string;
 }
 
-const EnumSelector = ({enumerator, labelName, name}: Props) => {
-  const enumsToOptions = (enumerator: any) => {
-    return enumerator.map(
-      (entry: any) => <option value={entry}>{entry}</option>
-    );
-  };
+const EnumSelector: React.FC<Props> = ({enumerator, labelName, name}) => {
 
   return (
     <>
@@ -21,7 +16,9 @@ const EnumSelector = ({enumerator, labelName, name}: Props) => {
         placeholder={labelName}
         component="select"
       >
-        {enumsToOptions(enumerator)}
+        {Object.keys(enumerator).map(key => {
+          return <option value={key}>{enumerator[key]}</option>;
+        })}
       </Field>
       <ErrorMessage component="span" name={name} />
     </>
