@@ -1,16 +1,17 @@
-import { usePagination, useSortBy, useTable } from "react-table";
+import { usePagination, useRowSelect, useSortBy, useTable } from "react-table";
+import { AircraftData } from "../../types/Aircraft/Aircraft";
 
 import Style from "./AircraftsTable.module.scss";
 
 // Documentation: https://react-table.tanstack.com/docs/overview
 
 interface Props {
-  data: any;
-  columns: {Header: string, accessor: string}[];
+  data: AircraftData[];
+  columns: any;
 }
 
-const AircraftsTable = ({columns, data}: Props): JSX.Element => {
-
+const AircraftsTable: React.FC<Props> = ({data, columns}) => {
+  
   const {
     getTableProps,
     getTableBodyProps,
@@ -34,10 +35,11 @@ const AircraftsTable = ({columns, data}: Props): JSX.Element => {
     },
     useSortBy,
     usePagination,
+    useRowSelect,
   );
 
   return (
-    <div  className={Style.TableView}>
+    <div className={Style.TableView}>
     {/* Apply the table props */}
       <table {...getTableProps()} className={Style.Table}>
         <thead className={Style.TableHeader}>
@@ -92,6 +94,7 @@ const AircraftsTable = ({columns, data}: Props): JSX.Element => {
         </tbody>
       </table>
 
+      {/* Table Pagination Controls */}
       <div className={Style.Pagination}>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}

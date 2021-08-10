@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useModalClose } from "../../../hooks/useModalClose";
 import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
 // import Map from "./Map";
 import ModalTab from "../../Buttons/ModalTab";
 import DraggableModal from "../../Modals/DraggableModal";
-
-import Style from "./MapView.module.scss";
-// import InfoFooter from "./InfoFooter";
 import PlanningModal from "./Planning";
 
-const MapView = (): JSX.Element => {
-  const [isModalActive, setIsModalActive] = React.useState(false); // One active modal at once
-  const [displayPlanningModal, setDisplayPlanningModal] = React.useState(false);
-  const [displayAircraftsModal, setDisplayAircraftsModal] = React.useState(false);
+import { AircraftState } from "../../../types/Aircraft/Aircraft";
 
-  /* TODO: Aircraft selected states here */
+import Style from "./Home.module.scss";
+import AircraftSelect from "./AircraftSelect";
+// import InfoFooter from "./InfoFooter";
 
-  // TODO: abstract modal toggle states parameters (array of states?)
+const Home = () => {
+  const [isModalActive, setIsModalActive] = useState(false); // One active modal at once
+  const [displayPlanningModal, setDisplayPlanningModal] = useState(false);
+  const [displayAircraftsModal, setDisplayAircraftsModal] = useState(true);
+
+  const [aircraft, setAircraft] = useState<AircraftState | null>(null);
+
+  // TODO: move to a custom hook?
   const handleModalDisplay = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
     display: boolean
@@ -32,7 +35,7 @@ const MapView = (): JSX.Element => {
   };
 
   return (
-    <div className={Style.MapView}>
+    <div className={Style.Home}>
 
       {/* Main Map View */}
       {/* <Map /> */}
@@ -57,19 +60,23 @@ const MapView = (): JSX.Element => {
       {/* Map View Properties Modals */}
       <DraggableModal 
         show={displayPlanningModal}
+        
         label="Planning"
         handleClose={() => useModalClose(setDisplayPlanningModal)}
       >
-        <PlanningModal handleAccept={() => useModalClose(setDisplayPlanningModal)}/>
+        <PlanningModal 
+          handleAccept={() => useModalClose(setDisplayPlanningModal)}
+          aircraft={aircraft}
+          aircraftState={setAircraft}
+        />
       </DraggableModal>
 
       <DraggableModal 
         show={displayAircraftsModal}
-        label="Aircrafts"
+        label="Selection"
         handleClose={() => useModalClose(setDisplayAircraftsModal)}
       >
-        {/* TODO: AIRCRAFT SELECT COMPONENT */}
-        <div>AIRCRAFTS PLACEHOLDER</div>
+        <AircraftSelect aircraftSelected={aircraft}/>
       </DraggableModal>
 
       {/* <div className={Style.Info}>
@@ -80,4 +87,4 @@ const MapView = (): JSX.Element => {
   );
 };
 
-export default MapView;
+export default Home;

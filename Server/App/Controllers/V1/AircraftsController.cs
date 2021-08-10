@@ -18,17 +18,18 @@ namespace App.Controllers.V1
 {
     /// <summary>
     /// Aircraft model controller endpoints:
-    /// <para> GetAllAircrafts             - GET     api/aircrafts         </para>
-    /// <para> GetAircraftByParameters     - GET     api/aircrafts/search  </para>
-    /// <para> GetAircraftOwnedByUser      - GET     api/aircrafts/owned   </para>
-    /// <para> GetAircraftId               - GET     api/aircrafts/5       </para>
-    /// <para> CreateAircraft              - POST    api/aircrafts/create  </para>
-    /// <para> CloneAircraft               - POST    api/aircrafts/5/clone  </para>
-    /// <para> PartialUpdateAircraftId     - PUT     api/aircrafts/5       </para>
-    /// <para> SaveAircraftId              - PUT     api/aircrafts/5/save  </para>
-    /// <para> FullUpdateAircraftId        - PATCH   api/aircrafts/5       </para>
-    /// <para> DeleteAircraftId            - DELETE  api/aircrafts/5       </para>
+    /// <para> GetAllAircrafts             - GET     api/aircrafts            </para>
+    /// <para> GetAllAircraftsPaginated    - GET     api/aircrafts/paginated  </para>
+    /// <para> GetAircraftByParameters     - GET     api/aircrafts/search     </para>
+    /// <para> GetAircraftOwnedByUser      - GET     api/aircrafts/owned      </para>
+    /// <para> GetAircraftId               - GET     api/aircrafts/5          </para>
+    /// <para> CreateAircraft              - POST    api/aircrafts/create     </para>
+    /// <para> PartialUpdateAircraftId     - PUT     api/aircrafts/5          </para>
+    /// <para> SaveAircraftId              - PUT     api/aircrafts/5/save     </para>
+    /// <para> FullUpdateAircraftId        - PATCH   api/aircrafts/5          </para>
+    /// <para> DeleteAircraftId            - DELETE  api/aircrafts/5          </para>
     /// </summary>
+
     [ApiController]
     [Route("/api/aircrafts")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -56,11 +57,33 @@ namespace App.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts(
+        public ActionResult<IEnumerable<AircraftReadDTO>> GetAllAircrafts(
+            [FromQuery] AircraftParameters aircraftParameters)
+        {
+            var aircrafts = _repository.Aircraft
+                .GetAllAircrafts(aircraftParameters);
+
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+
+            _logger.LogInfo(
+                $"INFO: Returning {aircraftsResponse.Count()} aircrafts from db."
+            );
+
+            return Ok(aircraftsResponse);
+        }
+
+        // GET api/aircrafts/paginated
+        /// <summary>
+        /// Retrieves all aircrafts in the database
+        /// </summary>
+        /// <response code="200">Retrieves all aircrafts in the database</response>
+        [HttpGet("paginated")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircraftsPaginated(
             [FromQuery] AircraftParameters aircraftParameters)
         {
             var aircrafts = await _repository.Aircraft
-                .GetAllAircraftsAsync(aircraftParameters);
+                .GetAllAircraftsPaginatedAsync(aircraftParameters);
 
             var metadata = new
             {

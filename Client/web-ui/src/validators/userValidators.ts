@@ -30,5 +30,7 @@ export const userRegistrationSchema: SchemaOf<UserRegistration> = object().shape
     .matches(new RegExp("^[a-zA-Z0-9_-]{4,16}$"),
       "Password must contain at least one digit, one uppercase letter and one lowercase letter")
     .defined("Password is required"),
-  confirmPassword: string().equals([ref("password")], "Passwords do not match").defined("Password confirmation is required"),
+  confirmPassword: string()
+    .equals([ref("password")], "Passwords do not match")
+    .defined("Password confirmation is required"),
 }).defined();

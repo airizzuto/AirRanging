@@ -1,22 +1,22 @@
 import React from 'react';
-import aircrafts from '../../../data/aircrafts-mock';
-import { Aircraft } from '../../../types/Aircraft/Aircraft';
+import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import AircraftsTable from '../../Table/AircraftsTable';
-
-import Style from "./AircraftsView.module.scss";
 import LinkedButton from '../../Buttons/LinkedButton';
 
+import Style from "./Aircrafts.module.scss";
 
+interface Props {
+  aircrafts: AircraftData[];
+}
 
-const mockAircrafts: Aircraft[] = aircrafts;
+const AircraftsView: React.FC<Props> = ({ aircrafts }) => {
 
-const AircraftsView = (): JSX.Element => {
-
-  // Data search filter in this level
-  const data = React.useMemo(
-    () => mockAircrafts,
-    []
-  );
+  const [filterInput, setFilterInput] = React.useState("");
+  
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const value = e.target.value;
+    setFilterInput(value);
+  };
 
   const columns = React.useMemo(
     () => [
@@ -56,6 +56,14 @@ const AircraftsView = (): JSX.Element => {
         Header: 'Max Range',
         accessor: 'maxRange',
       },
+      {
+        Header: 'Author',
+        accessor: 'authorUsername',
+      },
+      {
+        Header: 'Saved Times',
+        accessor: 'savesCount',
+      },
     ],
     []
   );
@@ -66,9 +74,14 @@ const AircraftsView = (): JSX.Element => {
       <div className={Style.SubHeader}>
         <h1 className={Style.Title}>Browse Aircrafts</h1>
   
-        <input className={Style.SearchBar}></input>
+        <input className={Style.SearchBar}
+          value={filterInput}
+          onChange={handleFilterChange}
+          placeholder={"Search aircraft model"}
+        />
 
         <div className={Style.CreateNew}>
+          {/* TODO: User logged verify */}
           <LinkedButton path="/aircrafts/create">Create Aircraft</LinkedButton>
         </div>
       </div>
@@ -76,7 +89,7 @@ const AircraftsView = (): JSX.Element => {
       <hr />
 
       <div className={Style.AircraftsTable}>
-        <AircraftsTable columns={columns} data={data} />
+        <AircraftsTable data={aircrafts} columns={columns}/>
       </div>
 
     </div>

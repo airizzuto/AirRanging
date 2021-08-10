@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import { UserInfo } from "../../types/User/User";
+import { UserPublic } from "../../types/User/User";
 
 import Menu from "../Menu/Menu";
+import LinkedButton from "../Buttons/LinkedButton";
+import UndecoratedButton from "../Buttons/UndecoratedButton";
 
 import Style from "./Header.module.scss";
-import ButtonStyle from "../Buttons/ButtonStyles.module.scss";
-import UndecoratedButton from "../Buttons/UndecoratedButton";
 import Logo from "./LogoVector.svg";
 
 interface Props {
   handleLogin: () => void;
   handleLogout: () => void;
-  user: UserInfo | null;
+  user: UserPublic | null;
 }
 
 const Header = ({handleLogin, handleLogout, user}: Props): JSX.Element => {
@@ -31,14 +31,14 @@ const Header = ({handleLogin, handleLogout, user}: Props): JSX.Element => {
 
       <ul className={Style.HeaderNav}>
         <li>
-          <Link to="/aircrafts" className={ButtonStyle.Decorated}>
-            AIRCRAFT EDIT
-          </Link>
+          <LinkedButton path="/aircrafts">
+            AIRCRAFTS
+          </LinkedButton>
         </li>
         <li>
-          <Link to="/airports" className={ButtonStyle.Decorated}>
-            AIRPORT EDIT
-          </Link>
+          <LinkedButton path="/airports">
+            AIRPORTS
+          </LinkedButton>
         </li>
       </ul>
 
@@ -51,7 +51,7 @@ const Header = ({handleLogin, handleLogout, user}: Props): JSX.Element => {
                 </li>
                 <li>
                   <Link to="/registration">
-                    SIGN IN
+                    SIGN UP
                   </Link>
                 </li>
               </ul>

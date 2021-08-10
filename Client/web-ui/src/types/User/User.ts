@@ -1,5 +1,5 @@
 
-export interface UserInfo {
+export interface UserPublic {
   username: string;
 }
 

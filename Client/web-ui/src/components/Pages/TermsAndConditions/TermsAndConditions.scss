@@ -1,0 +1,19 @@
+@use "../../../styles/mixins" as *;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/colors" as color;
+
+.TermsAndConditions {
+  @include main-component;
+  @include text-shadow;
+
+  color: color.$light1;
+  display: grid;
+
+  h2{
+    @include font.header-1;
+  }
+
+  p {
+    @include font.main;
+  }
+}

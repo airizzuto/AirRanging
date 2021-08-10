@@ -1,36 +1,36 @@
 import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import { useModalClose } from "./hooks/useModalClose";
 import { useModalToggle } from "./hooks/useModalToggle";
 
 import aircraftService from "./services/aircraftService";
+import userService from "./services/userService";
+import { isUserAuthenticated } from "./helpers/tokenHelper";
 
-import MapView from "./components/Pages/MapView/MapView";
-import AircraftsView from "./components/Pages/AircraftEditView/AircraftsView";
-import UserRegistrationView from "./components/Pages/UserRegistration/UserRegistrationView";
+import { UserPublic } from "./types/User/User";
+import { AircraftData } from "./types/Aircraft/Aircraft";
+
+import Home from "./components/Pages/Home";
+import AircraftsView from "./components/Pages/Aircrafts";
+import UserRegistrationView from "./components/Pages/UserRegistration";
 import NotFound from "./components/Pages/ErrorPages/NotFound";
+import TermsAndConditions from "./components/Pages/TermsAndConditions";
+import AircraftCreate from "./components/Pages/AircraftCreate";
 
 import Header from "./components/Header/Header";
 import Login from "./components/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
-import userService from "./services/userService";
-import { isUserAuthenticated } from "./helpers/tokenHelper";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = (): JSX.Element =>{
-  // TODO: refactor to global states to useContext
   const [showLogin, setShowLogin] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserPublic | null>(null);
+  const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
 
-  // TODO: aircraftSelected state
-
-  // TODO: route matching
-  // const matchAircraftRoute = useRouteMatch("/aircrafts/:id");
-  // const matchUserRoute = useRouteMatch("/users/:id");
-  // const aircraftSelected = null; // TODO: service get aircraft by id
-
-  // aircrafts state effect
+  useEffect(() => {
+    refreshAircrafts();
+  }, []);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("user");
@@ -46,6 +46,15 @@ const App = (): JSX.Element =>{
     userService.logout();
     setUser(null);
   };
+  
+  const refreshAircrafts = async () => {
+    const aircrafts = await aircraftService.getAllAircrafts();
+    setAircrafts(aircrafts);
+  };
+
+  // TODO: route matching
+  // const matchAircraftRoute = useRouteMatch("/aircrafts/:id");
+  // const matchUserRoute = useRouteMatch("/users/:id");
 
   return (
     <div className={"App"}>
@@ -59,21 +68,24 @@ const App = (): JSX.Element =>{
 
       <Login 
         showLogin={showLogin} 
-        handleClose={() => useModalClose(setShowLogin)}
+        setShowLogin={setShowLogin}
         setUser={setUser}
       />
   
       <div className="Main">
         <Switch>
             <Route exact path="/">
-              <MapView />
+              <Home />
             </Route>
             <Route exact path="/aircrafts">
-              <AircraftsView />
+              <AircraftsView aircrafts={aircrafts}/>
             </Route>
-            <Route exact path="/aircrafts/:id">
+            <Route exact path="/aircrafts/detail/:id">
               {/* <AircraftDetail aircraft={aircraftSelected}/> */}
             </Route>
+            <ProtectedRoute exact path="/aircrafts/create" authenticationPath="/login">
+              <AircraftCreate />
+            </ProtectedRoute>
             <Route exact path="/airports">
               {/* <AirportsEditView /> */}
             </Route>
@@ -82,6 +94,9 @@ const App = (): JSX.Element =>{
             </Route>
             <Route exact path="/forgotpass">
               {/* <ForgotPassword /> */}
+            </Route>
+            <Route exact path="/terms">
+              <TermsAndConditions />
             </Route>
             <Route path="*">
               <NotFound />

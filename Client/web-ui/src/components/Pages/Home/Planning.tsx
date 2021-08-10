@@ -1,48 +1,56 @@
 import React from "react";
+
 import Slider from "../../Sliders/Slider";
 import DecoratedButton from "../../Buttons/DecoratedButton";
+
+import { AircraftState } from "../../../types/Aircraft/Aircraft";
 
 import Style from "./Planning.module.scss";
 
 interface Props {
+  aircraft?: AircraftState | null;
+  aircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
   handleAccept: () => void;
-  // TODO: aircraft
-  // TODO: aircraft fuel state handler
 }
+const Planning: React.FC<Props> = ({ 
+  aircraft,
+  aircraftState,
+  handleAccept,
+}: Props) => {
 
-export default function Planning({ handleAccept }: Props) {
-  const [aircraft, setAircraft] = React.useState({
-    fuelLoaded: 0,
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFuelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
-    
-    setAircraft({
-      ...aircraft,
-      [e.target.name]: value,
-    });
+
+    const parsedValue = Number(value);
+
+    if (aircraft) {
+      aircraftState({...aircraft, loadedFuel: parsedValue});
+    }
   };
 
+  // TODO: fuel calculations
+
+  // TODO: split render to planning or select depending on aircraft state null or present
   return (
     <div className={Style.Planning}>
       <div className={Style.PropertiesGroup}>
         <h2>Properties</h2>
         <div className={Style.Selected}>
           <label>Selected Aircraft:</label>
-          <span>*SELECTED AIRCRAFT*</span>
+          {/* Replace "select an aircraft" with a dropdown or switch to select */}
+          <span>{aircraft ? aircraft.model : "Select an aircraft"}</span>
         </div>
         <div className={Style.SliderProp}>
           <label>Fuel Loaded:</label>
           <div className={Style.output}>
-            {/*TODO:*/}{aircraft.fuelLoaded} %
+            {aircraft ? aircraft.loadedFuel : 0} %
           </div>
           <div className={Style.range}>
-            <Slider name="fuelLoaded"
+            <Slider name="loadedFuel"
               min={0}
-              max={100} // TODO: Max aircraft fuel
-              value={aircraft.fuelLoaded}
-              handler={handleChange}
+              max={aircraft ? aircraft.fuelCapacity: 0}
+              value={aircraft ? aircraft.loadedFuel : 0}
+              handler={handleFuelChange}
             />
           </div>
         </div>
@@ -67,4 +75,6 @@ export default function Planning({ handleAccept }: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default Planning;

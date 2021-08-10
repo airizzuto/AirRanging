@@ -6,7 +6,7 @@ export const isTokenExpired = (token: string): boolean => {
     const { exp } = jwt.decode(token) as {
         exp: number;
     };
-    const expirationDatetimeInSeconds = exp * 1000;
+    const expirationDatetimeInSeconds = exp * 1000; // FIXME: review date formats
 
     return Date.now() >= expirationDatetimeInSeconds;
   } catch {

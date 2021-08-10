@@ -46,6 +46,10 @@
     cursor: pointer;
     transition: color 0.4s;
   }
+
+  &:disabled {
+    background-color: color.$light2-disabled;
+  }
 };
 
 @mixin no-decorations {

@@ -8,19 +8,20 @@ interface Props {
   handler: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function Slider({name, min, max, value, handler }:Props): JSX.Element {
-
+const Slider: React.FC<Props> = ({name, min, max, value, handler }) => {
   return (
     <div className="SliderContainer">
       <input 
         type="range"
         className="slider" 
         name={name}
-        min={min.toString()}
-        max={max.toString()}
-        value={value.toString()}
+        min={min}
+        max={max}
+        value={value}
         onChange={(e) => handler(e)}
       />
     </div>
   );
-}
+};
+
+export default Slider;

@@ -1,10 +1,10 @@
 import Style from "./ButtonStyles.module.scss";
 
 interface Props {
-  handleClick: () => void
+  handleClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const ExitButton = ({ handleClick }: Props): JSX.Element => {
+const ExitButton: React.FC<Props> = ({ handleClick }) => {
 
   return (
     <div className={Style.ExitButton}>

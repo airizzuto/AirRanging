@@ -5,14 +5,14 @@ import ExitButton from "../Buttons/ExitButton";
 import Style from "./DraggableModal.module.scss";
 
 interface Props {
-  label: string,
-  handleClose: () => void,
-  show: boolean,
-  children: JSX.Element
+  label: string;
+  handleClose: React.MouseEventHandler<HTMLButtonElement>;
+  show: boolean;
+  children: React.ReactElement
 }
 
 // TODO: Draggable bounds, dragabble area
-const Modal = ({ label, handleClose, show, children }: Props): JSX.Element => {
+const Modal: React.FC<Props> = ({ label, handleClose, show, children }) => {
   const showHideClassName = show ? {display: "block"} : {display: "none"};
 
   return (

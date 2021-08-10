@@ -2,7 +2,6 @@
 
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../enums/AircraftEnums";
 
-// TODO IMPORTANT: PARSE OR DEFINE ONE TYPE
 export interface Aircraft {
   id: string;
   icaoId: string;
@@ -10,24 +9,42 @@ export interface Aircraft {
   model: string;
   variant?: string;
   registration?: string;
-  aircraftType: EAircraftType | string;
-  engineType: EEngineType | string;
-  engineCount: number | string;
-  weightCategory: EWeightCategory | string;
-  icaoWakeCategory: EIcaoWakeCategory | string;
-  fuelType: EFuelType | string;
-  maxTakeoffWeight: number | string;
-  cruiseSpeed: number | string;
-  fuelCapacity: number | string;
-  maxRange: number | string;
-  serviceCeiling: number | string;
+  aircraftType: EAircraftType;
+  engineType: EEngineType;
+  engineCount: number;
+  weightCategory: EWeightCategory;
+  icaoWakeCategory: EIcaoWakeCategory;
+  fuelType: EFuelType;
+  maxTakeoffWeight: number;
+  cruiseSpeed: number;
+  fuelCapacity: number;
+  maxRange: number;
+  serviceCeiling: number;
 }
 
 export interface AircraftData extends Aircraft{
   savesCount: number;
-  author?: string; // TODO: Remove optional
+  authorUsername?: string; // TODO: Remove optional
 }
 
 export interface AircraftState extends AircraftData {
   loadedFuel: number;
 }
+
+// TODO: Implement paginated model
+export interface AircraftsPaginated {
+  aircrafts: AircraftData[];
+  totalCount: number;
+  pageSize: number;
+  currentPage: number;
+  totalPages: number;
+  hasNext: boolean;
+  nasPrevious: boolean;
+}
+
+// Define special omit for unions
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
+
+export type NewAircraft = UnionOmit<Aircraft, 'id'>;
+
+// TODO: paginated AircraftData

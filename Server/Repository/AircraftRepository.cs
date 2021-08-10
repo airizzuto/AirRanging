@@ -26,8 +26,22 @@ namespace Repository
         /// Retrieves all aircrafts in context.
         /// </summary>
         /// <param name="parameters"></param>
+        /// <returns>List of all aircrafts</returns>
+        public IQueryable<Aircraft> GetAllAircrafts(
+            AircraftParameters parameters)
+        {
+            var aircrafts = FindAll();
+            var aircraftsSorted = _sortHelper.ApplySort(aircrafts, parameters.OrderBy);
+        
+            return aircraftsSorted;
+        }
+
+        /// <summary>
+        /// Retrieves all aircrafts in context.
+        /// </summary>
+        /// <param name="parameters"></param>
         /// <returns>Paginated list of aircrafts</returns>
-        public async Task<PagedList<Aircraft>> GetAllAircraftsAsync(
+        public async Task<PagedList<Aircraft>> GetAllAircraftsPaginatedAsync(
             AircraftParameters parameters)
         {
             var aircrafts = FindAll();

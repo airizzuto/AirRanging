@@ -14,6 +14,9 @@ const Footer = (): JSX.Element => {
       </div>
 
       <div className={Style.Links}>
+        <Link to="/terms">
+          Terms & Conditions
+        </Link>
         <Link to="/help">
           Help
         </Link>
