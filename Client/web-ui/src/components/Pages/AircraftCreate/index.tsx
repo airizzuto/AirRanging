@@ -12,7 +12,7 @@ import EnumSelector from "./EnumSelector";
 
 // FIXME: not rendering
 
-const AircraftCreate = (): JSX.Element => {
+const AircraftCreate: React.FC = () => {
   const [alert, setAlert] = React.useState("");
 
   const history = useHistory();

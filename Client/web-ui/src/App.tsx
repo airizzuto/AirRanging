@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import { useModalClose } from "./hooks/useModalClose";
 import { useModalToggle } from "./hooks/useModalToggle";
 
 import aircraftService from "./services/aircraftService";
@@ -8,7 +7,7 @@ import userService from "./services/userService";
 import { isUserAuthenticated } from "./helpers/tokenHelper";
 
 import { UserPublic } from "./types/User/User";
-import { Aircraft } from "./types/Aircraft/Aircraft";
+import { AircraftData } from "./types/Aircraft/Aircraft";
 
 import Home from "./components/Pages/Home";
 import AircraftsView from "./components/Pages/Aircrafts";
@@ -27,24 +26,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const App = (): JSX.Element =>{
   const [showLogin, setShowLogin] = useState(false);
   const [user, setUser] = useState<UserPublic | null>(null);
-
-  const userLogout = () => {
-    userService.logout();
-    setUser(null);
-  };
-
-  const [aircrafts, setAircrafts] = useState<Aircraft[]>([]);
-  
-  const refreshAircrafts = async () => {
-    const aircrafts = await aircraftService.getAllAircrafts();
-    setAircrafts(aircrafts);
-  };
-
-
-
-  // TODO: route matching
-  // const matchAircraftRoute = useRouteMatch("/aircrafts/:id");
-  // const matchUserRoute = useRouteMatch("/users/:id");
+  const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
 
   useEffect(() => {
     refreshAircrafts();
@@ -60,9 +42,19 @@ const App = (): JSX.Element =>{
     }
   }, []);
 
-
-
+  const userLogout = () => {
+    userService.logout();
+    setUser(null);
+  };
   
+  const refreshAircrafts = async () => {
+    const aircrafts = await aircraftService.getAllAircrafts();
+    setAircrafts(aircrafts);
+  };
+
+  // TODO: route matching
+  // const matchAircraftRoute = useRouteMatch("/aircrafts/:id");
+  // const matchUserRoute = useRouteMatch("/users/:id");
 
   return (
     <div className={"App"}>
@@ -76,7 +68,7 @@ const App = (): JSX.Element =>{
 
       <Login 
         showLogin={showLogin} 
-        handleClose={() => useModalClose(setShowLogin)}
+        setShowLogin={setShowLogin}
         setUser={setUser}
       />
   

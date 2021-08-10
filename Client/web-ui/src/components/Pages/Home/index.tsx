@@ -1,23 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useModalClose } from "../../../hooks/useModalClose";
 import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
 // import Map from "./Map";
 import ModalTab from "../../Buttons/ModalTab";
 import DraggableModal from "../../Modals/DraggableModal";
+import PlanningModal from "./Planning";
+
+import { AircraftState } from "../../../types/Aircraft/Aircraft";
 
 import Style from "./Home.module.scss";
 // import InfoFooter from "./InfoFooter";
-import PlanningModal from "./Planning";
 
-const Home = (): JSX.Element => {
-  const [isModalActive, setIsModalActive] = React.useState(false); // One active modal at once
-  const [displayPlanningModal, setDisplayPlanningModal] = React.useState(false);
-  const [displayAircraftsModal, setDisplayAircraftsModal] = React.useState(false);
+const Home = () => {
+  const [isModalActive, setIsModalActive] = useState(false); // One active modal at once
+  const [displayPlanningModal, setDisplayPlanningModal] = useState(false);
+  const [displayAircraftsModal, setDisplayAircraftsModal] = useState(true);
 
-  /* TODO: Aircraft selected states here */
+  const [aircraft, setAircraft] = useState<AircraftState | null>(null);
 
-  // TODO: abstract modal toggle states parameters (array of states?)
+  // TODO: move to a custom hook?
   const handleModalDisplay = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
     display: boolean
@@ -57,10 +59,15 @@ const Home = (): JSX.Element => {
       {/* Map View Properties Modals */}
       <DraggableModal 
         show={displayPlanningModal}
+        
         label="Planning"
         handleClose={() => useModalClose(setDisplayPlanningModal)}
       >
-        <PlanningModal handleAccept={() => useModalClose(setDisplayPlanningModal)}/>
+        <PlanningModal 
+          handleAccept={() => useModalClose(setDisplayPlanningModal)}
+          aircraft={aircraft}
+          aircraftState={setAircraft}
+        />
       </DraggableModal>
 
       <DraggableModal 

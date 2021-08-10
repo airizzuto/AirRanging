@@ -1,20 +1,20 @@
 import React from 'react';
-import { Aircraft } from '../../../types/Aircraft/Aircraft';
+import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import AircraftsTable from '../../Table/AircraftsTable';
 import LinkedButton from '../../Buttons/LinkedButton';
 
-import Style from "./AircraftsView.module.scss";
+import Style from "./Aircrafts.module.scss";
 
 interface Props {
-  aircrafts: Aircraft[];
+  aircrafts: AircraftData[];
 }
 
-const AircraftsView = ({aircrafts}: Props): JSX.Element => {
+const AircraftsView: React.FC<Props> = ({ aircrafts }) => {
 
   const [filterInput, setFilterInput] = React.useState("");
   
-  const handleFilterChange = (e: any) => {
-    const value = e.target.value || undefined;
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const value = e.target.value;
     setFilterInput(value);
   };
 
