@@ -5,10 +5,12 @@ export type ProtectedRouteProps = {
   authenticationPath: string;
 } & RouteProps;
 
-export default function ProtectedRoute({ authenticationPath, ...routeProps }: ProtectedRouteProps) {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ authenticationPath, ...routeProps }) => {
   if(isUserAuthenticated()) {
     return <Route {...routeProps} />;
   } else {
     return <Redirect to={{ pathname: authenticationPath }} />;
   }
-}
+};
+
+export default ProtectedRoute;

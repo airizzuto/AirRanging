@@ -1,15 +1,16 @@
 import { usePagination, useRowSelect, useSortBy, useTable } from "react-table";
+import { AircraftData } from "../../types/Aircraft/Aircraft";
 
 import Style from "./AircraftsTable.module.scss";
 
 // Documentation: https://react-table.tanstack.com/docs/overview
 
 interface Props {
-  data: any;
+  data: AircraftData[];
   columns: any;
 }
 
-const AircraftsTable = ({data, columns}: Props): JSX.Element => {
+const AircraftsTable: React.FC<Props> = ({data, columns}) => {
   
   const {
     getTableProps,

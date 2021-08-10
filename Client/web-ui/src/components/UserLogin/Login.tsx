@@ -1,22 +1,23 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field, FormikHelpers, ErrorMessage } from 'formik';
 
 import userService from "../../services/userService";
 import aircraftService from "../../services/aircraftService";
+import { userLoginSchema } from "../../validators/userValidators";
 
 import FixedModal from "../Modals/FixedModal";
+import AlertBox from "../Alerts/AlertBox";
+
+import { UserPublic } from "../../types/User/User";
 
 import Style from "./Login.module.scss";
 import CheckboxStyle from "../../styles/components/_checkbox.module.scss";
-import { userLoginSchema } from "../../validators/userValidators";
-import AlertBox from "../Alerts/AlertBox";
-import { UserPublic } from "../../types/User/User";
 
 interface Props {
   showLogin: boolean;
-  handleClose: () => void;
-  setUser: React.Dispatch<React.SetStateAction<UserPublic | null>>;
+  setShowLogin: Dispatch<SetStateAction<boolean>>;
+  setUser: Dispatch<SetStateAction<UserPublic | null>>;
 }
 
 interface Values {
@@ -24,8 +25,12 @@ interface Values {
   password: string;
 }
 
-export default function LoginModal({ showLogin, handleClose, setUser }: Props): JSX.Element {
+export default function LoginModal({ showLogin, setShowLogin, setUser }: Props): JSX.Element {
   const [alert, setAlert] = React.useState("");
+
+  const handleClose = () => {
+    setShowLogin(false);
+  };
 
   const handleSubmit = async ({email, password}: Values) => {
     try {
@@ -45,7 +50,7 @@ export default function LoginModal({ showLogin, handleClose, setUser }: Props): 
     <FixedModal
       label="User Login"
       visible={showLogin}
-      handleModalClose={handleClose}
+      handleCloseModal={handleClose}
     >
       <Formik 
         initialValues={{ email: "", password: ""}}

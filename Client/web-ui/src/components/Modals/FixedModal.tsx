@@ -8,18 +8,16 @@ import Style from "./FixedModal.module.scss";
 interface Props {
   label: string,
   visible: boolean,
-  handleModalClose: () => void,
-  children: JSX.Element
+  handleCloseModal: React.MouseEventHandler<HTMLButtonElement>,
+  children: React.ReactElement
 }
 
-export default function Modal({
-  label, visible, handleModalClose, children
-}: Props): JSX.Element {
+const Modal: React.FC<Props> = ({ label, visible, handleCloseModal, children }) => {
   const ref = React.useRef(null);
 
   const showHideClassName = visible ? { display: "grid" } : { display: "none" };
 
-  useOnClickOutside(ref, handleModalClose);
+  useOnClickOutside(ref, () => handleCloseModal);
 
   return (
     <div className={Style.Modal} style={showHideClassName}>
@@ -27,7 +25,7 @@ export default function Modal({
         <div className={Style.ModalHeader}>
           <h1 className={Style.ModalTitle}>{label}</h1>
           <div className={Style.CloseButton}>
-            <ExitButton handleClick={handleModalClose} />
+            <ExitButton handleClick={() => handleCloseModal} />
           </div>
         </div>
 
@@ -39,4 +37,6 @@ export default function Modal({
       </div>
     </div>
   );
-}
+};
+
+export default Modal;

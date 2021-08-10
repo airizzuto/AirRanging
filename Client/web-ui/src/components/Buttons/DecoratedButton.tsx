@@ -1,17 +1,17 @@
 import Style from "../Buttons/ButtonStyles.module.scss";
 
 interface Props {
-  children: JSX.Element | string;
+  children: React.ReactElement | string;
   backgroundImage?: string;
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function DecoratedButton(
-  { children, onClick }: Props
-): JSX.Element {
+const DecoratedButton: React.FC<Props> = ({ children, onClick }) => {
   return (
     <button className={Style.Decorated} onClick={onClick}>
       {children}
     </button>
   );
-}
+};
+
+export default DecoratedButton;
