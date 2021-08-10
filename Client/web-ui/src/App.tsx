@@ -80,7 +80,7 @@ const App = (): JSX.Element =>{
             <Route exact path="/aircrafts">
               <AircraftsView aircrafts={aircrafts}/>
             </Route>
-            <Route exact path="/aircrafts/:id">
+            <Route exact path="/aircrafts/detail/:id">
               {/* <AircraftDetail aircraft={aircraftSelected}/> */}
             </Route>
             <ProtectedRoute exact path="/aircrafts/create" authenticationPath="/login">
