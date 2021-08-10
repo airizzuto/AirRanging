@@ -1,31 +1,39 @@
+import { AircraftState } from "../../../types/Aircraft/Aircraft";
+
+import DecoratedButton from "../../Buttons/DecoratedButton";
 // import SelectDropdown from "../Filters/SelectDropdown";
-
 // import SearchbarDropdown from "../../Filters/SearchbarDropdown"
-
-
 // import aircrafts from "../../data/aircrafts-mock";
 
-const AircraftSelect = () => {
+import Style from "./AircraftSelect.module.scss";
+
+interface Props {
+  aircraftSelected: AircraftState | null;
+}
+
+const AircraftSelect: React.FC<Props> = ({aircraftSelected}) => {
   return (
-    <div>
-      <div>
-        {/* <SearchbarDropdown /> */}
+    <div className={Style.AircraftSelect}>
+      <div className={Style.SearchBar}>
+        {/* TODO: <SearchbarDropdown /> */}
       </div>
       {/* TODO: toggle owned */}
-      {/* TODO: selected info
-          <row>
-            <col>aircraft.icao</col>
-            <col>aircraft.manufacturer</col>
-            <col>aircraft.model</col>
-            <col>aircraft.author</col>
-            <col>details</>
-          </row>
-      */}
-      {/* TODO: pagination controls */}
-      {/* TODO: buttons
-        accept closes modal
-        details opens aircraft id page
-      */}
+      {aircraftSelected
+      ? <div className={Style.AircraftDetails}>
+          <h2>Selected Aircraft Details</h2>
+          <div className={Style.FieldGroup}>
+            <label>ICAO Id:</label>
+            <p>{aircraftSelected.icaoId}</p>
+          </div>
+        </div>
+      : <div className={Style.AircraftNotSelected}>
+          <p>Select an aircraft to view details and begin planning</p>
+        </div>
+      }
+      
+      <div className={Style.Buttons}>
+        <DecoratedButton onClick={() => null}>Select</DecoratedButton>
+      </div>
     </div>
   );
 };

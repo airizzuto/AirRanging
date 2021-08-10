@@ -10,6 +10,7 @@ import PlanningModal from "./Planning";
 import { AircraftState } from "../../../types/Aircraft/Aircraft";
 
 import Style from "./Home.module.scss";
+import AircraftSelect from "./AircraftSelect";
 // import InfoFooter from "./InfoFooter";
 
 const Home = () => {
@@ -72,11 +73,10 @@ const Home = () => {
 
       <DraggableModal 
         show={displayAircraftsModal}
-        label="Aircrafts"
+        label="Selection"
         handleClose={() => useModalClose(setDisplayAircraftsModal)}
       >
-        {/* TODO: AIRCRAFT SELECT COMPONENT */}
-        <div>AIRCRAFTS PLACEHOLDER</div>
+        <AircraftSelect aircraftSelected={aircraft}/>
       </DraggableModal>
 
       {/* <div className={Style.Info}>
