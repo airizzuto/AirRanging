@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useModalClose } from "../../../hooks/useModalClose";
 import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
-// import Map from "./Map";
 import ModalTab from "../../Buttons/ModalTab";
 import DraggableModal from "../../Modals/DraggableModal";
 import PlanningModal from "./Planning";
@@ -37,8 +36,7 @@ const Home = () => {
   return (
     <div className={Style.Home}>
 
-      {/* Main Map View */}
-      {/* <Map /> */}
+      
 
       {/* Properties Modals Activation Tabs */}
       <div className={Style.ModalTabs}>

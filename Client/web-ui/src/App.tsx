@@ -18,6 +18,8 @@ import AircraftCreate from "./components/Pages/AircraftCreate";
 import Header from "./components/Header/Header";
 import Login from "./components/Pages/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
+import Map from "./components/Map/Map";
+
 
 import "./App.scss";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -62,7 +64,10 @@ const App = (): JSX.Element =>{
           user={user}
         />
       </div>
-  
+      {/* Main Map View */}
+      <div className={"Map"}>
+        <Map />
+      </div>
       <div className="Main">
         <Switch>
             <Route exact path="/">
