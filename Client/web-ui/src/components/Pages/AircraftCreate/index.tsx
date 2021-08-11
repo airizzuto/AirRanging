@@ -8,7 +8,7 @@ import { aircraftCreationSchema } from "../../../validators/aircraftValidators";
 import AlertBox from "../../Alerts/AlertBox";
 
 import Style from "./AircraftCreate.module.scss";
-import EnumSelector from "./EnumSelector";
+import EnumOptions from "./EnumOptions";
 
 const AircraftCreate: React.FC = () => {
   const [alert, setAlert] = React.useState("");
@@ -48,7 +48,7 @@ const AircraftCreate: React.FC = () => {
 
   return (
       <div className={Style.FormContainer}>
-        <h1 className={Style.FormTitle}>User Registration</h1>
+        <h1 className={Style.FormTitle}>Create Aircraft</h1>
   
         <hr className={Style.Separator}/>
 
@@ -94,11 +94,11 @@ const AircraftCreate: React.FC = () => {
                 </div>
     
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EAircraftType} labelName="Aircraft Type" name="aircraftType" />
+                  <EnumOptions enumerator={EAircraftType} labelName="Aircraft Type" name="aircraftType" />
                 </div>
 
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EEngineType} labelName="Engine Type" name="engineType" />
+                  <EnumOptions enumerator={EEngineType} labelName="Engine Type" name="engineType" />
                 </div>
 
                 <div className={Style.FieldGroup}>
@@ -108,15 +108,15 @@ const AircraftCreate: React.FC = () => {
                 </div>
 
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EWeightCategory} labelName="Weight Category" name="weightCategory" />
+                  <EnumOptions enumerator={EWeightCategory} labelName="Weight Category" name="weightCategory" />
                 </div>
 
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EIcaoWakeCategory} labelName="ICAO Wake Category" name="icaoWakeCategory" />
+                  <EnumOptions enumerator={EIcaoWakeCategory} labelName="ICAO Wake Category" name="icaoWakeCategory" />
                 </div>
 
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EFuelType} labelName="Fuel Type" name="fuelType" />
+                  <EnumOptions enumerator={EFuelType} labelName="Fuel Type" name="fuelType" />
                 </div>
 
                 <div className={Style.FieldGroup}>

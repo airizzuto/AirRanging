@@ -40,8 +40,9 @@
     display: grid;
     grid-template-rows: max-content fit-content min-content;
     grid-template-areas: "fields" "alert" "submit";
-    padding: 1rem 0rem;
+    padding: 2rem 0rem;
     row-gap: 1rem;
+    margin-bottom: 2rem;
 
     .AlertNotification {
       grid-area: alert;
@@ -71,6 +72,7 @@
       display: grid;
       grid-auto-rows: max-content;
       row-gap: 1rem;
+
 
       .FieldGroup {
         display: grid;
