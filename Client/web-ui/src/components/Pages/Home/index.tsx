@@ -14,9 +14,9 @@ import AircraftSelect from "./AircraftSelect";
 // import InfoFooter from "./InfoFooter";
 
 const Home = () => {
-  const [isModalActive, setIsModalActive] = useState(false); // One active modal at once
+  const [isModalActive, setIsModalActive] = useState(true); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = useState(false);
-  const [displayAircraftsModal, setDisplayAircraftsModal] = useState(true);
+  const [displayAircraftsModal, setDisplaySelectionModal] = useState(true);
 
   const [aircraft, setAircraft] = useState<AircraftState | null>(null);
 
@@ -27,7 +27,7 @@ const Home = () => {
   ) => {
     if (isModalActive) {
       setDisplayPlanningModal(false);
-      setDisplayAircraftsModal(false);
+      setDisplaySelectionModal(false);
     }
 
     setDisplayModal(display ? false : true);
@@ -52,7 +52,7 @@ const Home = () => {
         <ModalTab
           icon={faPaperPlane}
           handleTabClick={() => handleModalDisplay(
-            setDisplayAircraftsModal, displayAircraftsModal
+            setDisplaySelectionModal, displayAircraftsModal
           )}
         />
       </div>
@@ -74,7 +74,7 @@ const Home = () => {
       <DraggableModal 
         show={displayAircraftsModal}
         label="Selection"
-        handleClose={() => useModalClose(setDisplayAircraftsModal)}
+        handleClose={() => useModalClose(setDisplaySelectionModal)}
       >
         <AircraftSelect aircraftSelected={aircraft}/>
       </DraggableModal>
