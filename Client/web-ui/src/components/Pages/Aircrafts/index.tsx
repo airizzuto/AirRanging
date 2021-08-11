@@ -9,7 +9,7 @@ interface Props {
   aircrafts: AircraftData[];
 }
 
-const AircraftsView: React.FC<Props> = ({ aircrafts }) => {
+const Aircrafts: React.FC<Props> = ({ aircrafts }) => {
 
   const [filterInput, setFilterInput] = React.useState("");
   
@@ -81,7 +81,6 @@ const AircraftsView: React.FC<Props> = ({ aircrafts }) => {
         />
 
         <div className={Style.CreateNew}>
-          {/* TODO: User logged verify */}
           <LinkedButton path="/aircrafts/create">Create Aircraft</LinkedButton>
         </div>
       </div>
@@ -96,4 +95,4 @@ const AircraftsView: React.FC<Props> = ({ aircrafts }) => {
   );
 };
 
-export default AircraftsView;
+export default Aircrafts;
