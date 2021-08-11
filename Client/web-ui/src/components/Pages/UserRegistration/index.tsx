@@ -21,7 +21,7 @@ const UserRegistrationView = () => {
       setAlert("");
       await userService.register({ username, email, password });
       await userService.login({ email, password });
-      history.push("/");
+      history.goBack();
     } catch(error) {
       console.log(error.message);
       setAlert(error.message);
