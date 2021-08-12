@@ -6,18 +6,36 @@ import ModalTab from "../../Buttons/ModalTab";
 import DraggableModal from "../../Modals/DraggableModal";
 import PlanningModal from "./Planning";
 
-import { AircraftState } from "../../../types/Aircraft/Aircraft";
+import { AircraftData, AircraftState } from "../../../types/Aircraft/Aircraft";
 
 import Style from "./Home.module.scss";
 import AircraftSelect from "./AircraftSelect";
+import aircraftService from "../../../services/aircraftService";
 // import InfoFooter from "./InfoFooter";
 
-const Home = () => {
+interface Props {
+  initialAircrafts: AircraftData[];
+}
+
+const Home: React.FC<Props> = ({initialAircrafts}) => {
   const [isModalActive, setIsModalActive] = useState(true); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = useState(false);
   const [displayAircraftsModal, setDisplaySelectionModal] = useState(true);
 
   const [aircraft, setAircraft] = useState<AircraftState | null>(null);
+  const [aircrafts, setAircrafts] = useState<AircraftData[]>(initialAircrafts);
+
+  const handleAircraftsFiltering = async (input: string) => {
+    await aircraftService.searchAircraftByModel(input)
+      .then(aircrafts => setAircrafts(aircrafts));
+  };
+
+  // FIXME:
+  const handleAircraftSelection = (selected: AircraftData | null) => {
+    selected 
+    ? setAircraft({...selected, loadedFuel: selected.fuelCapacity})
+    : setAircraft(null);
+  };
 
   // TODO: move to a custom hook?
   const handleModalDisplay = (
@@ -35,8 +53,6 @@ const Home = () => {
 
   return (
     <div className={Style.Home}>
-
-      
 
       {/* Properties Modals Activation Tabs */}
       <div className={Style.ModalTabs}>
@@ -74,12 +90,18 @@ const Home = () => {
         label="Selection"
         handleClose={() => useModalClose(setDisplaySelectionModal)}
       >
-        <AircraftSelect aircraftSelected={aircraft}/>
+        <AircraftSelect 
+          aircraftSelected={aircraft} 
+          aircrafts={aircrafts}
+          handleAircraftSelection={handleAircraftSelection}
+          handleAircraftsFiltering={handleAircraftsFiltering}/>
       </DraggableModal>
 
-      {/* <div className={Style.Info}>
-        <InfoFooter />
-      </div> */}
+      {/* TODO:
+      <div className={Style.Info}>
+        <InfoOverlay />
+      </div> 
+      */}
 
     </div>
   );

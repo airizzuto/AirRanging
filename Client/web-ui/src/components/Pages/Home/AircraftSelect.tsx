@@ -1,6 +1,7 @@
-import { AircraftState } from "../../../types/Aircraft/Aircraft";
+import { AircraftData } from "../../../types/Aircraft/Aircraft";
 
 import DecoratedButton from "../../Buttons/DecoratedButton";
+import SearchbarDropdown from "../../Searchbar/SearchbarDropdown";
 // import SelectDropdown from "../Filters/SelectDropdown";
 // import SearchbarDropdown from "../../Filters/SearchbarDropdown"
 // import aircrafts from "../../data/aircrafts-mock";
@@ -8,14 +9,28 @@ import DecoratedButton from "../../Buttons/DecoratedButton";
 import Style from "./AircraftSelect.module.scss";
 
 interface Props {
-  aircraftSelected: AircraftState | null;
+  aircrafts: AircraftData[];
+  aircraftSelected: AircraftData | null;
+  handleAircraftSelection: (selected: AircraftData | null) => void;
+  handleAircraftsFiltering: (input: string) => Promise<void>;
 }
 
-const AircraftSelect: React.FC<Props> = ({aircraftSelected}) => {
+const AircraftSelect: React.FC<Props> = ({
+  aircrafts,
+  aircraftSelected, 
+  handleAircraftSelection,
+  handleAircraftsFiltering
+}) => {
   return (
     <div className={Style.AircraftSelect}>
       <div className={Style.SearchBar}>
-        {/* TODO: <SearchbarDropdown /> */}
+        <SearchbarDropdown 
+          defaultOptions={aircrafts.map(a => ({
+            "value": a, "label": a.model
+          }))}
+          handleSelection={handleAircraftSelection}
+          handleFilter={handleAircraftsFiltering}
+        />
       </div>
       {/* TODO: toggle owned */}
       {aircraftSelected

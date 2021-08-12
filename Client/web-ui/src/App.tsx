@@ -20,14 +20,13 @@ import Login from "./components/Pages/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 // import Map from "./components/Map/Map";
 
-
 import "./App.scss";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { getUserData } from "./helpers/userHelper";
 
 const App = (): JSX.Element =>{
   const [user, setUser] = useState<UserPublic | null>(null);
-  const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
+  const [initialAircrafts, setInitialAircrafts] = useState<AircraftData[]>([]);
 
   useEffect(() => {
     refreshAircrafts();
@@ -45,8 +44,9 @@ const App = (): JSX.Element =>{
   };
   
   const refreshAircrafts = async () => {
-    const aircrafts = await aircraftService.getAllAircrafts();
-    setAircrafts(aircrafts);
+    aircraftService
+      .getAllAircrafts()
+      .then(aircrafts => setInitialAircrafts(aircrafts));
   };
 
   return (
@@ -65,11 +65,11 @@ const App = (): JSX.Element =>{
       <div className="Main">
         <Switch>
             <Route exact path="/">
-              <Home />
+              <Home initialAircrafts={initialAircrafts}/>
             </Route>
             <Route exact path="/aircrafts">
               <Aircrafts
-                aircrafts={aircrafts} 
+                initialAircrafts={initialAircrafts} 
               />
             </Route>
             <Route exact path="/aircrafts/detail/:id">
