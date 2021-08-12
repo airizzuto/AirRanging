@@ -10,7 +10,6 @@ export const isTokenExpired = (token: string): boolean => {
     // Converts api token expiration time from seconds to milliseconds to be comparable to that of Date.now()
     const expirationDatetimeInMilliseconds = exp * 100;
     const isExpired = Date.now() >= expirationDatetimeInMilliseconds;
-    console.log("Is token expired: ", isExpired);
 
     return isExpired;
   } catch {
@@ -22,12 +21,10 @@ export const isUserAuthenticated = async () => {
   const token = getStoredToken();
 
   if (token && !isTokenExpired(token)) {
-    console.log("Authenticated");
     return true;
   }
 
   const isRefreshSuccess = await refreshToken(token);
-  console.log("Token refresh status: ", isRefreshSuccess);
   if (!isRefreshSuccess) {
     userService.logout();
     return false;
