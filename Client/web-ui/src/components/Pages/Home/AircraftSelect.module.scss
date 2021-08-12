@@ -1,6 +1,9 @@
+@use "../../../styles/mixins" as *;
+
 
 .AircraftSelect {
   display: grid;
+  @include text-shadow;
 
   .Searchbar {
 
