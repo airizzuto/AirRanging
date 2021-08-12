@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import { Formik, Form, Field, FormikHelpers, ErrorMessage } from 'formik';
 
 import userService from "../../../services/userService";
-import aircraftService from "../../../services/aircraftService";
 import { userLoginSchema } from "../../../validators/userValidators";
 
 import AlertBox from "../../Alerts/AlertBox";
@@ -35,7 +34,6 @@ const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
     try {
       setAlert("");
       const user = await userService.login({ email, password });
-      aircraftService.setToken(user.token);  // For aircraft requests with authentication requirements
       setUser(user);
       handleClose();
     } catch (error) {
