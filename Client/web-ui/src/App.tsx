@@ -18,11 +18,12 @@ import AircraftCreate from "./components/Pages/AircraftCreate";
 import Header from "./components/Header/Header";
 import Login from "./components/Pages/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
-import Map from "./components/Map/Map";
+// import Map from "./components/Map/Map";
 
 
 import "./App.scss";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { getUserData } from "./helpers/userHelper";
 
 const App = (): JSX.Element =>{
   const [user, setUser] = useState<UserPublic | null>(null);
@@ -33,16 +34,12 @@ const App = (): JSX.Element =>{
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("user");
-    if (loggedUserJSON && isUserAuthenticated()) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      /* Send user token to services needing authentication for requests */
-      aircraftService.setToken(user.token);
+    if (isUserAuthenticated()) {
+      setUser(getUserData());
     }
   }, []);
 
-  const userLogout = () => {
+  const handleLogout = () => {
     userService.logout();
     setUser(null);
   };
@@ -52,22 +49,19 @@ const App = (): JSX.Element =>{
     setAircrafts(aircrafts);
   };
 
-  // TODO: route matching
-  // const matchAircraftRoute = useRouteMatch("/aircrafts/:id");
-  // const matchUserRoute = useRouteMatch("/users/:id");
-
   return (
     <div className={"App"}>
       <div className="Header">
         <Header 
-          handleLogout={userLogout}
+          handleLogout={handleLogout}
           user={user}
         />
       </div>
-      {/* Main Map View */}
+
       <div className={"Map"}>
-        <Map />
+        {/* <Map /> */}
       </div>
+
       <div className="Main">
         <Switch>
             <Route exact path="/">
@@ -81,7 +75,11 @@ const App = (): JSX.Element =>{
             <Route exact path="/aircrafts/detail/:id">
               {/* <AircraftDetail aircraft={aircraftSelected}/> */}
             </Route>
-            <ProtectedRoute exact path="/aircrafts/create" authenticationPath="/login">
+            <ProtectedRoute 
+              path="/aircrafts/create" 
+              authenticationPath="/login"
+              isAuthenticated={(async () => await isUserAuthenticated()) && user}
+            >
               <AircraftCreate />
             </ProtectedRoute>
             <Route exact path="/airports">

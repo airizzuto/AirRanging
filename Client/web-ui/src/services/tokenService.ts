@@ -11,13 +11,13 @@ const baseUrl = process.env.REACT_APP_BASEURL;
 */
 
 export const refreshToken = async (token: string | null) => {
-  const refreshToken = localStorage.getItem("user.refreshToken");
+  const refreshToken = window.localStorage.getItem("user.refreshToken");
 
   if (!token || !refreshToken) {
     return false;
   }
 
-  const credentials = JSON.stringify({ accessToken: token, refreshToken: refreshToken });
+  const credentials = JSON.stringify({ token: token, refreshToken: refreshToken });
 
   let isRefreshSuccess: boolean;
   try {
@@ -32,8 +32,9 @@ export const refreshToken = async (token: string | null) => {
 
     const newToken = response.data.accessToken;
     const newRefreshToken = response.data.refreshToken;
-    localStorage.setItem("user.token", newToken);
-    localStorage.setItem("user.refreshToken", newRefreshToken);
+
+    window.localStorage.setItem("user.token", newToken);
+    window.localStorage.setItem("user.refreshToken", newRefreshToken);
 
     isRefreshSuccess = true;
   } catch (ex) {
@@ -43,4 +44,4 @@ export const refreshToken = async (token: string | null) => {
   return isRefreshSuccess;
 };
 
-// TODO: revoke on refresh token expiration
+// TODO: revoke

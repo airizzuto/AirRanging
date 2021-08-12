@@ -7,7 +7,6 @@ import UndecoratedButton from "../Buttons/UndecoratedButton";
 
 import Style from "./Header.module.scss";
 import Logo from "./LogoVector.svg";
-import { isUserAuthenticated } from "../../helpers/tokenHelper";
 
 interface Props {
   handleLogout: () => void;
@@ -43,7 +42,7 @@ const Header = ({handleLogout, user}: Props): JSX.Element => {
       </ul>
 
       <div className={Style.HeaderAccount}>
-          {(!isUserAuthenticated() || !user)
+          {!user
             ? <ul>
                 <li>
                   <Link to="/login">

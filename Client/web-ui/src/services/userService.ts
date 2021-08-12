@@ -35,13 +35,18 @@ const login = async (credentials: UserLogin) => {
     credentials,
     config,
   );
-  window.localStorage.setItem("user", JSON.stringify(response.data));
+
+  window.localStorage.setItem("user.username", response.data.username);
+  window.localStorage.setItem("user.token", response.data.token);
+  window.localStorage.setItem("user.refreshToken", response.data.refreshToken);
 
   return response.data;
 };
 
 const logout = () => {
-  window.localStorage.removeItem("user");
+  window.localStorage.removeItem("user.username");
+  window.localStorage.removeItem("user.token");
+  window.localStorage.removeItem("user.refreshToken");
 };
 
 export default {

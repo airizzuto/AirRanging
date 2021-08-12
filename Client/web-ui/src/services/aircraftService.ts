@@ -1,13 +1,8 @@
 import axios from "axios";
+import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
 import { NewAircraft } from "../types/Aircraft/Aircraft";
 
 const baseUrl = process.env.REACT_APP_BASEURL;
-
-let token: string | null = null;
-
-const setToken = (newToken: string) => {
-  token = `bearer ${newToken}`;
-};
 
 /*
 /// <summary>
@@ -38,7 +33,7 @@ const getAllAircraftsPaginated = async () => {
 
 const getAircraftsOwnedByUser = async () => {
   const config = {
-    headers: { Authorization: token },
+    headers: { Authorization: getStoredToken() },
   };
   const response = await axios.get(baseUrl + "/api/aircrafts/owned", config);
 
@@ -52,16 +47,18 @@ const searchAircraftByModel = async (query: string) => {
 };
 
 const createAircraft = async (newAircraft: NewAircraft) => {
-  const config = {
-    headers: { Authorization: token }
-  };
-  const response = await axios.post(
-    baseUrl + "/api/aircrafts/create",
-    newAircraft,
-    config
-  );
+  if (await isUserAuthenticated()) {
+    const config = {
+      headers: { Authorization: `bearer ${getStoredToken()}` }
+    };
+    const response = await axios.post(
+      baseUrl + "/api/aircrafts/create",
+      newAircraft,
+      config
+    );
 
-  return response.data;
+    return response.data;
+  }
 };
 
 
@@ -71,5 +68,4 @@ export default {
   getAircraftsOwnedByUser,
   searchAircraftByModel,
   createAircraft,
-  setToken
 };
