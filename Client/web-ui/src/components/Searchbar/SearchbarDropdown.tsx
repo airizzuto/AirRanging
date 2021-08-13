@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import AsyncSelect from 'react-select/async';
 
@@ -9,7 +10,6 @@ interface Props {
 
 /* React select documentation https://react-select.com/home */
 
-// TODO: make async and use aircraft/search  model
 const SearchbarDropdown: React.FC<Props> = ({defaultOptions, handleSelection, handleFilter}) => {
 
   const promiseOptions = async (inputValue: string): Promise<readonly any[]> =>
