@@ -69,6 +69,8 @@ namespace App.Controllers.V1
             user.RefreshToken = newRefreshToken;
             await _context.SaveChangesAsync();
 
+            _logger.LogInfo( $"INFO: Tokens refreshed");
+
             return new ObjectResult(new 
             {
                 accessToken = newAccessToken,
@@ -92,6 +94,8 @@ namespace App.Controllers.V1
             user.RefreshToken = null;
 
             await _context.SaveChangesAsync();
+
+            _logger.LogInfo( $"INFO: Tokens revoked");
 
             return NoContent();
         }
