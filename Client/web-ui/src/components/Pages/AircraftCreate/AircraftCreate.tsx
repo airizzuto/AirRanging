@@ -10,7 +10,11 @@ import AlertBox from "../../Alerts/AlertBox";
 import Style from "./AircraftCreate.module.scss";
 import EnumOptions from "./EnumOptions";
 
-const AircraftCreate: React.FC = () => {
+interface Props {
+  refreshData: () => void;
+}
+
+const AircraftCreate: React.FC<Props> = ({refreshData}) => {
   const [alert, setAlert] = React.useState("");
 
   const history = useHistory();
@@ -19,6 +23,7 @@ const AircraftCreate: React.FC = () => {
     try {
       setAlert("");
       await aircraftService.createAircraft(newAircraft);
+      refreshData();
       history.push("/");
     } catch(error) {
       console.log(error.message);
