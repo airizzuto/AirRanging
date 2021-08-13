@@ -1,7 +1,6 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import aircraftService from "../../../services/aircraftService";
 import { NewAircraft } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/enums/AircraftEnums";
 import { aircraftCreationSchema } from "../../../validators/aircraftValidators";
@@ -11,19 +10,18 @@ import Style from "./AircraftCreate.module.scss";
 import EnumOptions from "./EnumOptions";
 
 interface Props {
-  refreshData: () => void;
+  handleCreate: (newAircraft: NewAircraft) => void;
 }
 
-const AircraftCreate: React.FC<Props> = ({refreshData}) => {
+const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
   const [alert, setAlert] = React.useState("");
 
   const history = useHistory();
 
-  const handleSubmit = async (newAircraft : NewAircraft) => { 
+  const handleSubmit = (newAircraft : NewAircraft) => { 
     try {
       setAlert("");
-      await aircraftService.createAircraft(newAircraft);
-      refreshData();
+      handleCreate(newAircraft);
       history.push("/");
     } catch(error) {
       console.log(error.message);
