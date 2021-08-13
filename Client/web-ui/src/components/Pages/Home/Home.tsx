@@ -4,38 +4,33 @@ import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
 import ModalTab from "../../Buttons/ModalTab";
 import DraggableModal from "../../Modals/DraggableModal";
-import PlanningModal from "./Planning";
+import PlanningModal from "./PlanningModal";
 
 import { AircraftData, AircraftState } from "../../../types/Aircraft/Aircraft";
 
 import Style from "./Home.module.scss";
-import AircraftSelect from "./AircraftSelect";
-import aircraftService from "../../../services/aircraftService";
+import AircraftSelect from "./AircraftSelectModal";
 // import InfoFooter from "./InfoFooter";
 
 interface Props {
-  initialAircrafts: AircraftData[];
+  aircrafts: AircraftData[];
+  selectedAircraft: AircraftState | null;
+  handleAircraftSelection: (selected: AircraftData | null) => void ;
+  handleAircraftsFiltering: (filter: string) => void;
+  handleAircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
 }
 
-const Home: React.FC<Props> = ({initialAircrafts}) => {
+const Home: React.FC<Props> = ({
+  aircrafts,
+  selectedAircraft,
+  handleAircraftSelection,
+  handleAircraftsFiltering,
+  handleAircraftState
+}) => {
   const [isModalActive, setIsModalActive] = useState(true); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = useState(false);
   const [displayAircraftsModal, setDisplaySelectionModal] = useState(true);
 
-  const [aircraft, setAircraft] = useState<AircraftState | null>(null);
-  const [aircrafts, setAircrafts] = useState<AircraftData[]>(initialAircrafts);
-
-  const handleAircraftsFiltering = async (input: string) => {
-    await aircraftService.searchAircraftByModel(input)
-      .then(aircrafts => setAircrafts(aircrafts));
-  };
-
-  // FIXME:
-  const handleAircraftSelection = (selected: AircraftData | null) => {
-    selected 
-    ? setAircraft({...selected, loadedFuel: selected.fuelCapacity})
-    : setAircraft(null);
-  };
 
   // TODO: move to a custom hook?
   const handleModalDisplay = (
@@ -80,8 +75,8 @@ const Home: React.FC<Props> = ({initialAircrafts}) => {
       >
         <PlanningModal 
           handleAccept={() => useModalClose(setDisplayPlanningModal)}
-          aircraft={aircraft}
-          aircraftState={setAircraft}
+          aircraft={selectedAircraft}
+          aircraftState={handleAircraftState}
         />
       </DraggableModal>
 
@@ -91,7 +86,7 @@ const Home: React.FC<Props> = ({initialAircrafts}) => {
         handleClose={() => useModalClose(setDisplaySelectionModal)}
       >
         <AircraftSelect 
-          aircraftSelected={aircraft} 
+          aircraftSelected={selectedAircraft} 
           aircrafts={aircrafts}
           handleAircraftSelection={handleAircraftSelection}
           handleAircraftsFiltering={handleAircraftsFiltering}/>

@@ -6,21 +6,22 @@ import SearchbarDropdown from "../../Searchbar/SearchbarDropdown";
 // import SearchbarDropdown from "../../Filters/SearchbarDropdown"
 // import aircrafts from "../../data/aircrafts-mock";
 
-import Style from "./AircraftSelect.module.scss";
+import Style from "./AircraftSelectModal.module.scss";
 
 interface Props {
   aircrafts: AircraftData[];
   aircraftSelected: AircraftData | null;
   handleAircraftSelection: (selected: AircraftData | null) => void;
-  handleAircraftsFiltering: (input: string) => Promise<void>;
+  handleAircraftsFiltering: (input: string) => void;
 }
 
-const AircraftSelect: React.FC<Props> = ({
+const AircraftSelectModal: React.FC<Props> = ({
   aircrafts,
   aircraftSelected, 
   handleAircraftSelection,
   handleAircraftsFiltering
 }) => {
+
   return (
     <div className={Style.AircraftSelect}>
       <div className={Style.SearchBar}>
@@ -29,16 +30,35 @@ const AircraftSelect: React.FC<Props> = ({
             "value": a, "label": a.model
           }))}
           handleSelection={handleAircraftSelection}
-          handleFilter={handleAircraftsFiltering}
+          handleFilter={async () => await handleAircraftsFiltering}
         />
       </div>
       {/* TODO: toggle owned */}
       {aircraftSelected
       ? <div className={Style.AircraftDetails}>
           <h2>Selected Aircraft Details</h2>
-          <div className={Style.FieldGroup}>
-            <label>ICAO Id:</label>
-            <p>{aircraftSelected.icaoId}</p>
+          <div className={Style.FieldsContainer}>
+            <div className={Style.FieldGroup}>
+              <label>ICAO Id:</label>
+              <p>{aircraftSelected.icaoId}</p>
+            </div>
+
+            <div className={Style.FieldGroup}>
+              <label>Manufacturer:</label>
+              <p>{aircraftSelected.manufacturer}</p>
+            </div>
+
+            <div className={Style.FieldGroup}>
+              <label>Model:</label>
+              <p>{aircraftSelected.model}</p>
+            </div>
+
+            <div className={Style.FieldGroup}>
+              <label>Variant:</label>
+              <p>{aircraftSelected.variant}</p>
+            </div>
+
+            {/* TODO: fields */}
           </div>
         </div>
       : <div className={Style.AircraftNotSelected}>
@@ -53,4 +73,4 @@ const AircraftSelect: React.FC<Props> = ({
   );
 };
 
-export default AircraftSelect;
+export default AircraftSelectModal;

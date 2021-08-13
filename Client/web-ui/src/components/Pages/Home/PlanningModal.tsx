@@ -5,14 +5,14 @@ import DecoratedButton from "../../Buttons/DecoratedButton";
 
 import { AircraftState } from "../../../types/Aircraft/Aircraft";
 
-import Style from "./Planning.module.scss";
+import Style from "./PlanningModal.module.scss";
 
 interface Props {
   aircraft?: AircraftState | null;
   aircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
   handleAccept: () => void;
 }
-const Planning: React.FC<Props> = ({ 
+const PlanningModal: React.FC<Props> = ({ 
   aircraft,
   aircraftState,
   handleAccept,
@@ -27,8 +27,6 @@ const Planning: React.FC<Props> = ({
       aircraftState({...aircraft, loadedFuel: parsedValue});
     }
   };
-
-  // TODO: fuel calculations
 
   // TODO: split render to planning or select depending on aircraft state null or present
   return (
@@ -77,4 +75,4 @@ const Planning: React.FC<Props> = ({
   );
 };
 
-export default Planning;
+export default PlanningModal;

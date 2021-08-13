@@ -6,8 +6,6 @@ export type ProtectedRouteProps = {
 } & RouteProps;
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ isAuthenticated, authenticationPath, ...routeProps }) => {
-  console.log("Trying to access protected route...");
-  
   if (isAuthenticated) {
     return <Route {...routeProps} />;
   } else {
