@@ -6,19 +6,19 @@ export const aircraftCreationSchema: SchemaOf<NewAircraft> = object().shape({
   icaoId: string()
     .max(4, "ICAO Id must be of no more than 4 characters")
     .matches(
-      new RegExp("(?!\\s)+^([A-Za-z1-9-]{0,4})$"),
+      new RegExp("(?!\\s)+^([A-Za-z0-9-]{0,4})$"),
       "Only alphanumeric values and - are valid. No spaces allowed."
     ),
   manufacturer: string()
     .max(255)
     .matches(
-      new RegExp("^[a-zA-Z1-9]+[-\\s\\w]*[a-zA-Z1-9]$"),
+      new RegExp("^[a-zA-Z0-9]+[-\\s\\w]*[a-zA-Z0-9]$"),
       "Only alphanumeric and spaces allowed"
     ).defined("Manufacturer must be provided"),
   model: string()
     .max(255)
     .matches(
-      new RegExp("^[a-zA-Z1-9]+[-\\s\\w]*[a-zA-Z1-9]$"),
+      new RegExp("^[a-zA-Z0-9]+[-\\s\\w]*[a-zA-Z0-9]$"),
       "Only alphanumeric and spaces allowed"
     ).defined("Model must be provided"),
   aircraftType: mixed<keyof typeof EAircraftType>()
