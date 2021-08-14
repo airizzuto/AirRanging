@@ -12,7 +12,7 @@ interface Props {
   aircrafts: AircraftData[];
   aircraftSelected: AircraftData | null;
   handleAircraftSelection: (selected: AircraftData | null) => void;
-  handleAircraftsFiltering: (input: string) => void;
+  handleAircraftsFiltering: (input: string) => Promise<any>;
 }
 
 const AircraftSelectModal: React.FC<Props> = ({
@@ -30,7 +30,7 @@ const AircraftSelectModal: React.FC<Props> = ({
             "value": a, "label": a.model
           }))}
           handleSelection={handleAircraftSelection}
-          handleFilter={async () => await handleAircraftsFiltering}
+          handleFilter={handleAircraftsFiltering}
         />
       </div>
       {/* TODO: toggle owned */}

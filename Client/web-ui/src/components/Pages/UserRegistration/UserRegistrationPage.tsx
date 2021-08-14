@@ -9,7 +9,7 @@ import AlertBox from '../../Alerts/AlertBox';
 
 import Style from "./UserRegistration.module.scss";
 
-const UserRegistrationView = () => {
+const UserRegistration = () => {
   const [alert, setAlert] = React.useState("");
 
   const history = useHistory();
@@ -99,4 +99,4 @@ const UserRegistrationView = () => {
   );
 };
 
-export default UserRegistrationView;
+export default UserRegistration;

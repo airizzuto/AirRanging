@@ -10,7 +10,9 @@ interface Props {
 
 /* React select documentation https://react-select.com/home */
 
-const SearchbarDropdown: React.FC<Props> = ({defaultOptions, handleSelection, handleFilter}) => {
+const SearchbarDropdown: React.FC<Props> = ({
+  defaultOptions, handleSelection, handleFilter
+}) => {
 
   const promiseOptions = async (inputValue: string): Promise<readonly any[]> =>
     new Promise(resolve => {
@@ -22,7 +24,7 @@ const SearchbarDropdown: React.FC<Props> = ({defaultOptions, handleSelection, ha
   const selectProps = {
     isClearable: true,
     isDisabled: false,
-    isLoading: true,
+    isLoading: false,
     isRtl: false,
     isSearchable: true,
   };

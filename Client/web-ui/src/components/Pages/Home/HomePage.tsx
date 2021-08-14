@@ -16,7 +16,7 @@ interface Props {
   aircrafts: AircraftData[];
   selectedAircraft: AircraftState | null;
   handleAircraftSelection: (selected: AircraftData | null) => void ;
-  handleAircraftsFiltering: (filter: string) => void;
+  handleAircraftsFiltering: (filter: string) => Promise<void>;
   handleAircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
 }
 
@@ -27,12 +27,16 @@ const Home: React.FC<Props> = ({
   handleAircraftsFiltering,
   handleAircraftState
 }) => {
-  const [isModalActive, setIsModalActive] = useState(true); // One active modal at once
+  const [isModalActive, setIsModalActive] = useState(false); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = useState(false);
-  const [displayAircraftsModal, setDisplaySelectionModal] = useState(true);
+  const [displayAircraftsModal, setDisplaySelectionModal] = useState(false);
+  React.useEffect(() => {
+    if (!selectedAircraft) {
+      setIsModalActive(true);
+      setDisplaySelectionModal(true);
+    }
+  }, []);
 
-
-  // TODO: move to a custom hook?
   const handleModalDisplay = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
     display: boolean

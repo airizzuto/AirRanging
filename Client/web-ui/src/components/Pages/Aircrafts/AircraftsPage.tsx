@@ -6,20 +6,19 @@ import LinkedButton from '../../Buttons/LinkedButton';
 import Style from "./Aircrafts.module.scss";
 
 interface Props {
-  initialAircrafts: AircraftData[];
+  aircrafts: AircraftData[];
+  handleAircraftsFilter: (filter: string) => Promise<void>;
 }
 
-const Aircrafts: React.FC<Props> = ({ initialAircrafts }) => {
-
-  const [aircrafts, setAircrafts] = React.useState<AircraftData[]>(initialAircrafts);
+const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
   const [filterInput, setFilterInput] = React.useState("");
-  
+
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
-    setFilterInput(value);
-
-    setAircrafts(aircrafts.filter(a => 
-      a.model.toLowerCase() === filterInput.toLowerCase().trim()));
+    if (value) {
+      setFilterInput(value);
+      handleAircraftsFilter(value);
+    }
   };
 
   const columns = React.useMemo(

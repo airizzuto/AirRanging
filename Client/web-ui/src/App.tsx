@@ -4,47 +4,59 @@ import { Route, Switch } from "react-router-dom";
 import aircraftService from "./services/aircraftService";
 import userService from "./services/userService";
 import { isUserAuthenticated } from "./helpers/tokenHelper";
+import { getUserData } from "./helpers/userHelper";
 
 import { UserPublic } from "./types/User/User";
 import { AircraftData, AircraftState, NewAircraft } from "./types/Aircraft/Aircraft";
 
-import Home from "./components/Pages/Home/Home";
-import Aircrafts from "./components/Pages/Aircrafts/Aircrafts";
-import UserRegistrationView from "./components/Pages/UserRegistration/UserRegistration";
-import NotFound from "./components/Pages/ErrorPages/NotFound";
-import TermsAndConditions from "./components/Pages/TermsAndConditions/TermsAndConditions";
-import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreate";
+import Home from "./components/Pages/Home/HomePage";
+import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
+import Login from "./components/Pages/UserLogin/LoginPage";
+import UserRegistration from "./components/Pages/UserRegistration/UserRegistrationPage";
+import NotFound from "./components/Pages/ErrorPages/NotFoundPage";
+import TermsAndConditions from "./components/Pages/TermsAndConditions/TermsAndConditionsPage";
+import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage";
 
+import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
-import Login from "./components/Pages/UserLogin/Login";
 import Footer from "./components/Footer/Footer";
 // import Map from "./components/Map/Map";
 
 import "./App.scss";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { getUserData } from "./helpers/userHelper";
 
 const App = (): JSX.Element =>{
+  /* Aircrafts data */
   const [initialAircrafts, setInitialAircrafts] = useState<AircraftData[]>([]);
-  const [aircrafts, setAircrafts] = useState<AircraftData[]>(initialAircrafts);
-  const [selectedAircraft, setSelectedAircraft] = useState<AircraftState | null>(null);
-  const [user, setUser] = useState<UserPublic | null>(null);
-
+  const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
   useEffect(() => {
     refreshAircrafts();
-
-    if (isUserAuthenticated()) {
-      setUser(getUserData());
-    }
+    return () => {
+      setAircrafts(initialAircrafts);
+    };
   }, []);
 
-  const handleAircraftCreate = (newAircraft: NewAircraft) => {
+  const refreshAircrafts = () => {
     aircraftService
-      .createAircraft(newAircraft)
-      .then(response => {
-        setInitialAircrafts(initialAircrafts.concat(response));
-      });
+      .getAllAircrafts()
+      .then(response => setInitialAircrafts(response));
   };
+
+  const handleAircraftsFilter = async (filter: string) => {
+    if (filter) {
+      await aircraftService
+      .searchAircraftByModel(filter)
+      .then(response => setAircrafts(response));
+    }
+  };
+
+  const handleAircraftCreate = async (newAircraft: NewAircraft) => {
+    await aircraftService
+      .createAircraft(newAircraft)
+      .then(response => setInitialAircrafts(response));
+  };
+
+  /* Aircraft selected state */
+  const [selectedAircraft, setSelectedAircraft] = useState<AircraftState | null>(null);
   
   const handleAircraftSelection = (selected: AircraftData | null) => {
     selected 
@@ -52,20 +64,17 @@ const App = (): JSX.Element =>{
     : setSelectedAircraft(null);
   };
 
-  const handleAircraftsFiltering = (filter: string) => {
-    aircraftService.searchAircraftByModel(filter)
-      .then(aircrafts => setAircrafts(aircrafts));
-  };
+  /* User */
+  const [user, setUser] = useState<UserPublic | null>(null);
+  useEffect(() => {
+    if (isUserAuthenticated()) {
+      setUser(getUserData());
+    }
+  }, []);
 
   const handleLogout = () => {
     userService.logout();
     setUser(null);
-  };
-  
-  const refreshAircrafts = () => {
-    aircraftService
-      .getAllAircrafts()
-      .then(aircrafts => setInitialAircrafts(aircrafts));
   };
 
   return (
@@ -88,13 +97,14 @@ const App = (): JSX.Element =>{
                 aircrafts={aircrafts}
                 selectedAircraft={selectedAircraft}
                 handleAircraftSelection={handleAircraftSelection}
-                handleAircraftsFiltering={handleAircraftsFiltering}
+                handleAircraftsFiltering={handleAircraftsFilter}
                 handleAircraftState={setSelectedAircraft}
               />
             </Route>
             <Route exact path="/aircrafts">
               <Aircrafts
-                initialAircrafts={initialAircrafts} 
+                aircrafts={aircrafts}
+                handleAircraftsFilter={handleAircraftsFilter} 
               />
             </Route>
             <Route exact path="/aircrafts/detail/:id">
@@ -114,7 +124,7 @@ const App = (): JSX.Element =>{
               <Login setUser={setUser}/>
             </Route>
             <Route exact path="/registration">
-              <UserRegistrationView />
+              <UserRegistration />
             </Route>
             <Route exact path="/forgotpass">
               {/* <ForgotPassword /> */}
