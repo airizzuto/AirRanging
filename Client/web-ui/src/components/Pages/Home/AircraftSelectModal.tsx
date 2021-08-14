@@ -1,3 +1,4 @@
+import { mapAircraftToFilter } from "../../../helpers/aircraftHelper";
 import { AircraftData } from "../../../types/Aircraft/Aircraft";
 
 import DecoratedButton from "../../Buttons/DecoratedButton";
@@ -26,9 +27,7 @@ const AircraftSelectModal: React.FC<Props> = ({
     <div className={Style.AircraftSelect}>
       <div className={Style.SearchBar}>
         <SearchbarDropdown 
-          defaultOptions={aircrafts.map(a => ({
-            "value": a, "label": a.model
-          }))}
+          defaultOptions={mapAircraftToFilter(aircrafts, "model")}
           handleSelection={handleAircraftSelection}
           handleFilter={handleAircraftsFiltering}
         />
