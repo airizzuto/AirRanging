@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { NewAircraft } from "../../../types/Aircraft/Aircraft";
-import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/enums/AircraftEnums";
+import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/Aircraft/AircraftEnums";
 import { aircraftCreationSchema } from "../../../validators/aircraftValidators";
 import AlertBox from "../../Alerts/AlertBox";
 
