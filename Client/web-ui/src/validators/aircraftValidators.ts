@@ -1,6 +1,6 @@
 import { string, object, SchemaOf, mixed, number } from 'yup';
 import { NewAircraft } from '../types/Aircraft/Aircraft';
-import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from '../types/enums/AircraftEnums';
+import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from '../types/Aircraft/AircraftEnums';
 
 export const aircraftCreationSchema: SchemaOf<NewAircraft> = object().shape({
   icaoId: string()
