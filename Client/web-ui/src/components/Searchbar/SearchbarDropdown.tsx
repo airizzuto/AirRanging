@@ -2,8 +2,9 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
 
+import "./SearchbarDropdown.scss";
+
 interface Props {
-  defaultOptions: any;
   handleSelection: React.Dispatch<React.SetStateAction<any | null>>;
   handleFilter: (inputValue: string) => Promise<any>;
 }
@@ -11,15 +12,21 @@ interface Props {
 /* React select documentation https://react-select.com/home */
 
 const SearchbarDropdown: React.FC<Props> = ({
-  defaultOptions, handleSelection, handleFilter
+  handleSelection, handleFilter
 }) => {
 
   const promiseOptions = async (inputValue: string): Promise<readonly any[]> =>
     new Promise(resolve => {
-      setTimeout(() => {
+      setTimeout(async () => {
         resolve(handleFilter(inputValue));
       }, 1000);
   });
+
+  const handleChange = (selected: any) => {
+    selected
+    ? handleSelection(selected.value)
+    : handleSelection(null);
+  };
 
   const selectProps = {
     isClearable: true,
@@ -32,10 +39,12 @@ const SearchbarDropdown: React.FC<Props> = ({
   return (
     <>
       <AsyncSelect
+        className="Searchbar-Container"
+        classNamePrefix="Searchbar"
         cacheOptions
-        defaultOptions={defaultOptions}
+        defaultOptions
         loadOptions={promiseOptions}
-        onChange={handleSelection}
+        onChange={handleChange}
         {...selectProps}
       />
     </>

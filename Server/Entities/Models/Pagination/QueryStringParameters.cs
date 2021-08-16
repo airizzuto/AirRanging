@@ -5,10 +5,10 @@ namespace Entities.Models.Pagination
     /// </summary>
     public abstract class QueryStringParameters
     {
-        const int maxPageSize = 20;
+        const int maxPageSize = 100;
         public int PageNumber { get; set; } = 1;
 
-        private int _pageSize = 5;
+        private int _pageSize = 50;
         public int PageSize
         {
             get

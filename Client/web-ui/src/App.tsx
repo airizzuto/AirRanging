@@ -52,14 +52,16 @@ const App = (): JSX.Element =>{
       .then(response => setAircrafts(aircrafts.concat(response)));
   };
 
+
   /* Aircraft selected state */
   const [selectedAircraft, setSelectedAircraft] = useState<AircraftState | null>(null);
   
   const handleAircraftSelection = (selected: AircraftData | null) => {
-    selected 
+    selected
     ? setSelectedAircraft({...selected, loadedFuel: selected.fuelCapacity})
     : setSelectedAircraft(null);
   };
+
 
   /* User */
   const [user, setUser] = useState<UserPublic | null>(null);
@@ -73,6 +75,7 @@ const App = (): JSX.Element =>{
     userService.logout();
     setUser(null);
   };
+
 
   return (
     <div className={"App"}>

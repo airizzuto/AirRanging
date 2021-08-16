@@ -10,5 +10,5 @@ export const calculateRange = ({maxRange, fuelCapacity, fuelLoaded}: FuelProps):
 };
 
 export const calculateRadiusOfAction = ({...fuelProps}: FuelProps): number => {
-  return calculateRange(fuelProps) / 2; // TODO: check calculation
+  return calculateRange(fuelProps) / 2; // TODO: (Endurance X GS return)/(2 X TAS)
 };

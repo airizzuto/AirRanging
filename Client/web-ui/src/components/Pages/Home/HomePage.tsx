@@ -21,10 +21,8 @@ interface Props {
 }
 
 const Home: React.FC<Props> = ({
-  aircrafts,
   selectedAircraft,
   handleAircraftSelection,
-  handleAircraftsFiltering,
   handleAircraftState
 }) => {
   const [isModalActive, setIsModalActive] = useState(false); // One active modal at once
@@ -91,9 +89,8 @@ const Home: React.FC<Props> = ({
       >
         <AircraftSelect 
           aircraftSelected={selectedAircraft} 
-          aircrafts={aircrafts}
           handleAircraftSelection={handleAircraftSelection}
-          handleAircraftsFiltering={handleAircraftsFiltering}/>
+        />
       </DraggableModal>
 
       {/* TODO:

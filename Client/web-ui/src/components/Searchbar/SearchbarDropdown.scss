@@ -1,0 +1,38 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/colors" as color;
+@use "../../styles/components/boxes" as box;
+
+.Searchbar-Container {
+
+  .Searchbar__control {
+    @include box.light;
+    color: color.$dark1;
+    padding: 0;
+
+    .Searchbar__placeholder {
+      color: color.$neutral;
+    }
+      
+    .Searchbar__value-container {
+      color: color.$dark1;
+    }
+
+
+    .Searchbar__indicators {
+      svg {
+        color: color.$neutral;
+      }
+    }
+  }
+
+  .Searchbar__menu {
+    color: color.$dark1;
+
+    .Searchbar__menu-list {
+
+      .Searchbar-option {
+        
+      }
+    }
+  }
+}

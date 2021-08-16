@@ -6,6 +6,7 @@ import DecoratedButton from "../../Buttons/DecoratedButton";
 import { AircraftState } from "../../../types/Aircraft/Aircraft";
 
 import Style from "./PlanningModal.module.scss";
+import { calculateRange } from "../../../helpers/fuelCalculation";
 
 interface Props {
   aircraft?: AircraftState | null;
@@ -37,36 +38,48 @@ const PlanningModal: React.FC<Props> = ({
           <label>Selected Aircraft:</label>
           {/* Replace "select an aircraft" with a dropdown or switch to select */}
           <span>{aircraft ? aircraft.model : "Select an aircraft"}</span>
+          {/* TODO: additional aircraft info */}
         </div>
         <div className={Style.SliderProp}>
           <label>Fuel Loaded:</label>
           <div className={Style.output}>
-            {aircraft ? aircraft.loadedFuel : 0} %
+            {aircraft ? aircraft.loadedFuel : 0}
           </div>
           <div className={Style.range}>
             <Slider name="loadedFuel"
               min={0}
-              max={aircraft ? aircraft.fuelCapacity: 0}
+              max={aircraft ? aircraft.fuelCapacity : 0}
               value={aircraft ? aircraft.loadedFuel : 0}
               handler={handleFuelChange}
             />
           </div>
         </div>
+        {/* TODO: GS/TAS */}
       </div>
 
+      {/* TODO: move to info overlay */}
       <hr className={Style.Separator} />
-
-      <div className={Style.ResultsGroup}>
-        <h2>Information</h2>
-          <div className={Style.Results}>
-            <label>Max Range:</label>
-            <span className={Style.output}>{/*TODO:*/}*CALCULATED RESULT*</span>
+      {aircraft
+        ? <div className={Style.ResultsGroup}>
+            <h2>Information</h2>
+              <div className={Style.Results}>
+                <label>Max Range:</label>
+                <span className={Style.output}>
+                  {calculateRange({
+                    maxRange: aircraft.maxRange,
+                    fuelCapacity: aircraft.fuelCapacity,
+                    fuelLoaded: aircraft.loadedFuel
+                  }).toFixed(2)}
+                </span>
+              </div>
+              <div className={Style.Results}>
+                <label>Radius of Action (PNR):</label>
+                <span className={Style.output}>{/*TODO:*/}*CALCULATED RESULT*</span>
+              </div>
           </div>
-          <div className={Style.Results}>
-            <label>Radius of Action:</label>
-            <span className={Style.output}>{/*TODO:*/}*CALCULATED RESULT*</span>
-          </div>
-      </div>
+        : <div>No aircraft selected</div>
+      }
+      
 
       <div className={Style.AcceptButton}>
         <DecoratedButton onClick={handleAccept}>Accept</DecoratedButton>
