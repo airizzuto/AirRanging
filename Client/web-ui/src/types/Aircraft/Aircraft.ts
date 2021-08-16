@@ -1,6 +1,5 @@
-/* TODO REMOVE: https://fullstackopen.com/en/part9/typing_the_express_app#utility-types */
-
-import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../enums/AircraftEnums";
+import { Pagination } from "../Pagination";
+import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "./AircraftEnums";
 
 export interface Aircraft {
   id: string;
@@ -24,7 +23,7 @@ export interface Aircraft {
 
 export interface AircraftData extends Aircraft{
   savesCount: number;
-  authorUsername?: string; // TODO: Remove optional
+  authorUsername: string;
 }
 
 export interface AircraftState extends AircraftData {
@@ -34,12 +33,7 @@ export interface AircraftState extends AircraftData {
 // TODO: Implement paginated model
 export interface AircraftsPaginated {
   aircrafts: AircraftData[];
-  totalCount: number;
-  pageSize: number;
-  currentPage: number;
-  totalPages: number;
-  hasNext: boolean;
-  nasPrevious: boolean;
+  metadata: Pagination;
 }
 
 // Define special omit for unions
@@ -47,4 +41,3 @@ type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit
 
 export type NewAircraft = UnionOmit<Aircraft, 'id'>;
 
-// TODO: paginated AircraftData
