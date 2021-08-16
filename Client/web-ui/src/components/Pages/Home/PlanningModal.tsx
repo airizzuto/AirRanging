@@ -47,7 +47,7 @@ const PlanningModal: React.FC<Props> = ({
             <Slider name="loadedFuel"
               min={0}
               max={aircraft ? aircraft.fuelCapacity : 0}
-              value={aircraft ? aircraft.fuelCapacity : 0}
+              value={aircraft ? aircraft.loadedFuel : 0}
               handler={handleFuelChange}
             />
           </div>
