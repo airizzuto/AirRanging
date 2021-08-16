@@ -25,34 +25,31 @@ import Footer from "./components/Footer/Footer";
 import "./App.scss";
 
 const App = (): JSX.Element =>{
+
   /* Aircrafts data */
-  const [initialAircrafts, setInitialAircrafts] = useState<AircraftData[]>([]);
   const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
   useEffect(() => {
     refreshAircrafts();
-    return () => {
-      setAircrafts(initialAircrafts);
-    };
   }, []);
 
   const refreshAircrafts = () => {
     aircraftService
       .getAllAircrafts()
-      .then(response => setInitialAircrafts(response));
+      .then(response => setAircrafts(response));
   };
 
   const handleAircraftsFilter = async (filter: string) => {
-    if (filter) {
-      await aircraftService
-      .searchAircraftByModel(filter)
-      .then(response => setAircrafts(response));
-    }
+    filter
+      ? await aircraftService
+          .searchAircraftByModel(filter)
+          .then(response => setAircrafts(response))
+      : refreshAircrafts();
   };
 
   const handleAircraftCreate = async (newAircraft: NewAircraft) => {
     await aircraftService
       .createAircraft(newAircraft)
-      .then(response => setInitialAircrafts(response));
+      .then(response => setAircrafts(aircrafts.concat(response)));
   };
 
   /* Aircraft selected state */

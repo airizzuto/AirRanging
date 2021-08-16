@@ -15,10 +15,8 @@ const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
-    if (value) {
-      setFilterInput(value);
-      handleAircraftsFilter(value);
-    }
+    setFilterInput(value);
+    handleAircraftsFilter(value);
   };
 
   const columns = React.useMemo(
