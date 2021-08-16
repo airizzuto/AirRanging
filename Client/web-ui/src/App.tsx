@@ -56,7 +56,7 @@ const App = (): JSX.Element =>{
   const [selectedAircraft, setSelectedAircraft] = useState<AircraftState | null>(null);
   
   const handleAircraftSelection = (selected: AircraftData | null) => {
-    selected 
+    selected
     ? setSelectedAircraft({...selected, loadedFuel: selected.fuelCapacity})
     : setSelectedAircraft(null);
   };

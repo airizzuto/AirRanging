@@ -1,4 +1,5 @@
 import { mapAircraftToFilter } from "../../../helpers/aircraftHelper";
+import aircraftService from "../../../services/aircraftService";
 import { AircraftData } from "../../../types/Aircraft/Aircraft";
 
 import DecoratedButton from "../../Buttons/DecoratedButton";
@@ -8,34 +9,37 @@ import SearchbarDropdown from "../../Searchbar/SearchbarDropdown";
 import Style from "./AircraftSelectModal.module.scss";  // TODO: style
 
 interface Props {
-  aircrafts: AircraftData[];
   aircraftSelected: AircraftData | null;
   handleAircraftSelection: (selected: AircraftData | null) => void;
-  handleAircraftsFiltering: (input: string) => Promise<any>;
 }
 
 const AircraftSelectModal: React.FC<Props> = ({
-  aircrafts,
   aircraftSelected, 
   handleAircraftSelection,
-  handleAircraftsFiltering
 }) => {
+
+  const handleAircraftsSelectionFilter = async (input: string) => {
+    const aircraftsFiltered = await aircraftService
+      .searchAircraftByModel(input)
+      .then(aircrafts => mapAircraftToFilter(aircrafts, "model"));
+    
+      return aircraftsFiltered;
+  };
 
   return (
     <div className={Style.AircraftSelect}>
       <div className={Style.SearchBar}>
         <SearchbarDropdown 
-          defaultOptions={mapAircraftToFilter(aircrafts, "model")}
           handleSelection={handleAircraftSelection}
-          handleFilter={handleAircraftsFiltering}
+          handleFilter={handleAircraftsSelectionFilter}
         />
       </div>
       {/* TODO: toggle owned */}
       {aircraftSelected
       ? <div className={Style.AircraftDetails}>
           <h2>Selected Aircraft Details</h2>
-          <div className={Style.FieldsContainer}>
 
+          <div className={Style.FieldsContainer}>
             <div className={Style.FieldGroup}>
               <label>Aircraft Type:</label>
               <p>{aircraftSelected.aircraftType}</p>
@@ -75,8 +79,6 @@ const AircraftSelectModal: React.FC<Props> = ({
               <label>Max Range:</label>
               <p>{aircraftSelected.maxRange}</p>
             </div>
-
-            {/* TODO: fields */}
           </div>
         </div>
       : <div className={Style.AircraftNotSelected}>
