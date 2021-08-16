@@ -2,6 +2,8 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
 
+import "./SearchbarDropdown.scss";
+
 interface Props {
   handleSelection: React.Dispatch<React.SetStateAction<any | null>>;
   handleFilter: (inputValue: string) => Promise<any>;
@@ -37,6 +39,8 @@ const SearchbarDropdown: React.FC<Props> = ({
   return (
     <>
       <AsyncSelect
+        className="Searchbar-Container"
+        classNamePrefix="Searchbar"
         cacheOptions
         defaultOptions
         loadOptions={promiseOptions}

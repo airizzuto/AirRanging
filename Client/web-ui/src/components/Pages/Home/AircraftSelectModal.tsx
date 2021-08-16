@@ -29,7 +29,7 @@ const AircraftSelectModal: React.FC<Props> = ({
   return (
     <div className={Style.AircraftSelect}>
       <div className={Style.SearchBar}>
-        <SearchbarDropdown 
+        <SearchbarDropdown
           handleSelection={handleAircraftSelection}
           handleFilter={handleAircraftsSelectionFilter}
         />
@@ -81,12 +81,13 @@ const AircraftSelectModal: React.FC<Props> = ({
             </div>
           </div>
         </div>
-      : <div className={Style.AircraftNotSelected}>
+      : <div className={Style.AircraftDetails}>
           <p>Select an aircraft to view details and begin planning</p>
         </div>
       }
       
-      <div className={Style.Buttons}>
+      {/* TODO: on select switch to planning modal */}
+      <div className={Style.Select}>
         <DecoratedButton onClick={() => null}>Select</DecoratedButton>
       </div>
     </div>
