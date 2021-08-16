@@ -1,24 +1,27 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import aircraftService from "../../../services/aircraftService";
 import { NewAircraft } from "../../../types/Aircraft/Aircraft";
-import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/enums/AircraftEnums";
+import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/Aircraft/AircraftEnums";
 import { aircraftCreationSchema } from "../../../validators/aircraftValidators";
 import AlertBox from "../../Alerts/AlertBox";
 
 import Style from "./AircraftCreate.module.scss";
-import EnumSelector from "./EnumSelector";
+import EnumOptions from "./EnumOptions";
 
-const AircraftCreate: React.FC = () => {
+interface Props {
+  handleCreate: (newAircraft: NewAircraft) => void;
+}
+
+const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
   const [alert, setAlert] = React.useState("");
 
   const history = useHistory();
 
-  const handleSubmit = async (newAircraft : NewAircraft) => { 
+  const handleSubmit = (newAircraft : NewAircraft) => { 
     try {
       setAlert("");
-      await aircraftService.createAircraft(newAircraft);
+      handleCreate(newAircraft);
       history.push("/");
     } catch(error) {
       console.log(error.message);
@@ -48,7 +51,7 @@ const AircraftCreate: React.FC = () => {
 
   return (
       <div className={Style.FormContainer}>
-        <h1 className={Style.FormTitle}>User Registration</h1>
+        <h1 className={Style.FormTitle}>Create Aircraft</h1>
   
         <hr className={Style.Separator}/>
 
@@ -94,11 +97,11 @@ const AircraftCreate: React.FC = () => {
                 </div>
     
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EAircraftType} labelName="Aircraft Type" name="aircraftType" />
+                  <EnumOptions enumerator={EAircraftType} labelName="Aircraft Type" name="aircraftType" />
                 </div>
 
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EEngineType} labelName="Engine Type" name="engineType" />
+                  <EnumOptions enumerator={EEngineType} labelName="Engine Type" name="engineType" />
                 </div>
 
                 <div className={Style.FieldGroup}>
@@ -108,15 +111,15 @@ const AircraftCreate: React.FC = () => {
                 </div>
 
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EWeightCategory} labelName="Weight Category" name="weightCategory" />
+                  <EnumOptions enumerator={EWeightCategory} labelName="Weight Category" name="weightCategory" />
                 </div>
 
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EIcaoWakeCategory} labelName="ICAO Wake Category" name="icaoWakeCategory" />
+                  <EnumOptions enumerator={EIcaoWakeCategory} labelName="ICAO Wake Category" name="icaoWakeCategory" />
                 </div>
 
                 <div className={Style.FieldGroup}>
-                  <EnumSelector enumerator={EFuelType} labelName="Fuel Type" name="fuelType" />
+                  <EnumOptions enumerator={EFuelType} labelName="Fuel Type" name="fuelType" />
                 </div>
 
                 <div className={Style.FieldGroup}>

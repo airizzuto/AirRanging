@@ -2,32 +2,48 @@ import React, { useState } from "react";
 import { useModalClose } from "../../../hooks/useModalClose";
 import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
-// import Map from "./Map";
 import ModalTab from "../../Buttons/ModalTab";
 import DraggableModal from "../../Modals/DraggableModal";
-import PlanningModal from "./Planning";
+import PlanningModal from "./PlanningModal";
 
-import { AircraftState } from "../../../types/Aircraft/Aircraft";
+import { AircraftData, AircraftState } from "../../../types/Aircraft/Aircraft";
 
 import Style from "./Home.module.scss";
-import AircraftSelect from "./AircraftSelect";
+import AircraftSelect from "./AircraftSelectModal";
 // import InfoFooter from "./InfoFooter";
 
-const Home = () => {
+interface Props {
+  aircrafts: AircraftData[];
+  selectedAircraft: AircraftState | null;
+  handleAircraftSelection: (selected: AircraftData | null) => void ;
+  handleAircraftsFiltering: (filter: string) => Promise<void>;
+  handleAircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
+}
+
+const Home: React.FC<Props> = ({
+  aircrafts,
+  selectedAircraft,
+  handleAircraftSelection,
+  handleAircraftsFiltering,
+  handleAircraftState
+}) => {
   const [isModalActive, setIsModalActive] = useState(false); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = useState(false);
-  const [displayAircraftsModal, setDisplayAircraftsModal] = useState(true);
+  const [displayAircraftsModal, setDisplaySelectionModal] = useState(false);
+  React.useEffect(() => {
+    if (!selectedAircraft) {
+      setIsModalActive(true);
+      setDisplaySelectionModal(true);
+    }
+  }, []);
 
-  const [aircraft, setAircraft] = useState<AircraftState | null>(null);
-
-  // TODO: move to a custom hook?
   const handleModalDisplay = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
     display: boolean
   ) => {
     if (isModalActive) {
       setDisplayPlanningModal(false);
-      setDisplayAircraftsModal(false);
+      setDisplaySelectionModal(false);
     }
 
     setDisplayModal(display ? false : true);
@@ -36,9 +52,6 @@ const Home = () => {
 
   return (
     <div className={Style.Home}>
-
-      {/* Main Map View */}
-      {/* <Map /> */}
 
       {/* Properties Modals Activation Tabs */}
       <div className={Style.ModalTabs}>
@@ -52,7 +65,7 @@ const Home = () => {
         <ModalTab
           icon={faPaperPlane}
           handleTabClick={() => handleModalDisplay(
-            setDisplayAircraftsModal, displayAircraftsModal
+            setDisplaySelectionModal, displayAircraftsModal
           )}
         />
       </div>
@@ -66,22 +79,28 @@ const Home = () => {
       >
         <PlanningModal 
           handleAccept={() => useModalClose(setDisplayPlanningModal)}
-          aircraft={aircraft}
-          aircraftState={setAircraft}
+          aircraft={selectedAircraft}
+          aircraftState={handleAircraftState}
         />
       </DraggableModal>
 
       <DraggableModal 
         show={displayAircraftsModal}
         label="Selection"
-        handleClose={() => useModalClose(setDisplayAircraftsModal)}
+        handleClose={() => useModalClose(setDisplaySelectionModal)}
       >
-        <AircraftSelect aircraftSelected={aircraft}/>
+        <AircraftSelect 
+          aircraftSelected={selectedAircraft} 
+          aircrafts={aircrafts}
+          handleAircraftSelection={handleAircraftSelection}
+          handleAircraftsFiltering={handleAircraftsFiltering}/>
       </DraggableModal>
 
-      {/* <div className={Style.Info}>
-        <InfoFooter />
-      </div> */}
+      {/* TODO:
+      <div className={Style.Info}>
+        <InfoOverlay />
+      </div> 
+      */}
 
     </div>
   );

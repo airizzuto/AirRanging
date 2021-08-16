@@ -1,6 +1,6 @@
 
 import { Aircraft } from "../types/Aircraft/Aircraft";
-import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../types/enums/AircraftEnums";
+import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../types/Aircraft/AircraftEnums";
 
 const aircrafts: Aircraft[] = [
   {

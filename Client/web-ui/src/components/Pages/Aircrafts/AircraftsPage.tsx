@@ -7,15 +7,16 @@ import Style from "./Aircrafts.module.scss";
 
 interface Props {
   aircrafts: AircraftData[];
+  handleAircraftsFilter: (filter: string) => Promise<void>;
 }
 
-const AircraftsView: React.FC<Props> = ({ aircrafts }) => {
-
+const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
   const [filterInput, setFilterInput] = React.useState("");
-  
+
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
     setFilterInput(value);
+    handleAircraftsFilter(value);
   };
 
   const columns = React.useMemo(
@@ -81,7 +82,6 @@ const AircraftsView: React.FC<Props> = ({ aircrafts }) => {
         />
 
         <div className={Style.CreateNew}>
-          {/* TODO: User logged verify */}
           <LinkedButton path="/aircrafts/create">Create Aircraft</LinkedButton>
         </div>
       </div>
@@ -96,4 +96,4 @@ const AircraftsView: React.FC<Props> = ({ aircrafts }) => {
   );
 };
 
-export default AircraftsView;
+export default Aircrafts;
