@@ -35,7 +35,7 @@ const AircraftSelectModal: React.FC<Props> = ({
         />
       </div>
       {/* TODO: toggle owned */}
-      {aircraftSelected
+      {aircraftSelected //TODO: move to a separate component
       ? <div className={Style.AircraftDetails}>
           <h2>Selected Aircraft Details</h2>
 
@@ -48,11 +48,6 @@ const AircraftSelectModal: React.FC<Props> = ({
             <div className={Style.FieldGroup}>
               <label>Engine Type:</label>
               <p>{aircraftSelected.engineType}</p>
-            </div>
-
-            <div className={Style.FieldGroup}>
-              <label>ICAO Id:</label>
-              <p>{aircraftSelected.icaoId}</p>
             </div>
 
             <div className={Style.FieldGroup}>
