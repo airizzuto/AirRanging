@@ -3,11 +3,9 @@ import { AircraftData } from "../../../types/Aircraft/Aircraft";
 
 import DecoratedButton from "../../Buttons/DecoratedButton";
 import SearchbarDropdown from "../../Searchbar/SearchbarDropdown";
-// import SelectDropdown from "../Filters/SelectDropdown";
-// import SearchbarDropdown from "../../Filters/SearchbarDropdown"
 // import aircrafts from "../../data/aircrafts-mock";
 
-import Style from "./AircraftSelectModal.module.scss";
+import Style from "./AircraftSelectModal.module.scss";  // TODO: style
 
 interface Props {
   aircrafts: AircraftData[];
@@ -37,6 +35,17 @@ const AircraftSelectModal: React.FC<Props> = ({
       ? <div className={Style.AircraftDetails}>
           <h2>Selected Aircraft Details</h2>
           <div className={Style.FieldsContainer}>
+
+            <div className={Style.FieldGroup}>
+              <label>Aircraft Type:</label>
+              <p>{aircraftSelected.aircraftType}</p>
+            </div>
+
+            <div className={Style.FieldGroup}>
+              <label>Engine Type:</label>
+              <p>{aircraftSelected.engineType}</p>
+            </div>
+
             <div className={Style.FieldGroup}>
               <label>ICAO Id:</label>
               <p>{aircraftSelected.icaoId}</p>
@@ -55,6 +64,16 @@ const AircraftSelectModal: React.FC<Props> = ({
             <div className={Style.FieldGroup}>
               <label>Variant:</label>
               <p>{aircraftSelected.variant}</p>
+            </div>
+
+            <div className={Style.FieldGroup}>
+              <label>Fuel Capacity:</label>
+              <p>{aircraftSelected.fuelCapacity}</p>
+            </div>
+
+            <div className={Style.FieldGroup}>
+              <label>Max Range:</label>
+              <p>{aircraftSelected.maxRange}</p>
             </div>
 
             {/* TODO: fields */}
