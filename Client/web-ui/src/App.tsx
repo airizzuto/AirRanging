@@ -20,7 +20,7 @@ import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-// import Map from "./components/Map/Map";
+import Map from "./components/Map/Map";
 
 import "./App.scss";
 
@@ -58,7 +58,11 @@ const App = (): JSX.Element =>{
   
   const handleAircraftSelection = (selected: AircraftData | null) => {
     selected
-    ? setSelectedAircraft({...selected, loadedFuel: selected.fuelCapacity})
+    ? setSelectedAircraft({
+      ...selected,
+      loadedFuel: selected.fuelCapacity,
+      currentMaxRange: selected.maxRange
+    })
     : setSelectedAircraft(null);
   };
 
@@ -78,7 +82,7 @@ const App = (): JSX.Element =>{
 
 
   return (
-    <div className={"App"}>
+    <div className="App">
       <div className="Header">
         <Header 
           handleLogout={handleLogout}
@@ -86,8 +90,8 @@ const App = (): JSX.Element =>{
         />
       </div>
 
-      <div className={"Map"}>
-        {/* <Map /> */}
+      <div className="Map">
+        <Map selectedAircraft={selectedAircraft}/>
       </div>
 
       <div className="Main">
