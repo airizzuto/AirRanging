@@ -22,14 +22,16 @@
 }
 
 .Header {
+  position: absolute;
+  height: 100%;
+  width: 100%;
   grid-area: header-nav;
   z-index: 2;
-
 }
 
 .Map {
-  position:fixed;
   grid-area: 1 / 1 / 3 / end;
+  z-index: 1;
 }
 
 .Main {
@@ -37,6 +39,8 @@
 }
 
 .Footer {
+  height: 100%;
+  width: 100%;
   grid-area: footer;
   z-index: 2;
 }
