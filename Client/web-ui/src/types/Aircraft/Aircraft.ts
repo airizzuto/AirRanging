@@ -28,6 +28,7 @@ export interface AircraftData extends Aircraft{
 
 export interface AircraftState extends AircraftData {
   loadedFuel: number;
+  currentMaxRange: number;
 }
 
 // TODO: Implement paginated model
