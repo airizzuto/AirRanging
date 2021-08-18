@@ -1,11 +1,10 @@
 import React from 'react';
 import { Circle, GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
-import { containerStyle, DEFAULT_MAP_OPTIONS, LIBRARIES } from '../../settings/google-maps/mapSettings';
+import { containerStyle, DEFAULT_MAP_CENTER, DEFAULT_MAP_OPTIONS, LIBRARIES } from '../../settings/google-maps/mapSettings';
 
 import { Coordinates } from '../../types/Map/Map';
 import { AircraftState } from '../../types/Aircraft/Aircraft';
 
-import Style from "./Map.module.scss";
 import Spinner from "../../styles/components/_spinner.module.scss";
 import { convertNauticalToMeters } from '../../helpers/mapHelper';
 
@@ -17,7 +16,7 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
-  const [point, setPoint] = React.useState<Coordinates>();
+  const [point, setPoint] = React.useState<Coordinates | null>(null);
   // TODO: replace point with an array for route calculation
   // const [points, setPoints] = React.useState<Coordinates[]>();
   // const [selectedPoint, setSelectedPoint] = React.useState();
@@ -40,13 +39,13 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
     mapRef.current = null;
   };
 
-  const onMapClick = React.useCallback((e: google.maps.MapMouseEvent) => {
-    if (e.latLng) {
-      setPoint({ 
-        latitude: e.latLng.lat(),
-        longitude: e.latLng.lng()
-      });
-    }
+  const onMapClick = React.useCallback((event: google.maps.MapMouseEvent) => {
+    event.latLng
+    ? setPoint({ 
+        latitude: event.latLng.lat(),
+        longitude: event.latLng.lng()
+      })
+    : setPoint(null);
   }, []);
 
   if (loadError) {
@@ -62,11 +61,10 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
   }
 
   return (
-    <div className={Style.Map}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         options={DEFAULT_MAP_OPTIONS as google.maps.MapOptions}
-        center={{lat: 51.000, lng: 1.500}} // TODO: take user current location or default to 0,0
+        center={DEFAULT_MAP_CENTER.london} // TODO: take user current location or default to 0,0
         zoom={5}
         onLoad={onMapLoad}
         onUnmount={onMapUnmount}
@@ -92,7 +90,6 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
             : null
         }
       </GoogleMap>
-    </div>
   );
 };
 
