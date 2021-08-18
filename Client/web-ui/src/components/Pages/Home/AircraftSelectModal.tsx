@@ -6,16 +6,18 @@ import DecoratedButton from "../../Buttons/DecoratedButton";
 import SearchbarDropdown from "../../Searchbar/SearchbarDropdown";
 // import aircrafts from "../../data/aircrafts-mock";
 
-import Style from "./AircraftSelectModal.module.scss";  // TODO: style
+import Style from "./AircraftSelectModal.module.scss";
 
 interface Props {
   aircraftSelected: AircraftData | null;
   handleAircraftSelection: (selected: AircraftData | null) => void;
+  handleSelectClick: () => void;
 }
 
 const AircraftSelectModal: React.FC<Props> = ({
   aircraftSelected, 
   handleAircraftSelection,
+  handleSelectClick,
 }) => {
 
   const handleAircraftsSelectionFilter = async (input: string) => {
@@ -28,13 +30,15 @@ const AircraftSelectModal: React.FC<Props> = ({
 
   return (
     <div className={Style.AircraftSelect}>
+      {/* TODO: toggle owned */}
+
       <div className={Style.SearchBar}>
         <SearchbarDropdown
           handleSelection={handleAircraftSelection}
           handleFilter={handleAircraftsSelectionFilter}
         />
       </div>
-      {/* TODO: toggle owned */}
+
       {aircraftSelected //TODO: move to a separate component
       ? <div className={Style.AircraftDetails}>
           <h2>Selected Aircraft Details</h2>
@@ -74,6 +78,11 @@ const AircraftSelectModal: React.FC<Props> = ({
               <label>Max Range:</label>
               <p>{aircraftSelected.maxRange}</p>
             </div>
+
+            <div className={Style.FieldGroup}>
+              <label>Author:</label>
+              <p>{aircraftSelected.authorUsername}</p>
+            </div>
           </div>
         </div>
       : <div className={Style.AircraftDetails}>
@@ -81,9 +90,8 @@ const AircraftSelectModal: React.FC<Props> = ({
         </div>
       }
       
-      {/* TODO: on select switch to planning modal */}
       <div className={Style.Select}>
-        <DecoratedButton onClick={() => null}>Select</DecoratedButton>
+        <DecoratedButton onClick={handleSelectClick}>Select</DecoratedButton>
       </div>
     </div>
   );

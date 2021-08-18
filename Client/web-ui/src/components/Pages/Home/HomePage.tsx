@@ -90,6 +90,7 @@ const Home: React.FC<Props> = ({
         <AircraftSelect 
           aircraftSelected={selectedAircraft} 
           handleAircraftSelection={handleAircraftSelection}
+          handleSelectClick={() => handleModalDisplay(setDisplayPlanningModal, displayPlanningModal)}
         />
       </DraggableModal>
 
