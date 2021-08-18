@@ -13,7 +13,7 @@
   row-gap: 1rem;
   height: 100%;
 
-  .PropertiesGroup {
+  .PropertiesContainer {
     grid-area: properties;
 
     display: grid;
@@ -40,7 +40,7 @@
       grid-template-areas: 
         "properties-label properties-output"
         "modifier modifier";
-      row-gap: 1rem;
+      row-gap: 0.5rem;
 
       .range {
         grid-area: modifier;
@@ -48,12 +48,32 @@
 
       .output {
         grid-area: properties-output;
-        width: fit-content;
+        width: max-content;
       }
 
       label {
         grid-area: properties-label;
         align-self: center;
+        width: 100%;
+      }
+    }
+
+    .InputField {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "properties-label properties-input";
+
+      label {
+        grid-area: properties-label;
+        align-self: center;
+      }
+
+      input {
+        @include box.light;
+        grid-area: properties-input;
+        align-self: center;
+        width: max-content;
       }
     }
   }

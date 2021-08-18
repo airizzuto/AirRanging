@@ -18,28 +18,40 @@ const PlanningModal: React.FC<Props> = ({
   aircraftState,
   handleAccept,
 }: Props) => {
-
   const handleFuelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
 
-    const parsedValue = Number(value);
-
     if (aircraft) {
-      aircraftState({...aircraft, loadedFuel: parsedValue});
+      const parsedValue = Number(value);
+
+      const maxRangeValue = Number(calculateRange({
+        maxRange: aircraft.maxRange,
+        fuelCapacity: aircraft.fuelCapacity,
+        fuelLoaded: parsedValue
+      }).toFixed(2));
+
+      aircraftState({
+        ...aircraft,
+        loadedFuel: parsedValue,
+        currentMaxRange: maxRangeValue
+      });
     }
   };
+
 
   // TODO: split render to planning or select depending on aircraft state null or present
   return (
     <div className={Style.Planning}>
-      <div className={Style.PropertiesGroup}>
+      <div className={Style.PropertiesContainer}>
         <h2>Properties</h2>
+
         <div className={Style.Selected}>
           <label>Selected Aircraft:</label>
           {/* Replace "select an aircraft" with a dropdown or switch to select */}
           <span>{aircraft ? aircraft.model : "Select an aircraft"}</span>
           {/* TODO: additional aircraft info */}
         </div>
+
         <div className={Style.SliderProp}>
           <label>Fuel Loaded:</label>
           <div className={Style.output}>
@@ -65,16 +77,12 @@ const PlanningModal: React.FC<Props> = ({
               <div className={Style.Results}>
                 <label>Max Range:</label>
                 <span className={Style.output}>
-                  {calculateRange({
-                    maxRange: aircraft.maxRange,
-                    fuelCapacity: aircraft.fuelCapacity,
-                    fuelLoaded: aircraft.loadedFuel
-                  }).toFixed(2)}
+                  {aircraft.currentMaxRange}
                 </span>
               </div>
               <div className={Style.Results}>
                 <label>Radius of Action (PNR):</label>
-                <span className={Style.output}>{/*TODO:*/}*CALCULATED RESULT*</span>
+                <span className={Style.output}>{/*TODO:*/}*WIP*</span>
               </div>
           </div>
         : <div>No aircraft selected</div>

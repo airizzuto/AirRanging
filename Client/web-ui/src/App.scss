@@ -22,23 +22,32 @@
 }
 
 .Header {
+  height: 100%;
+  width: 100%;
   grid-area: header-nav;
   z-index: 2;
-
 }
 
 .Map {
-  position:fixed;
+  position: fixed;
   grid-area: 1 / 1 / 3 / end;
+  height: 100%;
+  width: 100%;
 }
 
 .Main {
   grid-area: main;
+  height: 100%;
+  width: 100%;
+  z-index: auto;
+
 }
 
 .Footer {
+  height: 100%;
+  width: 100%;
   grid-area: footer;
-  z-index: 2;
+  z-index: 4;
 }
 
 @media (max-width: 600px) {
