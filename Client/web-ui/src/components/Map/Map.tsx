@@ -1,12 +1,12 @@
 import React from 'react';
-import { Circle, GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import { containerStyle, DEFAULT_MAP_CENTER, DEFAULT_MAP_OPTIONS, LIBRARIES } from '../../settings/google-maps/mapSettings';
 
 import { Coordinates } from '../../types/Map/Map';
 import { AircraftState } from '../../types/Aircraft/Aircraft';
 
 import Spinner from "../../styles/components/_spinner.module.scss";
-import { convertNauticalToMeters } from '../../helpers/mapHelper';
+import DrawAircraftRadius from './DrawAircraftRadius';
 
 // TODO: https://tomchentw.github.io/react-google-maps/#installation
 // TODO REMOVE: reference video https://www.youtube.com/watch?v=WZcxJGmLbSo&t=0s
@@ -64,6 +64,7 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
       <GoogleMap
         mapContainerStyle={containerStyle}
         options={DEFAULT_MAP_OPTIONS as google.maps.MapOptions}
+        // center property must be referenced from a variable, not doing this makes map re-render on click
         center={DEFAULT_MAP_CENTER.london} // TODO: take user current location or default to 0,0
         zoom={5}
         onLoad={onMapLoad}
@@ -72,21 +73,7 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
       >
         {
           (point && selectedAircraft)
-            ? <>
-                <Marker 
-                  position={{lat: point.latitude, lng: point.longitude}}
-                  icon={{
-                    url: "./PointSelected.svg",
-                    scaledSize: new window.google.maps.Size(10, 10),
-                    origin: new window.google.maps.Point(0, 0),
-                    anchor: new window.google.maps.Point(5, 5)
-                  }}
-                />
-                <Circle 
-                  center={{lat: point.latitude, lng: point.longitude}}
-                  radius={convertNauticalToMeters(selectedAircraft.currentMaxRange)}
-                />
-              </>
+            ? <DrawAircraftRadius position={point} aircraftSelected={selectedAircraft}/>
             : null
         }
       </GoogleMap>
