@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
-import { NewAircraft } from "../types/Aircraft/Aircraft";
+import { AircraftData, NewAircraft } from "../types/Aircraft/Aircraft";
 
 const baseUrl = process.env.REACT_APP_BASEURL;
 
@@ -61,6 +61,47 @@ const createAircraft = async (newAircraft: NewAircraft) => {
   }
 };
 
+const saveAircraft = async (aircraftId: string) => {
+  const config = {
+    headers: { Authorization: `bearer ${getStoredToken()}` }
+  };
+
+  const response = await axios.put(
+    baseUrl + `/api/aircrafts/${aircraftId}/save`,
+    aircraftId,
+    config
+  );
+
+  return response.status;
+};
+
+const editAircraft = async (aircraftId: string, aircraftUpdated: AircraftData) => {
+  const config = {
+    headers: { Authorization: `bearer ${getStoredToken()}` }
+  };
+
+  const response = await axios.put(
+    baseUrl + `/api/aircrafts/${aircraftId}`,
+    {aircraftId, aircraftUpdated},
+    config
+  );
+
+  return response.status;
+};
+
+const deleteAircraft = async (aircraftId: string) => {
+  const config = {
+    headers: { Authorization: `bearer ${getStoredToken()}` }
+  };
+
+  const response = await axios.delete(
+    baseUrl + `/api/aircrafts/${aircraftId}`,
+    config
+  );
+
+  return response.status;
+};
+
 
 export default {
   getAllAircrafts,
@@ -68,4 +109,7 @@ export default {
   getAircraftsOwnedByUser,
   searchAircraftByModel,
   createAircraft,
+  saveAircraft,
+  editAircraft,
+  deleteAircraft,
 };
