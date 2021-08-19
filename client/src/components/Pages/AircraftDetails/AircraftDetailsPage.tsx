@@ -16,7 +16,9 @@ const AircraftDetails = () => {
       <hr />
 
       <div className={Style.Details}>
-        
+        {/* TODO:
+          Mix of formik create, and constant fields. formik fields disabled={isEditMode}
+        */}
       </div>
 
       {/* TODO: EDIT/CLONE button */}

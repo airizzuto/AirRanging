@@ -64,6 +64,7 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
         }}
         >
           {({ isSubmitting }) => 
+            //TODO: Field render={ disabled={isSubmitting} }
             <Form className={Style.Form}>
               <div className={Style.Fields}>
                 <div className={Style.FieldGroup}>
