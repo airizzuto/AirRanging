@@ -23,6 +23,7 @@ import Footer from "./components/Footer/Footer";
 import Map from "./components/Map/Map";
 
 import "./App.scss";
+import AircraftDetails from "./components/Pages/AircraftDetails/AircraftDetailsPage";
 
 const App = (): JSX.Element =>{
 
@@ -105,15 +106,18 @@ const App = (): JSX.Element =>{
                 handleAircraftState={setSelectedAircraft}
               />
             </Route>
+
             <Route exact path="/aircrafts">
               <Aircrafts
                 aircrafts={aircrafts}
                 handleAircraftsFilter={handleAircraftsFilter} 
               />
             </Route>
-            <Route exact path="/aircrafts/detail/:id">
-              {/* <AircraftDetail aircraft={aircraftSelected}/> */}
+
+            <Route exact path="/aircrafts/details/:id">
+              <AircraftDetails />
             </Route>
+
             <ProtectedRoute 
               path="/aircrafts/create" 
               authenticationPath="/login"
@@ -121,21 +125,27 @@ const App = (): JSX.Element =>{
             >
               <AircraftCreate handleCreate={handleAircraftCreate}/>
             </ProtectedRoute>
+
             <Route exact path="/airports">
               {/* <AirportsEditView /> */}
             </Route>
+
             <Route exact path="/login">
               <Login setUser={setUser}/>
             </Route>
+
             <Route exact path="/registration">
               <UserRegistration />
             </Route>
+
             <Route exact path="/forgotpass">
               {/* <ForgotPassword /> */}
             </Route>
+
             <Route exact path="/terms">
               <TermsAndConditions />
             </Route>
+
             <Route path="*">
               <NotFound />
             </Route>

@@ -1,4 +1,5 @@
-import { usePagination, useRowSelect, useSortBy, useTable } from "react-table";
+import React from "react";
+import { Column, usePagination, useRowSelect, useSortBy, useTable } from "react-table";
 import { AircraftData } from "../../types/Aircraft/Aircraft";
 
 import Style from "./AircraftsTable.module.scss";
@@ -6,12 +7,13 @@ import Style from "./AircraftsTable.module.scss";
 // Documentation: https://react-table.tanstack.com/docs/overview
 
 interface Props {
+  columns: Column[];
   data: AircraftData[];
-  columns: any;
 }
 
-const AircraftsTable: React.FC<Props> = ({data, columns}) => {
-  
+const AircraftsTable: React.FC<Props> = ({columns, data}) => {
+
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -27,8 +29,7 @@ const AircraftsTable: React.FC<Props> = ({data, columns}) => {
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
-  } = useTable(
-    {
+  } = useTable({
       columns,
       data,
       initialState: { pageIndex: 0, pageSize: 5 },

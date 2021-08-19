@@ -65,6 +65,15 @@ const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
         Header: 'Saved Times',
         accessor: 'savesCount',
       },
+      {
+        Header: " ",
+        // accessor: "aircraftDetails",
+        Cell: ({ cell }: any) => (
+          <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`}>
+            Details
+          </LinkedButton>
+        )
+      },
     ],
     []
   );
@@ -89,7 +98,7 @@ const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
       <hr />
 
       <div className={Style.AircraftsTable}>
-        <AircraftsTable data={aircrafts} columns={columns}/>
+        <AircraftsTable data={aircrafts} columns={columns} />
       </div>
 
     </div>
