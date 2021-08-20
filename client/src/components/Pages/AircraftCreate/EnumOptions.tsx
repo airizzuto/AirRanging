@@ -5,6 +5,7 @@ interface Props {
   labelName: string;
   name: string;
   isDisabled?: boolean;
+  initialValue?: any;
 }
 
 /**
@@ -15,7 +16,7 @@ interface Props {
  * @returns Iterates enumerator members and passes them as options for the form selector dropdown
  */
 const EnumOptions: React.FC<Props> = ({
-  enumerator, labelName, name, isDisabled
+  enumerator, labelName, name, isDisabled, initialValue
 }) => {
 
   return (
@@ -26,6 +27,7 @@ const EnumOptions: React.FC<Props> = ({
         placeholder={labelName}
         component="select"
         disabled={isDisabled}
+        value={initialValue}
       >
         {Object.keys(enumerator).map(key => {
           return <option value={key} key={key}>{enumerator[key]}</option>;
