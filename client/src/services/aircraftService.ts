@@ -31,6 +31,11 @@ const getAllAircraftsPaginated = async () => {
   return response.data;
 };
 
+const getAircraftById = async (aircraftId: string) => {
+  const response = await axios.get(baseUrl + `/api/aircrafts/${aircraftId}`);
+  return response.data;
+};
+
 const getAircraftsOwnedByUser = async () => {
   const config = {
     headers: { Authorization: getStoredToken() },
@@ -106,6 +111,7 @@ const deleteAircraft = async (aircraftId: string) => {
 export default {
   getAllAircrafts,
   getAllAircraftsPaginated,
+  getAircraftById,
   getAircraftsOwnedByUser,
   searchAircraftByModel,
   createAircraft,
