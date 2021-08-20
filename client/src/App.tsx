@@ -55,16 +55,16 @@ const App = (): JSX.Element =>{
 
 
   /* Aircraft selected state */
-  const [selectedAircraft, setSelectedAircraft] = useState<AircraftState | null>(null);
+  const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
 
   const handleAircraftSelection = (selected: AircraftData | null) => {
     selected
-    ? setSelectedAircraft({
+    ? setAircraftSelected({
       ...selected,
       loadedFuel: selected.fuelCapacity,
       currentMaxRange: selected.maxRange
     })
-    : setSelectedAircraft(null);
+    : setAircraftSelected(null);
   };
 
 
@@ -92,7 +92,7 @@ const App = (): JSX.Element =>{
       </div>
 
       <div className="Map">
-        <Map selectedAircraft={selectedAircraft}/>
+        <Map selectedAircraft={aircraftSelected}/>
       </div>
 
       <div className="Main">
@@ -100,10 +100,10 @@ const App = (): JSX.Element =>{
             <Route exact path="/">
               <Home 
                 aircrafts={aircrafts}
-                selectedAircraft={selectedAircraft}
+                selectedAircraft={aircraftSelected}
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftsFiltering={handleAircraftsFilter}
-                handleAircraftState={setSelectedAircraft}
+                handleAircraftState={setAircraftSelected}
               />
             </Route>
 
