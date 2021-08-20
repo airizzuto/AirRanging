@@ -53,6 +53,14 @@ const App = (): JSX.Element =>{
       .then(response => setAircrafts(aircrafts.concat(response)));
   };
 
+  const handleAircraftEdit = async (aircraftId: string, editedAircraft: AircraftData) => {
+    await aircraftService
+      .editAircraft(aircraftId, editedAircraft)
+      .then(() => setAircrafts(
+        aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : editedAircraft)
+      ));
+  };
+
 
   /* Aircraft selected state */
   const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
@@ -115,7 +123,10 @@ const App = (): JSX.Element =>{
             </Route>
 
             <Route exact path="/aircrafts/details/:id">
-              <AircraftDetails />
+              <AircraftDetails 
+                handleAircraftEdit={handleAircraftEdit}
+                handleAircraftSelect={handleAircraftSelection}
+              />
             </Route>
 
             <ProtectedRoute 
