@@ -7,7 +7,7 @@ import aircraftService from "../../../services/aircraftService";
 
 import { AircraftData } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EWeightCategory, EIcaoWakeCategory, EFuelType } from "../../../types/Aircraft/AircraftEnums";
-import { aircraftCreationSchema } from "../../../validators/aircraftValidators";
+import { aircraftSchema } from "../../../validators/aircraftValidators";
 import AlertBox from "../../Alerts/AlertBox";
 import EnumOptions from "../AircraftCreate/EnumOptions";
 
@@ -41,10 +41,15 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
     }
   }, [aircraft]);
 
+
   const handleSubmit = (editedAircraft : AircraftData) => { 
     try {
       setAlert("");
-      handleAircraftEdit(editedAircraft.id , editedAircraft);
+
+      if (isEditMode) {
+        handleAircraftEdit(editedAircraft.id , editedAircraft);
+      }
+
       handleAircraftSelect(editedAircraft);
       history.push("/");
     } catch(error) {
@@ -65,7 +70,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
       {aircraft 
         ? <Formik 
             initialValues={aircraft}
-            validationSchema={aircraftCreationSchema}
+            validationSchema={aircraftSchema}
             onSubmit={async (values: AircraftData, { setSubmitting }: FormikHelpers<AircraftData>) => {
               await handleSubmit(values);
               setSubmitting(false);
@@ -256,7 +261,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                 </div>
 
                 <div className={Style.SubmitButton}>
-                  <button type="submit" disabled={isSubmitting || !isEditMode}>
+                  <button type="submit" >
                     Accept
                   </button>
                 </div>
