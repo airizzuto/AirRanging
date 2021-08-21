@@ -12,42 +12,19 @@
   display: grid;
   grid-template-rows: max-content fit-content min-content;
   grid-template-areas: "fields" "alert" "submit";
-  row-gap: 1rem;
-  margin-bottom: 2rem;
-
-  .AlertNotification {
-    grid-area: alert;
-
-    display: grid;
-    place-content: center;
-  }
-
-  .SubmitButton {
-    @include button-behavior;
-    grid-area: submit;
-
-    align-self: center;
-    align-content: center;
-    justify-self: right;
-    width: 15%;
-    min-width: 8rem;
-
-    button {
-      @include button.primary-light;
-    }
-  }
+  row-gap: 0.5rem;
 
   .Fields {
     grid-area: fields;
 
     display: grid;
+    grid-template-columns: 1fr;
     grid-auto-rows: max-content;
     row-gap: 1rem;
 
 
     .FieldGroup {
       display: grid;
-
       grid-template-columns: 1fr 3fr 3fr;
       grid-template-rows: 1fr;
       grid-template-areas: "field-label field-input validation";
@@ -67,7 +44,6 @@
       span {
         @include font.error-alert;
         grid-area: validation;
-        display: flex;
         justify-self: start;
         align-self: center;
       }
@@ -76,8 +52,8 @@
         @include box.light;
         grid-area: field-input;
 
-        height: 1.5rem;
-        width: 100%;
+        height: 1rem;
+        width: 30rem;
         align-self: center;
         justify-self: center;
       }
@@ -86,11 +62,33 @@
         @include box.light;
         grid-area: field-input;
 
-        height: 3rem;
-        width: 100%;
+        height: 2.5rem;
+        width: 32.5rem;
         align-self: center;
         justify-self: center;
       }
+    }
+  }
+
+  .AlertNotification {
+    grid-area: alert;
+
+    display: grid;
+    place-content: center;
+  }
+
+  .SubmitButton {
+    @include button-behavior;
+    grid-area: submit;
+
+    align-self: center;
+    align-content: center;
+    justify-self: right;
+    width: 10vw;
+    min-width: 8rem;
+
+    button {
+      @include button.primary-light;
     }
   }
 }
