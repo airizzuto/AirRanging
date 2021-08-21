@@ -12,6 +12,8 @@ import AlertBox from "../../Alerts/AlertBox";
 import EnumOptions from "../AircraftCreate/EnumOptions";
 
 import Style from "./AircraftDetailsPage.module.scss";
+import Spinner from "../../../styles/components/_spinner.module.scss";
+
 
 interface Props {
   handleAircraftEdit: (aircraftId: string, editedAircraft: AircraftData) => Promise<void>;
@@ -20,22 +22,24 @@ interface Props {
 
 const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelect }) => {
   const { id }: any = useParams();
+  const history = useHistory();
 
   const [alert, setAlert] = React.useState("");
+
   const [aircraft, setAircraft] = React.useState<AircraftData>();
-  const [isEditMode, setIsEditMode] = React.useState(false);
-
-  // edit button activates edit mode if user is owner. if user not owner clones aircraft and activates edit mode
-
   React.useEffect(() => {
     aircraftService.getAircraftById(id)
       .then(response => setAircraft(response));
 
-    const user = getUserData();
-    setIsEditMode(user?.username === aircraft?.authorUsername);
   }, []);
 
-  const history = useHistory();
+  const [isEditMode, setIsEditMode] = React.useState(false);
+  React.useEffect(() => {
+    if (aircraft) {
+      const user = getUserData();
+      setIsEditMode(user?.username === aircraft?.authorUsername);
+    }
+  }, [aircraft]);
 
   const handleSubmit = (editedAircraft : AircraftData) => { 
     try {
@@ -75,8 +79,8 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <Field 
                       type="text" 
                       name="icaoId" 
-                      placeholder="ICAO ID" 
-                      disabled={isSubmitting && !isEditMode}
+                      placeholder="ICAO ID"
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.icaoId}
                     />
                     <ErrorMessage component="span" name="icaoId" />
@@ -88,7 +92,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                       type="text"
                       name="manufacturer"
                       placeholder="Manufacturer"
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.manufacturer}
                     />
                     <ErrorMessage component="span" name="manufacturer" />
@@ -100,7 +104,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                       type="text"
                       name="model"
                       placeholder="Model"
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.model}
                     />
                     <ErrorMessage component="span" name="model" />
@@ -112,7 +116,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                       type="text"
                       name="variant"
                       placeholder="Variant"
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.variant}
                     />
                     <ErrorMessage component="span" name="variant" />
@@ -124,7 +128,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                       type="text"
                       name="registration"
                       placeholder="Registration"
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.registration}
                     />
                     <ErrorMessage component="span" name="registration" />
@@ -135,7 +139,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                       enumerator={EAircraftType}
                       labelName="Aircraft Type"
                       name="aircraftType"
-                      isDisabled={isSubmitting && !isEditMode}
+                      isDisabled={isSubmitting || !isEditMode}
                       value={aircraft.aircraftType}
                     />
                   </div>
@@ -145,7 +149,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                       enumerator={EEngineType}
                       labelName="Engine Type"
                       name="engineType"
-                      isDisabled={isSubmitting && !isEditMode}
+                      isDisabled={isSubmitting || !isEditMode}
                       value={aircraft.engineType}
                     />
                   </div>
@@ -155,7 +159,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <Field 
                       type="number" 
                       name="engineCount" 
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.engineCount}
                     />
                     <ErrorMessage component="span" name="engineCount" />
@@ -166,7 +170,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                       enumerator={EWeightCategory}
                       labelName="Weight Category"
                       name="weightCategory"
-                      isDisabled={isSubmitting && !isEditMode}
+                      isDisabled={isSubmitting || !isEditMode}
                       value={aircraft.weightCategory}
                     />
                   </div>
@@ -176,7 +180,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                       enumerator={EIcaoWakeCategory}
                       labelName="ICAO Wake Category"
                       name="icaoWakeCategory"
-                      isDisabled={isSubmitting && !isEditMode}
+                      isDisabled={isSubmitting || !isEditMode}
                       value={aircraft.icaoWakeCategory}
                     />
                   </div>
@@ -186,7 +190,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                       enumerator={EFuelType}
                       labelName="Fuel Type"
                       name="fuelType"
-                      isDisabled={isSubmitting && !isEditMode}
+                      isDisabled={isSubmitting || !isEditMode}
                       value={aircraft.fuelType}
                     />
                   </div>
@@ -196,7 +200,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <Field
                       type="number"
                       name="maxTakeoffWeight"
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.maxTakeoffWeight}
                     />
                     <ErrorMessage component="span" name="maxTakeoffWeight" />
@@ -207,7 +211,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <Field
                       type="number"
                       name="cruiseSpeed"
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.cruiseSpeed}
                     />
                     <ErrorMessage component="span" name="cruiseSpeed" />
@@ -218,7 +222,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <Field
                       type="number"
                       name="fuelCapacity"
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.fuelCapacity}
                     />
                     <ErrorMessage component="span" name="fuelCapacity" />
@@ -229,7 +233,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <Field
                       type="number"
                       name="maxRange"
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.maxRange}
                     />
                     <ErrorMessage component="span" name="maxRange" />
@@ -240,7 +244,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <Field
                       type="number"
                       name="serviceCeiling"
-                      disabled={isSubmitting && !isEditMode}
+                      disabled={isSubmitting || !isEditMode}
                       value={aircraft.serviceCeiling}
                     />
                     <ErrorMessage component="span" name="serviceCeiling" />
@@ -252,14 +256,14 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                 </div>
 
                 <div className={Style.SubmitButton}>
-                  <button type="submit" disabled={isSubmitting && !isEditMode}>
+                  <button type="submit" disabled={isSubmitting || !isEditMode}>
                     Accept
                   </button>
                 </div>
             </Form>
             }
           </Formik>
-        : <div>Problem loading aircraft</div>
+        : <div className={Spinner.spinner}></div>
       }
       </div>
       
