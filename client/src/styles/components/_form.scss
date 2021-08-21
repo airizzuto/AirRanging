@@ -58,6 +58,10 @@
         justify-self: center;
       }
 
+      input:disabled {
+        @include box.light-disabled;
+      }
+
       select{
         @include box.light;
         grid-area: field-input;
@@ -66,6 +70,10 @@
         width: 32.5rem;
         align-self: center;
         justify-self: center;
+      }
+
+      select:disabled {
+        @include box.light-disabled;
       }
     }
   }
