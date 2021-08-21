@@ -1,0 +1,96 @@
+@use "../colors" as color;
+@use "../fonts" as font;
+@use "./separators" as separator;
+@use "./boxes" as box;
+@use "./buttons" as button;
+@use "../mixins" as *;
+
+@mixin style {
+  @include text-shadow;
+  grid-area: form;
+
+  display: grid;
+  grid-template-rows: max-content fit-content min-content;
+  grid-template-areas: "fields" "alert" "submit";
+  row-gap: 1rem;
+  margin-bottom: 2rem;
+
+  .AlertNotification {
+    grid-area: alert;
+
+    display: grid;
+    place-content: center;
+  }
+
+  .SubmitButton {
+    @include button-behavior;
+    grid-area: submit;
+
+    align-self: center;
+    align-content: center;
+    justify-self: right;
+    width: 15%;
+    min-width: 8rem;
+
+    button {
+      @include button.primary-light;
+    }
+  }
+
+  .Fields {
+    grid-area: fields;
+
+    display: grid;
+    grid-auto-rows: max-content;
+    row-gap: 1rem;
+
+
+    .FieldGroup {
+      display: grid;
+
+      grid-template-columns: 1fr 3fr 3fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "field-label field-input validation";
+      column-gap: 2rem;
+
+      label {
+        @include font.main;
+        color: color.$light1;
+        grid-area: field-label;
+
+        text-align: center;
+        justify-self: start;
+        align-self: center;
+        height: max-content;
+      }
+
+      span {
+        @include font.error-alert;
+        grid-area: validation;
+        display: flex;
+        justify-self: start;
+        align-self: center;
+      }
+
+      input {
+        @include box.light;
+        grid-area: field-input;
+
+        height: 1.5rem;
+        width: 100%;
+        align-self: center;
+        justify-self: center;
+      }
+
+      select{
+        @include box.light;
+        grid-area: field-input;
+
+        height: 3rem;
+        width: 100%;
+        align-self: center;
+        justify-self: center;
+      }
+    }
+  }
+}
