@@ -19,12 +19,13 @@
   grid-template-areas: "header-nav" "main" "footer";
 
   overflow: hidden auto;
+  
 }
 
 .Header {
+  grid-area: header-nav;
   height: 100%;
   width: 100%;
-  grid-area: header-nav;
   z-index: 2;
 }
 
@@ -43,9 +44,9 @@
 }
 
 .Footer {
+  grid-area: footer;
   height: 100%;
   width: 100%;
-  grid-area: footer;
   z-index: 4;
 }
 
