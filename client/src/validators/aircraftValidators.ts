@@ -2,7 +2,7 @@ import { string, object, SchemaOf, mixed, number } from 'yup';
 import { NewAircraft } from '../types/Aircraft/Aircraft';
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from '../types/Aircraft/AircraftEnums';
 
-export const aircraftCreationSchema: SchemaOf<NewAircraft> = object().shape({
+export const aircraftSchema: SchemaOf<NewAircraft> = object().shape({
   icaoId: string()
     .max(4, "ICAO Id must be of no more than 4 characters")
     .matches(

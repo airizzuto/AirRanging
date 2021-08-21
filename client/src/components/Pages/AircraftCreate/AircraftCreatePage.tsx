@@ -3,7 +3,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { NewAircraft } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/Aircraft/AircraftEnums";
-import { aircraftCreationSchema } from "../../../validators/aircraftValidators";
+import { aircraftSchema } from "../../../validators/aircraftValidators";
 import AlertBox from "../../Alerts/AlertBox";
 
 import Style from "./AircraftCreate.module.scss";
@@ -57,7 +57,7 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
 
         <Formik 
           initialValues={initialFormValues}
-          validationSchema={aircraftCreationSchema}
+          validationSchema={aircraftSchema}
           onSubmit={async (values: NewAircraft, { setSubmitting }: FormikHelpers<NewAircraft>) => {
             await handleSubmit(values);
             setSubmitting(false);
