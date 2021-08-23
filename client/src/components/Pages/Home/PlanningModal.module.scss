@@ -11,7 +11,6 @@
   grid-template-columns: 1fr;
   grid-template-areas: "properties" "separator" "results" "accept";
   row-gap: 1rem;
-  height: 100%;
 
   .PropertiesContainer {
     grid-area: properties;

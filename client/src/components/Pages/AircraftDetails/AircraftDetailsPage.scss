@@ -5,13 +5,14 @@
 @use "../../../styles/components/form";
 
 .Container {
+
   @include main-component;
   grid-area: 2 / 1 / 3 / end;
 
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: auto;
-  grid-template-areas: "title" "." "form" "buttons";
+  grid-template-areas: "title" "." "form";
 
   h1 {
     @include text-shadow;
@@ -30,8 +31,6 @@
   .Form {
     @include form.style;
     display: grid;
-    padding-top: 0;
-    align-self: center;
-    margin-bottom: 1rem;
+    grid-area: form;
   }
 };

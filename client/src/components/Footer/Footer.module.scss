@@ -20,7 +20,7 @@
     @include text-shadow;
     color: color.$light1;
     grid-area: copyright;
-    padding: 0 1rem;
+    padding: 0 2vh;
 
     svg {
       @include drop-shadow;
@@ -38,7 +38,7 @@
 
     a {
       text-decoration: none;
-      padding: 0 1rem;
+      padding: 0 2vh;
       color: color.$light1;
     }
   }

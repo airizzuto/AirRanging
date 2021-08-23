@@ -11,7 +11,7 @@ import { aircraftSchema } from "../../../validators/aircraftValidators";
 import AlertBox from "../../Alerts/AlertBox";
 import EnumOptions from "../AircraftCreate/EnumOptions";
 
-import Style from "./AircraftDetailsPage.module.scss";
+import "./AircraftDetailsPage.scss";
 import Spinner from "../../../styles/components/_spinner.module.scss";
 
 
@@ -61,12 +61,12 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
 
 
   return (
-    <div className={Style.Container}>
+    <div className={"Container"}>
       <h1>Aircraft Details: {aircraft?.model} {aircraft?.variant}</h1>
 
       <hr />
 
-      <div className={Style.Form}>
+      <div>
       {aircraft 
         ? <Formik 
             initialValues={aircraft}
@@ -77,9 +77,9 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
           }}
           >
             {({ isSubmitting }) => 
-              <Form className={Style.Form}>
-                <div className={Style.Fields}>
-                  <div className={Style.FieldGroup}>
+              <Form className={"Form"}>
+                <div className={"Fields"}>
+                  <div className={"FieldGroup"}>
                     <label>ICAO ID:</label>
                     <Field 
                       type="text" 
@@ -91,7 +91,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="icaoId" />
                   </div>
       
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Manufacturer:</label>
                     <Field 
                       type="text"
@@ -103,7 +103,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="manufacturer" />
                   </div>
       
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Model:</label>
                     <Field
                       type="text"
@@ -115,7 +115,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="model" />
                   </div>
       
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Variant:</label>
                     <Field
                       type="text"
@@ -127,7 +127,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="variant" />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Registration:</label>
                     <Field
                       type="text"
@@ -139,7 +139,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="registration" />
                   </div>
       
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <EnumOptions
                       enumerator={EAircraftType}
                       labelName="Aircraft Type"
@@ -149,7 +149,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <EnumOptions
                       enumerator={EEngineType}
                       labelName="Engine Type"
@@ -159,7 +159,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Engine Count:</label>
                     <Field 
                       type="number" 
@@ -170,7 +170,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="engineCount" />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <EnumOptions 
                       enumerator={EWeightCategory}
                       labelName="Weight Category"
@@ -180,7 +180,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <EnumOptions 
                       enumerator={EIcaoWakeCategory}
                       labelName="ICAO Wake Category"
@@ -190,7 +190,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <EnumOptions 
                       enumerator={EFuelType}
                       labelName="Fuel Type"
@@ -200,7 +200,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Max Takeoff Weight:</label>
                     <Field
                       type="number"
@@ -211,7 +211,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="maxTakeoffWeight" />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Cruise Speed:</label>
                     <Field
                       type="number"
@@ -222,7 +222,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="cruiseSpeed" />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Fuel Capacity:</label>
                     <Field
                       type="number"
@@ -233,7 +233,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="fuelCapacity" />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Max Range:</label>
                     <Field
                       type="number"
@@ -244,7 +244,7 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                     <ErrorMessage component="span" name="maxRange" />
                   </div>
 
-                  <div className={Style.FieldGroup}>
+                  <div className={"FieldGroup"}>
                     <label>Service Ceiling:</label>
                     <Field
                       type="number"
@@ -256,11 +256,11 @@ const AircraftDetails: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSe
                   </div>
                 </div>
       
-                <div className={Style.AlertNotification}>
+                <div className={"AlertNotification"}>
                   <AlertBox alertText={alert}/>
                 </div>
 
-                <div className={Style.SubmitButton}>
+                <div className={"SubmitButton"}>
                   <button type="submit" >
                     Accept
                   </button>
