@@ -65,6 +65,37 @@ namespace App.Controllers.V1
             return Ok(aircraftsResponse);
         }
 
+        // GET api/bookmarks/5
+        /// <summary>
+        /// Retrieves user aircraft id if bookmarked in the database
+        /// </summary>
+        /// <response code="200">Retrieves all aircrafts in the database</response>
+        /// <response code="401">Unauthorized. User not logged in.</response>
+        /// <response code="404">Aircraft id not found in bookmark.</response>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AircraftReadDTO>> GetUserBookmarkedAircraftId(Guid id)
+        {
+            var userId = HttpContext.GetUserId();
+            if (userId == null)
+            {
+                _logger.LogError($"User not logged in. Unable to create aircraft.");
+
+                return Unauthorized();
+            }
+
+            var aircrafts = await _repository.Bookmark.GetBookmarkAsync(userId, id);
+            if (aircrafts == null) 
+            {
+                _logger.LogError($"ERROR: aircraft id {id} not found in user bookmark.");
+                return NotFound("Aircraft id not found");
+            }
+
+            var aircraftsResponse = _mapper.Map<AircraftReadDTO>(aircrafts);
+            _logger.LogInfo($"INFO: Returning aircraft {id}.");
+
+            return Ok(aircraftsResponse);
+        }
+
         // DELETE api/bookmarks/id
         /// <summary>
         /// Removes bookmark for aircraft id
