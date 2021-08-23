@@ -84,7 +84,7 @@ namespace App.Controllers.V1
                 return Unauthorized();
             }
 
-            var aircrafts = await _repository.Bookmark.GetBookmarkAsync(userId, id);
+            var aircrafts = await _repository.Bookmark.GetBookmarkedIdAsync(userId, id);
             if (aircrafts == null) 
             {
                 _logger.LogError($"ERROR: aircraft id {id} not found in user bookmark.");
@@ -115,7 +115,7 @@ namespace App.Controllers.V1
                 return Unauthorized();
             }
 
-            var bookmark = await _repository.Bookmark.GetBookmarkAsync(userId, aircraftId);
+            var bookmark = await _repository.Bookmark.GetBookmarkedIdAsync(userId, aircraftId);
             if (bookmark == null)
             {
                 _logger.LogError($"User {userId}, Aircraft {aircraftId} bookmark not found.");

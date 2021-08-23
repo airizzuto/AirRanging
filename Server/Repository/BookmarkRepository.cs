@@ -41,7 +41,7 @@ namespace Repository
                 .ToListAsync();
         }
 
-        public async Task<Bookmark> GetBookmarkAsync(string userId, Guid aircraftId)
+        public async Task<Bookmark> GetBookmarkedIdAsync(string userId, Guid aircraftId)
         {
             return await FindByCondition(b =>
                 b.UserId == userId && b.AircraftId == aircraftId
