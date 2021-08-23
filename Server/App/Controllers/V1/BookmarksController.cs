@@ -16,8 +16,9 @@ namespace App.Controllers.V1
 {
     /// <summary>
     /// Bookmark model controller endpoints:
-    /// <para> GetUserBookmarks        - GET     api/bookmarks    </para>
-    /// <para> DeleteAircraftBookmark  - DELETE  api/bookmarks/5  </para>
+    /// <para> GetUserBookmarks             - GET     api/bookmarks    </para>
+    /// <para> GetUserBookmarkedAircraftId  - GET     api/bookmarks/5  </para>
+    /// <para> DeleteAircraftBookmark       - DELETE  api/bookmarks/5  </para>
     /// </summary>
     [ApiController]
     [Route("/api/bookmarks")]
@@ -41,9 +42,9 @@ namespace App.Controllers.V1
 
         // GET api/bookmarks
         /// <summary>
-        /// Retrieves all user aircrafts bookmarked in the database
+        /// Retrieves all user aircrafts bookmarked by the user.
         /// </summary>
-        /// <response code="200">Retrieves all aircrafts in the database</response>
+        /// <response code="200">Retrieves all aircrafts saved by user</response>
         /// <response code="401">Unauthorized. User not logged in.</response>
         [HttpGet]
         public async Task<ActionResult<PagedList<AircraftReadDTO>>> GetUserBookmarkedAircrafts()
@@ -67,9 +68,9 @@ namespace App.Controllers.V1
 
         // GET api/bookmarks/5
         /// <summary>
-        /// Retrieves user aircraft id if bookmarked in the database
+        /// Retrieves user aircraft id bookmarked by user.
         /// </summary>
-        /// <response code="200">Retrieves all aircrafts in the database</response>
+        /// <response code="200">Retrieves aircraft id bookmarked by user</response>
         /// <response code="401">Unauthorized. User not logged in.</response>
         /// <response code="404">Aircraft id not found in bookmark.</response>
         [HttpGet("{id}")]
