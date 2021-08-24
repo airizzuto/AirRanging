@@ -12,6 +12,7 @@ namespace Repository
         private readonly ApplicationDbContext _context;
 
         private IAircraftRepository _aircraft;
+        private IApplicationUserRepository _applicationUser;
         private readonly ISortHelper<Aircraft> _aircraftSortHelper;
 
         private IBookmarkRepository _bookmark;
@@ -25,6 +26,18 @@ namespace Repository
                 }
 
                 return _aircraft;
+            }
+        }
+
+        public IApplicationUserRepository ApplicationUser {
+            get
+            {
+                if (_applicationUser == null)
+                {
+                    _applicationUser = new ApplicationUserRepository(_context);
+                }
+
+                return _applicationUser;
             }
         }
 

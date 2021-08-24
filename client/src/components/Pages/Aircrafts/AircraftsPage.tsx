@@ -1,16 +1,28 @@
 import React from 'react';
+
+// import aircraftService from '../../../services/aircraftService';
+// import { isAircraftSavedByUser, isUserOwner } from '../../../helpers/userHelper';
+
 import { AircraftData } from '../../../types/Aircraft/Aircraft';
+
 import AircraftsTable from '../../Table/AircraftsTable';
 import LinkedButton from '../../Buttons/LinkedButton';
+// import DecoratedButton from '../../Buttons/DecoratedButton';
 
 import Style from "./Aircrafts.module.scss";
+// import bookmarkService from '../../../services/bookmarkService';
 
 interface Props {
   aircrafts: AircraftData[];
   handleAircraftsFilter: (filter: string) => Promise<void>;
+  handleAircraftSelection: (selected: AircraftData | null) => void;
 }
 
-const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
+const Aircrafts: React.FC<Props> = ({
+  aircrafts,
+  handleAircraftsFilter,
+  handleAircraftSelection,
+}) => {
   const [filterInput, setFilterInput] = React.useState("");
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -18,6 +30,14 @@ const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
     setFilterInput(value);
     handleAircraftsFilter(value);
   };
+
+  // const saveAircraftToUser = (aircraftId: string) => {
+  //   aircraftService.saveAircraft(aircraftId);
+  // };
+
+  // const unsaveAircraft = (aircraftId: string) => {
+  //   bookmarkService.unsaveAircraft(aircraftId);
+  // };
 
   const columns = React.useMemo(
     () => [
@@ -58,6 +78,10 @@ const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
         accessor: 'maxRange',
       },
       {
+        Header: 'Service Ceiling',
+        accessor: 'serviceCeiling',
+      },
+      {
         Header: 'Author',
         accessor: 'authorUsername',
       },
@@ -69,9 +93,15 @@ const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
         Header: " ",
         // accessor: "aircraftDetails",
         Cell: ({ cell }: any) => (
-          <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`}>
-            Details
-          </LinkedButton>
+          <div>
+            { 
+              // TODO: save functionality
+            }
+            <LinkedButton path={`/aircrafts/edit/${cell.row.original.id}`}>
+              Edit {/* TODO: Clone */}
+            </LinkedButton>
+          </div>
+          
         )
       },
     ],
@@ -98,7 +128,11 @@ const Aircrafts: React.FC<Props> = ({ aircrafts, handleAircraftsFilter }) => {
       <hr />
 
       <div className={Style.AircraftsTable}>
-        <AircraftsTable data={aircrafts} columns={columns} />
+        <AircraftsTable 
+          data={aircrafts}
+          columns={columns}
+          handleAircraftSelection={handleAircraftSelection}
+        />
       </div>
 
     </div>

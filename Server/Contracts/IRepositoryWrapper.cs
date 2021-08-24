@@ -6,7 +6,7 @@ namespace Contracts
     public interface IRepositoryWrapper
     {
         IAircraftRepository Aircraft { get; }
-        // IApplicationUserService ApplicationUser { get; }
+        IApplicationUserRepository ApplicationUser { get; }
         IBookmarkRepository Bookmark { get; }
         Task SaveAsync();
     }
