@@ -55,7 +55,7 @@ namespace App.Extensions.Configurations
                 ValidateIssuerSigningKey = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
-                RequireExpirationTime = false,
+                RequireExpirationTime = true,
             };
 
             services.AddSingleton(tokenValidationParameters);
