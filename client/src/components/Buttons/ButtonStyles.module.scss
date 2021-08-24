@@ -3,16 +3,34 @@
 @use "../../styles/components/buttons" as button;
 @use "../../styles/mixins" as *;
 
-.Decorated {
-  @include button.primary-light;
+.primary {
+  @include button.decorated;
+  color: color.$light1;
+  background-color: color.$light2;
 };
 
-.ExitButton {
+.primary:disabled {
+  color: color.$light1-disabled;
+  background-color: color.$light2-disabled;
+}
+
+.danger {
+  @include button.decorated;
+  color: color.$light1;
+  background-color: color.$danger;
+};
+
+.danger:disabled {
+  color: color.$light1-disabled;
+  background-color: color.$danger-disabled;
+}
+
+.exit {
   button {
     @include button.small-light;
   }
 };
 
-.Undecorated {
+.undecorated {
   @include button.no-decorations;
 }

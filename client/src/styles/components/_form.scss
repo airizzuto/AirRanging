@@ -95,7 +95,15 @@
     min-width: 8rem;
 
     button {
-      @include button.primary-light;
+      @include button.decorated;
+      color: color.$light1;
+      background-color: color.$light2;
+    }
+
+    button:disabled {
+      @include button.decorated;
+      color: color.$light1-disabled;
+      background-color: color.$light2-disabled;
     }
   }
 }

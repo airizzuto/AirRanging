@@ -2,14 +2,11 @@
 @use "../fonts" as font;
 @use "../mixins" as *;
 
-@mixin primary-light {
+@mixin decorated {
   @include font.button;
   @include drop-shadow;
   @include text-shadow;
   @include button-behavior;
-
-  color: color.$light1;
-  background-color: color.$light2;
 
   width: 100%;
 

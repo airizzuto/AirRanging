@@ -90,7 +90,7 @@ const PlanningModal: React.FC<Props> = ({
       
 
       <div className={Style.AcceptButton}>
-        <DecoratedButton onClick={handleAccept}>Accept</DecoratedButton>
+        <DecoratedButton onClick={handleAccept} style="primary">Accept</DecoratedButton>
       </div>
     </div>
   );

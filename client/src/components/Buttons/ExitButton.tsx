@@ -7,7 +7,7 @@ interface Props {
 const ExitButton: React.FC<Props> = ({ handleClick }) => {
 
   return (
-    <div className={Style.ExitButton}>
+    <div className={Style.exit}>
       <button onClick={handleClick}>
         X
       </button>

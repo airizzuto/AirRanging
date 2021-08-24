@@ -61,7 +61,7 @@
       min-width: 8rem;
 
       button {
-        @include button.primary-light;
+        @include button.decorated;
       }
     }
 

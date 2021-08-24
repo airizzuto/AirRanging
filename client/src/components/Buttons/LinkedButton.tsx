@@ -8,7 +8,7 @@ interface Props {
 
 const LinkedButton: React.FC<Props> = ({ children, path }) => {
   return (
-    <Link to={path} className={Style.Decorated} >
+    <Link to={path} className={Style.primary} >
       {children}
     </Link>
   );
