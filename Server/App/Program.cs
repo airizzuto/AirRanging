@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Constants;
 using Contracts;
 using Data;
 using Entities.Models.Identity;
@@ -45,7 +46,8 @@ namespace App
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                        .UseUrls(Path.Local.Full);
                 });
     }
 }
