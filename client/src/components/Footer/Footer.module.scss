@@ -1,0 +1,47 @@
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/mixins" as *;
+
+.Footer {
+  @include blurring;
+  @include font.footer;
+  
+  grid-area: 3 / 1 / 4 / end;
+
+  min-height: 1.25rem;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: "copyright links";
+
+  align-content: center;
+
+  .Copyright{
+    @include text-shadow;
+    color: color.$light1;
+    grid-area: copyright;
+    padding: 0 2vh;
+
+    svg {
+      @include drop-shadow;
+    }
+  }
+
+  .Links{
+    @include text-shadow;
+    @include hyperlink-behavior;
+
+    grid-area: links;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    a {
+      text-decoration: none;
+      padding: 0 2vh;
+      color: color.$light1;
+    }
+  }
+
+  z-index: 10;
+}

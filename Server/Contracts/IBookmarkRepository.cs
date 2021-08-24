@@ -11,6 +11,6 @@ namespace Contracts
         Task SaveToBookmarkAsync(string userId, Guid aircraftId);
         Task<IEnumerable<Bookmark>> GetAllBookmarksAsync();
         Task<IEnumerable<Aircraft>> GetAircraftsBookmarkedAsync(string userId);
-        Task<Bookmark> GetBookmarkAsync(string userId, Guid aircraftId);
+        Task<Bookmark> GetBookmarkedIdAsync(string userId, Guid aircraftId);
     }
 }

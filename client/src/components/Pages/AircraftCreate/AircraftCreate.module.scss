@@ -1,0 +1,40 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/components/separators" as separator;
+@use "../../../styles/components/boxes" as box;
+@use "../../../styles/components/buttons" as button;
+@use "../../../styles/components/form";
+@use "../../../styles/mixins" as *;
+
+.FormContainer {
+  @include blurring;
+  grid-area: 2 / 1 / 3 / end;
+  
+  height: 100%;
+  padding: 0 10vw;
+  
+  display: grid;
+  grid-template-rows: auto min-content 8fr;
+  grid-template-columns: 1fr;
+  grid-template-areas: "title" "separator" "form";
+
+  .FormTitle {
+    @include font.header-1;
+    @include text-shadow;
+    grid-area: title;
+
+    color: color.$light1;
+  }
+  
+  .Separator {
+    @include separator.style;
+    grid-area: separator;
+
+    width: 95%;
+    place-self: center;
+  }
+
+  .Form {
+    @include form.style;
+  }
+}

@@ -1,0 +1,59 @@
+@use "../../../styles/mixins" as *;
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/components/boxes" as box;
+
+
+.AircraftSelect {
+  display: grid;
+  padding: 0.5rem;
+  margin-bottom: 0;
+  min-width: 25rem; // TODO: create modal width global var
+  grid-template-rows: min-content 1fr min-content;
+  grid-template-areas: 
+    "searchbar"
+    "details"
+    "select";
+
+  .Searchbar {
+    grid-area: searchbar;
+  }
+
+  .AircraftDetails {
+    @include text-shadow;
+
+    grid-area: details;
+
+    display: grid;
+    place-self: center;
+    width: 100%;
+
+    .FieldsContainer {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-auto-rows: 2.5rem;
+
+      .FieldGroup {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "selected-label selected-value";
+
+        label {
+          grid-area: selected-label;
+          align-self: center;
+        }
+        p {
+          grid-area: selected-value;
+          align-self: center;
+        }
+      }
+    }
+  }
+
+  .Select {
+    display: grid;
+    padding-top: 1rem;
+    grid-area: select;
+    align-self: bottom;
+  }
+}
