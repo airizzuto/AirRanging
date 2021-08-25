@@ -88,6 +88,23 @@ namespace App.Controllers.V1
                 return BadRequest(createdUser.Errors.Select(x => x.Description));
             }
 
+            // TODO: test email
+            var emailToken = await _userManager
+                .GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = Url.Action(
+                nameof(ConfirmEmail),
+                "Account",
+                new { emailToken, email = user.Email },
+                Request.Scheme
+            );
+
+            var message = new Message(
+                new string[] { user.Email },
+                "Confirmation email link",
+                confirmationLink
+            );
+            await _emailSender.SendEmailAsync(message);
+
             await _userManager.AddToRoleAsync(
                 user, Authorization.default_role.ToString());
 
@@ -118,14 +135,21 @@ namespace App.Controllers.V1
             if (user == null)
             {
                 _logger.LogError($"ERROR: user email/password invalid");
-                return Unauthorized();
+                return Unauthorized("User email or password invalid");
+            }
+
+            var userHasConfirmedEmail = await _userManager.IsEmailConfirmedAsync(user);
+            if (!userHasConfirmedEmail)
+            {
+                _logger.LogError($"ERROR: email is not confirmed");
+                return Unauthorized("User email is not confirmed");
             }
 
             var userHasValidPassword = await _userManager.CheckPasswordAsync(user, userLogin.Password);
             if(!userHasValidPassword)
             {
                 _logger.LogError($"ERROR: user email/password invalid");
-                return Unauthorized();
+                return Unauthorized("User email or password invalid");
             }
 
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -162,7 +186,7 @@ namespace App.Controllers.V1
             });
         }
 
-        // TODO: Email confirmation
+        // TODO: test
         [HttpGet("confirmation")]
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {

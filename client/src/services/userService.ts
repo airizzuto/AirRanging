@@ -52,6 +52,8 @@ const login = async (credentials: UserLogin) => {
   }
 };
 
+// TODO: email confimation
+
 const logout = () => {
   window.localStorage.removeItem("user.username");
   window.localStorage.removeItem("user.token");

@@ -9,11 +9,16 @@ namespace App.Extensions.Configurations
         public static void ConfigureEmailerService(
             this IServiceCollection services, IConfiguration configuration)
         {
-            var emailConfig = configuration
-                .GetSection(nameof(EmailConfiguration))
-                .Get<EmailConfiguration>();
-            
-            services.AddSingleton(emailConfig);
+      EmailConfiguration emailConfig = new()
+      {
+        From = configuration["Email:Address"],
+        SmtpServer = "smtp.gmail.com",
+        Port = 465,
+        UserName = "AirRangingApp",
+        Password = configuration["Email:Password"]
+      };
+
+      services.AddSingleton(emailConfig);
             services.AddScoped<IEmailSender, EmailSender>();
         }
     }

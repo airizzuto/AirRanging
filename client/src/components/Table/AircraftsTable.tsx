@@ -78,6 +78,7 @@ const AircraftsTable: React.FC<Props> = ({columns, data }) => {
               // Apply the row props
               <tr {...row.getRowProps()}>
                 { // Loop over the rows cells
+                // TODO: on row click select aircraft
                 row.cells.map(cell => {
                   // Apply the cell props
                   return(

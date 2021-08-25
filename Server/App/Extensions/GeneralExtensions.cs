@@ -1,5 +1,4 @@
 using System.Linq;
-using Entities.Models.Identity;
 using Microsoft.AspNetCore.Http;
 
 namespace App.Extensions
