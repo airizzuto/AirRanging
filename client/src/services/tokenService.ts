@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const baseUrl = process.env.REACT_APP_BASEURL;
+import { BASE_URL } from "../constants/globals";
 
 /* Tokens endpoints
 /// <summary>
@@ -25,7 +24,7 @@ export const refreshToken = async (token: string | null) => {
       headers: { "Content-Type": "application/json" }, 
     };
     const response = await axios.post(
-      baseUrl + "/api/tokens/refresh",
+      BASE_URL + "/api/tokens/refresh",
       credentials,
       config,
     );

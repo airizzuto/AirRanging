@@ -1,7 +1,6 @@
 import axios from "axios";
+import { BASE_URL } from "../constants/globals";
 import { UserLogin, UserRegistration } from "../types/User/User";
-
-const baseUrl = process.env.REACT_APP_BASEURL;
 
 /* Users endpoints
 /// <summary>
@@ -16,31 +15,41 @@ const baseUrl = process.env.REACT_APP_BASEURL;
 */
 
 const register = async ({...newUser}: UserRegistration) => {
-  const config = {
-    headers: { "Content-Type": "application/json" },
-  };
-  return await axios.post(
-    baseUrl + "/api/users/register",
-    newUser,
-    config
-  );
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await axios.post(
+      BASE_URL + "/api/users/register",
+      newUser,
+      config
+    );
+
+    return response.data;
+  } catch(error) {
+    console.log(error);
+  }
 };
 
 const login = async (credentials: UserLogin) => {
-  const config = {
-    headers: { "Content-Type": "application/json" },
-  };
-  const response = await axios.post(
-    baseUrl + "/api/users/login",
-    credentials,
-    config,
-  );
-
-  window.localStorage.setItem("user.username", response.data.username);
-  window.localStorage.setItem("user.token", response.data.token);
-  window.localStorage.setItem("user.refreshToken", response.data.refreshToken);
-
-  return response.data;
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await axios.post(
+      BASE_URL + "/api/users/login",
+      credentials,
+      config,
+    );
+  
+    window.localStorage.setItem("user.username", response.data.username);
+    window.localStorage.setItem("user.token", response.data.token);
+    window.localStorage.setItem("user.refreshToken", response.data.refreshToken);
+  
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const logout = () => {
