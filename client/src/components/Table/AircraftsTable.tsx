@@ -11,8 +11,7 @@ interface Props {
   data: AircraftData[];
 }
 
-const AircraftsTable: React.FC<Props> = ({columns, data}) => {
-
+const AircraftsTable: React.FC<Props> = ({columns, data }) => {
 
   const {
     getTableProps,
