@@ -17,7 +17,7 @@ export const isTokenExpired = (token: string): boolean => {
   }
 };
 
-export const isUserAuthenticated = async () => {
+export const isUserAuthenticated = async (): Promise<boolean> => {
   const token = getStoredToken();
 
   if (token && !isTokenExpired(token)) {
