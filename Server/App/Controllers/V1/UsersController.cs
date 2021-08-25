@@ -162,26 +162,26 @@ namespace App.Controllers.V1
             });
         }
 
-        // // TODO: Email confirmation
-        // [HttpGet("confirmation")]
-        // public async Task<IActionResult> ConfirmEmail(string token, string email)
-        // {
-        //     var user = await _userManager.FindByEmailAsync(email);
-        //     if (user == null)
-        //     {
-        //         _logger.LogError($"ERROR: retrieving user.");
-        //         return BadRequest();
-        //     }
+        // TODO: Email confirmation
+        [HttpGet("confirmation")]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                _logger.LogError($"ERROR: retrieving user.");
+                return BadRequest();
+            }
 
-        //     var result = await _userManager.ConfirmEmailAsync(user, token);
-        //     if (!result.Succeeded)
-        //     {
-        //         _logger.LogError($"ERROR: confirming user {user.Id} email.");
-        //         return BadRequest();
-        //     }
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                _logger.LogError($"ERROR: confirming user {user.Id} email.");
+                return BadRequest();
+            }
 
-        //     return NoContent();
-        // }
+            return NoContent();
+        }
 
         // TODO: test
         [HttpPost("forgot")]
