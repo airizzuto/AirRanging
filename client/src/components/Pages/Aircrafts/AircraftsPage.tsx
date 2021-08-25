@@ -21,7 +21,6 @@ interface Props {
 const Aircrafts: React.FC<Props> = ({
   aircrafts,
   handleAircraftsFilter,
-  handleAircraftSelection,
 }) => {
   const [filterInput, setFilterInput] = React.useState("");
 
@@ -131,7 +130,6 @@ const Aircrafts: React.FC<Props> = ({
         <AircraftsTable 
           data={aircrafts}
           columns={columns}
-          handleAircraftSelection={handleAircraftSelection}
         />
       </div>
 
