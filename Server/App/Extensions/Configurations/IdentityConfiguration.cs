@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Constants;
 using Repository.Settings;
 using App.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace App.Extensions.Configurations
 {
@@ -71,16 +72,15 @@ namespace App.Extensions.Configurations
                 options.TokenValidationParameters = tokenValidationParameters;
             });
 
-            /*
-                services.AddAuthorization(options => {
-                    var defaultAuthBuilder = new AuthorizationPolicyBuilder();
-                    var defaultAuthPolicy = defaultAuthBuilder
-                        .RequireAuthenticatedUser()
-                        .Build();
+            services.AddAuthorization(options => 
+            {
+                var defaultAuthBuilder = new AuthorizationPolicyBuilder();
+                var defaultAuthPolicy = defaultAuthBuilder
+                    .RequireAuthenticatedUser()
+                    .Build();
 
-                    options.DefaultPolicy = defaultAuthPolicy;
-                });
-            */
+                options.DefaultPolicy = defaultAuthPolicy;
+            });
         }
     }
 }
