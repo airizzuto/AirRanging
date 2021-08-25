@@ -20,19 +20,41 @@ import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Map from "./components/Map/Map";
+// import Map from "./components/Map/Map";
 
 import "./App.scss";
-import AircraftDetails from "./components/Pages/AircraftDetails/AircraftDetailsPage";
+import AircraftEdit from "./components/Pages/AircraftEdit/AircraftEditPage";
 
 const App = (): JSX.Element =>{
 
-  /* Aircrafts data */
+  const [user, setUser] = useState<UserPublic | null>(null);
   const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
+  const [aircraftsSaved, setAircraftsSaved] = useState<AircraftData[]>([]);
+  const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
+
+  // Sets initial aircrafts
   useEffect(() => {
     refreshAircrafts();
   }, []);
 
+  // Sets user saved aircrafts
+  useEffect(() => {
+    isUserAuthenticated()
+      .then(() => aircraftService.getAircraftsSavedByUser()
+        .then(response => setAircraftsSaved(response)));
+    
+    console.log(aircraftsSaved);
+  }, [user]);
+
+  // Sets user if a valid token is found in localStorage
+  useEffect(() => {
+    if (isUserAuthenticated()) {
+      setUser(getUserData());
+    }
+  }, []);
+
+
+  /* Aircrafts state handlers */
   const refreshAircrafts = () => {
     aircraftService
       .getAllAircrafts()
@@ -61,10 +83,6 @@ const App = (): JSX.Element =>{
       ));
   };
 
-
-  /* Aircraft selected state */
-  const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
-
   const handleAircraftSelection = (selected: AircraftData | null) => {
     selected
     ? setAircraftSelected({
@@ -75,20 +93,11 @@ const App = (): JSX.Element =>{
     : setAircraftSelected(null);
   };
 
-
-  /* User */
-  const [user, setUser] = useState<UserPublic | null>(null);
-  useEffect(() => {
-    if (isUserAuthenticated()) {
-      setUser(getUserData());
-    }
-  }, []);
-
+  /* User state handlers */
   const handleLogout = () => {
     userService.logout();
     setUser(null);
   };
-
 
   return (
     <div className="App">
@@ -100,7 +109,7 @@ const App = (): JSX.Element =>{
       </div>
 
       <div className="Map">
-        <Map selectedAircraft={aircraftSelected}/>
+        {/* <Map selectedAircraft={aircraftSelected}/> */}
       </div>
 
       <div className="Main">
@@ -119,15 +128,20 @@ const App = (): JSX.Element =>{
               <Aircrafts
                 aircrafts={aircrafts}
                 handleAircraftsFilter={handleAircraftsFilter} 
+                handleAircraftSelection={handleAircraftSelection}
               />
             </Route>
 
-            <Route exact path="/aircrafts/details/:id">
-              <AircraftDetails 
+            <ProtectedRoute
+              exact path="/aircrafts/edit/:id"
+              authenticationPath="/login"
+              isAuthenticated={(async () => await isUserAuthenticated()) && user}
+            >
+              <AircraftEdit
                 handleAircraftEdit={handleAircraftEdit}
                 handleAircraftSelect={handleAircraftSelection}
               />
-            </Route>
+            </ProtectedRoute>
 
             <ProtectedRoute 
               path="/aircrafts/create" 
