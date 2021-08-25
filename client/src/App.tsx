@@ -133,7 +133,7 @@ const App = (): JSX.Element =>{
             </Route>
 
             <ProtectedRoute
-              exact path="/aircrafts/edit/:id"
+              exact path="/aircrafts/details/:id"
               authenticationPath="/login"
               isAuthenticated={(async () => await isUserAuthenticated()) && user}
             >

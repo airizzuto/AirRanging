@@ -65,6 +65,10 @@ const Aircrafts: React.FC<Props> = ({
         accessor: 'engineType',
       },
       {
+        Header: 'Fuel Type',
+        accessor: 'fuelType',
+      },
+      {
         Header: 'Engine Count',
         accessor: 'engineCount',
       },
@@ -96,8 +100,8 @@ const Aircrafts: React.FC<Props> = ({
             { 
               // TODO: save functionality
             }
-            <LinkedButton path={`/aircrafts/edit/${cell.row.original.id}`}>
-              Edit {/* TODO: Clone */}
+            <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`}>
+              Details {/* TODO: Clone */}
             </LinkedButton>
           </div>
           
