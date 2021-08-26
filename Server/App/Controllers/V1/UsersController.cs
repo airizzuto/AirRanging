@@ -187,6 +187,7 @@ namespace App.Controllers.V1
         }
 
         // TODO: test
+        // response from registration: https://localhost:5001/api/users/confirmation?emailToken=CfDJ8Hdm5bIhj05Guz3CAUyPESLvbTcSjuHcR9K9BbBMfzLwWG8YeZOxAejI9gvwSp443QbYdQXuwR1x9q8nLY2cxd6oHCNgCVEdu%2F7RQy4CRCqzeD4FR4UucgqCX3vM0E%2BVtI2PhKnCyQKliVzVaiB5tGzf1HFGGCcxe0yhKzUD9RliJxoQ%2BijYmn8AOaG%2FmsdOCeOLopZ2ZHx09LkYknpHBCr14MtNNxDTza75Rf2Ym%2FDbwiZecTy0DqHF11%2BwBkecgQ%3D%3D&email=airrangingapp@gmail.com
         [HttpGet("confirmation")]
         public async Task<IActionResult> ConfirmEmail(string emailToken, string email)
         {
