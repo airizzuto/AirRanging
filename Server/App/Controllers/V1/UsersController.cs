@@ -100,7 +100,7 @@ namespace App.Controllers.V1
 
             var message = new Message(
                 new string[] { user.Email },
-                "Confirmation email link",
+                "Confirmation email for AirRangingApp",
                 confirmationLink
             );
             await _emailSender.SendEmailAsync(message);

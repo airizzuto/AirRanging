@@ -14,7 +14,7 @@ namespace App.Extensions.Configurations
         From = configuration["Email:Address"],
         SmtpServer = "smtp.gmail.com",
         Port = 465,
-        UserName = "AirRangingApp",
+        UserName = configuration["Email:Address"],
         Password = configuration["Email:Password"]
       };
 

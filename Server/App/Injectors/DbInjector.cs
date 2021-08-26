@@ -7,6 +7,7 @@ using App.Extensions.Configurations;
 using Entities.Models.Identity;
 using Data;
 using Npgsql;
+using App.Services;
 
 namespace App.Injectors
 {
@@ -15,10 +16,10 @@ namespace App.Injectors
         public void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("AirRangingDB");
-            var dbPassword = configuration["DbPassword"];
 
             var builder = new NpgsqlConnectionStringBuilder(connectionString) {
-                Password = dbPassword
+                Username = configuration["DB:Username"],
+                Password = configuration["DB:Password"]
             };
 
             services.AddDbContext<ApplicationDbContext>(opt =>
@@ -32,9 +33,17 @@ namespace App.Injectors
                 ).EnableDetailedErrors()
             );
 
+            services.AddDataProtection();
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddTokenProvider<EmailConfirmationTokenProvider<ApplicationUser>>("emailconfirmation");
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromHours(2));
+            services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromDays(3));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

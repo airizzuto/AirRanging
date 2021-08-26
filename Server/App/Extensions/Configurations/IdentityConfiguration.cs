@@ -39,6 +39,8 @@ namespace App.Extensions.Configurations
                 options.User.RequireUniqueEmail = true;
 
                 options.SignIn.RequireConfirmedEmail = true;
+
+                options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
             });
 
             var jwtSettings = new JwtSettings();
