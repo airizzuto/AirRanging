@@ -41,8 +41,7 @@ namespace Emailer
             // { 
             //     Text = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) 
             // };
-            
-            // FIXME:  System.ArgumentNullException: Value cannot be null. (Parameter 'format')
+
             var bodyBuilder = new BodyBuilder { HtmlBody = string.Format(message.Content) };
             if (message.Attachments != null && message.Attachments.Any())
             {
@@ -58,12 +57,7 @@ namespace Emailer
                 }
             }
 
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text)
-            {
-                Text = message.Content
-            };
-
-            
+            emailMessage.Body = bodyBuilder.ToMessageBody();
             return emailMessage;
         }
 

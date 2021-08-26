@@ -88,12 +88,11 @@ namespace App.Controllers.V1
                 return BadRequest(createdUser.Errors.Select(x => x.Description));
             }
 
-            // TODO: test email
             var emailToken = await _userManager
                 .GenerateEmailConfirmationTokenAsync(user);
-            var confirmationLink = Url.Action(
+            var confirmationLink = Url.Action( //FIXME: null
                 nameof(ConfirmEmail),
-                "Account",
+                "Users",
                 new { emailToken, email = user.Email },
                 Request.Scheme
             );
@@ -188,8 +187,9 @@ namespace App.Controllers.V1
         }
 
         // TODO: test
+        // response from registration: https://localhost:5001/api/users/confirmation?emailToken=CfDJ8Hdm5bIhj05Guz3CAUyPESLvbTcSjuHcR9K9BbBMfzLwWG8YeZOxAejI9gvwSp443QbYdQXuwR1x9q8nLY2cxd6oHCNgCVEdu%2F7RQy4CRCqzeD4FR4UucgqCX3vM0E%2BVtI2PhKnCyQKliVzVaiB5tGzf1HFGGCcxe0yhKzUD9RliJxoQ%2BijYmn8AOaG%2FmsdOCeOLopZ2ZHx09LkYknpHBCr14MtNNxDTza75Rf2Ym%2FDbwiZecTy0DqHF11%2BwBkecgQ%3D%3D&email=airrangingapp@gmail.com
         [HttpGet("confirmation")]
-        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        public async Task<IActionResult> ConfirmEmail(string emailToken, string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
@@ -198,13 +198,14 @@ namespace App.Controllers.V1
                 return BadRequest();
             }
 
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+            var result = await _userManager.ConfirmEmailAsync(user, emailToken);
             if (!result.Succeeded)
             {
-                _logger.LogError($"ERROR: confirming user {user.Id} email.");
+                _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
                 return BadRequest();
             }
 
+            _logger.LogInfo($"INFO: {user.Id} email confirmed.");
             return NoContent();
         }
 

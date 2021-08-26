@@ -16,7 +16,7 @@ namespace Emailer
         {
             To = new List<MailboxAddress>();
 
-            To.AddRange(to.Select(x => new MailboxAddress(x)));
+            To.AddRange(to.Select(address => new MailboxAddress(address)));
             Subject = subject;
             Content = content;
             Attachments = attachments;
