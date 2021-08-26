@@ -88,12 +88,11 @@ namespace App.Controllers.V1
                 return BadRequest(createdUser.Errors.Select(x => x.Description));
             }
 
-            // TODO: test email
             var emailToken = await _userManager
                 .GenerateEmailConfirmationTokenAsync(user);
-            var confirmationLink = Url.Action(
+            var confirmationLink = Url.Action( //FIXME: null
                 nameof(ConfirmEmail),
-                "Account",
+                "Users",
                 new { emailToken, email = user.Email },
                 Request.Scheme
             );
@@ -189,7 +188,7 @@ namespace App.Controllers.V1
 
         // TODO: test
         [HttpGet("confirmation")]
-        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        public async Task<IActionResult> ConfirmEmail(string emailToken, string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
@@ -198,13 +197,14 @@ namespace App.Controllers.V1
                 return BadRequest();
             }
 
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+            var result = await _userManager.ConfirmEmailAsync(user, emailToken);
             if (!result.Succeeded)
             {
-                _logger.LogError($"ERROR: confirming user {user.Id} email.");
+                _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
                 return BadRequest();
             }
 
+            _logger.LogInfo($"INFO: {user.Id} email confirmed.");
             return NoContent();
         }
 
