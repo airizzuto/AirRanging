@@ -186,7 +186,7 @@ namespace App.Controllers.V1
             });
         }
 
-        // TODO: test
+        // TODO: redirect to confirmed page
         [HttpGet("confirmation")]
         public async Task<IActionResult> ConfirmEmail(string emailToken, string email)
         {
