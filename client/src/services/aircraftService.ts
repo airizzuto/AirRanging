@@ -31,7 +31,6 @@ const getAllAircraftsPaginated = async () => {
     return response.data;
   } catch(error) {
     console.log(error);
-    
   }
 };
 
@@ -41,6 +40,7 @@ const getAircraftById = async (aircraftId: string) => {
     return response.data;
   } catch(error) {
     console.log(error);
+    return error.message;
   }
 };
 
@@ -54,6 +54,7 @@ const getAircraftsOwnedByUser = async () => {
     return response.data;
   } catch(error) {
     console.log(error);
+    return error.message;
   }
 };
 
@@ -71,6 +72,7 @@ const getAircraftsSavedByUser = async () => {
     return response.data;
   } catch (error) {
     console.log(error);
+    return error.message;
   }
 };
 
@@ -81,6 +83,7 @@ const searchAircraftByModel = async (query: string) => {
     return response.data;
   } catch(error) {
     console.log(error);
+    return error.message;
   }
 };
 
@@ -100,6 +103,7 @@ const createAircraft = async (newAircraft: NewAircraft) => {
     }
   } catch(error) {
     console.log(error);
+    return error.message;
   }
 };
 
@@ -119,6 +123,7 @@ const saveAircraft = async (aircraftId: string) => {
     return response.data;
   } catch(error) {
     console.log(error);
+    return error.message;
   }
 };
 
@@ -138,6 +143,7 @@ const editAircraft = async (aircraftId: string, aircraftUpdated: AircraftData) =
     return response.data;
   } catch(error) {
     console.log(error);
+    return error.message;
   }
 };
 
@@ -156,6 +162,7 @@ const deleteAircraft = async (aircraftId: string) => {
     return response.data;
   } catch(error) {
     console.log(error);
+    return error.message;
   }
 };
 
