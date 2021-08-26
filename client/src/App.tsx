@@ -26,6 +26,7 @@ import "./App.scss";
 import AircraftEdit from "./components/Pages/AircraftEdit/AircraftEditPage";
 import EmailVerified from "./components/Pages/EmailVerified/EmailVerifiedPage";
 import SuccessfulRegistration from "./components/Pages/SuccessfulRegistration/SuccessfulRegistrationPage";
+import ForgotPassword from "./components/Pages/ForgotPassword/ForgotPasswordPage";
 
 const App = (): JSX.Element =>{
 
@@ -174,7 +175,11 @@ const App = (): JSX.Element =>{
             </Route>
   
             <Route exact path="/forgotpass">
-              {/* <ForgotPassword /> */}
+              <ForgotPassword />
+            </Route>
+
+            <Route exact path="/resetsent">
+              <ForgotPassword />
             </Route>
 
             <Route exact path="/terms">

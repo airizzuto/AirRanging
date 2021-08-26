@@ -21,6 +21,8 @@
 
 @mixin main-component {
   @include blurring;
+  @include text-shadow;
+  color: color.$light1;
   height: 100%;
   padding: 0 10vw;
 }

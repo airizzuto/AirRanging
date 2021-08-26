@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/globals";
-import { UserLogin, UserRegistration } from "../types/User/User";
+import { ForgotPasswordModel, UserLogin, UserRegistration } from "../types/User/User";
 
 /* Users endpoints
 /// <summary>
@@ -27,7 +27,7 @@ const register = async ({...newUser}: UserRegistration) => {
 
     return response.data;
   } catch(error) {
-    console.log(error);
+    return error.message;
   }
 };
 
@@ -49,10 +49,29 @@ const login = async (credentials: UserLogin) => {
     return response.data;
   } catch (error) {
     console.log(error);
+    return error.message;
   }
 };
 
-// TODO: email confimation
+// TODO: email confirmation
+
+const forgotPassword = async (model: ForgotPasswordModel) => {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await axios.post(
+      BASE_URL + "/api/users/forgot",
+      model,
+      config,
+    );
+
+    return response.status;
+  } catch(error) {
+    console.log(error);
+    return error.message;
+  }
+};
 
 const logout = () => {
   window.localStorage.removeItem("user.username");
@@ -63,5 +82,6 @@ const logout = () => {
 export default {
   register,
   login,
+  forgotPassword,
   logout
 };

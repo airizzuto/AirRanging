@@ -17,3 +17,7 @@ export interface UserRegistration {
 export interface UserRegistrationForm extends UserRegistration {
   confirmPassword: string;
 }
+
+export interface ForgotPasswordModel {
+  email: string;
+}

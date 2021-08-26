@@ -1,5 +1,5 @@
 import { string, object, SchemaOf, ref } from 'yup';
-import { UserLogin, UserRegistration } from '../types/User/User';
+import { ForgotPasswordModel, UserLogin, UserRegistration } from '../types/User/User';
 
 // TODO: Yup docs https://github.com/jquense/yup
 
@@ -33,4 +33,8 @@ export const userRegistrationSchema: SchemaOf<UserRegistration> = object().shape
   confirmPassword: string()
     .equals([ref("password")], "Passwords do not match")
     .defined("Password confirmation is required"),
+}).defined();
+
+export const forgotPasswordSchema: SchemaOf<ForgotPasswordModel> = object().shape({
+  email: isValidEmail,
 }).defined();
