@@ -17,16 +17,14 @@ const UserRegistration = () => {
   const handleSubmit = async ({
     username, email, password
   }: UserRegistrationForm) => { 
-    try {
-      setAlert("");
-      await userService.register({ username, email, password });
-      await userService.login({ email, password });
-      history.goBack();
-    } catch(error) {
-      console.log(error.message);
-      setAlert(error.message);
-      setTimeout(() => setAlert(""), 10000);
-    }
+    setAlert("");
+    await userService.register({ username, email, password })
+      .then(_ => history.push("/successful"))
+      .catch(error => {
+        console.log(error.message);
+        setAlert(error.message);
+        setTimeout(() => setAlert(""), 10000);
+      });
   }; 
 
   return (
@@ -49,11 +47,11 @@ const UserRegistration = () => {
       }}
       >
         {({isSubmitting}) => 
-          <Form className={Style.RegistrationForm}>
+          <Form className={Style.RegistrationForm} autoComplete="on">
             <div className={Style.RegistrationFields}>
               <div className={Style.FormGroup}>
                 <label>Username:</label>
-                <Field type="text" name="username" placeholder="Username"/>
+                <Field type="text" name="username" placeholder="Username" autoComplete="off"/>
                 <ErrorMessage component="span" name="username" />
               </div>
 

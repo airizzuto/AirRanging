@@ -62,6 +62,8 @@
 
       button {
         @include button.decorated;
+        color: color.$light1;
+        background-color: color.$light2;
       }
     }
 
