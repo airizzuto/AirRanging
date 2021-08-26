@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Emailer;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace App.Extensions.Configurations
 {
@@ -9,17 +10,24 @@ namespace App.Extensions.Configurations
         public static void ConfigureEmailerService(
             this IServiceCollection services, IConfiguration configuration)
         {
-      EmailConfiguration emailConfig = new()
-      {
-        From = configuration["Email:Address"],
-        SmtpServer = "smtp.gmail.com",
-        Port = 465,
-        UserName = configuration["Email:Address"],
-        Password = configuration["Email:Password"]
-      };
 
-      services.AddSingleton(emailConfig);
+            EmailConfiguration emailConfig = new()
+            {
+                From = configuration["Email:Address"],
+                SmtpServer = "smtp.gmail.com",
+                Port = 465,
+                UserName = configuration["Email:Address"],
+                Password = configuration["Email:Password"]
+            };
+
+            services.AddSingleton(emailConfig);
             services.AddScoped<IEmailSender, EmailSender>();
+
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
         }
     }
 }

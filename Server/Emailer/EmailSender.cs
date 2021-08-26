@@ -1,3 +1,5 @@
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MimeKit;
@@ -33,17 +35,35 @@ namespace Emailer
             emailMessage.From.Add(new MailboxAddress(_emailConfig.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text)
-            {
-                Text = message.Content
-            };
 
             // Example using html instead of plain text to send content.
             // emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) 
             // { 
             //     Text = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) 
             // };
+            
+            // FIXME:  System.ArgumentNullException: Value cannot be null. (Parameter 'format')
+            var bodyBuilder = new BodyBuilder { HtmlBody = string.Format(message.Content) };
+            if (message.Attachments != null && message.Attachments.Any())
+            {
+                byte[] fileBytes;
+                foreach (var attachment in message.Attachments)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        attachment.CopyTo(ms);
+                        fileBytes = ms.ToArray();
+                    }
+                    bodyBuilder.Attachments.Add(attachment.FileName, fileBytes, ContentType.Parse(attachment.ContentType));
+                }
+            }
 
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text)
+            {
+                Text = message.Content
+            };
+
+            
             return emailMessage;
         }
 

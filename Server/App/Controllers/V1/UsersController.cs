@@ -101,7 +101,8 @@ namespace App.Controllers.V1
             var message = new Message(
                 new string[] { user.Email },
                 "Confirmation email for AirRangingApp",
-                confirmationLink
+                confirmationLink,
+                null
             );
             await _emailSender.SendEmailAsync(message);
 
@@ -228,7 +229,7 @@ namespace App.Controllers.V1
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callback = Url.Action(nameof(ResetPassword), "Users", new { token, email = user.Email }, Request.Scheme);
 
-            var message = new Message(new string[] { user.Email }, "Reset password token", callback);
+            var message = new Message(new string[] { user.Email }, "Reset password token", callback, null);
             await _emailSender.SendEmailAsync(message);
 
             _logger.LogInfo($"INFO: password reset email sent.");
