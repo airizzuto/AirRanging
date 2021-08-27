@@ -14,6 +14,7 @@ using Data;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System;
+using App.Services;
 
 namespace App.Controllers.V1
 {
@@ -90,17 +91,19 @@ namespace App.Controllers.V1
 
             var emailToken = await _userManager
                 .GenerateEmailConfirmationTokenAsync(user);
-            var confirmationLink = Url.Action( //FIXME: null
+            var confirmationLink = Url.Action(
                 nameof(ConfirmEmail),
                 "Users",
                 new { emailToken, email = user.Email },
                 Request.Scheme
             );
 
+            var emailContent = EmailService.EmailConfirmationContent(confirmationLink);
+
             var message = new Message(
                 new string[] { user.Email },
                 "Confirmation email for AirRangingApp",
-                confirmationLink,
+                emailContent,
                 null
             );
             await _emailSender.SendEmailAsync(message);
@@ -167,7 +170,7 @@ namespace App.Controllers.V1
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-            var accessToken = _tokenService.GenerateAccessToken(claims); // To client storage?
+            var accessToken = _tokenService.GenerateAccessToken(claims);
             var refreshToken = _tokenService.GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
@@ -216,7 +219,7 @@ namespace App.Controllers.V1
             if (!ModelState.IsValid)
             {
                 _logger.LogError($"ERROR: forgot password validation failed.");
-                return BadRequest("Validation failed.");
+                return BadRequest("Invalid user request.");
             }
 
             var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
