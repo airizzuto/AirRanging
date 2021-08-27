@@ -192,7 +192,7 @@ const App = (): JSX.Element =>{
               <NotFound />
             </Route>
 
-            <Route path="/confirmationfailed">
+            <Route exact path="/confirmationfailed">
               <EmailConfirmationFail />
             </Route>
         </Switch>

@@ -1,5 +1,21 @@
 @use "../../../styles/mixins" as *;
+@use "../../../styles/fonts" as font;
 
 .EmailVerified {
   @include main-component;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    @include font.header-2;
+    align-self: center;
+  }
+
+  button {
+    place-self: center;
+    max-width: 20%;
+    min-width: 6rem;
+    min-height: 4rem;
+  }
 }
