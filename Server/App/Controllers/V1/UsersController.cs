@@ -203,14 +203,20 @@ namespace App.Controllers.V1
             if (user == null)
             {
                 _logger.LogError($"ERROR: retrieving user.");
-                return BadRequest();
+                return Redirect(Path.Client.Full + "/confirmationfailed");
+            }
+
+            if (await _userManager.IsEmailConfirmedAsync(user))
+            {
+                _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
+                return Redirect(Path.Client.Full + "/confirmationfailed");
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, emailToken);
             if (!result.Succeeded)
             {
                 _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
-                return BadRequest();
+                return Redirect(Path.Client.Full + "/confirmationfailed");
             }
 
             _logger.LogInfo($"INFO: {user.Id} email confirmed.");
