@@ -3,14 +3,14 @@ import { useHistory } from 'react-router-dom';
 
 import DecoratedButton from '../../Buttons/DecoratedButton';
 
-import "./EmailVerified.scss";
+import "./EmailConfirmation.scss";
 
-const EmailVerified: React.FC = (): React.ReactElement => {
+const EmailConfirmation: React.FC = (): React.ReactElement => {
 
   const history = useHistory();
 
   return (
-    <div className={"EmailVerified"}>
+    <div className={"EmailConfirmation"}>
       <p>Email verified. You can now proceed to login.</p>
       <DecoratedButton 
         style={"primary"}
@@ -22,4 +22,4 @@ const EmailVerified: React.FC = (): React.ReactElement => {
   );
 };
 
-export default EmailVerified;
+export default EmailConfirmation;

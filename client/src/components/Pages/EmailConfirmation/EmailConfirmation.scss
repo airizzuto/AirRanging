@@ -1,8 +1,9 @@
 @use "../../../styles/mixins" as *;
 @use "../../../styles/fonts" as font;
 
-.EmailVerified {
+.EmailConfirmation {
   @include main-component;
+
   display: flex;
   flex-direction: column;
   justify-content: center;

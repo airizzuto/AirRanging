@@ -13,22 +13,21 @@ import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
 import Login from "./components/Pages/UserLogin/LoginPage";
 import UserRegistration from "./components/Pages/UserRegistration/UserRegistrationPage";
-import NotFound from "./components/Pages/ErrorPages/NotFoundPage";
 import TermsAndConditions from "./components/Pages/TermsAndConditions/TermsAndConditionsPage";
 import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage";
+import AircraftEdit from "./components/Pages/AircraftEdit/AircraftEditPage";
+import ForgotPassword from "./components/Pages/ForgotPassword/ForgotPasswordPage";
+import SuccessfulRegistration from "./components/Pages/EmailConfirmation/SuccessfulRegistrationPage";
+import EmailConfirmation from "./components/Pages/EmailConfirmation/EmailConfirmationPage";
+import EmailConfirmationFail from "./components/Pages/ErrorPages/EmailConfirmationFail";
+import NotFound from "./components/Pages/ErrorPages/NotFoundPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 // import Map from "./components/Map/Map";
 
-import AircraftEdit from "./components/Pages/AircraftEdit/AircraftEditPage";
-import EmailVerified from "./components/Pages/EmailConfirmation/EmailVerifiedPage";
-import ForgotPassword from "./components/Pages/ForgotPassword/ForgotPasswordPage";
-import SuccessfulRegistration from "./components/Pages/EmailConfirmation/SuccessfulRegistrationPage";
-
 import "./App.scss";
-import EmailConfirmationFail from "./components/Pages/ErrorPages/EmailConfirmationFail";
 
 const App = (): JSX.Element =>{
 
@@ -173,7 +172,11 @@ const App = (): JSX.Element =>{
             </Route>
 
             <Route exact path="/confirmed">
-              <EmailVerified />
+              <EmailConfirmation />
+            </Route>
+
+            <Route exact path="/confirmationfailed">
+              <EmailConfirmationFail />
             </Route>
   
             <Route exact path="/forgotpass">
@@ -190,10 +193,6 @@ const App = (): JSX.Element =>{
 
             <Route path="*">
               <NotFound />
-            </Route>
-
-            <Route exact path="/confirmationfailed">
-              <EmailConfirmationFail />
             </Route>
         </Switch>
       </div>
