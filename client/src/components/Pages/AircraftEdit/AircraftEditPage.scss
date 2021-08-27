@@ -5,9 +5,7 @@
 @use "../../../styles/components/form";
 
 .Container {
-
   @include main-component;
-  grid-area: 2 / 1 / 3 / end;
 
   display: grid;
   grid-template-columns: 1fr;

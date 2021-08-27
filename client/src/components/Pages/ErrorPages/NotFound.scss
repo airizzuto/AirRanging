@@ -3,14 +3,8 @@
 @use "../../../styles/mixins" as *;
 
 .NotFound {
-  @include blurring;
+  @include main-component;
 
   display: grid;
   place-content: center;
-  height: 100%;
-
-  h1 {
-    @include text-shadow;
-    color: color.$light1;
-  }
 }

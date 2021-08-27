@@ -6,14 +6,10 @@
 @use "../../../styles/mixins" as *;
 
 .LoginContainer {
-  @include blurring;
-  grid-area: 2 / 1 / 3 / end;
-  background-color: color.$bg-semitransparent;
+  @include main-component;
+
   display: flex;
   place-content: center;
-
-  height: 100%;
-  width: 100%;
 
   .Login {
     @include text-shadow;
