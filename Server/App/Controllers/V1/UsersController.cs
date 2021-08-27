@@ -16,6 +16,7 @@ using System.Security.Claims;
 using System;
 using App.Services;
 using Microsoft.AspNetCore.DataProtection;
+using Entities.DTOs.V1.Errors;
 
 namespace App.Controllers.V1
 {
@@ -65,7 +66,7 @@ namespace App.Controllers.V1
             if (!ModelState.IsValid)
             {
                 _logger.LogError($"User registration validation failed.");
-                return BadRequest(new UserAuthFailedDTO {
+                return BadRequest(new ValidationErrorDTO {
                     Errors = ModelState.Values.SelectMany(x => 
                         x.Errors.Select(xx => xx.ErrorMessage))
                 });
@@ -194,8 +195,6 @@ namespace App.Controllers.V1
             });
         }
 
-        // TODO: redirect to confirmed page
-        // TODO: already confirmed
         [HttpGet("confirmation")]
         public async Task<IActionResult> ConfirmEmail(string emailToken, string email)
         {
@@ -256,7 +255,7 @@ namespace App.Controllers.V1
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogError("ERROR: password reset validation.");
+                _logger.LogError("ERROR: password reset validation failed.");
                 return BadRequest("Password reset validation failed.");
             }
 
