@@ -22,11 +22,13 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 // import Map from "./components/Map/Map";
 
-import "./App.scss";
 import AircraftEdit from "./components/Pages/AircraftEdit/AircraftEditPage";
-import EmailVerified from "./components/Pages/EmailVerified/EmailVerifiedPage";
-import SuccessfulRegistration from "./components/Pages/SuccessfulRegistration/SuccessfulRegistrationPage";
+import EmailVerified from "./components/Pages/EmailConfirmation/EmailVerifiedPage";
 import ForgotPassword from "./components/Pages/ForgotPassword/ForgotPasswordPage";
+import SuccessfulRegistration from "./components/Pages/EmailConfirmation/SuccessfulRegistrationPage";
+
+import "./App.scss";
+import EmailConfirmationFail from "./components/Pages/ErrorPages/EmailConfirmationFail";
 
 const App = (): JSX.Element =>{
 
@@ -188,6 +190,10 @@ const App = (): JSX.Element =>{
 
             <Route path="*">
               <NotFound />
+            </Route>
+
+            <Route path="/confirmationfailed">
+              <EmailConfirmationFail />
             </Route>
         </Switch>
       </div>
