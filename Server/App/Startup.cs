@@ -81,6 +81,7 @@ namespace App
             });
 
             app.UseRouting();
+
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
