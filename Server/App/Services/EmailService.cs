@@ -6,13 +6,22 @@ namespace App.Services
         {
             // TODO: Styling, better html
             return string.Concat(
-                $"<h1>Confirm your email for AirRangingApp</h1>",
-                $"<p>Click button to continue with email verification<p>",
-                $"<a href=\"{confirmationLink}\"><button>Confirmation</button></a>",
+                $"<h1>Hello from AirRangingApp!</h1>",
+                $"<div>",
+                $"<p>Verify your email</p>",
+                $"<p>Click button below to confirm your email address.</p>",
+                $"<a href=\"{confirmationLink}\"><button>Verify Email Address</button></a>",
+                $"</div>",
+                $"<div>",
                 $"<p>If that does not work, copy and paste the following link in your browser</p>",
                 $"<a href=\"{confirmationLink}\">{confirmationLink}</a>",
                 $"<br />",
-                $"Air Ranging App"
+                $"</div>",
+                $"<div>",
+                $"<p>If you have not requested an account, you can delete this email.</p>",
+                $"</div>",
+                $"<br />",
+                $"<p>Air Ranging App</p>"
             );
         }
     }
