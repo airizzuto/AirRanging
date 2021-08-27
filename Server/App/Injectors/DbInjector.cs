@@ -33,7 +33,6 @@ namespace App.Injectors
                 ).EnableDetailedErrors()
             );
 
-            services.AddDataProtection();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

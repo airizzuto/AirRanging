@@ -35,9 +35,9 @@ namespace App.Services
             {
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
-                ValidIssuer = Path.Local.Full + "/airrangingapi",
+                ValidIssuer = Path.Server.Full + "/airrangingapi",
                 ValidateIssuerSigningKey = true,
-                ValidAudience = Path.Local.Full + "/airranginguser",
+                ValidAudience = Path.Server.Full + "/airranginguser",
                 ValidateAudience = true,
                 ValidateLifetime = false
             };
@@ -68,8 +68,8 @@ namespace App.Services
                 secretKey, SecurityAlgorithms.HmacSha256);
             
             var tokenOptions = new JwtSecurityToken(
-                issuer: Path.Local.Full + "/airrangingapi",
-                audience: Path.Local.Full + "/airranginguser",
+                issuer: Path.Server.Full + "/airrangingapi",
+                audience: Path.Server.Full + "/airranginguser",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: signingCredentials

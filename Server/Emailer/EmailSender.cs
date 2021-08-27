@@ -42,7 +42,9 @@ namespace Emailer
             //     Text = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) 
             // };
 
-            var bodyBuilder = new BodyBuilder { HtmlBody = string.Format(message.Content) };
+            var bodyBuilder = new BodyBuilder {
+                HtmlBody = message.Content
+            };
             if (message.Attachments != null && message.Attachments.Any())
             {
                 byte[] fileBytes;

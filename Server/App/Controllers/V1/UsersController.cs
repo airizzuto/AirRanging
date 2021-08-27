@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System;
 using App.Services;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace App.Controllers.V1
 {
@@ -38,6 +39,7 @@ namespace App.Controllers.V1
         private readonly IMapper _mapper;
         private readonly ILoggerManager _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IDataProtector _protector;
 
         public UsersController(
             ApplicationDbContext context,
@@ -45,7 +47,8 @@ namespace App.Controllers.V1
             ITokenService tokenService,
             IMapper mapper,
             ILoggerManager logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IDataProtectionProvider provider)
         {
             _context = context;
             _tokenService = tokenService;
@@ -53,6 +56,7 @@ namespace App.Controllers.V1
             _mapper = mapper;
             _logger = logger;
             _emailSender = emailSender;
+            _protector = provider.CreateProtector("App.UsersController");
         }
 
         [HttpPost("register")]
@@ -91,10 +95,11 @@ namespace App.Controllers.V1
 
             var emailToken = await _userManager
                 .GenerateEmailConfirmationTokenAsync(user);
+
             var confirmationLink = Url.Action(
                 nameof(ConfirmEmail),
                 "Users",
-                new { emailToken, email = user.Email },
+                new { emailToken, email = _protector.Protect(user.Email) },
                 Request.Scheme
             );
 
@@ -190,10 +195,11 @@ namespace App.Controllers.V1
         }
 
         // TODO: redirect to confirmed page
+        // TODO: already confirmed
         [HttpGet("confirmation")]
         public async Task<IActionResult> ConfirmEmail(string emailToken, string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(_protector.Unprotect(email));
             if (user == null)
             {
                 _logger.LogError($"ERROR: retrieving user.");
@@ -208,7 +214,7 @@ namespace App.Controllers.V1
             }
 
             _logger.LogInfo($"INFO: {user.Id} email confirmed.");
-            return NoContent();
+            return Redirect(Path.Client.Full + "/confirmed");
         }
 
         // TODO: test

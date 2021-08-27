@@ -53,8 +53,8 @@ namespace App.Extensions.Configurations
             {
                 ClockSkew = TimeSpan.Zero,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
-                ValidIssuer = Path.Local.Full + "/airrangingapi",
-                ValidAudience = Path.Local.Full + "/airranginguser",
+                ValidIssuer = Path.Server.Full + "/airrangingapi",
+                ValidAudience = Path.Server.Full + "/airranginguser",
                 ValidateIssuerSigningKey = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,

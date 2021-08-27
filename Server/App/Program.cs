@@ -47,7 +47,7 @@ namespace App
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                        .UseUrls(Path.Local.Full);
+                        .UseUrls(Path.Server.Full);
                 });
     }
 }

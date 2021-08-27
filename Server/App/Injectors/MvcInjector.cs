@@ -24,6 +24,8 @@ namespace App.Injectors
 
             services.ConfigureIdentity(configuration);
 
+            services.AddDataProtection();
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddJsonOptions(options => {
