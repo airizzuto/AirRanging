@@ -46,7 +46,7 @@ namespace Tests.Controller
         {
             // Arrange
             _mock.repo.Setup(repo =>
-                repo.Aircraft.GetAllAircraftsAsync(aircraftParameters)
+                repo.Aircraft.GetAllAircraftsPaginatedAsync(aircraftParameters)
             ).ReturnsAsync(
                 await _mockData.RetrieveAircraftsQuantityAsync(0, aircraftParameters)
             );
@@ -65,7 +65,7 @@ namespace Tests.Controller
         {
             // Arrange
             _mock.repo.Setup(repo =>
-                repo.Aircraft.GetAllAircraftsAsync(aircraftParameters)
+                repo.Aircraft.GetAllAircraftsPaginatedAsync(aircraftParameters)
             ).ReturnsAsync(
                 await _mockData.RetrieveAircraftsQuantityAsync(1, aircraftParameters)
             );
