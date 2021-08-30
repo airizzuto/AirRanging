@@ -3,7 +3,7 @@ using Entities.Models.Identity;
 
 namespace Contracts
 {
-    public interface IEmailService
+    public interface IEmailerService
     {
         // Task SendEmailConfirmation(ApplicationUser user);
         Task SendPasswordReset(ApplicationUser user);

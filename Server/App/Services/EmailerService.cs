@@ -8,13 +8,13 @@ using Entities.Models.Identity;
 
 namespace App.Services
 {
-    public class EmailService : IEmailService
+    public class EmailerService : IEmailerService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IDataProtector _protector;
         private readonly IEmailSender _emailSender;
 
-        public EmailService(
+        public EmailerService(
             UserManager<ApplicationUser> userManager,
             IDataProtector protector,
             IEmailSender emailSender)

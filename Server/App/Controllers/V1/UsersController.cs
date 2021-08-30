@@ -40,7 +40,7 @@ namespace App.Controllers.V1
         private readonly IMapper _mapper;
         private readonly ILoggerManager _logger;
         private readonly IEmailSender _emailSender;
-        private readonly IEmailService _emailService;
+        private readonly IEmailerService _emailerService;
         private readonly IDataProtector _protector;
 
         public UsersController(
@@ -50,7 +50,7 @@ namespace App.Controllers.V1
             IMapper mapper,
             ILoggerManager logger,
             IEmailSender emailSender,
-            IEmailService emailService,
+            IEmailerService emailerService,
             IDataProtectionProvider protector)
         {
             _context = context;
@@ -59,7 +59,7 @@ namespace App.Controllers.V1
             _mapper = mapper;
             _logger = logger;
             _emailSender = emailSender;
-            _emailService = emailService;
+            _emailerService = emailerService;
             _protector = protector.CreateProtector("App.UsersController");
         }
 
@@ -108,7 +108,7 @@ namespace App.Controllers.V1
                 Request.Scheme
             );
 
-            var emailContent = EmailService.EmailConfirmationContent(confirmationLink);
+            var emailContent = EmailerService.EmailConfirmationContent(confirmationLink);
 
             var message = new Message(
                 new string[] { user.Email },
@@ -251,7 +251,7 @@ namespace App.Controllers.V1
             }
 
             // TODO: test
-            await _emailService.SendPasswordReset(user);
+            await _emailerService.SendPasswordReset(user);
 
             _logger.LogInfo($"INFO: password reset email sent.");
             return Ok();
