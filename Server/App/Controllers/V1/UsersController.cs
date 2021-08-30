@@ -1,22 +1,22 @@
+using System;
 using System.Linq;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.DataProtection;
+using App.Services;
 using Entities.Models.Identity;
 using Entities.DTOs.V1.Identity;
+using Entities.DTOs.V1.Errors;
 using Contracts;
 using AutoMapper;
 using Logger;
 using Emailer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Constants;
 using Data;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System;
-using App.Services;
-using Microsoft.AspNetCore.DataProtection;
-using Entities.DTOs.V1.Errors;
 
 namespace App.Controllers.V1
 {
@@ -40,6 +40,7 @@ namespace App.Controllers.V1
         private readonly IMapper _mapper;
         private readonly ILoggerManager _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailService;
         private readonly IDataProtector _protector;
 
         public UsersController(
@@ -49,7 +50,8 @@ namespace App.Controllers.V1
             IMapper mapper,
             ILoggerManager logger,
             IEmailSender emailSender,
-            IDataProtectionProvider provider)
+            IEmailService emailService,
+            IDataProtectionProvider protector)
         {
             _context = context;
             _tokenService = tokenService;
@@ -57,7 +59,8 @@ namespace App.Controllers.V1
             _mapper = mapper;
             _logger = logger;
             _emailSender = emailSender;
-            _protector = provider.CreateProtector("App.UsersController");
+            _emailService = emailService;
+            _protector = protector.CreateProtector("App.UsersController");
         }
 
         [HttpPost("register")]
@@ -94,6 +97,7 @@ namespace App.Controllers.V1
                 return BadRequest(createdUser.Errors.Select(x => x.Description));
             }
 
+            // TODO: refactor to use emailService
             var emailToken = await _userManager
                 .GenerateEmailConfirmationTokenAsync(user);
 
@@ -202,30 +206,29 @@ namespace App.Controllers.V1
             if (user == null)
             {
                 _logger.LogError($"ERROR: retrieving user.");
-                return Redirect(Path.Client.Full + "/confirmationfailed");
+                return RedirectToRoute(Path.Client.Full + "/confirmationfailed");
             }
 
             if (await _userManager.IsEmailConfirmedAsync(user))
             {
                 _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
-                return Redirect(Path.Client.Full + "/confirmationfailed");
+                return RedirectToRoute(Path.Client.Full + "/confirmationfailed");
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, emailToken);
             if (!result.Succeeded)
             {
                 _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
-                return Redirect(Path.Client.Full + "/confirmationfailed");
+                return RedirectToRoute(Path.Client.Full, "/confirmationfailed");
             }
 
             _logger.LogInfo($"INFO: {user.Id} email confirmed.");
-            return Redirect(Path.Client.Full + "/confirmed");
+            return RedirectToRoute(Path.Client.Full, "/confirmed");
         }
 
         // TODO: test
         [HttpPost("forgot")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ForgotPassword(PasswordResetForgotDTO forgotPassword)
+        public async Task<IActionResult> ForgotPassword(PasswordResetForgotDTO forgotPasswordDto)
         {
             if (!ModelState.IsValid)
             {
@@ -233,25 +236,29 @@ namespace App.Controllers.V1
                 return BadRequest("Invalid user request.");
             }
 
-            var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
+            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
             if (user == null)
             {
                 _logger.LogError($"ERROR: failed retrieving user.");
                 return BadRequest("Invalid user request.");
             }
 
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callback = Url.Action(nameof(ResetPassword), "Users", new { token, email = user.Email }, Request.Scheme);
+            var userHasConfirmedEmail = await _userManager.IsEmailConfirmedAsync(user);
+            if (!userHasConfirmedEmail)
+            {
+                _logger.LogError($"ERROR: email is not confirmed");
+                return Unauthorized("Invalid user request.");
+            }
 
-            var message = new Message(new string[] { user.Email }, "Reset password token", callback, null);
-            await _emailSender.SendEmailAsync(message);
+            // TODO: test
+            await _emailService.SendPasswordReset(user);
 
             _logger.LogInfo($"INFO: password reset email sent.");
-            return NoContent();
+            return Ok();
         }
 
         [HttpPost("reset")]
-        public async Task<IActionResult> ResetPassword(PasswordResetModel passwordReset)
+        public async Task<IActionResult> ResetPassword(PasswordResetDTO passwordReset)
         {
             if (!ModelState.IsValid)
             {
@@ -259,7 +266,8 @@ namespace App.Controllers.V1
                 return BadRequest("Password reset validation failed.");
             }
 
-            var user = await _userManager.FindByEmailAsync(passwordReset.Email);
+            var user = await _userManager
+                .FindByEmailAsync(_protector.Unprotect(passwordReset.Email));
             if (user == null)
             {
                 _logger.LogError($"ERROR: retrieving user.");
@@ -275,7 +283,7 @@ namespace App.Controllers.V1
             }
 
             _logger.LogInfo($"INFO: password reset successful.");
-            return Ok("Password reset successfully.");
+            return Ok();
         }
 
         [Authorize(Roles = "Administrator")]

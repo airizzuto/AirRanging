@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/globals";
-import { ForgotPasswordModel, UserLogin, UserRegistration } from "../types/User/User";
+import { ForgotPasswordModel, ResetPasswordModel, UserLogin, UserRegistration } from "../types/User/User";
 
 /* Users endpoints
 /// <summary>
@@ -53,7 +53,7 @@ const login = async (credentials: UserLogin) => {
   }
 };
 
-// TODO: email confirmation
+// TODO: email confirmation refactor
 
 const forgotPassword = async (model: ForgotPasswordModel) => {
   try {
@@ -73,6 +73,25 @@ const forgotPassword = async (model: ForgotPasswordModel) => {
   }
 };
 
+
+const resetPassword = async (model: ResetPasswordModel) => {
+  try {
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await axios.post(
+      BASE_URL + "/api/users/reset",
+      model,
+      config
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error.message;
+  }
+};
+
 const logout = () => {
   window.localStorage.removeItem("user.username");
   window.localStorage.removeItem("user.token");
@@ -83,5 +102,6 @@ export default {
   register,
   login,
   forgotPassword,
+  resetPassword,
   logout
 };

@@ -1,5 +1,5 @@
 import { string, object, SchemaOf, ref } from 'yup';
-import { ForgotPasswordModel, UserLogin, UserRegistration } from '../types/User/User';
+import { ForgotPasswordModel, ResetPasswordModel, UserLogin, UserRegistration } from '../types/User/User';
 
 // TODO: Yup docs https://github.com/jquense/yup
 
@@ -8,6 +8,17 @@ import { ForgotPasswordModel, UserLogin, UserRegistration } from '../types/User/
 const isValidEmail = string()
   .email("Invalid email format")
   .defined("Email is required");
+
+const isValidPassword = string()
+  .min(8, "Password must be of at least 8 characters")
+  .max(20, "Password must be of no more than 20 characters")
+  .matches(new RegExp("^[a-zA-Z0-9_-]{4,16}$"),
+    "Password must contain at least one digit, one uppercase letter and one lowercase letter")
+  .defined("Password is required");
+
+const isValidConfirmPassword = string()
+  .equals([ref("password")], "Passwords do not match")
+  .defined("Password confirmation is required");
 
 export const userLoginSchema: SchemaOf<UserLogin> = object({
   email: isValidEmail,
@@ -24,17 +35,15 @@ export const userRegistrationSchema: SchemaOf<UserRegistration> = object().shape
     .matches(new RegExp("^[a-zA-Z0-9_-]{4,16}$"),
       "Username can only contain alphanumeric characters")
     .defined("Username is required"),
-  password: string()
-    .min(8, "Password must be of at least 8 characters")
-    .max(20, "Password must be of no more than 20 characters")
-    .matches(new RegExp("^[a-zA-Z0-9_-]{4,16}$"),
-      "Password must contain at least one digit, one uppercase letter and one lowercase letter")
-    .defined("Password is required"),
-  confirmPassword: string()
-    .equals([ref("password")], "Passwords do not match")
-    .defined("Password confirmation is required"),
+  password: isValidPassword,
+  confirmPassword: isValidConfirmPassword,
 }).defined();
 
 export const forgotPasswordSchema: SchemaOf<ForgotPasswordModel> = object().shape({
   email: isValidEmail,
+}).defined();
+
+export const resetPasswordSchema: SchemaOf<ResetPasswordModel> = object().shape({
+  newPassword: isValidPassword,
+  confirmNewPassword: isValidConfirmPassword,
 }).defined();

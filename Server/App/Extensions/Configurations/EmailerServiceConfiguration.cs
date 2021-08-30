@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Emailer;
 using Microsoft.AspNetCore.Http.Features;
+using Emailer;
 
 namespace App.Extensions.Configurations
 {

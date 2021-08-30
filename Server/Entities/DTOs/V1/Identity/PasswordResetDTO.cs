@@ -1,11 +1,11 @@
-namespace Entities.Models.Identity
+namespace Entities.DTOs.V1.Identity
 {
-    public class PasswordResetModel
+    public class PasswordResetDTO
     {
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
 
         public string Email { get; set; }
-        public string ResetToken { get; set; }
+        public string Token { get; set; }
     }
 }

@@ -16,10 +16,13 @@ import UserRegistration from "./components/Pages/UserRegistration/UserRegistrati
 import TermsAndConditions from "./components/Pages/TermsAndConditions/TermsAndConditionsPage";
 import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage";
 import AircraftEdit from "./components/Pages/AircraftEdit/AircraftEditPage";
-import ForgotPassword from "./components/Pages/ForgotPassword/ForgotPasswordPage";
 import SuccessfulRegistration from "./components/Pages/EmailConfirmation/SuccessfulRegistrationPage";
 import EmailConfirmation from "./components/Pages/EmailConfirmation/EmailConfirmationPage";
 import EmailConfirmationFail from "./components/Pages/ErrorPages/EmailConfirmationFail";
+import ForgotPassword from "./components/Pages/ForgotPassword/ForgotPasswordPage";
+import PasswordResetSent from "./components/Pages/ForgotPassword/PasswordResetSent";
+import PasswordResetPage from "./components/Pages/ForgotPassword/PasswordResetPage";
+import PasswordResetSuccess from "./components/Pages/ForgotPassword/PasswordResetSuccess";
 import NotFound from "./components/Pages/ErrorPages/NotFoundPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -171,6 +174,8 @@ const App = (): JSX.Element =>{
               <SuccessfulRegistration />
             </Route>
 
+            {/* TODO: Email confirmation refactor */}
+
             <Route exact path="/confirmed">
               <EmailConfirmation />
             </Route>
@@ -184,7 +189,15 @@ const App = (): JSX.Element =>{
             </Route>
 
             <Route exact path="/resetsent">
-              <ForgotPassword />
+              <PasswordResetSent />
+            </Route>
+
+            <Route path="/reset">
+              <PasswordResetPage />
+            </Route>
+
+            <Route exact path="/resetsuccess">
+              <PasswordResetSuccess />
             </Route>
 
             <Route exact path="/terms">

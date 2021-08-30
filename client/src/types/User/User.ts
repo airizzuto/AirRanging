@@ -21,3 +21,15 @@ export interface UserRegistrationForm extends UserRegistration {
 export interface ForgotPasswordModel {
   email: string;
 }
+
+export interface ResetPasswordForm {
+  newPassword: string;
+  confirmNewPassword: string;
+  // isSuccess: boolean;
+}
+
+export interface ResetPasswordModel {
+  password: string,
+  email: string,
+  token: string,
+}
