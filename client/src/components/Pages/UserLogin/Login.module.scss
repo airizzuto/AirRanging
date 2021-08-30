@@ -10,20 +10,20 @@
 
   display: flex;
   place-content: center;
+  height: 100%;
 
   .Login {
     @include text-shadow;
     @include drop-shadow;
 
-    margin: 2rem 0 0 0;
+    margin: 2rem 0 2rem 0;
     place-content: center;
     color: color.$light1;
     background-color: color.$dark1;
   
-    max-height: 70%;
-    height: fit-content;
+    min-height: 70%;
     width: max-content;
-    padding: 1rem 2rem 3rem 2rem;
+    padding: 0rem 2rem 1rem 2rem;
   
     display: grid;
     grid-template-rows: 1fr min-content minmax(2fr, max-content);
@@ -124,8 +124,6 @@
       }
     
       .Options {
-        margin-top: 0.5rem;
-    
         display: grid;
         grid-area: options;
         height: fit-content;

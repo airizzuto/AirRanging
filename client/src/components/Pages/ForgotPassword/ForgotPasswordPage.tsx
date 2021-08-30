@@ -12,14 +12,17 @@ const ForgotPassword = () => {
   const history = useHistory();
 
   const handleSubmit = async (resetModel: ForgotPasswordModel) => {
-    await userService.forgotPassword(resetModel)
-      .then(() => history.push("/resetsent"));
+    if (resetModel)
+      await userService.forgotPassword(resetModel)
+        .then(() => history.push("/resetsent"));
   };
 
   return (
     <div className="ForgotPassword">
       <h1>Reset password</h1>
+
       <p>Enter the email address that you used to register your user. We will send you a message with a link to reset your password.</p>
+
       <Formik
         initialValues={{ email: "" }}
         validationSchema={forgotPasswordSchema}
