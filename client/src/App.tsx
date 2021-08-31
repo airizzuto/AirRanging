@@ -55,9 +55,8 @@ const App = (): JSX.Element =>{
 
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
-    if (isUserAuthenticated()) {
-      setUser(getUserData());
-    }
+    isUserAuthenticated()
+      .then(_ => setUser(getUserData()));
   }, []);
 
 
