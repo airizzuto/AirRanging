@@ -12,6 +12,7 @@ import { UserPublic } from "../../../types/User/User";
 import Style from "./Login.module.scss";
 import CheckboxStyle from "../../../styles/components/_checkbox.module.scss";
 import ExitButton from "../../Buttons/ExitButton";
+import { getUserData } from "../../../helpers/userHelper";
 
 interface Props {
   setUser: Dispatch<SetStateAction<UserPublic | null>>;
@@ -31,16 +32,17 @@ const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
   };
 
   const handleSubmit = async ({email, password}: Values) => {
-    try {
-      setAlert("");
-      const user = await userService.login({ email, password });
-      setUser(user);
-      handleClose();
-    } catch (error) {
-      setAlert("User email/password combination invalid");
-      console.log(error.message);
-      setTimeout(() => setAlert(""), 10000);
-    }
+    setAlert("");
+    await userService.login({ email, password })
+      .then(_ => {
+        setAlert("User email/password combination invalid");
+        setUser(getUserData());
+        handleClose();
+      })
+      .catch(error => {
+        console.log(error.message);
+        setTimeout(() => setAlert(""), 10000);
+      });
   };
 
   return (
