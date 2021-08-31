@@ -2,6 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http.Features;
 using Emailer;
+using App.Services;
+using Contracts;
 
 namespace App.Extensions.Configurations
 {
@@ -21,6 +23,7 @@ namespace App.Extensions.Configurations
             };
 
             services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailerService, EmailerService>();
             services.AddScoped<IEmailSender, EmailSender>();
 
             services.Configure<FormOptions>(o => {

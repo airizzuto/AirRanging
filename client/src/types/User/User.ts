@@ -23,8 +23,8 @@ export interface ForgotPasswordModel {
 }
 
 export interface ResetPasswordForm {
-  newPassword: string;
-  confirmNewPassword: string;
+  password: string;
+  confirmPassword: string;
   // isSuccess: boolean;
 }
 

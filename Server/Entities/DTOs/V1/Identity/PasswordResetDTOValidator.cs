@@ -19,10 +19,6 @@ namespace Entities.DTOs.V1.Identity
                 .Matches(
                     @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
                 ).WithMessage("Password must contain at least one digit, one uppercase letter and one lowercase letter");
-            
-            RuleFor(x => x.ConfirmPassword)
-                .Equal(x => x.Password)
-                .WithMessage("Password confirmation does not matches password.");
         }
     }
 }

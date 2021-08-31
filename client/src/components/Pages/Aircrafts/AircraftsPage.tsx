@@ -14,12 +14,15 @@ import Style from "./Aircrafts.module.scss";
 
 interface Props {
   aircrafts: AircraftData[];
+  // user: UserPublic | null;
+  // aircraftsSaved: AircraftData[] | null;
   handleAircraftsFilter: (filter: string) => Promise<void>;
   handleAircraftSelection: (selected: AircraftData | null) => void;
 }
 
 const Aircrafts: React.FC<Props> = ({
   aircrafts,
+  // aircraftsSaved,
   handleAircraftsFilter,
 }) => {
   const [filterInput, setFilterInput] = React.useState("");
@@ -99,6 +102,7 @@ const Aircrafts: React.FC<Props> = ({
           <div>
             { 
               // TODO: save functionality
+              // aircrafts.map(aircraft => aircraftsSaved.contains(aircraft) ? <button>Unsave</button> : <button>Save</button>) // TODO: check if logic correct
             }
             <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`}>
               Details {/* TODO: Clone */}

@@ -5,24 +5,28 @@ using Constants;
 using Contracts;
 using Emailer;
 using Entities.Models.Identity;
+using Logger;
 
 namespace App.Services
 {
     public class EmailerService : IEmailerService
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IDataProtector _protector;
-        private readonly IEmailSender _emailSender;
+        // private readonly UserManager<ApplicationUser> _userManager;
+        // private readonly IDataProtector _protector;
+        // private readonly IEmailSender _emailSender;
+        // private readonly ILoggerManager _logger;
 
-        public EmailerService(
-            UserManager<ApplicationUser> userManager,
-            IDataProtector protector,
-            IEmailSender emailSender)
-        {
-            _userManager = userManager;
-            _protector = protector;
-            _emailSender = emailSender;
-        }
+        // public EmailerService(
+        //     UserManager<ApplicationUser> userManager,
+        //     IDataProtector protector,
+        //     IEmailSender emailSender,
+        //     ILoggerManager logger)
+        // {
+        //     _userManager = userManager;
+        //     _protector = protector;
+        //     _emailSender = emailSender;
+        //     _logger = logger;
+        // }
 
         // TODO: make one function
         // public async Task SendEmailConfirmation(ApplicationUser user)
@@ -44,24 +48,24 @@ namespace App.Services
         //     await _emailSender.SendEmailAsync(message);
         // }
 
-        public async Task SendPasswordReset(ApplicationUser user)
-        {
-            // TODO: error handling?
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var email = _protector.Protect(user.Email);
+        // public async Task SendPasswordReset(ApplicationUser user)
+        // {
+        //     // TODO: error handling?
+        //     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        //     var email = _protector.Protect(user.Email);
 
-            var resetLink = Path.Client.Port + $"/reset?token={token}&email={email}";
-            var content = PasswordResetContent(resetLink);
+        //     var resetLink = Path.Client.Port + $"/reset?token={token}&email={email}";
+        //     var content = PasswordResetContent(resetLink);
 
-            var message = new Message(
-                new string[] { user.Email },
-                "Reset password for AirRanging",
-                content,
-                null
-            );
+        //     var message = new Message(
+        //         new string[] { user.Email },
+        //         "Reset password for AirRanging",
+        //         content,
+        //         null
+        //     );
 
-            await _emailSender.SendEmailAsync(message);
-        }
+        //     await _emailSender.SendEmailAsync(message);
+        // }
 
         public static string EmailConfirmationContent(string confirmationLink)
         {
@@ -82,7 +86,7 @@ namespace App.Services
             );
         }
 
-        private static string PasswordResetContent(string confirmationLink)
+        public static string PasswordResetContent(string confirmationLink)
         {
             // TODO: Styling, better html
             return string.Concat(

@@ -6,6 +6,6 @@ namespace Contracts
     public interface IEmailerService
     {
         // Task SendEmailConfirmation(ApplicationUser user);
-        Task SendPasswordReset(ApplicationUser user);
+        // Task SendPasswordReset(ApplicationUser user);
     }
 }

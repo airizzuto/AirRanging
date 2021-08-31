@@ -12,19 +12,18 @@ const PasswordResetPage = () => {
 
   // url: "/confirmation?token={token}&email={email}"
   const queryParams = new URLSearchParams(window.location.search);
-  // extract mail from url
+  // extract mail from url query string
   const email = queryParams.get("email");
-  // extract token from url
+  // extract token from url url query string
   const token = queryParams.get("token");
 
-  const handleSubmit = async (newPassword: string) => {
-    (email && token && newPassword) 
-      ? await userService.resetPassword({
-          password: newPassword,
+  const handleSubmit = async (password: string) => {
+    if (email && token && password) 
+      await userService.resetPassword({
+          password: password,
           token: token,
           email: email
-        }).then(() => history.push("/resetsuccessful"))
-      : console.log("ERROR: reset password failed.");
+        }).then(() => history.push("/resetsuccess"));
   };
 
   return (
@@ -32,18 +31,18 @@ const PasswordResetPage = () => {
       <h1>Enter your new password:</h1>
       <Formik
         initialValues={{
-          newPassword: "",
-          confirmNewPassword: "",
+          password: "",
+          confirmPassword: "",
         }}
         validationSchema={resetPasswordSchema}
         onSubmit={async ( values: ResetPasswordForm, { setSubmitting }: FormikHelpers<ResetPasswordForm>) => {
-          await handleSubmit(values.newPassword);
+          await handleSubmit(values.password);
           setSubmitting(false);
         }}
       >
         {({isSubmitting}) => 
-          <Form>
-            <div>
+          <Form className="form">
+            <div className="passwordField">
               <label>New Password</label>
               <Field 
                 type="password"
@@ -53,7 +52,7 @@ const PasswordResetPage = () => {
               />
               <ErrorMessage component="span" name="password" />
             </div>
-            <div>
+            <div className="passwordField">
               <label>Confirm Password</label>
               <Field 
                 type="password"
@@ -64,7 +63,7 @@ const PasswordResetPage = () => {
               <ErrorMessage component="span" name="confirmPassword" />
             </div>
 
-            <div className={"SubmitButton"}>
+            <div className="submitButton">
               <button type="submit" disabled={isSubmitting}>
                 Accept
               </button>

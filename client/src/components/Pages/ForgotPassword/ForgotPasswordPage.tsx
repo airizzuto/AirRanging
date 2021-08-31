@@ -8,7 +8,6 @@ import { forgotPasswordSchema } from '../../../validators/userValidators';
 import "./ForgotPassword.scss";
 
 const ForgotPassword = () => {
-
   const history = useHistory();
 
   const handleSubmit = async (resetModel: ForgotPasswordModel) => {

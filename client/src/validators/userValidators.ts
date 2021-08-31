@@ -44,6 +44,6 @@ export const forgotPasswordSchema: SchemaOf<ForgotPasswordModel> = object().shap
 }).defined();
 
 export const resetPasswordSchema: SchemaOf<ResetPasswordModel> = object().shape({
-  newPassword: isValidPassword,
-  confirmNewPassword: isValidConfirmPassword,
+  password: isValidPassword,
+  confirmPassword: isValidConfirmPassword,
 }).defined();

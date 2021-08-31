@@ -228,6 +228,7 @@ namespace App.Controllers.V1
 
         // TODO: test
         [HttpPost("forgot")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(PasswordResetForgotDTO forgotPasswordDto)
         {
             if (!ModelState.IsValid)
@@ -250,15 +251,27 @@ namespace App.Controllers.V1
                 return Unauthorized("Invalid user request.");
             }
 
-            // TODO: test
-            await _emailerService.SendPasswordReset(user);
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var email = _protector.Protect(user.Email);
+
+            var resetLink = Path.Client.Full + $"/reset?token={token}&email={email}";
+            var content = EmailerService.PasswordResetContent(resetLink);
+
+            var message = new Message(
+                new string[] { user.Email },
+                "Reset password for AirRanging",
+                content,
+                null
+            );
+
+            await _emailSender.SendEmailAsync(message);
 
             _logger.LogInfo($"INFO: password reset email sent.");
             return Ok();
         }
 
         [HttpPost("reset")]
-        public async Task<IActionResult> ResetPassword(PasswordResetDTO passwordReset)
+        public async Task<IActionResult> ResetPassword([FromBody] PasswordResetDTO passwordReset)
         {
             if (!ModelState.IsValid)
             {
