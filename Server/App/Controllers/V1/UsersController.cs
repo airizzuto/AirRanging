@@ -41,7 +41,6 @@ namespace App.Controllers.V1
         private readonly IMapper _mapper;
         private readonly ILoggerManager _logger;
         private readonly IEmailSender _emailSender;
-        private readonly IEmailerService _emailerService;
         private readonly IDataProtector _protector;
 
         public UsersController(
@@ -51,7 +50,6 @@ namespace App.Controllers.V1
             IMapper mapper,
             ILoggerManager logger,
             IEmailSender emailSender,
-            IEmailerService emailerService,
             IDataProtectionProvider protector)
         {
             _context = context;
@@ -60,7 +58,6 @@ namespace App.Controllers.V1
             _mapper = mapper;
             _logger = logger;
             _emailSender = emailSender;
-            _emailerService = emailerService;
             _protector = protector.CreateProtector("App.UsersController");
         }
 
@@ -252,9 +249,8 @@ namespace App.Controllers.V1
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var encodedToken = HttpUtility.UrlEncode(token);
             var email = _protector.Protect(user.Email);
-            var resetLink = Path.Client.Full + $"/reset?token={encodedToken}&email={email}";
+            var resetLink = Path.Client.Full + $"/reset?token={token}&email={email}";
             var content = EmailerService.PasswordResetContent(resetLink);
 
             var message = new Message(
@@ -288,12 +284,18 @@ namespace App.Controllers.V1
                 return BadRequest("Invalid user.");
             }
 
+            // Replace and trim corrects the url encoding and decoding changes
+            var token = passwordReset.Token.Replace(" ", "+").Trim('"');
+
             // FIXME: bug with token validation
             var passwordResetResult = await _userManager.ResetPasswordAsync(
-                user, passwordReset.Token, passwordReset.Password);
+                user, token, passwordReset.Password);
             if (!passwordResetResult.Succeeded)
             {
-                _logger.LogError($"ERROR: password reset failed.");
+                _logger.LogError(
+                    $"ERROR: password reset failed: " 
+                    + passwordResetResult.Errors.Select(x => x.Description.ToString())
+                );
                 return BadRequest(passwordResetResult.Errors.Select(x => x.Description));
             }
 

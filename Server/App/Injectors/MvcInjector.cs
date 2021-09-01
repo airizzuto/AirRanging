@@ -14,6 +14,10 @@ namespace App.Injectors
     {
         public void InjectServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddDataProtection();
+
+            services.ConfigureDataProtectionTokens(configuration);
+
             services.ConfigureLogger();
 
             services.ConfigureEmailerService(configuration);
@@ -23,8 +27,6 @@ namespace App.Injectors
             services.ConfigureIISIntegration();
 
             services.ConfigureIdentity(configuration);
-
-            services.AddDataProtection();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)

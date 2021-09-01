@@ -10,6 +10,7 @@ using Constants;
 using Repository.Settings;
 using App.Services;
 using Microsoft.AspNetCore.Authorization;
+using Entities.Models.Identity;
 
 namespace App.Extensions.Configurations
 {
@@ -39,8 +40,20 @@ namespace App.Extensions.Configurations
                 options.User.RequireUniqueEmail = true;
 
                 options.SignIn.RequireConfirmedEmail = true;
+                
+                // Email confirmation tokens
+                // options.Tokens.ProviderMap.Add(
+                //     "EmailConfirmationTokenProvider",
+                //     new TokenProviderDescriptor(typeof(EmailConfirmationTokenProvider<ApplicationUser>))
+                // );
+                options.Tokens.EmailConfirmationTokenProvider = "EmailConfirmationTokenProvider";
 
-                options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+                // Password reset tokens
+                options.Tokens.ProviderMap.Add(
+                    "PasswordResetTokenProvider",
+                    new TokenProviderDescriptor(typeof(PasswordResetTokenProvider<ApplicationUser>))
+                );
+                options.Tokens.PasswordResetTokenProvider = "PasswordResetTokenProvider";
             });
 
             var jwtSettings = new JwtSettings();
@@ -60,7 +73,6 @@ namespace App.Extensions.Configurations
                 ValidateLifetime = true,
                 RequireExpirationTime = true,
             };
-
             services.AddSingleton(tokenValidationParameters);
 
             services.AddAuthentication(options =>

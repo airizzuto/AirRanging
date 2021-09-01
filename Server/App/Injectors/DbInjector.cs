@@ -33,16 +33,11 @@ namespace App.Injectors
                 ).EnableDetailedErrors()
             );
 
-
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
-                .AddTokenProvider<EmailConfirmationTokenProvider<ApplicationUser>>("emailconfirmation");
-
-            services.Configure<DataProtectionTokenProviderOptions>(opt =>
-                opt.TokenLifespan = TimeSpan.FromHours(2));
-            services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
-                opt.TokenLifespan = TimeSpan.FromDays(3));
+                .AddTokenProvider<EmailConfirmationTokenProvider<ApplicationUser>>("EmailConfirmationProvider")
+                .AddTokenProvider<PasswordResetTokenProvider<ApplicationUser>>("PasswordResetProvider");
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

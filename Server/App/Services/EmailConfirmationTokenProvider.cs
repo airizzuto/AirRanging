@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -20,6 +21,10 @@ namespace App.Services
 
     public class EmailConfirmationTokenProviderOptions : DataProtectionTokenProviderOptions
     {
-        
+        public EmailConfirmationTokenProviderOptions()
+        {
+            Name = "EmailConfirmationTokenProvider";
+            TokenLifespan = TimeSpan.FromDays(3);
+        }
     }
 }
