@@ -9,6 +9,7 @@ using Logger;
 
 namespace App.Services
 {
+    // TODO: Rename and move to utility
     public class EmailerService : IEmailerService
     {
         // private readonly UserManager<ApplicationUser> _userManager;

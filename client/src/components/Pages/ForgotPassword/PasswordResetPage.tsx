@@ -15,14 +15,14 @@ const PasswordResetPage = () => {
   // extract mail from url query string
   const email = queryParams.get("email");
   // extract token from url url query string
-  const token = queryParams.get("token");
+  const token = JSON.stringify(queryParams.get("token"));
 
   const handleSubmit = async (password: string) => {
     if (email && token && password) 
       await userService.resetPassword({
           password: password,
+          email: email,
           token: token,
-          email: email
         }).then(() => history.push("/resetsuccess"));
   };
 

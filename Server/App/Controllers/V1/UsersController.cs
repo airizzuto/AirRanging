@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -228,7 +229,6 @@ namespace App.Controllers.V1
 
         // TODO: test
         [HttpPost("forgot")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(PasswordResetForgotDTO forgotPasswordDto)
         {
             if (!ModelState.IsValid)
@@ -252,9 +252,9 @@ namespace App.Controllers.V1
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var encodedToken = HttpUtility.UrlEncode(token);
             var email = _protector.Protect(user.Email);
-
-            var resetLink = Path.Client.Full + $"/reset?token={token}&email={email}";
+            var resetLink = Path.Client.Full + $"/reset?token={encodedToken}&email={email}";
             var content = EmailerService.PasswordResetContent(resetLink);
 
             var message = new Message(
@@ -266,12 +266,13 @@ namespace App.Controllers.V1
 
             await _emailSender.SendEmailAsync(message);
 
+
             _logger.LogInfo($"INFO: password reset email sent.");
             return Ok();
         }
 
         [HttpPost("reset")]
-        public async Task<IActionResult> ResetPassword([FromBody] PasswordResetDTO passwordReset)
+        public async Task<IActionResult> ResetPassword(PasswordResetDTO passwordReset)
         {
             if (!ModelState.IsValid)
             {
@@ -279,14 +280,15 @@ namespace App.Controllers.V1
                 return BadRequest("Password reset validation failed.");
             }
 
-            var user = await _userManager
-                .FindByEmailAsync(_protector.Unprotect(passwordReset.Email));
+            var user = await _userManager.FindByEmailAsync(
+                _protector.Unprotect(passwordReset.Email));
             if (user == null)
             {
                 _logger.LogError($"ERROR: retrieving user.");
                 return BadRequest("Invalid user.");
             }
 
+            // FIXME: bug with token validation
             var passwordResetResult = await _userManager.ResetPasswordAsync(
                 user, passwordReset.Token, passwordReset.Password);
             if (!passwordResetResult.Succeeded)

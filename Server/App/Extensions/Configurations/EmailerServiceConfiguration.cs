@@ -23,7 +23,6 @@ namespace App.Extensions.Configurations
             };
 
             services.AddSingleton(emailConfig);
-            services.AddScoped<IEmailerService, EmailerService>();
             services.AddScoped<IEmailSender, EmailSender>();
 
             services.Configure<FormOptions>(o => {
