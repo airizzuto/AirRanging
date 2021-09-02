@@ -36,8 +36,8 @@ namespace App.Injectors
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
-                .AddTokenProvider<EmailConfirmationTokenProvider<ApplicationUser>>("EmailConfirmationProvider")
-                .AddTokenProvider<PasswordResetTokenProvider<ApplicationUser>>("PasswordResetProvider");
+                .AddTokenProvider<EmailConfirmationTokenProvider<ApplicationUser>>("EmailConfirmationTokenProvider")
+                .AddTokenProvider<PasswordResetTokenProvider<ApplicationUser>>("PasswordResetTokenProvider");
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
