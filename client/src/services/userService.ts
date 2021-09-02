@@ -25,7 +25,7 @@ const register = async ({...newUser}: UserRegistration) => {
       config
     );
 
-    return response.data;
+    return response.status;
   } catch(error) {
     return error.message;
   }

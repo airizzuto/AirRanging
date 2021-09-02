@@ -19,7 +19,11 @@ const UserRegistration = () => {
   }: UserRegistrationForm) => { 
     setAlert("");
     await userService.register({ username, email, password })
-      .then(_ => history.push("/successful")) // TODO: test if routes in fail
+      .then(response => {
+        if (response === 200) {
+          history.push("/successful");
+        }
+      }) // TODO: test if routes in fail
       .catch(error => {
         console.log(error.message);
         setAlert(error.message);
