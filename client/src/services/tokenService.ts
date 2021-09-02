@@ -18,7 +18,6 @@ export const refreshToken = async (token: string | null) => {
 
   const credentials = JSON.stringify({ token: token, refreshToken: refreshToken });
 
-  let isRefreshSuccess: boolean;
   try {
     const config = {
       headers: { "Content-Type": "application/json" }, 
@@ -29,18 +28,22 @@ export const refreshToken = async (token: string | null) => {
       config,
     );
 
-    const newToken = response.data.accessToken;
-    const newRefreshToken = response.data.refreshToken;
+    if (response.data)
+    {
+      const newToken = response.data.accessToken;
+      const newRefreshToken = response.data.refreshToken;
+  
+      window.localStorage.setItem("user.token", newToken);
+      window.localStorage.setItem("user.refreshToken", newRefreshToken);
 
-    window.localStorage.setItem("user.token", newToken);
-    window.localStorage.setItem("user.refreshToken", newRefreshToken);
+      return true;
+    }
 
-    isRefreshSuccess = true;
+    return false;
   } catch (ex) {
-    isRefreshSuccess = false;
+    console.log("ERROR: refreshing token.", ex.error);
+    return false;
   }
-
-  return isRefreshSuccess;
 };
 
 // TODO: revoke

@@ -47,10 +47,15 @@ const App = (): JSX.Element =>{
   // Sets user saved aircrafts
   useEffect(() => {
     isUserAuthenticated()
-      .then(() => aircraftService.getAircraftsSavedByUser()
-        .then(response => setAircraftsSaved(response)));
+      .then(response => {
+
+        if (response) {
+          aircraftService.getAircraftsSavedByUser()
+            .then(response => setAircraftsSaved(response));
+        }
     
-    console.log(aircraftsSaved);
+        console.log(aircraftsSaved);
+    });
   }, [user]);
 
   // Sets user if a valid token is found in localStorage
