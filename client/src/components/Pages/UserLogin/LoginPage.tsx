@@ -42,6 +42,7 @@ const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
         }
 
         setAlert("User email/password combination invalid.");
+        setTimeout(() => setAlert(""), 10000);
       })
       .catch(error => {
         console.log(error.message);
