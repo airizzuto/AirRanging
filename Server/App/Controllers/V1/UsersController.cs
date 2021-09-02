@@ -110,7 +110,7 @@ namespace App.Controllers.V1
 
             var message = new Message(
                 new string[] { user.Email },
-                "Confirmation email for AirRangingApp",
+                "Confirmation email for Air Ranging",
                 emailContent,
                 null
             );
@@ -204,24 +204,24 @@ namespace App.Controllers.V1
             if (user == null)
             {
                 _logger.LogError($"ERROR: retrieving user.");
-                return RedirectToRoute(Path.Client.Full + "/confirmationfailed");
+                return Redirect(Path.Client.Full + "/confirmationfailed");
             }
 
             if (await _userManager.IsEmailConfirmedAsync(user))
             {
                 _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
-                return RedirectToRoute(Path.Client.Full + "/confirmationfailed");
+                return Redirect(Path.Client.Full + "/confirmationfailed");
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, emailToken);
             if (!result.Succeeded)
             {
                 _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
-                return RedirectToRoute(Path.Client.Full, "/confirmationfailed");
+                return Redirect(Path.Client.Full + "/confirmationfailed");
             }
 
             _logger.LogInfo($"INFO: {user.Id} email confirmed.");
-            return RedirectToRoute(Path.Client.Full, "/confirmed");
+            return Redirect(Path.Client.Full + "/confirmed");
         }
 
         // TODO: test
