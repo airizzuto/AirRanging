@@ -179,7 +179,6 @@ const App = (): JSX.Element =>{
             </Route>
 
             {/* TODO: Email confirmation refactor */}
-
             <Route exact path="/confirmed">
               <EmailConfirmation />
             </Route>

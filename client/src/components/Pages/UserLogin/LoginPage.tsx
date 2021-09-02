@@ -4,15 +4,14 @@ import { Formik, Form, Field, FormikHelpers, ErrorMessage } from 'formik';
 
 import userService from "../../../services/userService";
 import { userLoginSchema } from "../../../validators/userValidators";
+import { getUserData } from "../../../helpers/userHelper";
+import { UserPublic } from "../../../types/User/User";
 
 import AlertBox from "../../Alerts/AlertBox";
-
-import { UserPublic } from "../../../types/User/User";
+import ExitButton from "../../Buttons/ExitButton";
 
 import Style from "./Login.module.scss";
 import CheckboxStyle from "../../../styles/components/_checkbox.module.scss";
-import ExitButton from "../../Buttons/ExitButton";
-import { getUserData } from "../../../helpers/userHelper";
 
 interface Props {
   setUser: Dispatch<SetStateAction<UserPublic | null>>;
