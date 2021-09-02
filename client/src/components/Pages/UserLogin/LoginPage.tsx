@@ -35,12 +35,17 @@ const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
     setAlert("");
     await userService.login({ email, password })
       .then(_ => {
-        setAlert("User email/password combination invalid");
-        setUser(getUserData());
-        handleClose();
+        const user = getUserData();
+        if (user) {
+          setUser(user);
+          handleClose();
+        }
+
+        setAlert("User email/password combination invalid.");
       })
       .catch(error => {
         console.log(error.message);
+        setAlert("An error ocurred when login user.");
         setTimeout(() => setAlert(""), 10000);
       });
   };

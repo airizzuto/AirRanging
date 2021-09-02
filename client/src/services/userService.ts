@@ -32,24 +32,28 @@ const register = async ({...newUser}: UserRegistration) => {
 };
 
 const login = async (credentials: UserLogin) => {
+  try {
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    await axios.post(
+
+    const response = await axios.post(
       BASE_URL + "/api/users/login",
       credentials,
       config,
-    ).then(res => {
-      if (res.data) {
-        window.localStorage.setItem("user.username", res.data.username);
-        window.localStorage.setItem("user.token", res.data.token);
-        window.localStorage.setItem("user.refreshToken", res.data.refreshToken);
-      }
-      return res.status;
-    }).catch(error => {
-      console.log(error);
-      return error.message;
-    });
+    );
+    
+    if (response.data) {
+      window.localStorage.setItem("user.username", response.data.username);
+      window.localStorage.setItem("user.token", response.data.token);
+      window.localStorage.setItem("user.refreshToken", response.data.refreshToken);
+    }
+
+    return response;
+  } catch(error) {
+    console.log(error);
+    return error.message;
+  }
 };
 
 // TODO: email confirmation refactor
