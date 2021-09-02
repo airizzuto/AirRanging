@@ -21,8 +21,12 @@ import { AircraftData, NewAircraft } from "../types/Aircraft/Aircraft";
 */
 
 const getAllAircrafts = async () => {
-  const response = await axios.get(BASE_URL + "/api/aircrafts");
-  return response.data;
+  try {
+    const response = await axios.get(BASE_URL + "/api/aircrafts");
+    return response.data;
+  } catch(error) {
+    console.log("ERROR: Retrieving all aircrafts - ", error.message);
+  }
 };
 
 const getAllAircraftsPaginated = async () => {
