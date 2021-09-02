@@ -49,10 +49,10 @@ namespace App.Extensions.Configurations
                 options.Tokens.EmailConfirmationTokenProvider = "EmailConfirmationTokenProvider";
 
                 // Password reset tokens
-                options.Tokens.ProviderMap.Add(
-                    "PasswordResetTokenProvider",
-                    new TokenProviderDescriptor(typeof(PasswordResetTokenProvider<ApplicationUser>))
-                );
+                // options.Tokens.ProviderMap.Add(
+                //     "PasswordResetTokenProvider",
+                //     new TokenProviderDescriptor(typeof(PasswordResetTokenProvider<ApplicationUser>))
+                // );
                 options.Tokens.PasswordResetTokenProvider = "PasswordResetTokenProvider";
             });
 
