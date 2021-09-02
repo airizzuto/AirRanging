@@ -17,7 +17,7 @@ const Header = ({handleLogout, user}: Props): JSX.Element => {
 
 
   return (
-    <nav className={Style.Header}>
+    <nav className={Style.HeaderContainer}>
       <div className={Style.Menu}>
         <Menu />
       </div>

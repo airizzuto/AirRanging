@@ -5,7 +5,7 @@
 @import "../Menu/Menu.module.scss";
 @import "../Buttons/ButtonStyles.module.scss";
 
-.Header {
+.HeaderContainer {
   @include blurring;
   @include text-shadow;
 
@@ -96,9 +96,9 @@
     }
   }
 
-  .MenuButton {
+  .Menu {
     display: none;
-    grid-area: logo;
+    visibility: hidden;
   }
 
   ul {
@@ -114,8 +114,9 @@
 }
 
 @media screen and (max-width: 600px) {
-  .Header {
+  .HeaderContainer {
     display: grid;
+    grid-template-rows: 1fr;
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "menu user";
 
@@ -127,10 +128,10 @@
       display: none;
     }
   
-    .MenuButton {
-      display: flex;
-      content-visibility: visible;
+    .Menu {
+      display: grid;
       grid-area: menu;
+      visibility: visible;
     }
   }
 }

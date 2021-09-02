@@ -2,109 +2,112 @@
 @use "../../styles/fonts" as font;
 @use "../../styles/mixins" as *;
 
-.MenuButton {
-  position: fixed;
-  right: 2rem;
-  top: 2.5rem;
-  padding: 2.5rem;
-  z-index: 10;
-  cursor: pointer;
-  user-select: none;
-  span {
-      height: 4px;
-      width: 35px;
-      border-radius: 2px;
-      background-color: color.$light1;
-      position: relative;
-      display: block;
-      transition: all .2s ease-in-out;
-      &:before {
-        top: -10px;
-        visibility: visible;
+@media screen and (max-width: 600px) {
+  .MenuButton {
+    display: grid;
+    position: fixed;
+    right: 2rem;
+    top: 2.5rem;
+    padding: 2.5rem;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+    span {
+        height: 4px;
+        width: 35px;
+        border-radius: 2px;
+        background-color: color.$light1;
+        position: relative;
+        display: block;
+        transition: all .2s ease-in-out;
+        &:before {
+          top: -10px;
+          visibility: visible;
+        }
+        &:after {
+          top: 10px;
+        }
+        &:before, &:after {
+            height: 4px;
+            width: 35px;
+            border-radius: 2px;
+            background-color: color.$light1;
+            position: absolute;
+            content: "";
+            transition: all .2s ease-in-out;
+        }
       }
-      &:after {
-        top: 10px;
+      &:hover span, &:hover span:before, &:hover span:after {
+        background: color.$light2;
       }
-      &:before, &:after {
-          height: 4px;
-          width: 35px;
-          border-radius: 2px;
-          background-color: color.$light1;
-          position: absolute;
-          content: "";
-          transition: all .2s ease-in-out;
-      }
-    }
-    &:hover span, &:hover span:before, &:hover span:after {
-      background: color.$light2;
-    }
-}
-
-.MenuInput {
-  display: none;
-}
-
-.MenuInput:checked ~ .Menu {
-  visibility: visible;
-}
-
-.MenuInput:checked ~ .MenuButton {
-  &:hover span, span{
-    background: transparent;
   }
-  span {
-    &:before {
-      transform: rotate(45deg) translate(7px, 7px);
-      opacity: 1;
-    }
-    &:after {
-      transform: rotate(-45deg) translate(7px, -7px);
-    }
-  }
-}
 
-.Menu {
-  position: fixed;
-  visibility: hidden;
-  margin-top: 0;
-  padding-left: 0;
-  top: 0px;
-  left: 0px;
-  height: 100vh;
-  width: 100vw;
-  background: color.$bg-semitransparent;
-  opacity: 0.8;
-  z-index: 9;
-  &.active {
+  .MenuInput {
+    display: none;
+  }
+
+  .MenuInput:checked ~ .Menu {
     visibility: visible;
   }
-  ul {
-    display: flex;
-    flex-direction: column;
-    padding-left: 0;
-    justify-content: center;
-    align-items: stretch;
-    text-align: center;
-    height: 100vh;
-    list-style-type: none;
-    li {
-      grid-column: 2 / 3;
-      align-self: center;
-      width: 100%;
-      padding: 5em 0em;
-      &:hover {
-        background-color: color.$light2;
+
+  .MenuInput:checked ~ .MenuButton {
+    &:hover span, span{
+      background: transparent;
+    }
+    span {
+      &:before {
+        transform: rotate(45deg) translate(7px, 7px);
+        opacity: 1;
       }
-      a {
-        @include font.nav;
-        color: color.$light1;
-        text-decoration: none;
+      &:after {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+    }
+  }
+
+  .Menu {
+    position: fixed;
+    visibility: hidden;
+    margin-top: 0;
+    padding-left: 0;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    background: color.$bg-semitransparent;
+    opacity: 0.8;
+    z-index: 9;
+    &.active {
+      visibility: visible;
+    }
+    ul {
+      display: flex;
+      flex-direction: column;
+      padding-left: 0;
+      justify-content: center;
+      align-items: stretch;
+      text-align: center;
+      height: 100vh;
+      list-style-type: none;
+      li {
+        grid-column: 2 / 3;
+        align-self: center;
+        width: 100%;
+        padding: 5em 0em;
         &:hover {
-          color: color.$accent1;
+          background-color: color.$light2;
         }
-        &:active {
-          .Menu {
-            display: none;
+        a {
+          @include font.nav;
+          color: color.$light1;
+          text-decoration: none;
+          &:hover {
+            color: color.$accent1;
+          }
+          &:active {
+            .Menu {
+              display: none;
+            }
           }
         }
       }

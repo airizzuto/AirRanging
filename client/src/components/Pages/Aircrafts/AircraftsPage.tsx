@@ -102,7 +102,9 @@ const Aircrafts: React.FC<Props> = ({
           <div>
             { 
               // TODO: save functionality
-              // aircrafts.map(aircraft => aircraftsSaved.contains(aircraft) ? <button>Unsave</button> : <button>Save</button>) // TODO: check if logic correct
+              // aircrafts.map(aircraft => aircraftsSaved.contains(aircraft)
+              // ? <button>Unsave</button>
+              // : <button>Save</button>);
             }
             <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`}>
               Details {/* TODO: Clone */}
