@@ -95,8 +95,8 @@ const AircraftsTable: React.FC<Props> = ({columns, data }) => {
         </tbody>
       </table>
 
-      {/* Table Pagination Controls */}
-      <div className={Style.Pagination}>
+      {/* Table Controls */}
+      <div className={Style.Controls}>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}
@@ -139,6 +139,11 @@ const AircraftsTable: React.FC<Props> = ({columns, data }) => {
             </option>
           ))}
         </select>
+        
+        {/* TODO: handle selection */}
+        <div className={Style.SelectButton}>
+          <button>Select</button>
+        </div>
       </div>
     </div>
   );

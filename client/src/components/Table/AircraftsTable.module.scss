@@ -49,7 +49,7 @@
     }
   }
 
-  .Pagination {
+  .Controls {
     @include text-shadow;
     grid-area: pagination;
 
@@ -71,6 +71,16 @@
 
     button {
       @include button.controls;
+    }
+
+    .SelectButton { // TODO: improve
+      display: flex;
+      justify-content: end;
+
+      button {
+        @include button.decorated;
+        padding: 0.5rem 2rem;
+      }
     }
   }
 }
