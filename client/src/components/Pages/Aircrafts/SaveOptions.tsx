@@ -11,27 +11,40 @@ interface Props {
   aircraftsSaved: AircraftData[] | null;
 }
 
+// TODO: refresh on user log status change
 const SaveOptions: React.FC<Props> = ({
   user,
   aircraft,
   aircraftsSaved
 }) => {
-  if (!user) {
-    return <button disabled={true}>Save</button>; // TODO: route to loginn
-  }
+
+  // TODO: handling
+
+  // save
+
+  // unsave
 
   return (
     <div className={Style.SaveOptions}>
       {
-        aircraft.authorUsername === user?.username
-        ? <button disabled={true}>Owned</button>
-        : aircraftsSaved?.find(saved => saved.id !== aircraft.id) // FIXME
-          ? <button>Saved</button>
-          : <button>Save</button>
+        // Checks if user is logged.
+        user
+          // Checks if user is author.
+          ? aircraft.authorUsername === user?.username
+            // User is author.
+            ? <button disabled={true}>Owned</button>
+            // User is not author. Checks if user has saved aircraft.
+            : aircraftsSaved?.find(saved => saved.id !== aircraft.id)
+              ? <button>Saved</button>
+              : <button>Save</button>
+          // User is not logged.
+          : <LinkedButton path={`/login`}>
+              Login
+            </LinkedButton>
       }
 
       <LinkedButton path={`/aircrafts/details/${aircraft.id}`}>
-              View
+        View
       </LinkedButton>
     </div>
   );
