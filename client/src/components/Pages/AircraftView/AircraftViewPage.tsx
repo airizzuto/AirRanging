@@ -11,7 +11,7 @@ import { aircraftSchema } from "../../../validators/aircraftValidators";
 import AlertBox from "../../Alerts/AlertBox";
 import EnumOptions from "../AircraftCreate/EnumOptions";
 
-import "./AircraftEditPage.scss";
+import "./AircraftView.scss";
 import Spinner from "../../../styles/components/_spinner.module.scss";
 
 
@@ -20,7 +20,7 @@ interface Props {
   handleAircraftSelect: (selected: AircraftData | null) => void;
 }
 
-const AircraftEdit: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelect }) => {
+const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelect }) => {
   const { id }: any = useParams();
   const history = useHistory();
 
@@ -280,4 +280,4 @@ const AircraftEdit: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
   );
 };
 
-export default AircraftEdit;
+export default AircraftView;

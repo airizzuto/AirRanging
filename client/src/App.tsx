@@ -11,11 +11,11 @@ import { AircraftData, AircraftState, NewAircraft } from "./types/Aircraft/Aircr
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
+import AircraftView from "./components/Pages/AircraftView/AircraftViewPage";
+import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage";
 import Login from "./components/Pages/UserLogin/LoginPage";
 import UserRegistration from "./components/Pages/UserRegistration/UserRegistrationPage";
 import TermsAndConditions from "./components/Pages/TermsAndConditions/TermsAndConditionsPage";
-import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage";
-import AircraftEdit from "./components/Pages/AircraftEdit/AircraftEditPage";
 import SuccessfulRegistration from "./components/Pages/EmailConfirmation/SuccessfulRegistrationPage";
 import EmailConfirmation from "./components/Pages/EmailConfirmation/EmailConfirmationPage";
 import EmailConfirmationFail from "./components/Pages/ErrorPages/EmailConfirmationFail";
@@ -145,16 +145,14 @@ const App = (): JSX.Element =>{
               />
             </Route>
 
-            <ProtectedRoute
+            <Route
               exact path="/aircrafts/details/:id"
-              authenticationPath="/login"
-              isAuthenticated={(async () => await isUserAuthenticated()) && user}
             >
-              <AircraftEdit
+              <AircraftView
                 handleAircraftEdit={handleAircraftEdit}
                 handleAircraftSelect={handleAircraftSelection}
               />
-            </ProtectedRoute>
+            </Route>
 
             <ProtectedRoute 
               path="/aircrafts/create" 
