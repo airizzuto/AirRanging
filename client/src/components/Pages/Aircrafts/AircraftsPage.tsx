@@ -104,11 +104,7 @@ const Aircrafts: React.FC<Props> = ({
         Cell: ({ cell }: any) => (
           <div>
             <SaveOptions user={user} aircraft={cell.row.original} aircraftsSaved={aircraftsSaved}/>
-            <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`}>
-              View {/* TODO: Clone */}
-            </LinkedButton>
           </div>
-          
         )
       },
     ],

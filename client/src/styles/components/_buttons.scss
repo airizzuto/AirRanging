@@ -21,6 +21,14 @@
     cursor: pointer;
     transition: color 0.4s;
   }
+
+  &:disabled {
+    color: color.$light1-disabled;
+    background-color: color.$light2-disabled;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 };
 
 @mixin small-light {
