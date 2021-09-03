@@ -1,28 +1,31 @@
 import React from 'react';
 
 // import aircraftService from '../../../services/aircraftService';
+// import bookmarkService from '../../../services/bookmarkService';
 // import { isAircraftSavedByUser, isUserOwner } from '../../../helpers/userHelper';
 
 import { AircraftData } from '../../../types/Aircraft/Aircraft';
+import { UserPublic } from '../../../types/User/User';
 
 import AircraftsTable from '../../Table/AircraftsTable';
 import LinkedButton from '../../Buttons/LinkedButton';
 // import DecoratedButton from '../../Buttons/DecoratedButton';
 
 import Style from "./Aircrafts.module.scss";
-// import bookmarkService from '../../../services/bookmarkService';
+import SaveOptions from './SaveOptions';
 
 interface Props {
   aircrafts: AircraftData[];
-  // user: UserPublic | null;
-  // aircraftsSaved: AircraftData[] | null;
+  user: UserPublic | null;
+  aircraftsSaved: AircraftData[] | null;
   handleAircraftsFilter: (filter: string) => Promise<void>;
   handleAircraftSelection: (selected: AircraftData | null) => void;
 }
 
 const Aircrafts: React.FC<Props> = ({
+  user,
   aircrafts,
-  // aircraftsSaved,
+  aircraftsSaved,
   handleAircraftsFilter,
 }) => {
   const [filterInput, setFilterInput] = React.useState("");
@@ -100,14 +103,9 @@ const Aircrafts: React.FC<Props> = ({
         // accessor: "aircraftDetails",
         Cell: ({ cell }: any) => (
           <div>
-            { 
-              // TODO: save functionality
-              // aircrafts.map(aircraft => aircraftsSaved.contains(aircraft)
-              // ? <button>Unsave</button>
-              // : <button>Save</button>);
-            }
+            <SaveOptions user={user} aircraft={cell.row.original} aircraftsSaved={aircraftsSaved}/>
             <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`}>
-              Details {/* TODO: Clone */}
+              View {/* TODO: Clone */}
             </LinkedButton>
           </div>
           

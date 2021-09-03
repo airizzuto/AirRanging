@@ -137,7 +137,9 @@ const App = (): JSX.Element =>{
 
             <Route exact path="/aircrafts">
               <Aircrafts
+                user={user}
                 aircrafts={aircrafts}
+                aircraftsSaved={aircraftsSaved}
                 handleAircraftsFilter={handleAircraftsFilter} 
                 handleAircraftSelection={handleAircraftSelection}
               />
