@@ -2,17 +2,15 @@ import React from 'react';
 
 // import aircraftService from '../../../services/aircraftService';
 // import bookmarkService from '../../../services/bookmarkService';
-// import { isAircraftSavedByUser, isUserOwner } from '../../../helpers/userHelper';
 
 import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 
 import AircraftsTable from '../../Table/AircraftsTable';
 import LinkedButton from '../../Buttons/LinkedButton';
-// import DecoratedButton from '../../Buttons/DecoratedButton';
+import SaveOptions from './SaveOptions';
 
 import Style from "./Aircrafts.module.scss";
-import SaveOptions from './SaveOptions';
 
 interface Props {
   aircrafts: AircraftData[];
@@ -111,6 +109,7 @@ const Aircrafts: React.FC<Props> = ({
     []
   );
 
+
   return (
     <div className={Style.AircraftsView}>
 
@@ -130,12 +129,18 @@ const Aircrafts: React.FC<Props> = ({
 
       <hr />
 
-      <div className={Style.AircraftsTable}>
-        <AircraftsTable 
-          data={aircrafts}
-          columns={columns}
-        />
-      </div>
+      {
+        aircrafts
+          ? <div className={Style.AircraftsTable}>
+              <AircraftsTable 
+                data={aircrafts}
+                columns={columns}
+              />
+            </div>
+          : <div className={Style.AircraftsLoading}>
+              <p>Loading aircrafts...</p> {/* TODO: spinner */}
+            </div>
+      }
 
     </div>
   );
