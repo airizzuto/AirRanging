@@ -61,7 +61,7 @@ namespace App.Controllers.V1
 
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
-            _logger.LogInfo($"INFO: Returning {aircraftsResponse.Count()} bookmarked aircrafts from db.");
+            _logger.LogInfo($"Returning {aircraftsResponse.Count()} bookmarked aircrafts from db.");
 
             return Ok(aircraftsResponse);
         }
@@ -87,12 +87,12 @@ namespace App.Controllers.V1
             var aircrafts = await _repository.Bookmark.GetBookmarkedIdAsync(userId, id);
             if (aircrafts == null) 
             {
-                _logger.LogError($"ERROR: aircraft id {id} not found in user bookmark.");
+                _logger.LogError($"Aircraft id {id} not found in user bookmark.");
                 return NotFound("Aircraft id not found");
             }
 
             var aircraftsResponse = _mapper.Map<AircraftReadDTO>(aircrafts);
-            _logger.LogInfo($"INFO: Returning aircraft {id}.");
+            _logger.LogInfo($" Returning aircraft {id}.");
 
             return Ok(aircraftsResponse);
         }
@@ -125,7 +125,7 @@ namespace App.Controllers.V1
             _repository.Bookmark.Delete(bookmark);
             await _repository.SaveAsync();
 
-            _logger.LogInfo($"INFO: User {userId}, Aircraft {aircraftId} bookmark removed.");
+            _logger.LogInfo($"User {userId}, Aircraft {aircraftId} bookmark removed.");
 
             return NoContent();
         }

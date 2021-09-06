@@ -76,14 +76,14 @@ namespace App.Controllers.V1
             var existingUsername = await _userManager.FindByNameAsync(request.UserName);
             if (existingUsername != null)
             {
-                _logger.LogError($"ERROR: Username already in use.");
+                _logger.LogError($" Username already in use.");
                 return BadRequest("Username already in use.");
             }
 
             var existingEmail = await _userManager.FindByEmailAsync(request.Email);
             if (existingEmail != null)
             {
-                _logger.LogError($"ERROR: Email already in use.");
+                _logger.LogError($" Email already in use.");
                 return BadRequest("Email already in use.");
             }
 
@@ -91,7 +91,7 @@ namespace App.Controllers.V1
             var createdUser = await _userManager.CreateAsync(user, request.Password);
             if (!createdUser.Succeeded)
             {
-                _logger.LogError($"ERROR: creating user.");
+                _logger.LogError($" Creating user.");
                 return BadRequest(createdUser.Errors.Select(x => x.Description));
             }
 
@@ -121,7 +121,7 @@ namespace App.Controllers.V1
 
             await _context.SaveChangesAsync();
 
-            _logger.LogInfo($"INFO: User {request.UserName} created");
+            _logger.LogInfo($" User {request.UserName} created");
             return Ok("User registered successfully");
         }
 
@@ -138,29 +138,29 @@ namespace App.Controllers.V1
         {
             if (userLogin == null)
             {
-                _logger.LogError($"ERROR: Invalid client request");
+                _logger.LogError($" Invalid client request");
                 return BadRequest("Invalid client request");
             }
 
             var user = await _userManager.FindByEmailAsync(userLogin.Email);
             if (user == null)
             {
-                _logger.LogError($"ERROR: user email/password invalid");
+                _logger.LogError($" User email/password invalid");
+                return Unauthorized("User email or password invalid");
+            }
+
+            var userHasValidPassword = await _userManager.CheckPasswordAsync(user, userLogin.Password);
+            if(!userHasValidPassword)
+            {
+                _logger.LogError($" User email/password invalid");
                 return Unauthorized("User email or password invalid");
             }
 
             var userHasConfirmedEmail = await _userManager.IsEmailConfirmedAsync(user);
             if (!userHasConfirmedEmail)
             {
-                _logger.LogError($"ERROR: email is not confirmed");
+                _logger.LogError($" Email {userLogin.Email} is not confirmed");
                 return Unauthorized("User email is not confirmed");
-            }
-
-            var userHasValidPassword = await _userManager.CheckPasswordAsync(user, userLogin.Password);
-            if(!userHasValidPassword)
-            {
-                _logger.LogError($"ERROR: user email/password invalid");
-                return Unauthorized("User email or password invalid");
             }
 
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -187,7 +187,7 @@ namespace App.Controllers.V1
 
             await _context.SaveChangesAsync();
 
-            _logger.LogInfo($"INFO: user {user.Id} logged");
+            _logger.LogInfo($" user {user.Id} logged");
             return Ok(new UserAuthDTO
             {
                 Username = user.UserName,
@@ -203,24 +203,24 @@ namespace App.Controllers.V1
             var user = await _userManager.FindByEmailAsync(_protector.Unprotect(email));
             if (user == null)
             {
-                _logger.LogError($"ERROR: retrieving user.");
+                _logger.LogError($" Retrieving user.");
                 return Redirect(Path.Client.Full + "/confirmationfailed");
             }
 
             if (await _userManager.IsEmailConfirmedAsync(user))
             {
-                _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
+                _logger.LogError($" Trying to confirm user {user.Id} email.");
                 return Redirect(Path.Client.Full + "/confirmationfailed");
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, emailToken);
             if (!result.Succeeded)
             {
-                _logger.LogError($"ERROR: trying to confirm user {user.Id} email.");
+                _logger.LogError($" Trying to confirm user {user.Id} email.");
                 return Redirect(Path.Client.Full + "/confirmationfailed");
             }
 
-            _logger.LogInfo($"INFO: {user.Id} email confirmed.");
+            _logger.LogInfo($" {user.Id} email confirmed.");
             return Redirect(Path.Client.Full + "/confirmed");
         }
 
@@ -230,21 +230,21 @@ namespace App.Controllers.V1
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogError($"ERROR: forgot password validation failed.");
+                _logger.LogError($" Forgot password validation failed.");
                 return BadRequest("Invalid user request.");
             }
 
             var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
             if (user == null)
             {
-                _logger.LogError($"ERROR: failed retrieving user.");
+                _logger.LogError($" Failed retrieving user.");
                 return BadRequest("Invalid user request.");
             }
 
             var userHasConfirmedEmail = await _userManager.IsEmailConfirmedAsync(user);
             if (!userHasConfirmedEmail)
             {
-                _logger.LogError($"ERROR: email is not confirmed");
+                _logger.LogError($" Email is not confirmed");
                 return Unauthorized("Invalid user request.");
             }
 
@@ -263,7 +263,7 @@ namespace App.Controllers.V1
             await _emailSender.SendEmailAsync(message);
 
 
-            _logger.LogInfo($"INFO: password reset email sent.");
+            _logger.LogInfo($" Password reset email sent.");
             return Ok();
         }
 
@@ -272,7 +272,7 @@ namespace App.Controllers.V1
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogError("ERROR: password reset validation failed.");
+                _logger.LogError(" Password reset validation failed.");
                 return BadRequest("Password reset validation failed.");
             }
 
@@ -280,7 +280,7 @@ namespace App.Controllers.V1
                 _protector.Unprotect(passwordReset.Email));
             if (user == null)
             {
-                _logger.LogError($"ERROR: retrieving user.");
+                _logger.LogError($" Retrieving user.");
                 return BadRequest("Invalid user.");
             }
 
@@ -293,13 +293,13 @@ namespace App.Controllers.V1
             if (!passwordResetResult.Succeeded)
             {
                 _logger.LogError(
-                    $"ERROR: password reset failed: " 
+                    $" password reset failed: " 
                     + passwordResetResult.Errors.Select(x => x.Description.ToString())
                 );
                 return BadRequest(passwordResetResult.Errors.Select(x => x.Description));
             }
 
-            _logger.LogInfo($"INFO: password reset successful.");
+            _logger.LogInfo($" Password reset successful.");
             return Ok();
         }
 
@@ -310,18 +310,18 @@ namespace App.Controllers.V1
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
-                _logger.LogError($"ERROR: retrieving user.");
+                _logger.LogError($" Retrieving user.");
                 return BadRequest();
             }
             var UserDeletedResult = await _userManager.DeleteAsync(user);
             if (!UserDeletedResult.Succeeded)
             {
-                _logger.LogError($"ERROR: deleting User {id}.");
+                _logger.LogError($" Deleting User {id}.");
                 return BadRequest(UserDeletedResult.Errors.Select(e => e.Description));
             }
             
             await _context.SaveChangesAsync();
-            _logger.LogInfo($"INFO: user {id} deleted.");
+            _logger.LogInfo($" User {id} deleted.");
 
             return NoContent();
         }

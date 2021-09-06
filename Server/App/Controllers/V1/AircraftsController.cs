@@ -66,7 +66,7 @@ namespace App.Controllers.V1
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
             _logger.LogInfo(
-                $"INFO: Returning {aircraftsResponse.Count()} aircrafts from db."
+                $"Returning {aircraftsResponse.Count()} aircrafts from db."
             );
 
             return Ok(aircraftsResponse);
@@ -102,7 +102,7 @@ namespace App.Controllers.V1
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
             _logger.LogInfo(
-                $"INFO: Returning paginated {aircraftsResponse.Count()} aircrafts from db."
+                $"Returning paginated {aircraftsResponse.Count()} aircrafts from db."
             );
 
             return Ok(aircraftsResponse);
@@ -138,7 +138,7 @@ namespace App.Controllers.V1
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
             _logger.LogInfo(
-                $"INFO: Returning search paginated {aircraftsResponse.Count()} aircrafts from db."
+                $"Returning search paginated {aircraftsResponse.Count()} aircrafts from db."
             );
 
             return Ok(aircraftsResponse);
@@ -157,7 +157,7 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"ERROR: user not logged in.");
+                _logger.LogError($"User not logged in.");
 
                 return Unauthorized("User not logged in.");
             }
@@ -181,13 +181,13 @@ namespace App.Controllers.V1
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
             _logger.LogInfo(
-                $"INFO: Returning paginated {aircraftsResponse.Count()} aircrafts from db."
+                $" Returning paginated {aircraftsResponse.Count()} aircrafts from db."
             );
 
             return Ok(aircraftsResponse);
         }
 
-        // GET api/aircrafts/id/5
+        // GET api/aircrafts/5
         /// <summary>
         /// Retrieves aircraft {id} in the database
         /// </summary>
@@ -200,11 +200,11 @@ namespace App.Controllers.V1
             var aircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (aircraft == null)
             {
-                _logger.LogError($"ERROR: aircraft id {id} not found.");
+                _logger.LogError($"Aircraft id {id} not found.");
                 return NotFound("Aircraft id not found.");
             }
 
-            _logger.LogInfo($"INFO: Returning aircraft {id}.");
+            _logger.LogInfo($"Returning aircraft {id}.");
 
             var resource = _mapper.Map<AircraftReadDTO>(aircraft);
             return Ok(resource);
@@ -223,7 +223,7 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"ERROR: user not logged in.");
+                _logger.LogError($"user not logged in.");
                 return Unauthorized("User not logged in.");
             }
 
@@ -240,7 +240,7 @@ namespace App.Controllers.V1
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftModel);
 
             _logger.LogInfo(
-                $"INFO: User: {userId} created aircraft {aircraftReadDto.Id}."
+                $" User: {userId} created aircraft {aircraftReadDto.Id}."
             );
 
             return CreatedAtAction(
@@ -250,7 +250,7 @@ namespace App.Controllers.V1
             );
         }
 
-        // POST api/aircrafts/{id}/clone
+        // POST api/aircrafts/5/clone
         /// <summary>
         /// Creates a copy of an existing aircraft in the database referenced to  a new userId
         /// </summary>
@@ -263,7 +263,7 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"ERROR: user not logged in.");
+                _logger.LogError($"user not logged in.");
                 return Unauthorized("User not logged in.");
             }
 
@@ -280,7 +280,7 @@ namespace App.Controllers.V1
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftCopy);
 
             _logger.LogInfo(
-                $"INFO: User: {userId} created aircraft {aircraftReadDto.Id}."
+                $" User: {userId} created aircraft {aircraftReadDto.Id}."
             );
 
             return CreatedAtAction(
@@ -290,7 +290,7 @@ namespace App.Controllers.V1
             );
         }
 
-        // PUT api/aircrafts/id/5
+        // PUT api/aircrafts/5
         /// <summary>
         /// Full update aircraft {id} in the database
         /// </summary>
@@ -305,20 +305,20 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"ERROR: user not logged in.");
+                _logger.LogError($"User not logged in.");
                 return Unauthorized("User not logged in.");
             }
 
             var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
-                _logger.LogError($"ERROR: aircraft id {id}, not found.");
+                _logger.LogError($"Aircraft id {id}, not found.");
                 return NotFound("Aircraft id not found.");
             }
 
             if (existingAircraft.UserId != userId)
             {
-                _logger.LogError($"ERROR: user does not own this aircraft. Unable to update.");
+                _logger.LogError($"User does not own this aircraft. Unable to update.");
                 return Forbid("User does not own this aircraft. Unable to update.");
             }
 
@@ -327,12 +327,12 @@ namespace App.Controllers.V1
             _repository.Aircraft.UpdateAircraft(existingAircraft);
             await _repository.SaveAsync();
 
-            _logger.LogInfo($"INFO: User {userId} updated aircraft {id}.");
+            _logger.LogInfo($"User {userId} updated aircraft {id}.");
 
             return NoContent();
         }
 
-        // PUT api/aircrafts/id/5/save
+        // PUT api/aircrafts/5/save
         /// <summary>
         /// Save aircraft {id} to current user bookmarks
         /// </summary>
@@ -345,14 +345,14 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"ERROR: user not logged in.");
+                _logger.LogError($"User not logged in.");
                 return Unauthorized("User not logged in.");
             }
 
             var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
-                _logger.LogError($"ERROR: aircraft id {id}, not found.");
+                _logger.LogError($"Aircraft id {id}, not found.");
                 return NotFound("Aircraft id not found.");
             }
 
@@ -362,12 +362,14 @@ namespace App.Controllers.V1
             _repository.Aircraft.UpdateAircraft(existingAircraft);
             await _repository.SaveAsync();
 
-            _logger.LogInfo($"INFO: User {userId} saved aircraft {id}.");
+            var aircraftResponse = _mapper.Map<AircraftReadDTO>(existingAircraft);
 
-            return NoContent();
+            _logger.LogInfo($"User {userId} saved aircraft {aircraftResponse.Id}.");
+
+            return Ok(aircraftResponse);
         }
 
-        // PATCH api/aircrafts/id/5
+        // PATCH api/aircrafts/5
         /// <summary>
         /// Partial update aircraft {id} in the database
         /// </summary>
@@ -383,20 +385,20 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"ERROR: user not logged in.");
+                _logger.LogError($"User not logged in.");
                 return Unauthorized();
             }
 
             var existingAircraft = await _repository.Aircraft.GetAircraftByIdAsync(id);
             if (existingAircraft == null)
             {
-                _logger.LogError($"ERROR: aircraft {id} not found.");
+                _logger.LogError($"Aircraft {id} not found.");
                 return NotFound("Aircraft not found.");
             }
 
             if (existingAircraft.UserId != userId)
             {
-                _logger.LogError($"ERROR: user does not own this aircraft. Unable to update.");
+                _logger.LogError($"User does not own this aircraft. Unable to update.");
                 return Forbid("User does not own this aircraft. Unable to update.");
             }
 
@@ -405,7 +407,7 @@ namespace App.Controllers.V1
 
             if (!TryValidateModel(aircraftToPatch))
             {
-                _logger.LogError($"ERROR: validating aircraft update.");
+                _logger.LogError($"Validating aircraft update.");
                 return ValidationProblem(ModelState);
             }
 
@@ -415,12 +417,12 @@ namespace App.Controllers.V1
             await _repository.SaveAsync();
 
             _logger.LogInfo(
-                $"INFO: User {userId} partially updated aircraft {id}.");
+                $" User {userId} partially updated aircraft {id}.");
 
             return NoContent();
         }
 
-        // DELETE api/aircrafts/id/5
+        // DELETE api/aircrafts/5
         /// <summary>
         /// Delete aircraft {id} from database
         /// </summary>
@@ -434,7 +436,7 @@ namespace App.Controllers.V1
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"ERROR: user not logged in. Unable to delete aircraft.");
+                _logger.LogError($"User not logged in. Unable to delete aircraft.");
                 return Unauthorized();
             }
 
@@ -446,14 +448,14 @@ namespace App.Controllers.V1
 
             if (existingAircraft.UserId != userId)
             {
-                _logger.LogError("ERROR: user does not own this aircraft. Unable to delete aircraft.");
+                _logger.LogError("User does not own this aircraft. Unable to delete aircraft.");
                 return Forbid("User does not own this aircraft. Unable to delete aircraft.");
             }
 
             _repository.Aircraft.DeleteAircraft(existingAircraft);
             await _repository.SaveAsync();
 
-            _logger.LogInfo($"INFO: User {userId} deleted aircraft {id}.");
+            _logger.LogInfo($"User {userId} deleted aircraft {id}.");
 
             return NoContent();
         }

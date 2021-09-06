@@ -45,7 +45,7 @@ namespace App.Controllers.V1
         {
             if (userTokens is null)
             {
-                _logger.LogError($"Error validating user tokens");
+                _logger.LogError($"Error validating user tokens model");
                 return BadRequest("Invalid client request.");
             }
 
@@ -57,9 +57,17 @@ namespace App.Controllers.V1
 
             var user = await _userManager.FindByNameAsync(username);
 
-            if (user == null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            if (user == null) 
             {
-                _logger.LogError($"Error validating user tokens");
+                _logger.LogError($"Error validating user tokens. User not found.");
+                return BadRequest("Invalid client request");
+            } else if (user.RefreshToken != refreshToken)
+            {
+                _logger.LogError($"Error validating user tokens. Refresh token not valid.");
+                return BadRequest("Invalid client request");
+            } else if (user.RefreshTokenExpiryTime <= DateTime.Now)
+            {
+                _logger.LogError($"Error validating user tokens. Refresh token expired.");
                 return BadRequest("Invalid client request");
             }
 
@@ -69,7 +77,7 @@ namespace App.Controllers.V1
             user.RefreshToken = newRefreshToken;
             await _context.SaveChangesAsync();
 
-            _logger.LogInfo( $"INFO: Tokens refreshed");
+            _logger.LogInfo($"Tokens refreshed");
 
             return new ObjectResult(new 
             {
@@ -95,7 +103,7 @@ namespace App.Controllers.V1
 
             await _context.SaveChangesAsync();
 
-            _logger.LogInfo( $"INFO: Tokens revoked");
+            _logger.LogInfo($"Tokens revoked");
 
             return NoContent();
         }
