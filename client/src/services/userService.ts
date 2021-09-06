@@ -27,7 +27,8 @@ const register = async ({...newUser}: UserRegistration) => {
 
     return response.status;
   } catch(error) {
-    return error.message;
+    console.log("ERROR: Registering new user - ",error);
+    return error;
   }
 };
 
@@ -51,8 +52,8 @@ const login = async (credentials: UserLogin) => {
 
     return response;
   } catch(error) {
-    console.log(error);
-    return error.message;
+    console.log("ERROR: Login user - ", error);
+    return error;
   }
 };
 
@@ -71,8 +72,8 @@ const forgotPassword = async (model: ForgotPasswordModel) => {
 
     return response.status;
   } catch(error) {
-    console.log(error);
-    return error.message;
+    console.log("ERROR: Sending password reset link - ", error);
+    return error;
   }
 };
 
@@ -90,8 +91,8 @@ const resetPassword = async (model: ResetPasswordModel) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
-    return error.message;
+    console.log("ERROR: Reseting password - ", error);
+    return error;
   }
 };
 

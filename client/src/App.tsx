@@ -31,6 +31,7 @@ import Footer from "./components/Footer/Footer";
 // import Map from "./components/Map/Map";
 
 import "./App.scss";
+import bookmarkService from "./services/bookmarkService";
 
 const App = (): JSX.Element =>{
 
@@ -44,26 +45,22 @@ const App = (): JSX.Element =>{
     refreshAircrafts();
   }, []);
 
-  // Sets user saved aircrafts
-  useEffect(() => {
-    isUserAuthenticated()
-      .then(response => {
-
-        if (response) {
-          aircraftService.getAircraftsSavedByUser()
-            .then(response => setAircraftsSaved(response));
-        }
-    
-        console.log(aircraftsSaved);
-    });
-  }, [user]);
-
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
     isUserAuthenticated()
-      .then(_ => setUser(getUserData()));
+      .then(isAuthenticated => 
+        isAuthenticated 
+        ? setUser(getUserData()) 
+        : setUser(null));
   }, []);
 
+  // Sets user saved aircrafts
+  useEffect(() => {
+    user
+    ? aircraftService.getAircraftsSavedByUser()
+        .then(response => setAircraftsSaved(response))
+    : setAircraftsSaved([]);
+  }, [user]);
 
   /* Aircrafts state handlers */
   const refreshAircrafts = () => {
@@ -92,6 +89,20 @@ const App = (): JSX.Element =>{
       .then(() => setAircrafts(
         aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : editedAircraft)
       ));
+  };
+
+  const handleAircraftSave = async (aircraftId: string) => {
+    await aircraftService.saveAircraft(aircraftId)
+      .then(response => setAircraftsSaved(aircraftsSaved.concat(response)))
+      .catch(error => console.log("ERROR: retrieving aircraft: ", error)
+      );
+  };
+
+  const handleAircraftUnsave = async (aircraftId: string) => {
+    await bookmarkService.unsaveAircraft(aircraftId)
+      .then(_ => setAircraftsSaved(
+        aircraftsSaved.filter(aircraft => aircraft.id === aircraftId))
+      ).catch(error => console.log("ERROR: retrieving aircraft: ", error));
   };
 
   const handleAircraftSelection = (selected: AircraftData | null) => {
@@ -142,6 +153,8 @@ const App = (): JSX.Element =>{
                 aircraftsSaved={aircraftsSaved}
                 handleAircraftsFilter={handleAircraftsFilter} 
                 handleAircraftSelection={handleAircraftSelection}
+                handleAircraftSave={handleAircraftSave}
+                handleAircraftUnsave={handleAircraftUnsave}
               />
             </Route>
 

@@ -16,7 +16,7 @@ export const refreshToken = async (token: string | null) => {
     return false;
   }
 
-  const credentials = JSON.stringify({ token: token, refreshToken: refreshToken });
+  const credentials = { token: token, refreshToken: refreshToken };
 
   try {
     const config = {
@@ -41,7 +41,7 @@ export const refreshToken = async (token: string | null) => {
 
     return false;
   } catch (ex) {
-    console.log("ERROR: refreshing token.", ex.error);
+    console.log("ERROR: refreshing token.", ex);
     return false;
   }
 };
