@@ -9,20 +9,18 @@ interface Props {
   user: UserPublic | null;
   aircraft: AircraftData;
   aircraftsSaved: AircraftData[] | null;
+  handleAircraftSave: (aircraftId: string) => Promise<void>;
+  handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }
 
 // TODO: refresh on user log status change
 const SaveOptions: React.FC<Props> = ({
   user,
   aircraft,
-  aircraftsSaved
+  aircraftsSaved,
+  handleAircraftSave,
+  handleAircraftUnsave
 }) => {
-
-  // TODO: handling
-
-  // save
-
-  // unsave
 
   return (
     <div className={Style.SaveOptions}>
@@ -34,9 +32,10 @@ const SaveOptions: React.FC<Props> = ({
             // User is author.
             ? <button disabled={true}>Owned</button>
             // User is not author. Checks if user has saved aircraft.
-            : aircraftsSaved?.find(saved => saved.id !== aircraft.id)
-              ? <button>Saved</button>
-              : <button>Save</button>
+            : aircraftsSaved?.find(saved => saved.id === aircraft.id)
+              // FIXME
+              ? <button onClick={() => handleAircraftUnsave(aircraft.id)}>Saved</button>
+              : <button onClick={() => handleAircraftSave(aircraft.id)}>Save</button>
           // User is not logged.
           : <LinkedButton path={`/login`}>
               Login

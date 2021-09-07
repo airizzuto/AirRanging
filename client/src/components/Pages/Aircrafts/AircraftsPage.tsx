@@ -1,8 +1,5 @@
 import React from 'react';
 
-// import aircraftService from '../../../services/aircraftService';
-// import bookmarkService from '../../../services/bookmarkService';
-
 import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 
@@ -18,6 +15,8 @@ interface Props {
   aircraftsSaved: AircraftData[] | null;
   handleAircraftsFilter: (filter: string) => Promise<void>;
   handleAircraftSelection: (selected: AircraftData | null) => void;
+  handleAircraftSave: (aircraftId: string) => Promise<void>;
+  handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }
 
 const Aircrafts: React.FC<Props> = ({
@@ -25,6 +24,8 @@ const Aircrafts: React.FC<Props> = ({
   aircrafts,
   aircraftsSaved,
   handleAircraftsFilter,
+  handleAircraftSave,
+  handleAircraftUnsave
 }) => {
   const [filterInput, setFilterInput] = React.useState("");
 
@@ -33,14 +34,6 @@ const Aircrafts: React.FC<Props> = ({
     setFilterInput(value);
     handleAircraftsFilter(value);
   };
-
-  // const saveAircraftToUser = (aircraftId: string) => {
-  //   aircraftService.saveAircraft(aircraftId);
-  // };
-
-  // const unsaveAircraft = (aircraftId: string) => {
-  //   bookmarkService.unsaveAircraft(aircraftId);
-  // };
 
   const columns = React.useMemo(
     () => [
@@ -101,7 +94,13 @@ const Aircrafts: React.FC<Props> = ({
         // accessor: "aircraftDetails",
         Cell: ({ cell }: any) => (
           <div>
-            <SaveOptions user={user} aircraft={cell.row.original} aircraftsSaved={aircraftsSaved}/>
+            <SaveOptions 
+              user={user} 
+              aircraft={cell.row.original}
+              aircraftsSaved={aircraftsSaved}
+              handleAircraftSave={handleAircraftSave}
+              handleAircraftUnsave={handleAircraftUnsave}
+            />
           </div>
         )
       },
@@ -121,6 +120,13 @@ const Aircrafts: React.FC<Props> = ({
           onChange={handleFilterChange}
           placeholder={"Search aircraft model"}
         />
+
+        {/* TODO: Dropdown filter */}
+
+        <div> {/* TODO: filter saved */}
+          <label>Show saved</label>
+          <input className={Style.Checkbox} type="checkbox" />
+        </div>
 
         <div className={Style.CreateNew}>
           <LinkedButton path="/aircrafts/create">Create Aircraft</LinkedButton>
