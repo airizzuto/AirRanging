@@ -12,14 +12,14 @@ export const aircraftSchema: SchemaOf<NewAircraft> = object().shape({
   manufacturer: string()
     .max(255)
     .matches(
-      new RegExp("^[a-zA-Z0-9]+[-\\s\\w]*[a-zA-Z0-9]$"),
-      "Only alphanumeric and spaces allowed"
+      new RegExp("^[a-zA-Z0-9]+[-\\s\\w/]*[a-zA-Z0-9]$"),
+      "Only alphanumeric characters, '/', '-' and spaces are allowed."
     ).defined("Manufacturer must be provided"),
   model: string()
     .max(255)
     .matches(
-      new RegExp("^[a-zA-Z0-9]+[-\\s\\w]*[a-zA-Z0-9]$"),
-      "Only alphanumeric and spaces allowed"
+      new RegExp("^[a-zA-Z0-9]+[-\\s\\w/]*[a-zA-Z0-9]$"),
+      "Only alphanumeric characters, '/', '-' and spaces are allowed."
     ).defined("Model must be provided"),
   aircraftType: mixed<keyof typeof EAircraftType>()
     .defined("Aircraft type is required"),
@@ -35,9 +35,9 @@ export const aircraftSchema: SchemaOf<NewAircraft> = object().shape({
     .moreThan(0, "Engine must have at least one engine")
     .defined("Aircraft engine count is required"),
   maxTakeoffWeight: number()
-    .moreThan(0, ""),
+    .moreThan(0, "Maximum takeoff weight must be positive"),
   cruiseSpeed: number()
-    .positive(),
+    .positive("Cruise speed must be a positive number"),
   fuelCapacity: number()
     .moreThan(0, "Fuel capacity must be of more than 0")
     .defined("Fuel capacity is required"),
