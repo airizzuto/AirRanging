@@ -9,18 +9,32 @@ interface Props {
   user: UserPublic | null;
   aircraft: AircraftData;
   aircraftsSaved: AircraftData[] | null;
+  aircraftsOwned: AircraftData[] | null;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }
 
 // TODO: refresh on user log status change
 const SaveOptions: React.FC<Props> = ({
-  user,
+  user, // user ref?
   aircraft,
   aircraftsSaved,
+  aircraftsOwned,
   handleAircraftSave,
   handleAircraftUnsave
 }) => {
+
+  const isAircraftInUserList = (
+    aircraft: AircraftData,
+    userAicrafts: AircraftData[] | null
+  ): boolean => {
+    if (!userAicrafts) {
+      return false;
+    }
+    
+    return userAicrafts
+      .findIndex(userAircraft => userAircraft.id === aircraft.id) >= 0;
+  };
 
   return (
     <div className={Style.SaveOptions}>
@@ -28,12 +42,11 @@ const SaveOptions: React.FC<Props> = ({
         // Checks if user is logged.
         user
           // Checks if user is author.
-          ? aircraft.authorUsername === user?.username
+          ? isAircraftInUserList(aircraft, aircraftsOwned)
             // User is author.
             ? <button disabled={true}>Owned</button>
             // User is not author. Checks if user has saved aircraft.
-            : aircraftsSaved?.find(saved => saved.id === aircraft.id)
-              // FIXME
+            : isAircraftInUserList(aircraft, aircraftsSaved)
               ? <button onClick={() => handleAircraftUnsave(aircraft.id)}>Saved</button>
               : <button onClick={() => handleAircraftSave(aircraft.id)}>Save</button>
           // User is not logged.

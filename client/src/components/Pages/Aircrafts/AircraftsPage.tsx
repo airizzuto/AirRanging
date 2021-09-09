@@ -13,6 +13,7 @@ interface Props {
   aircrafts: AircraftData[];
   user: UserPublic | null;
   aircraftsSaved: AircraftData[] | null;
+  aircraftsOwned: AircraftData[] | null;
   handleAircraftsFilter: (filter: string) => Promise<void>;
   handleAircraftSelection: (selected: AircraftData | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
@@ -23,6 +24,7 @@ const Aircrafts: React.FC<Props> = ({
   user,
   aircrafts,
   aircraftsSaved,
+  aircraftsOwned,
   handleAircraftsFilter,
   handleAircraftSave,
   handleAircraftUnsave
@@ -98,6 +100,7 @@ const Aircrafts: React.FC<Props> = ({
               user={user} 
               aircraft={cell.row.original}
               aircraftsSaved={aircraftsSaved}
+              aircraftsOwned={aircraftsOwned}
               handleAircraftSave={handleAircraftSave}
               handleAircraftUnsave={handleAircraftUnsave}
             />
