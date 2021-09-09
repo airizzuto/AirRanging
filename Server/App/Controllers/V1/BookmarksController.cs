@@ -115,14 +115,7 @@ namespace App.Controllers.V1
                 return Unauthorized();
             }
 
-            var bookmark = await _repository.Bookmark.GetBookmarkedIdAsync(userId, aircraftId);
-            if (bookmark == null)
-            {
-                _logger.LogError($"User {userId}, Aircraft {aircraftId} bookmark not found.");
-                return NotFound();
-            }
-
-            _repository.Bookmark.Delete(bookmark);
+            _repository.Bookmark.RemoveBookmarkAsync(userId, aircraftId);
             await _repository.SaveAsync();
 
             _logger.LogInfo($"User {userId}, Aircraft {aircraftId} bookmark removed.");
