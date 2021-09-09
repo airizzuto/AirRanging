@@ -15,6 +15,7 @@ namespace Entities.Models.Identity
         public bool UsedToken { get; set; }  // If not in use no need to refresh
         public bool TokenInvalidated { get; set; }  // In case of change of email/password or security issues
 
+        // Navigation Properties
         public ICollection<Aircraft> AircraftsOwned { get; set; }
         public ICollection<Bookmark> Bookmarks { get; set; }
     }
