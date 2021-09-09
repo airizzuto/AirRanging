@@ -29,6 +29,14 @@ namespace Repository
             await DbContext.AddAsync(bookmark);
         }
 
+        public void RemoveBookmarkAsync(string userId, Guid aircraftId)
+        {
+            var bookmark = FindByCondition(bookmark => 
+                (bookmark.UserId == userId) && (bookmark.AircraftId == aircraftId));
+
+            DbContext.Remove(bookmark);
+        }
+
         public async Task<IEnumerable<Bookmark>> GetAllBookmarksAsync()
         {
             return await FindAll().ToListAsync();
