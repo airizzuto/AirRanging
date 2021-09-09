@@ -38,6 +38,7 @@ const App = (): JSX.Element =>{
   const [user, setUser] = useState<UserPublic | null>(null);
   const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
   const [aircraftsSaved, setAircraftsSaved] = useState<AircraftData[]>([]);
+  const [aircraftsOwned, setAircraftsOwned] = useState<AircraftData[]>([]);
   const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
 
   // Sets initial aircrafts
@@ -56,10 +57,8 @@ const App = (): JSX.Element =>{
 
   // Sets user saved aircrafts
   useEffect(() => {
-    user
-    ? aircraftService.getAircraftsSavedByUser()
-        .then(response => setAircraftsSaved(response))
-    : setAircraftsSaved([]);
+    refreshSavedAircrafts();
+    refreshOwnedAircrafts();
   }, [user]);
 
   /* Aircrafts state handlers */
@@ -67,6 +66,20 @@ const App = (): JSX.Element =>{
     aircraftService
       .getAllAircrafts()
       .then(response => setAircrafts(response));
+  };
+
+  const refreshSavedAircrafts = () => {
+    user
+    ? aircraftService.getAircraftsSavedByUser()
+        .then(response => setAircraftsSaved(response))
+    : setAircraftsSaved([]);
+  };
+
+  const refreshOwnedAircrafts = () => {
+    user
+    ? aircraftService.getAircraftsOwnedByUser()
+        .then(response => setAircraftsOwned(response))
+    : setAircraftsOwned([]);
   };
 
   const handleAircraftsFilter = async (filter: string) => {
@@ -151,6 +164,7 @@ const App = (): JSX.Element =>{
                 user={user}
                 aircrafts={aircrafts}
                 aircraftsSaved={aircraftsSaved}
+                aircraftsOwned={aircraftsOwned}
                 handleAircraftsFilter={handleAircraftsFilter} 
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftSave={handleAircraftSave}
