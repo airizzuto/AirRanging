@@ -66,18 +66,19 @@ namespace Repository
                 .ToListAsync();
         }
 
-        // TODO: retrieve aircraft?
         /// <summary>
         /// Retrieves bookmark referencing User and Aircraft.
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="aircraftId"></param>
         /// <returns>Bookmark</returns>
-        public async Task<Bookmark> GetBookmarkedIdAsync(string userId, Guid aircraftId)
+        public async Task<Aircraft> GetBookmarkIdAsync(string userId, Guid aircraftId)
         {
-            return await FindByCondition(b =>
+            var bookmark = await FindByCondition(b =>
                 b.UserId == userId && b.AircraftId == aircraftId
-            ).FirstAsync();
+            ).FirstOrDefaultAsync();
+
+            return bookmark.Aircraft;
         }
     }
 }

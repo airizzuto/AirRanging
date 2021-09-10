@@ -25,7 +25,7 @@ namespace Repository
         /// <summary>
         /// Retrieves all aircrafts in context.
         /// </summary>
-        /// <param name="parameters"></param>
+        /// <param name="parameters">Aircraft parameters</param>
         /// <returns>List of all aircrafts</returns>
         public IQueryable<Aircraft> GetAllAircrafts(
             AircraftParameters parameters)
@@ -39,7 +39,7 @@ namespace Repository
         /// <summary>
         /// Retrieves all aircrafts in context.
         /// </summary>
-        /// <param name="parameters"></param>
+        /// <param name="parameters">Aircraft parameters</param>
         /// <returns>Paginated list of aircrafts</returns>
         public async Task<PagedList<Aircraft>> GetAllAircraftsPaginatedAsync(
             AircraftParameters parameters)
@@ -56,7 +56,7 @@ namespace Repository
         /// <summary>
         /// Retrieves all aircrafts in context that comply with search query parameters
         /// </summary>
-        /// <param name="parameters"></param>
+        /// <param name="parameters">Aircraft parameters</param>
         /// <returns>Paginated list of aircrafts</returns>
         public async Task<PagedList<Aircraft>> GetAircraftsWithSearchAsync(AircraftParameters parameters)
         {
@@ -87,19 +87,19 @@ namespace Repository
         /// <summary>
         /// Retrieves aircraft matching id parameter.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="aircraftId">Aircraft ID</param>
         /// <returns>Aircraft</returns>
-        public async Task<Aircraft> GetAircraftByIdAsync(Guid id)
+        public async Task<Aircraft> GetAircraftByIdAsync(Guid aircraftId)
         {
-            return await FindByCondition(a => a.Id.Equals(id))
+            return await FindByCondition(a => a.Id.Equals(aircraftId))
                 .FirstOrDefaultAsync();
         }
 
         /// <summary>
         /// Retrieves all aircrafts in context created by user id.
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="parameters"></param>
+        /// <param name="userId">User ID</param>
+        /// <param name="parameters">Aircrafts parameters</param>
         /// <returns>Paginated list of Aircraft</returns>
         public async Task<PagedList<Aircraft>> GetAircraftsOwnedAsync(
             string userId, AircraftParameters parameters)
@@ -128,18 +128,60 @@ namespace Repository
         }
 
         /// <summary>
+        /// Retrieves all aircrafts in context saved by user id.
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <param name="parameters">Aircrafts parameters</param>
+        /// <returns>Paginated list of Aircraft</returns>
+        public async Task<PagedList<Aircraft>> GetAircraftsSavedAsync(
+            string userId, AircraftParameters parameters)
+        {
+            var user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var aircrafts = user.Bookmarks.Select(b => b.Aircraft).ToList().AsQueryable();
+
+            #region Search Parameters
+            SearchByIcaoId(ref aircrafts, parameters.IcaoId);
+            SearchByManufacturer(ref aircrafts, parameters.Manufacturer);
+            SearchByModel(ref aircrafts, parameters.Model);
+            SearchByVariant(ref aircrafts, parameters.Variant);
+            SearchByEngineCount(ref aircrafts, parameters.EngineCount);
+            SearchByGreaterThanMaxRange(ref aircrafts, parameters.MaxRange);
+            SearchByAircraftType(ref aircrafts, parameters.AircraftType);
+            SearchByEngineType(ref aircrafts, parameters.EngineType);
+            SearchByFuelType(ref aircrafts, parameters.FuelType);
+            SearchByWeightCategory(ref aircrafts, parameters.WeightCategory);
+            #endregion
+
+            var aircraftsSorted = _sortHelper.ApplySort(aircrafts, parameters.OrderBy);
+
+            return await PagedList<Aircraft>.ToPagedList(
+                aircraftsSorted,
+                parameters.PageNumber,
+                parameters.PageSize);
+        }
+
+        /// <summary>
         /// Passes aircraft to be created by context.
         /// </summary>
-        /// <param name="aircraft"></param>
-        public async Task CreateAircraftAsync(Aircraft aircraft)
+        /// <param name="aircraft">Aircraft model</param>
+        /// <param name="userId">User ID</param>
+        public async Task<Aircraft> CreateAircraftAsync(Aircraft aircraft, string userId)
         {
+            var user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            aircraft.Id = Guid.NewGuid();
+            aircraft.UserId = userId;
+            aircraft.AuthorUsername = user.UserName;
+
             await DbContext.AddAsync(aircraft);
+
+            return aircraft;
         }
 
         /// <summary>
         /// Passes aircraft to be updated by context.
         /// </summary>
-        /// <param name="aircraft"></param>
+        /// <param name="aircraft">Aircraft model</param>
         public void UpdateAircraft(Aircraft aircraft)
         {
             Update(aircraft);
@@ -148,7 +190,7 @@ namespace Repository
         /// <summary>
         /// Passes aircraft to be deleted by context.
         /// </summary>
-        /// <param name="aircraft"></param>
+        /// <param name="aircraft">Aircraft model</param>
         public void DeleteAircraft(Aircraft aircraft)
         {
             Delete(aircraft);
@@ -157,27 +199,18 @@ namespace Repository
         public Aircraft CountAircraftSaved(Aircraft aircraft)
         {
             aircraft.SavesCount += 1;
+            UpdateAircraft(aircraft);
 
             return aircraft;
         }
 
-        public async Task<bool> UserOwnsAircraftAsync(Guid aircraftId, string userId)
+        public Aircraft CountAircraftUnsaved(Aircraft aircraft)
         {
-            var aircraft = await GetAircraftByIdAsync(aircraftId);
-            
-            if (aircraft == null)
-            {
-                return false;
-            }
+            aircraft.SavesCount -= 1;
+            UpdateAircraft(aircraft);
 
-            if (aircraft.UserId != userId)
-            {
-                return false;
-            }
-
-            return true;
+            return aircraft;
         }
-
 
         // TODO: extract to separate file?
         // Search Parameters

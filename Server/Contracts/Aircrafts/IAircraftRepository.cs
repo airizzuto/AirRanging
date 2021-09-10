@@ -19,15 +19,17 @@ namespace Contracts.Aircrafts
         Task<PagedList<Aircraft>> GetAircraftsOwnedAsync(
             string userId, AircraftParameters aircraftParameters);
 
+        Task<PagedList<Aircraft>> GetAircraftsSavedAsync(
+            string userId, AircraftParameters aircraftParameters);
+
         Task<PagedList<Aircraft>> GetAircraftsWithSearchAsync(
             AircraftParameters aircraftParameters);
 
-        // Task SaveToUserAsync(string userId, Guid aircraftId);
         Task<Aircraft> GetAircraftByIdAsync(Guid id);
-        Task CreateAircraftAsync(Aircraft aircraft);
+        Task<Aircraft> CreateAircraftAsync(Aircraft aircraft, string userId);
         void UpdateAircraft(Aircraft aircraft);
         void DeleteAircraft(Aircraft aircraft);
         Aircraft CountAircraftSaved(Aircraft aircraft);
-        Task<bool> UserOwnsAircraftAsync(Guid id, string getUserId);
+        Aircraft CountAircraftUnsaved(Aircraft aircraft);
     }
 }
