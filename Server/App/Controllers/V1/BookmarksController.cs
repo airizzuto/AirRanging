@@ -84,8 +84,8 @@ namespace App.Controllers.V1
                 return Unauthorized();
             }
 
-            var aircrafts = await _repository.Bookmark.GetBookmarkedIdAsync(userId, id);
-            if (aircrafts == null) 
+            var aircrafts = await _repository.Bookmark.GetBookmarkIdAsync(userId, id);
+            if (aircrafts == null)
             {
                 _logger.LogError($"Aircraft id {id} not found in user bookmark.");
                 return NotFound("Aircraft id not found");
