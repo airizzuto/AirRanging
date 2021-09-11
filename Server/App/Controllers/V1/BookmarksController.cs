@@ -16,9 +16,11 @@ namespace App.Controllers.V1
 {
     /// <summary>
     /// Bookmark model controller endpoints:
-    /// <para> GetUserBookmarks             - GET     api/bookmarks    </para>
-    /// <para> GetUserBookmarkedAircraftId  - GET     api/bookmarks/5  </para>
-    /// <para> DeleteAircraftBookmark       - DELETE  api/bookmarks/5  </para>
+    /// <para> GetUserBookmarks             - GET    -  api/bookmarks        </para>
+    /// <para> GetUserBookmarkedAircraftId  - GET    -  api/bookmarks/5      </para>
+    /// <para> GetAircraftsSavedByUser      - GET    -  api/bookmarks/saved  </para>
+    /// <para> SaveAircraftId               - POST   -  api/bookmarks/5      </para>
+    /// <para> UnsaveAircraftId             - DELETE -  api/bookmarks/5      </para>
     /// </summary>
     [ApiController]
     [Route("/api/bookmarks")]
@@ -73,8 +75,8 @@ namespace App.Controllers.V1
         /// <response code="200">Retrieves aircraft id bookmarked by user</response>
         /// <response code="401">Unauthorized. User not logged in.</response>
         /// <response code="404">Aircraft id not found in bookmark.</response>
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AircraftReadDTO>> GetUserBookmarkedAircraftId(Guid id)
+        [HttpGet("{aircraftId}")]
+        public async Task<ActionResult<AircraftReadDTO>> GetUserBookmarkedAircraftId(string aircraftId)
         {
             var userId = HttpContext.GetUserId();
             if (userId == null)
@@ -84,41 +86,125 @@ namespace App.Controllers.V1
                 return Unauthorized();
             }
 
-            var aircrafts = await _repository.Bookmark.GetBookmarkIdAsync(userId, id);
+            var aircrafts = await _repository.Bookmark.GetBookmarkIdAsync(userId, aircraftId);
             if (aircrafts == null)
             {
-                _logger.LogError($"Aircraft id {id} not found in user bookmark.");
+                _logger.LogError($"Aircraft id {aircraftId} not found in user bookmark.");
                 return NotFound("Aircraft id not found");
             }
 
             var aircraftsResponse = _mapper.Map<AircraftReadDTO>(aircrafts);
-            _logger.LogInfo($" Returning aircraft {id}.");
+            _logger.LogInfo($" Returning aircraft {aircraftId}.");
 
             return Ok(aircraftsResponse);
         }
 
-        // DELETE api/bookmarks/id
+        
+        // GET api/bookmarks/saved
         /// <summary>
-        /// Removes bookmark for aircraft id
+        /// Retrieves aircrafts created by user.
         /// </summary>
-        /// <response code="204">Bookmark removed successfully</response>
-        /// <response code="401">Unauthorized. User not logged in.</response>
-        /// <response code="404">Aircraft id not found in bookmark</response>
-        [HttpDelete("{aircraftId}")]
-        public async Task<IActionResult> DeleteBookmarkedAircraft(Guid aircraftId)
+        /// <response code="200">Aircrafts retrieved successfully</response>
+        /// <response code="401">User not logged in. Unable to retrieve user aircrafts</response>
+        [HttpGet("saved")]
+        public async Task<IActionResult> GetSavedAircrafts()
         {
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
-                _logger.LogError($"User not logged in. Unable to create aircraft.");
+                _logger.LogError($" User not logged in.");
 
-                return Unauthorized();
+                return Unauthorized("User not logged in.");
+            }
+
+            var aircrafts = await _repository.Bookmark.GetAircraftsBookmarkedAsync(userId);
+
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+
+            _logger.LogInfo(
+                $" Returning paginated {aircraftsResponse.Count()} aircrafts from db."
+            );
+
+            return Ok(aircraftsResponse);
+        }
+
+        // POST api/bookmarks/
+        /// <summary>
+        /// Save aircraft {id} to current user bookmarks
+        /// </summary>
+        /// <response code="204">Aircraft {id} saved to current user bookmarks</response>
+        /// <response code="401">User not logged in</response>
+        /// <response code="404">Aircraft id not found</response>
+        [HttpPost]
+        public async Task<IActionResult> SaveAircraftId([FromBody] string aircraftId)
+        {
+            Console.WriteLine($"Trying to save aircraft {aircraftId}");
+            var userId = HttpContext.GetUserId();
+            if (userId == null)
+            {
+                _logger.LogError($" User not logged in.");
+                return Unauthorized("User not logged in.");
+            }
+
+            var existingAircraft = await _repository.Aircraft
+                .GetAircraftByIdAsync(aircraftId);
+            if (existingAircraft == null)
+            {
+                _logger.LogError($" Aircraft {aircraftId}, not found.");
+                return NotFound("Aircraft not found.");
+            }
+
+            var isAircraftAlreadySaved = await _repository.Bookmark
+                .GetBookmarkIdAsync(userId, aircraftId);
+            if (isAircraftAlreadySaved != null)
+            {
+                _logger.LogError($" Aircraft {aircraftId} already saved to user {userId}.");
+                return BadRequest(" Aircraft already saved");
+            }
+
+            await _repository.Bookmark.SaveToBookmarkAsync(userId, aircraftId);
+            _repository.Aircraft.CountAircraftSaved(existingAircraft);
+
+            await _repository.SaveAsync();
+
+            var aircraftResponse = _mapper.Map<AircraftReadDTO>(existingAircraft);
+
+            _logger.LogInfo($"User {userId} saved aircraft {aircraftResponse.Id}.");
+
+            return Ok(aircraftResponse);
+        }
+
+        // DELETE api/bookmarks/5
+        /// <summary>
+        /// Unsaves aircraft {id} to current user bookmarks
+        /// </summary>
+        /// <param name="aircraftId">aircraft ID</param>
+        /// <response code="204">Aircraft {id} saved to current user bookmarks</response>
+        /// <response code="401">User not logged in</response>
+        /// <response code="404">Aircraft id not found</response>
+        [HttpDelete("{aircraftId}")]
+        public async Task<IActionResult> UnsaveAircraftId(string aircraftId)
+        {
+            var userId = HttpContext.GetUserId();
+            if (userId == null)
+            {
+                _logger.LogError($"User not logged in.");
+                return Unauthorized("User not logged in.");
+            }
+
+            var existingAircraft = await _repository.Bookmark.GetBookmarkIdAsync(userId, aircraftId);
+            if (existingAircraft == null)
+            {
+                _logger.LogError($"Aircraft id {aircraftId}, not found or not saved by user {userId}.");
+                return NotFound("Aircraft id not saved.");
             }
 
             _repository.Bookmark.RemoveBookmarkAsync(userId, aircraftId);
+            _repository.Aircraft.CountAircraftUnsaved(existingAircraft);
+
             await _repository.SaveAsync();
 
-            _logger.LogInfo($"User {userId}, Aircraft {aircraftId} bookmark removed.");
+            _logger.LogInfo($"User {userId} unsaved aircraft {aircraftId}.");
 
             return NoContent();
         }
