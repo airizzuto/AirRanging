@@ -106,7 +106,7 @@ const App = (): JSX.Element =>{
 
   const handleAircraftSave = async (aircraftId: string) => {
     await aircraftService.saveAircraft(aircraftId)
-      .then(response => setAircraftsSaved(aircraftsSaved.concat(response)))
+      .then(_ => refreshSavedAircrafts())
       .catch(error => console.log("ERROR: retrieving aircraft: ", error)
       );
   };
