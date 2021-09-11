@@ -25,7 +25,7 @@ namespace Contracts.Aircrafts
         Task<PagedList<Aircraft>> GetAircraftsWithSearchAsync(
             AircraftParameters aircraftParameters);
 
-        Task<Aircraft> GetAircraftByIdAsync(Guid id);
+        Task<Aircraft> GetAircraftByIdAsync(string id);
         Task<Aircraft> CreateAircraftAsync(Aircraft aircraft, string userId);
         void UpdateAircraft(Aircraft aircraft);
         void DeleteAircraft(Aircraft aircraft);

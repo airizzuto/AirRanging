@@ -89,9 +89,9 @@ namespace Repository
         /// </summary>
         /// <param name="aircraftId">Aircraft ID</param>
         /// <returns>Aircraft</returns>
-        public async Task<Aircraft> GetAircraftByIdAsync(Guid aircraftId)
+        public async Task<Aircraft> GetAircraftByIdAsync(string aircraftId)
         {
-            return await FindByCondition(a => a.Id.Equals(aircraftId))
+            return await FindByCondition(a => a.Id.Equals(Guid.Parse(aircraftId)))
                 .FirstOrDefaultAsync();
         }
 

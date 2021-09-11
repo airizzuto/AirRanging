@@ -21,6 +21,22 @@ namespace Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="aircraftId"></param>
+        public async Task SaveToBookmarkAsync(string userId, string aircraftId)
+        {
+            var bookmark = new Bookmark
+            {
+                AircraftId = Guid.Parse(aircraftId),
+                UserId = userId
+            };
+
+            await DbContext.AddAsync(bookmark);
+        }
+
+        /// <summary>
+        /// Creates a new <typeparamref name="Bookmark">Bookmark</typeparamref> used to save Aircraft reference to ApplicationUser.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="aircraftId"></param>
         public async Task SaveToBookmarkAsync(string userId, Guid aircraftId)
         {
             var bookmark = new Bookmark
@@ -37,10 +53,10 @@ namespace Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="aircraftId"></param>
-        public void RemoveBookmarkAsync(string userId, Guid aircraftId)
+        public void RemoveBookmarkAsync(string userId, string aircraftId)
         {
             var bookmark = FindByCondition(bookmark => 
-                (bookmark.UserId == userId) && (bookmark.AircraftId == aircraftId));
+                (bookmark.UserId == userId) && (bookmark.AircraftId == Guid.Parse(aircraftId)));
 
             DbContext.Remove(bookmark);
         }
@@ -72,10 +88,10 @@ namespace Repository
         /// <param name="userId"></param>
         /// <param name="aircraftId"></param>
         /// <returns>Bookmark</returns>
-        public async Task<Aircraft> GetBookmarkIdAsync(string userId, Guid aircraftId)
+        public async Task<Aircraft> GetBookmarkIdAsync(string userId, string aircraftId)
         {
             var bookmark = await FindByCondition(b =>
-                b.UserId == userId && b.AircraftId == aircraftId
+                b.UserId == userId && b.AircraftId == Guid.Parse(aircraftId)
             ).FirstOrDefaultAsync();
 
             return bookmark.Aircraft;
