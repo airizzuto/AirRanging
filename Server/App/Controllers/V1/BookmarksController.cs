@@ -128,7 +128,6 @@ namespace App.Controllers.V1
             return Ok(aircraftsResponse);
         }
 
-        // FIXME: JsonSerializer self referencing loop
         // POST api/bookmarks/
         /// <summary>
         /// Save aircraft {id} to current user bookmarks
@@ -170,7 +169,7 @@ namespace App.Controllers.V1
 
             _logger.LogInfo($"User {bookmarkCreated.UserId} saved aircraft {bookmarkCreated.AircraftId}.");
 
-            return Ok(bookmarkCreated);
+            return Ok(); // TODO: return bookmark?
         }
 
         // DELETE api/bookmarks/5
