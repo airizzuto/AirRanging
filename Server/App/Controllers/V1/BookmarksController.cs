@@ -128,6 +128,7 @@ namespace App.Controllers.V1
             return Ok(aircraftsResponse);
         }
 
+        // FIXME: JsonSerializer self referencing loop
         // POST api/bookmarks/
         /// <summary>
         /// Save aircraft {id} to current user bookmarks
@@ -161,21 +162,15 @@ namespace App.Controllers.V1
                 return BadRequest(" Aircraft already saved");
             }
 
-            var bookmarkCreated = await _repository.Bookmark.CreateBookmarkAsync(userId, existingAircraft.Id);
+            var bookmarkCreated = await _repository.Bookmark.CreateBookmarkAsync(userId, request.aircraftId);
             _repository.Aircraft.CountAircraftSaved(existingAircraft);
 
             await _repository.SaveAsync();
 
-            var aircraftResponse = _mapper.Map<AircraftReadDTO>(existingAircraft);
 
-            _logger.LogInfo($"User {userId} saved aircraft {aircraftResponse.Id}.");
+            _logger.LogInfo($"User {bookmarkCreated.UserId} saved aircraft {bookmarkCreated.AircraftId}.");
 
-            // FIXME: response
-            return CreatedAtAction(
-                actionName: nameof(GetUserBookmarkedAircraftId),
-                routeValues: new {aircraftId = bookmarkCreated.AircraftId},
-                value: bookmarkCreated
-            );
+            return Ok(bookmarkCreated);
         }
 
         // DELETE api/bookmarks/5

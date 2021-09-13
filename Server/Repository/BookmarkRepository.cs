@@ -95,6 +95,10 @@ namespace Repository
                 b.UserId == userId && b.AircraftId == Guid.Parse(aircraftId)
             ).FirstOrDefaultAsync();
 
+            if (bookmark == null) {
+                return null;
+            }
+
             bookmark.Aircraft = await DbContext.Aircrafts.FindAsync(bookmark.AircraftId);
 
             return bookmark;
