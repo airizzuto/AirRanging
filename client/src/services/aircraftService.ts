@@ -89,9 +89,7 @@ const createAircraft = async (newAircraft: NewAircraft) => {
   try {
     if (await isUserAuthenticated()) {
       const config = {
-        headers: [
-          { Authorization: `Bearer ${getStoredToken()}` },
-        ]
+        headers: { Authorization: `Bearer ${getStoredToken()}` },
       };
 
       const response = await axios.post(
@@ -111,15 +109,13 @@ const saveAircraft = async (aircraftId: string) => {
   try {
     if (await isUserAuthenticated()) {
       const config = {
-        headers: [
-          { Authorization: `Bearer ${getStoredToken()}` },
-        ]
+        headers: { Authorization: `Bearer ${getStoredToken()}` },
       };
       
       //FIXME: error parsing payload data
       const response = await axios.post(
         BASE_URL + "/api/bookmarks",
-        aircraftId,
+        {aircraftId: aircraftId},
         config
       );
 
@@ -135,9 +131,7 @@ const unsaveAircraft = async (aircraftId: string) => {
   try {
     if (await isUserAuthenticated()) {
       const config = {
-        headers: [
-          { Authorization: `Bearer ${getStoredToken()}` },
-        ]
+        headers: { Authorization: `Bearer ${getStoredToken()}` },
       };
     
       const response = await axios.delete(

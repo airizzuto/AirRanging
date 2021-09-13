@@ -136,9 +136,8 @@ namespace App.Controllers.V1
         /// <response code="401">User not logged in</response>
         /// <response code="404">Aircraft id not found</response>
         [HttpPost]
-        public async Task<IActionResult> SaveAircraftId([FromBody] string aircraftId)
+        public async Task<IActionResult> SaveAircraftId([FromBody] AircraftSaveDTO request)
         {
-            Console.WriteLine($"Trying to save aircraft {aircraftId}");
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
@@ -147,22 +146,22 @@ namespace App.Controllers.V1
             }
 
             var existingAircraft = await _repository.Aircraft
-                .GetAircraftByIdAsync(aircraftId);
+                .GetAircraftByIdAsync(request.aircraftId);
             if (existingAircraft == null)
             {
-                _logger.LogError($" Aircraft {aircraftId}, not found.");
+                _logger.LogError($" Aircraft {request.aircraftId}, not found.");
                 return NotFound("Aircraft not found.");
             }
 
             var isAircraftAlreadySaved = await _repository.Bookmark
-                .GetBookmarkIdAsync(userId, aircraftId);
+                .GetBookmarkIdAsync(userId, request.aircraftId);
             if (isAircraftAlreadySaved != null)
             {
-                _logger.LogError($" Aircraft {aircraftId} already saved to user {userId}.");
+                _logger.LogError($" Aircraft {request.aircraftId} already saved to user {userId}.");
                 return BadRequest(" Aircraft already saved");
             }
 
-            await _repository.Bookmark.SaveToBookmarkAsync(userId, aircraftId);
+            var bookmarkCreated = await _repository.Bookmark.CreateBookmarkAsync(userId, request.aircraftId);
             _repository.Aircraft.CountAircraftSaved(existingAircraft);
 
             await _repository.SaveAsync();
@@ -171,7 +170,12 @@ namespace App.Controllers.V1
 
             _logger.LogInfo($"User {userId} saved aircraft {aircraftResponse.Id}.");
 
-            return Ok(aircraftResponse);
+            // FIXME: response
+            return CreatedAtAction(
+                actionName: nameof(GetUserBookmarkedAircraftId),
+                routeValues: new {aircraftId = bookmarkCreated.AircraftId},
+                value: bookmarkCreated
+            );
         }
 
         // DELETE api/bookmarks/5
@@ -192,12 +196,14 @@ namespace App.Controllers.V1
                 return Unauthorized("User not logged in.");
             }
 
-            var existingAircraft = await _repository.Bookmark.GetBookmarkIdAsync(userId, aircraftId);
-            if (existingAircraft == null)
+            var existingBookmark = await _repository.Bookmark.GetBookmarkIdAsync(userId, aircraftId);
+            if (existingBookmark == null)
             {
                 _logger.LogError($"Aircraft id {aircraftId}, not found or not saved by user {userId}.");
                 return NotFound("Aircraft id not saved.");
             }
+
+            var existingAircraft = existingBookmark.Aircraft;
 
             _repository.Bookmark.RemoveBookmarkAsync(userId, aircraftId);
             _repository.Aircraft.CountAircraftUnsaved(existingAircraft);
