@@ -107,15 +107,13 @@ const App = (): JSX.Element =>{
   const handleAircraftSave = async (aircraftId: string) => {
     await aircraftService.saveAircraft(aircraftId)
       .then(_ => refreshSavedAircrafts())
-      .catch(error => console.log("ERROR: retrieving aircraft: ", error)
-      );
+      .catch(error => console.log("ERROR: retrieving aircraft: ", error));
   };
 
   const handleAircraftUnsave = async (aircraftId: string) => {
     await bookmarkService.unsaveAircraft(aircraftId)
-      .then(_ => setAircraftsSaved(
-        aircraftsSaved.filter(aircraft => aircraft.id === aircraftId))
-      ).catch(error => console.log("ERROR: retrieving aircraft: ", error));
+      .then(_ => refreshSavedAircrafts())
+      .catch(error => console.log("ERROR: retrieving aircraft: ", error));
   };
 
   const handleAircraftSelection = (selected: AircraftData | null) => {
