@@ -21,7 +21,7 @@ namespace Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="aircraftId"></param>
-        public async Task SaveToBookmarkAsync(string userId, string aircraftId)
+        public async Task<Bookmark> CreateBookmarkAsync(string userId, string aircraftId)
         {
             var bookmark = new Bookmark
             {
@@ -30,6 +30,8 @@ namespace Repository
             };
 
             await DbContext.AddAsync(bookmark);
+
+            return bookmark;
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="aircraftId"></param>
-        public async Task SaveToBookmarkAsync(string userId, Guid aircraftId)
+        public async Task<Bookmark> CreateBookmarkAsync(string userId, Guid aircraftId)
         {
             var bookmark = new Bookmark
             {
@@ -46,6 +48,8 @@ namespace Repository
             };
 
             await DbContext.AddAsync(bookmark);
+
+            return bookmark;
         }
 
         /// <summary>
@@ -88,13 +92,13 @@ namespace Repository
         /// <param name="userId"></param>
         /// <param name="aircraftId"></param>
         /// <returns>Bookmark</returns>
-        public async Task<Aircraft> GetBookmarkIdAsync(string userId, string aircraftId)
+        public async Task<Bookmark> GetBookmarkIdAsync(string userId, string aircraftId)
         {
             var bookmark = await FindByCondition(b =>
                 b.UserId == userId && b.AircraftId == Guid.Parse(aircraftId)
             ).FirstOrDefaultAsync();
 
-            return bookmark.Aircraft;
+            return bookmark;
         }
     }
 }
