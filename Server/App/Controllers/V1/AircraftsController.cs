@@ -230,7 +230,7 @@ namespace App.Controllers.V1
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
 
             await _repository.Aircraft.CreateAircraftAsync(aircraftModel, userId);
-            await _repository.Bookmark.SaveToBookmarkAsync(userId, aircraftModel.Id);
+            await _repository.Bookmark.CreateBookmarkAsync(userId, aircraftModel.Id);
 
             await _repository.SaveAsync();
 
@@ -274,7 +274,7 @@ namespace App.Controllers.V1
             }
            
             var aircraftCopy = await _repository.Aircraft.CreateAircraftAsync(existingAircraft, userId);
-            await _repository.Bookmark.SaveToBookmarkAsync(userId, aircraftCopy.Id);
+            await _repository.Bookmark.CreateBookmarkAsync(userId, aircraftCopy.Id);
 
             await _repository.SaveAsync();
 
