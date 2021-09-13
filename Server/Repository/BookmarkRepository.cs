@@ -57,11 +57,8 @@ namespace Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="aircraftId"></param>
-        public void RemoveBookmarkAsync(string userId, string aircraftId)
+        public void RemoveBookmarkAsync(Bookmark bookmark)
         {
-            var bookmark = FindByCondition(bookmark => 
-                (bookmark.UserId == userId) && (bookmark.AircraftId == Guid.Parse(aircraftId)));
-
             DbContext.Remove(bookmark);
         }
 
@@ -97,6 +94,8 @@ namespace Repository
             var bookmark = await FindByCondition(b =>
                 b.UserId == userId && b.AircraftId == Guid.Parse(aircraftId)
             ).FirstOrDefaultAsync();
+
+            bookmark.Aircraft = await DbContext.Aircrafts.FindAsync(bookmark.AircraftId);
 
             return bookmark;
         }

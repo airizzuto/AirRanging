@@ -11,7 +11,7 @@ namespace Contracts
         Task<Bookmark> CreateBookmarkAsync(string userId, string aircraftId);
         Task<Bookmark> CreateBookmarkAsync(string userId, Guid aircraftId);
 
-        void RemoveBookmarkAsync(string userId, string aircraftId);
+        void RemoveBookmarkAsync(Bookmark bookmark);
 
         Task<IEnumerable<Bookmark>> GetAllBookmarksAsync();
         Task<IEnumerable<Aircraft>> GetAircraftsBookmarkedAsync(string userId);

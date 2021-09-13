@@ -112,7 +112,6 @@ const saveAircraft = async (aircraftId: string) => {
         headers: { Authorization: `Bearer ${getStoredToken()}` },
       };
       
-      //FIXME: error parsing payload data
       const response = await axios.post(
         BASE_URL + "/api/bookmarks",
         {aircraftId: aircraftId},

@@ -161,7 +161,7 @@ namespace App.Controllers.V1
                 return BadRequest(" Aircraft already saved");
             }
 
-            var bookmarkCreated = await _repository.Bookmark.CreateBookmarkAsync(userId, request.aircraftId);
+            var bookmarkCreated = await _repository.Bookmark.CreateBookmarkAsync(userId, existingAircraft.Id);
             _repository.Aircraft.CountAircraftSaved(existingAircraft);
 
             await _repository.SaveAsync();
@@ -203,10 +203,8 @@ namespace App.Controllers.V1
                 return NotFound("Aircraft id not saved.");
             }
 
-            var existingAircraft = existingBookmark.Aircraft;
-
-            _repository.Bookmark.RemoveBookmarkAsync(userId, aircraftId);
-            _repository.Aircraft.CountAircraftUnsaved(existingAircraft);
+            _repository.Aircraft.CountAircraftUnsaved(existingBookmark.Aircraft);
+            _repository.Bookmark.RemoveBookmarkAsync(existingBookmark);
 
             await _repository.SaveAsync();
 
