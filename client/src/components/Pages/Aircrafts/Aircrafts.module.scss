@@ -57,6 +57,25 @@
     grid-area: aircraft-table;
     z-index: 4;
   }
+
+  .SaveOptions {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  
+    button {
+      @include button.decorated;
+      background-color: color.$light2;
+      color: color.$light1;
+    }
+  
+    button:disabled {
+      @include button.decorated;
+      background-color: color.$light2;
+      color: color.$light1;
+    }
+  }
+  
 }
 
 @media (max-width: 600px) {

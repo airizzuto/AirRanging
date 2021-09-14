@@ -23,7 +23,7 @@ const AircraftSelectModal: React.FC<Props> = ({
   const handleAircraftsSelectionFilter = async (input: string) => {
     const aircraftsFiltered = await aircraftService
       .searchAircraftByModel(input)
-      .then(aircrafts => mapAircraftToFilter(aircrafts, "model"));
+      .then(response => mapAircraftToFilter(response.data, "model"));
     
       return aircraftsFiltered;
   };

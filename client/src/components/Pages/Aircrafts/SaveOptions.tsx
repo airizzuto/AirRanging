@@ -3,8 +3,6 @@ import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import LinkedButton from '../../Buttons/LinkedButton';
 
-import Style from "./SaveOptions.module.scss";
-
 interface Props {
   user: UserPublic | null;
   aircraft: AircraftData;
@@ -16,7 +14,7 @@ interface Props {
 
 // TODO: refresh on user log status change
 const SaveOptions: React.FC<Props> = ({
-  user, // user ref?
+  user,
   aircraft,
   aircraftsSaved,
   aircraftsOwned,
@@ -36,29 +34,20 @@ const SaveOptions: React.FC<Props> = ({
       .findIndex(userAircraft => userAircraft.id === aircraft.id) >= 0;
   };
 
-  return (
-    <div className={Style.SaveOptions}>
-      {
-        // Checks if user is logged.
-        user
-          // Checks if user is author.
-          ? isAircraftInUserList(aircraft, aircraftsOwned)
-            // User is author.
-            ? <button disabled={true}>Owned</button>
-            // User is not author. Checks if user has saved aircraft.
-            : isAircraftInUserList(aircraft, aircraftsSaved)
-              ? <button onClick={() => handleAircraftUnsave(aircraft.id)}>Saved</button>
-              : <button onClick={() => handleAircraftSave(aircraft.id)}>Save</button>
-          // User is not logged.
-          : <LinkedButton path={`/login`}>
-              Login
-            </LinkedButton>
-      }
+  if (user) {
+    if (isAircraftInUserList(aircraft, aircraftsOwned)) {
+      return <button disabled={true}>Owned</button>;
+    }
+    if (isAircraftInUserList(aircraft, aircraftsSaved)) {
+      return <button onClick={() => handleAircraftUnsave(aircraft.id)}>Saved</button>;
+    }
+    return <button onClick={() => handleAircraftSave(aircraft.id)}>Save</button>;
+  }
 
-      <LinkedButton path={`/aircrafts/details/${aircraft.id}`}>
-        View
-      </LinkedButton>
-    </div>
+  return (
+    <LinkedButton path={`/login`}>
+      Login
+    </LinkedButton>
   );
 };
 

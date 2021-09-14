@@ -95,7 +95,7 @@ const Aircrafts: React.FC<Props> = ({
         Header: " ",
         // accessor: "aircraftDetails",
         Cell: ({ cell }: any) => (
-          <div>
+          <div className={Style.SaveOptions}>
             <SaveOptions 
               user={user} 
               aircraft={cell.row.original}
@@ -104,6 +104,9 @@ const Aircrafts: React.FC<Props> = ({
               handleAircraftSave={handleAircraftSave}
               handleAircraftUnsave={handleAircraftUnsave}
             />
+            <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`}>
+              View
+            </LinkedButton>
           </div>
         )
       },
