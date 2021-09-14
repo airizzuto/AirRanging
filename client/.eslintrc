@@ -10,7 +10,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "rules": {
     "@typescript-eslint/semi": ["error"],
@@ -22,6 +23,7 @@
       "error",
       { "argsIgnorePattern": "^_" }
     ],
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
