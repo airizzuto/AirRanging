@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import aircraftService from "./services/aircraftService";
 import userService from "./services/userService";
+import bookmarkService from "./services/bookmarkService";
 import { isUserAuthenticated } from "./helpers/tokenHelper";
 import { getUserData } from "./helpers/userHelper";
 
@@ -31,7 +32,6 @@ import Footer from "./components/Footer/Footer";
 // import Map from "./components/Map/Map";
 
 import "./App.scss";
-import bookmarkService from "./services/bookmarkService";
 
 const App = (): JSX.Element =>{
 
@@ -49,8 +49,8 @@ const App = (): JSX.Element =>{
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
     isUserAuthenticated()
-      .then(isAuthenticated => 
-        isAuthenticated 
+      .then((isAuthenticated) =>
+        isAuthenticated
         ? setUser(getUserData()) 
         : setUser(null));
   }, []);
@@ -62,58 +62,69 @@ const App = (): JSX.Element =>{
   }, [user]);
 
   /* Aircrafts state handlers */
-  const refreshAircrafts = () => {
-    aircraftService
-      .getAllAircrafts()
-      .then(response => setAircrafts(response));
+
+  const refreshAircrafts = async () => {
+    await aircraftService.getAllAircrafts()
+      .then((response) => setAircrafts([...response.data]))
+      .catch(error => {
+        setAircrafts([]);
+        console.log("ERROR: Retrieving all aircrafts - ", error);
+      });
   };
 
-  const refreshSavedAircrafts = () => {
+  const refreshSavedAircrafts = async () => {
     user
-    ? aircraftService.getAircraftsSavedByUser()
-        .then(response => setAircraftsSaved(response))
+    ? await aircraftService.getAircraftsSavedByUser()
+        .then((response) => setAircraftsSaved([...response.data]))
+        .catch(error => {
+          setAircraftsSaved([]);
+          console.log("ERROR: retrieving saved aicrafts - ", error);
+        })
     : setAircraftsSaved([]);
   };
 
-  const refreshOwnedAircrafts = () => {
+  const refreshOwnedAircrafts = async () => {
     user
-    ? aircraftService.getAircraftsOwnedByUser()
-        .then(response => setAircraftsOwned(response))
+    ? await aircraftService.getAircraftsOwnedByUser()
+        .then((response) => setAircraftsOwned([...response.data]))
+        .catch(error => {
+          setAircraftsOwned([]);
+          console.log("ERROR: retrieving owned aicrafts - ", error);
+        })
     : setAircraftsOwned([]);
   };
 
   const handleAircraftsFilter = async (filter: string) => {
     filter
-      ? await aircraftService
-          .searchAircraftByModel(filter)
-          .then(response => setAircrafts(response))
+      ? await aircraftService.searchAircraftByModel(filter)
+          .then((response) => setAircrafts([...response.data]))
+          .catch(error => console.log("ERROR: filtering aicrafts - ", error))
       : refreshAircrafts();
   };
 
   const handleAircraftCreate = async (newAircraft: NewAircraft) => {
-    await aircraftService
-      .createAircraft(newAircraft)
-      .then(response => setAircrafts(aircrafts.concat(response)));
+    await aircraftService.createAircraft(newAircraft)
+      .then((response) => setAircrafts(aircrafts.concat(response)))
+      .catch(error => console.log("ERROR: creating aircraft - ", error));
   };
 
   const handleAircraftEdit = async (aircraftId: string, editedAircraft: AircraftData) => {
-    await aircraftService
-      .editAircraft(aircraftId, editedAircraft)
+    await aircraftService.editAircraft(aircraftId, editedAircraft)
       .then(() => setAircrafts(
         aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : editedAircraft)
-      ));
+      )).catch(error => console.log("ERROR: editing aircraft - ", error));
   };
 
   const handleAircraftSave = async (aircraftId: string) => {
     await aircraftService.saveAircraft(aircraftId)
-      .then(_ => refreshSavedAircrafts())
-      .catch(error => console.log("ERROR: retrieving aircraft: ", error));
+      .then(() => refreshSavedAircrafts())
+      .catch(error => console.log("ERROR: retrieving aircraft - ", error));
   };
 
   const handleAircraftUnsave = async (aircraftId: string) => {
     await bookmarkService.unsaveAircraft(aircraftId)
-      .then(_ => refreshSavedAircrafts())
-      .catch(error => console.log("ERROR: retrieving aircraft: ", error));
+      .then(() => refreshSavedAircrafts())
+      .catch(error => console.log("ERROR: retrieving aircraft - ", error));
   };
 
   const handleAircraftSelection = (selected: AircraftData | null) => {
@@ -126,7 +137,10 @@ const App = (): JSX.Element =>{
     : setAircraftSelected(null);
   };
 
+  // TODO: handle aircraft delete
+
   /* User state handlers */
+
   const handleLogout = () => {
     userService.logout();
     setUser(null);

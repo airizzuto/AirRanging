@@ -4,27 +4,19 @@ import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
 import { AircraftData, NewAircraft } from "../types/Aircraft/Aircraft";
 
 const getAllAircrafts = async () => {
-  try {
-    const response = await axios.get(
-      BASE_URL + "/api/aircrafts"
-    );
+  const response = await axios.get(
+    BASE_URL + "/api/aircrafts"
+  );
 
-    return response.data;
-  } catch(error) {
-    console.log("ERROR: Retrieving all aircrafts - ", error);
-  }
+  return response;
 };
 
 const getAllAircraftsPaginated = async () => {
-  try {
-    const response = await axios.get(
-      BASE_URL + "/api/aircrafts/paginated"
-    );
+  const response = await axios.get(
+    BASE_URL + "/api/aircrafts/paginated"
+  );
 
-    return response.data;
-  } catch(error) {
-    console.log(error);
-  }
+  return response;
 };
 
 const getAircraftById = async (aircraftId: string) => {
@@ -40,49 +32,37 @@ const getAircraftById = async (aircraftId: string) => {
 };
 
 const getAircraftsOwnedByUser = async () => {
-  try {
-    const config = {
-      headers: { Authorization: `Bearer ${getStoredToken()}` },
-    };
+  const config = {
+    headers: { Authorization: `Bearer ${getStoredToken()}` },
+  };
 
-    const response = await axios.get(
-      BASE_URL + "/api/aircrafts/owned",
-      config
-    );
-  
-    return response.data;
-  } catch(error) {
-    console.log(error);
-  }
+  const response = await axios.get(
+    BASE_URL + "/api/aircrafts/owned",
+    config
+  );
+
+  return response;
 };
 
 const getAircraftsSavedByUser = async () => {
-  try {
-    const config = {
-      headers: { Authorization: `Bearer ${getStoredToken()}` }
-    };
-    
-    const response = await axios.get(
-      BASE_URL + `/api/bookmarks/saved`,
-      config
-    );
+  const config = {
+    headers: { Authorization: `Bearer ${getStoredToken()}` }
+  };
   
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await axios.get(
+    BASE_URL + `/api/bookmarks/saved`,
+    config
+  );
+
+  return response;
 };
 
 const searchAircraftByModel = async (query: string) => {
-  try {
-    const response = await axios.get(
-      BASE_URL + `/api/aircrafts/search?Model=${query}`
-    );
-  
-    return response.data;
-  } catch(error) {
-    console.log(error);
-  }
+  const response = await axios.get(
+    BASE_URL + `/api/aircrafts/search?Model=${query}`
+  );
+
+  return response;
 };
 
 const createAircraft = async (newAircraft: NewAircraft) => {
@@ -119,10 +99,10 @@ const saveAircraft = async (aircraftId: string) => {
       );
 
       // return response.status;
-      return response.data;
+      return response;
     }
   } catch(error) {
-    console.log(error);
+    return error;
   }
 };
 
@@ -139,48 +119,39 @@ const unsaveAircraft = async (aircraftId: string) => {
       );
     
       // return response.status;
-      return response.data;
+      return response.status;
     }
   } catch(error) {
-    console.log(error);
+    return error;
   }
 };
 
 const editAircraft = async (aircraftId: string, aircraftUpdated: AircraftData) => {
-  try {
-    const config = {
-      headers: { Authorization: `Bearer ${getStoredToken()}` },
-    };
-  
-    const response = await axios.put(
-      BASE_URL + `/api/aircrafts/${aircraftId}`,
-      {aircraftId, aircraftUpdated},
-      config
-    );
-  
-    // return response.status;
-    return response.data;
-  } catch(error) {
-    console.log(error);
-  }
+  const config = {
+    headers: { Authorization: `Bearer ${getStoredToken()}` },
+  };
+
+  const response = await axios.put(
+    BASE_URL + `/api/aircrafts/${aircraftId}`,
+    {aircraftId, aircraftUpdated},
+    config
+  );
+
+  return response;
 };
 
 const deleteAircraft = async (aircraftId: string) => {
-  try {
-    const config = {
-      headers: { Authorization: `Bearer ${getStoredToken()}` },
-    };
-  
-    const response = await axios.delete(
-      BASE_URL + `/api/aircrafts/${aircraftId}`,
-      config
-    );
-  
-    // return response.status;
-    return response.data;
-  } catch(error) {
-    console.log(error);
-  }
+  const config = {
+    headers: { Authorization: `Bearer ${getStoredToken()}` },
+  };
+
+  const response = await axios.delete(
+    BASE_URL + `/api/aircrafts/${aircraftId}`,
+    config
+  );
+
+  // return response.status;
+  return response.data;
 };
 
 
