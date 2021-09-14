@@ -111,7 +111,7 @@ const Aircrafts: React.FC<Props> = ({
         )
       },
     ],
-    [user, aircraftsSaved, aircraftsOwned]
+    [user, aircrafts, aircraftsSaved, aircraftsOwned]
   );
 
 

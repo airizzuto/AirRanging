@@ -117,14 +117,28 @@ const App = (): JSX.Element =>{
 
   const handleAircraftSave = async (aircraftId: string) => {
     await aircraftService.saveAircraft(aircraftId)
-      .then(() => refreshSavedAircrafts())
-      .catch(error => console.log("ERROR: retrieving aircraft - ", error));
+      .then(async () => {
+        // Updates saved aircrafts list
+        refreshSavedAircrafts();
+        // Refreshes saved aircraft in aircrafts list
+        await aircraftService.getAircraftById(aircraftId)
+          .then(response => setAircrafts(
+              aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
+          )).catch(error => console.error(`Fetching aircraft ${aircraftId}: `, error));
+      }).catch(error => console.log("ERROR: retrieving aircraft - ", error));
   };
 
   const handleAircraftUnsave = async (aircraftId: string) => {
     await bookmarkService.unsaveAircraft(aircraftId)
-      .then(() => refreshSavedAircrafts())
-      .catch(error => console.log("ERROR: retrieving aircraft - ", error));
+      .then(async () => {
+        // Updates saved aircrafts list
+        refreshSavedAircrafts();
+        // Refreshes saved aircraft in aircrafts list
+        await aircraftService.getAircraftById(aircraftId)
+          .then(response => setAircrafts(
+              aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
+          )).catch(error => console.error(`Fetching aircraft ${aircraftId}: `, error));
+      }).catch(error => console.log("ERROR: retrieving aircraft - ", error));
   };
 
   const handleAircraftSelection = (selected: AircraftData | null) => {
