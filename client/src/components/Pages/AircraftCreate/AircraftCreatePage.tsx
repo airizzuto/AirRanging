@@ -23,9 +23,9 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
       setAlert("");
       handleCreate(newAircraft);
       history.push("/");
-    } catch(error) {
-      console.log(error.message);
-      setAlert(error.message);
+    } catch(error: any) {
+      console.error(error);
+      setAlert(error);
       setTimeout(() => setAlert(""), 10000);
     }
   };

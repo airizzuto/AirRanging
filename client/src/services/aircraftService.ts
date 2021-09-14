@@ -20,15 +20,11 @@ const getAllAircraftsPaginated = async () => {
 };
 
 const getAircraftById = async (aircraftId: string) => {
-  try {
-    const response = await axios.get(
-      BASE_URL + `/api/aircrafts/${aircraftId}`
-    );
+  const response = await axios.get(
+    BASE_URL + `/api/aircrafts/${aircraftId}`
+  );
 
-    return response.data;
-  } catch(error) {
-    console.log(error);
-  }
+  return response;
 };
 
 const getAircraftsOwnedByUser = async () => {

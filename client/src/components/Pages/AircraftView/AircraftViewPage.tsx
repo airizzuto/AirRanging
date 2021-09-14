@@ -29,8 +29,8 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
   const [aircraft, setAircraft] = React.useState<AircraftData>();
   React.useEffect(() => {
     aircraftService.getAircraftById(id)
-      .then(response => setAircraft(response));
-
+      .then(response => setAircraft(response.data))
+      .catch(error => console.error(`Fetching aircraft ${id}:`, error));
   }, []);
 
   const [isEditMode, setIsEditMode] = React.useState(false);
@@ -52,9 +52,9 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
 
       handleAircraftSelect(editedAircraft);
       history.push("/");
-    } catch(error) {
-      console.log(error.message);
-      setAlert(error.message);
+    } catch(error: any) {
+      console.log(error);
+      setAlert(error);
       setTimeout(() => setAlert(""), 10000);
     }
   };

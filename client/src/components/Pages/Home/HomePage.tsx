@@ -73,9 +73,11 @@ const Home: React.FC<Props> = ({
         show={displayPlanningModal}
         
         label="Planning"
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         handleClose={() => useModalClose(setDisplayPlanningModal)}
       >
         <PlanningModal 
+          // eslint-disable-next-line react-hooks/rules-of-hooks
           handleAccept={() => useModalClose(setDisplayPlanningModal)}
           aircraft={selectedAircraft}
           aircraftState={handleAircraftState}
@@ -85,6 +87,7 @@ const Home: React.FC<Props> = ({
       <DraggableModal 
         show={displayAircraftsModal}
         label="Selection"
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         handleClose={() => useModalClose(setDisplaySelectionModal)}
       >
         <AircraftSelect 
