@@ -1,4 +1,5 @@
 import React from 'react';
+import { isAircraftInUserList } from '../../../helpers/aircraftHelper';
 import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import LinkedButton from '../../Buttons/LinkedButton';
@@ -21,18 +22,6 @@ const SaveOptions: React.FC<Props> = ({
   handleAircraftSave,
   handleAircraftUnsave
 }) => {
-
-  const isAircraftInUserList = (
-    aircraft: AircraftData,
-    userAicrafts: AircraftData[] | null
-  ): boolean => {
-    if (!userAicrafts) {
-      return false;
-    }
-    
-    return userAicrafts
-      .findIndex(userAircraft => userAircraft.id === aircraft.id) >= 0;
-  };
 
   if (user) {
     if (isAircraftInUserList(aircraft, aircraftsOwned)) {

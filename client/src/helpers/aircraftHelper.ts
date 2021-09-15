@@ -16,3 +16,16 @@ export const mapAircraftToFilter = (
     label: resource[labelProp as keyof AircraftData]
   }));
 };
+
+
+export const isAircraftInUserList = (
+  aircraft: AircraftData,
+  userAicrafts: AircraftData[] | null
+): boolean => {
+  if (!userAicrafts) {
+    return false;
+  }
+  
+  return userAicrafts
+    .findIndex(userAircraft => userAircraft.id === aircraft.id) >= 0;
+};
