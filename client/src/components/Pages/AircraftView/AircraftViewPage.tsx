@@ -15,14 +15,13 @@ import EnumOptions from "../AircraftCreate/EnumOptions";
 import "./AircraftView.scss";
 import Spinner from "../../../styles/components/_spinner.module.scss";
 
-
 interface Props {
   handleAircraftEdit: (aircraftId: string, editedAircraft: AircraftData) => Promise<void>;
   handleAircraftSelect: (selected: AircraftData | null) => void;
 }
 
 const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelect }) => {
-  const { id }: any = useParams();
+  const { aircraftId }: any = useParams();
   const history = useHistory();
 
   const [alert, setAlert] = useState("");
@@ -31,10 +30,10 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
   const [isAircraftOwned, setIsAircraftOwned] = useState(false);
 
   useEffect(() => {
-    aircraftService.getAircraftById(id)
+    aircraftService.getAircraftById(aircraftId)
       .then(response => setAircraft(response.data))
-      .catch(error => console.error(`Fetching aircraft ${id}:`, error));
-  }, []);
+      .catch(error => console.error(`Fetching aircraft ${aircraftId}:`, error));
+  }, [aircraftId]);
 
   useEffect(() => {
     if (aircraft) {
@@ -60,7 +59,7 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
       handleAircraftSelect(editedAircraft);
       history.push("/");
     } catch(error: any) {
-      console.log(error);
+      console.error(error);
       setAlert(error);
       setTimeout(() => setAlert(""), 10000);
     }

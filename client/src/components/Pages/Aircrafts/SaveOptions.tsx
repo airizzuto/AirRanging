@@ -13,7 +13,6 @@ interface Props {
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }
 
-// TODO: refresh on user log status change
 const SaveOptions: React.FC<Props> = ({
   user,
   aircraft,
@@ -22,7 +21,6 @@ const SaveOptions: React.FC<Props> = ({
   handleAircraftSave,
   handleAircraftUnsave
 }) => {
-
   if (user) {
     if (isAircraftInUserList(aircraft, aircraftsOwned)) {
       return <button disabled={true}>Owned</button>;
