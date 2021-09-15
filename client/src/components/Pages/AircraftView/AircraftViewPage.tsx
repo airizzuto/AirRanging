@@ -1,8 +1,9 @@
 
+import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { getUserData } from "../../../helpers/userHelper";
+
+import { getUserData, isUserOwner } from "../../../helpers/userHelper";
 import aircraftService from "../../../services/aircraftService";
 
 import { AircraftData } from "../../../types/Aircraft/Aircraft";
@@ -24,23 +25,29 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
   const { id }: any = useParams();
   const history = useHistory();
 
-  const [alert, setAlert] = React.useState("");
+  const [alert, setAlert] = useState("");
+  const [aircraft, setAircraft] = useState<AircraftData>();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isAircraftOwned, setIsAircraftOwned] = useState(false);
 
-  const [aircraft, setAircraft] = React.useState<AircraftData>();
-  React.useEffect(() => {
+  useEffect(() => {
     aircraftService.getAircraftById(id)
       .then(response => setAircraft(response.data))
       .catch(error => console.error(`Fetching aircraft ${id}:`, error));
   }, []);
 
-  const [isEditMode, setIsEditMode] = React.useState(false);
-  React.useEffect(() => {
+  useEffect(() => {
     if (aircraft) {
       const user = getUserData();
       setIsEditMode(user?.username === aircraft?.authorUsername);
     }
   }, [aircraft]);
 
+  useEffect(() => {
+    if (aircraft) {
+      setIsAircraftOwned(isUserOwner(aircraft));
+    }
+  }, [aircraft]);
 
   const handleSubmit = (editedAircraft : AircraftData) => { 
     try {
@@ -260,10 +267,46 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
                   <AlertBox alertText={alert}/>
                 </div>
 
-                <div className={"SubmitButton"}>
-                  <button type="submit" >
-                    Accept
-                  </button>
+                <div>
+                  {/* TODO: handle delete */}
+                  <div>
+                    <button disabled={!isAircraftOwned}>
+                      DELETE
+                    </button>
+                  </div>
+
+                  {/* TODO: handle edit mode*/}
+                  {/* TODO: handle clone */}
+                  <div>
+                  {
+                    isAircraftOwned
+                    ? isEditMode 
+                      ? <button onClick={() => setIsEditMode(true)}>
+                          EDIT
+                        </button>
+                      : <button onClick={() => setIsEditMode(false)}>
+                          VIEW
+                        </button>
+                    : <button>
+                        CLONE
+                      </button>
+                  }
+                  </div>
+                  <div>
+                  {/* TODO: handle save/unsave */}
+                  {
+                    <button>
+                      SAVE
+                    </button>
+                  }
+                  </div>
+
+                  {/* TODO: handle submit */}
+                  <div className={"SubmitButton"}>
+                    <button type="submit" >
+                      SUBMIT
+                    </button>
+                  </div>
                 </div>
             </Form>
             }
@@ -271,11 +314,6 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
         : <div className={Spinner.spinner}></div>
       }
       </div>
-      
-
-      {/* TODO: EDIT/CLONE button */}
-      {/* TODO: DELETE button */}
-      {/* TODO: SELECT button */}
     </div>
   );
 };
