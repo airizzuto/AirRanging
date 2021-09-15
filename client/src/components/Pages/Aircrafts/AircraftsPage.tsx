@@ -4,6 +4,7 @@ import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 
 import AircraftsTable from '../../Table/AircraftsTable';
+import DropdownFilter from '../../Dropdown/DropdownSelect';
 import LinkedButton from '../../Buttons/LinkedButton';
 import SaveOptions from './SaveOptions';
 
@@ -111,7 +112,7 @@ const Aircrafts: React.FC<Props> = ({
         )
       },
     ],
-    [user, aircrafts, aircraftsSaved, aircraftsOwned]
+    [user, aircraftsSaved, aircraftsOwned, handleAircraftSave, handleAircraftUnsave]
   );
 
 
@@ -127,13 +128,23 @@ const Aircrafts: React.FC<Props> = ({
           placeholder={"Search aircraft model"}
         />
 
-        {/* TODO: Dropdown filter */}
-
-        <div> {/* TODO: filter saved */}
-          <label>Show saved</label>
-          <input className={Style.Checkbox} type="checkbox" />
+        {/* TODO: Grouped Select Dropdown filter */}
+        <div className={Style.Dropdown}>
+          <DropdownFilter options={null}/>
         </div>
 
+        <div className={Style.FilterOptions}>
+          <div className={Style.CheckboxItem}> {/* TODO: filter owned */}
+            <label>Show owned</label>
+            <input type="checkbox" />
+          </div>
+
+          <div className={Style.CheckboxItem}> {/* TODO: filter saved */}
+            <label>Show saved</label>
+            <input type="checkbox" />
+          </div>
+        </div>
+       
         <div className={Style.CreateNew}>
           <LinkedButton path="/aircrafts/create">Create Aircraft</LinkedButton>
         </div>
