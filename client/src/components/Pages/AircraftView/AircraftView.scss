@@ -3,6 +3,7 @@
 @use "../../../styles/colors" as color;
 @use "../../../styles/components/separators" as separator;
 @use "../../../styles/components/form";
+@use "../../../styles/components/buttons" as button;
 
 .Container {
   @include main-component;
@@ -30,5 +31,35 @@
     @include form.style;
     display: grid;
     grid-area: form;
+  }
+
+  .Options {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-content: center;
+    gap: 2rem;
+    margin-bottom: 0.5rem;
+
+    button {
+      @include button.decorated;
+      min-width: 8rem;
+      color: color.$light1;
+      background-color: color.$light2;
+    }
+
+    .Delete {
+        justify-content: left;
+
+      button {
+        color: color.$light1;
+        background-color: color.$danger;
+      }
+
+      button:disabled{
+        color: color.$light1-disabled;
+        background-color: color.$danger-disabled;
+      }
+    }
   }
 };

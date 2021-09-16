@@ -34,17 +34,17 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
       .then(response => setAircraft(response.data))
       .catch(error => console.error(`Fetching aircraft ${aircraftId}:`, error));
   }, [aircraftId]);
+  
+    useEffect(() => {
+      if (aircraft) {
+        setIsAircraftOwned(isUserOwner(aircraft));
+      }
+    }, [aircraft]);
 
   useEffect(() => {
     if (aircraft) {
       const user = getUserData();
       setIsEditMode(user?.username === aircraft?.authorUsername);
-    }
-  }, [aircraft]);
-
-  useEffect(() => {
-    if (aircraft) {
-      setIsAircraftOwned(isUserOwner(aircraft));
     }
   }, [aircraft]);
 
@@ -64,7 +64,6 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
       setTimeout(() => setAlert(""), 10000);
     }
   };
-
 
   return (
     <div className={"Container"}>
@@ -266,9 +265,9 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
                   <AlertBox alertText={alert}/>
                 </div>
 
-                <div>
+                <div className={"Options"}>
                   {/* TODO: handle delete */}
-                  <div>
+                  <div className={"Delete"}>
                     <button disabled={!isAircraftOwned}>
                       DELETE
                     </button>
@@ -276,6 +275,7 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
 
                   {/* TODO: handle edit mode*/}
                   {/* TODO: handle clone */}
+                  {/* TODO: route to cloned aircraft */}
                   <div>
                   {
                     isAircraftOwned
@@ -301,7 +301,7 @@ const AircraftView: React.FC<Props> = ({ handleAircraftEdit, handleAircraftSelec
                   </div>
 
                   {/* TODO: handle submit */}
-                  <div className={"SubmitButton"}>
+                  <div>
                     <button type="submit" >
                       SUBMIT
                     </button>
