@@ -19,6 +19,7 @@ interface Props {
   handleAircraftSelection: (selected: AircraftData | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
+  handleAircraftDelete: (aircraftId: string) => Promise<void>;
 }
 
 const Aircrafts: React.FC<Props> = ({
@@ -28,7 +29,8 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftsFilter,
   handleAircraftSave,
   handleAircraftUnsave,
-  handleAircraftSelection
+  handleAircraftSelection,
+  handleAircraftDelete
 }) => {
   const [filterInput, setFilterInput] = React.useState("");
 
@@ -160,6 +162,9 @@ const Aircrafts: React.FC<Props> = ({
                 data={aircrafts}
                 columns={columns}
                 handleAircraftSelection={handleAircraftSelection}
+                handleAircraftSave={handleAircraftSave}
+                handleAircraftUnsave={handleAircraftUnsave}
+                handleAircraftDelete={handleAircraftDelete}
               />
             </div>
           : <div className={Style.AircraftsLoading}>

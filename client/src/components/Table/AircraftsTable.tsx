@@ -10,9 +10,12 @@ interface Props {
   columns: Column[];
   data: AircraftData[];
   handleAircraftSelection: (selected: AircraftData | null) => void;
+  handleAircraftSave: (aircraftId: string) => Promise<void>;
+  handleAircraftUnsave: (aircraftId: string) => Promise<void>;
+  handleAircraftDelete: (aircraftId: string) => Promise<void>;
 }
 
-const AircraftsTable: React.FC<Props> = ({ columns, data, handleAircraftSelection }) => {
+const AircraftsTable: React.FC<Props> = ({ columns, data, handleAircraftSelection, handleAircraftSave, handleAircraftUnsave, handleAircraftDelete }) => {
 
   const [selected, setSelected] = React.useState<any>();
 
