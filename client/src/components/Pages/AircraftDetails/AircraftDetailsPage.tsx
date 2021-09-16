@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { useHistory, useParams } from "react-router-dom";
 
-import { isUserOwner } from "../../../helpers/userHelper";
 import aircraftService from "../../../services/aircraftService";
+import { isUserOwner } from "../../../helpers/userHelper";
 
 import { AircraftData } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EWeightCategory, EIcaoWakeCategory, EFuelType } from "../../../types/Aircraft/AircraftEnums";
@@ -12,7 +12,7 @@ import { aircraftSchema } from "../../../validators/aircraftValidators";
 import AlertBox from "../../Alerts/AlertBox";
 import EnumOptions from "../AircraftCreate/EnumOptions";
 
-import "./AircraftView.scss";
+import "./AircraftDetails.scss";
 import Spinner from "../../../styles/components/_spinner.module.scss";
 
 interface Props {
@@ -21,7 +21,7 @@ interface Props {
   handleAircraftSelect: (selected: AircraftData | null) => void;
 }
 
-const AircraftView: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, handleAircraftSelect }) => {
+const AircraftDetails: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, handleAircraftSelect }) => {
   const { aircraftId }: any = useParams();
   const history = useHistory();
 
@@ -56,6 +56,8 @@ const AircraftView: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, han
 
     setIsEditMode(false);
   }, [aircraft, isAircraftOwned]);
+
+  {/* TODO: user logged check on save/clone handlers. Route to login */}
 
   const handleSubmit = (editedAircraft : AircraftData) => { 
     try {
@@ -287,6 +289,7 @@ const AircraftView: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, han
                       ? <button>
                           SAVED
                         </button>
+                      // TODO: disable if user not logged
                       : <button>
                           SAVE
                         </button>
@@ -298,25 +301,29 @@ const AircraftView: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, han
                   {/* TODO: route to cloned aircraft */}
                   <div>
                   {
-                    isAircraftOwned
-                    ? isEditMode 
-                      ? <button onClick={() => setIsEditMode(true)}>
-                          EDIT
-                        </button>
-                      : <button onClick={() => setIsEditMode(false)}>
-                          VIEW
-                        </button>
+                    isEditMode
+                    ? <button onClick={() => setIsEditMode(true)}>
+                        EDIT
+                      </button>
+                    // TODO: disable if user not logged
                     : <button>
                         CLONE
                       </button>
+                      
                   }
                   </div>
 
-                  {/* TODO: handle submit */}
                   <div>
-                    <button type="submit" >
-                      SUBMIT
-                    </button>
+                    {
+                      isEditMode
+                      // TODO: on click handle submit and switch edit mode
+                      ? <button type="submit" >
+                          SUBMIT
+                        </button>
+                      : <button>
+                          SELECT
+                        </button>
+                    }
                   </div>
                 </div>
             </Form>
@@ -329,4 +336,4 @@ const AircraftView: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, han
   );
 };
 
-export default AircraftView;
+export default AircraftDetails;
