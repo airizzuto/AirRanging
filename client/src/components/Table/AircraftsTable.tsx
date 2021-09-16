@@ -9,9 +9,12 @@ import Style from "./AircraftsTable.module.scss";
 interface Props {
   columns: Column[];
   data: AircraftData[];
+  handleAircraftSelection: (selected: AircraftData | null) => void;
 }
 
-const AircraftsTable: React.FC<Props> = ({columns, data }) => {
+const AircraftsTable: React.FC<Props> = ({ columns, data, handleAircraftSelection }) => {
+
+  const [selected, setSelected] = React.useState<any>();
 
   const {
     getTableProps,
@@ -76,9 +79,9 @@ const AircraftsTable: React.FC<Props> = ({columns, data }) => {
             prepareRow(row);
             return (
               // Apply the row props
-              <tr {...row.getRowProps()}>
+              // FIXME: on row click pre-select aircraft
+              <tr {...row.getRowProps()} onClick={() => setSelected(row.original)}>
                 { // Loop over the rows cells
-                // TODO: on row click select aircraft
                 row.cells.map(cell => {
                   // Apply the cell props
                   return(
@@ -142,7 +145,7 @@ const AircraftsTable: React.FC<Props> = ({columns, data }) => {
         
         {/* TODO: handle selection */}
         <div className={Style.SelectButton}>
-          <button>Select</button>
+          <button onClick={() => handleAircraftSelection(selected)}>Select</button>
         </div>
       </div>
     </div>

@@ -42,10 +42,14 @@
     tbody {
       overflow: auto;
 
-      // tr:hover {
-      //   background-color: rgba(color.$light2, 0.5);
-      //   cursor: pointer;
-      // }
+      tr:hover {
+        cursor: pointer;
+
+        td {
+          color: rgba(color.$accent1, 1.0);
+          transition: color 0.3s;
+        }
+      }
     }
   }
 
