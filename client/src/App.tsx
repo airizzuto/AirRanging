@@ -57,9 +57,11 @@ const App = (): JSX.Element =>{
 
   // Sets user saved aircrafts
   useEffect(() => {
-    refreshSavedAircrafts();
-    refreshOwnedAircrafts();
-  }, [user]);
+    if (user) {
+      refreshSavedAircrafts();
+      refreshOwnedAircrafts();
+    }
+  }, [user, aircrafts]);
 
   /* Aircrafts state handlers */
 
@@ -152,6 +154,16 @@ const App = (): JSX.Element =>{
   };
 
   // TODO: handle aircraft delete
+  const handleAircraftDelete = async (aircraftId: string) => {
+    if (aircraftSelected) {
+      setAircraftSelected(null);
+    }
+    await aircraftService.deleteAircraft(aircraftId)
+      .then(_ => refreshAircrafts())
+      .catch(error => 
+        console.error(`ERROR: deleting aircraft ${aircraftId}: `, error)
+      );
+  };
 
   /* User state handlers */
 
@@ -195,6 +207,7 @@ const App = (): JSX.Element =>{
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftSave={handleAircraftSave}
                 handleAircraftUnsave={handleAircraftUnsave}
+                handleAircraftDelete={handleAircraftDelete}
               />
             </Route>
 
