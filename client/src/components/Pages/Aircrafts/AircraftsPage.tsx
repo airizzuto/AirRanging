@@ -6,7 +6,7 @@ import { UserPublic } from '../../../types/User/User';
 import AircraftsTable from '../../Table/AircraftsTable';
 import DropdownFilter from '../../Dropdown/DropdownSelect';
 import LinkedButton from '../../Buttons/LinkedButton';
-import SaveOptions from './SaveOptions';
+import ActionButtons from './ActionButtons';
 
 import Style from "./Aircrafts.module.scss";
 
@@ -25,10 +25,10 @@ const Aircrafts: React.FC<Props> = ({
   user,
   aircrafts,
   aircraftsSaved,
-  aircraftsOwned,
   handleAircraftsFilter,
   handleAircraftSave,
-  handleAircraftUnsave
+  handleAircraftUnsave,
+  handleAircraftSelection
 }) => {
   const [filterInput, setFilterInput] = React.useState("");
 
@@ -97,22 +97,21 @@ const Aircrafts: React.FC<Props> = ({
         // accessor: "aircraftDetails",
         Cell: ({ cell }: any) => (
           <div className={Style.SaveOptions}>
-            <SaveOptions 
+            <ActionButtons 
               user={user} 
               aircraft={cell.row.original}
               aircraftsSaved={aircraftsSaved}
-              aircraftsOwned={aircraftsOwned}
               handleAircraftSave={handleAircraftSave}
               handleAircraftUnsave={handleAircraftUnsave}
             />
-            <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`}>
-              View
+            <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`} style={"primary"}>
+              VIEW
             </LinkedButton>
           </div>
         )
       },
     ],
-    [user, aircraftsSaved, aircraftsOwned, handleAircraftSave, handleAircraftUnsave]
+    [user, aircraftsSaved, handleAircraftSave, handleAircraftUnsave]
   );
 
 
@@ -146,7 +145,9 @@ const Aircrafts: React.FC<Props> = ({
         </div>
        
         <div className={Style.CreateNew}>
-          <LinkedButton path="/aircrafts/create">Create Aircraft</LinkedButton>
+          <LinkedButton path="/aircrafts/create" style={"primary"}>
+            Create Aircraft
+          </LinkedButton>
         </div>
       </div>
 
@@ -158,6 +159,7 @@ const Aircrafts: React.FC<Props> = ({
               <AircraftsTable 
                 data={aircrafts}
                 columns={columns}
+                handleAircraftSelection={handleAircraftSelection}
               />
             </div>
           : <div className={Style.AircraftsLoading}>
