@@ -12,7 +12,7 @@ import { AircraftData, AircraftState, NewAircraft } from "./types/Aircraft/Aircr
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
-import AircraftView from "./components/Pages/AircraftView/AircraftViewPage";
+import AircraftDetails from "./components/Pages/AircraftDetails/AircraftDetailsPage";
 import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage";
 import Login from "./components/Pages/UserLogin/LoginPage";
 import UserRegistration from "./components/Pages/UserRegistration/UserRegistrationPage";
@@ -199,11 +199,12 @@ const App = (): JSX.Element =>{
             </Route>
 
             <Route
-              exact path="/aircrafts/details/:id"
+              exact path="/aircrafts/details/:aircraftId"
             >
-              <AircraftView
+              <AircraftDetails
                 handleAircraftEdit={handleAircraftEdit}
                 handleAircraftSelect={handleAircraftSelection}
+                aircraftsSaved={aircraftsSaved}
               />
             </Route>
 

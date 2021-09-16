@@ -29,6 +29,7 @@ const DropdownFilter = ({options}: any) => {
     </div>
   );
 
+  // TODO: handle selected filter, options groups
   return (
     <>
       <Select

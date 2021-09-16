@@ -1,4 +1,4 @@
-import Style from "./ButtonStyles.module.scss";
+import "./ButtonStyles.scss";
 
 interface Props {
   text: string,
@@ -7,7 +7,7 @@ interface Props {
 
 export default function UndecoratedButton({ text, onClick }: Props): JSX.Element {
   return (
-    <div className={Style.Undecorated}>
+    <div className={"undecorated"}>
       <a onClick={onClick}>
         {text}
       </a>

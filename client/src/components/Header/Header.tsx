@@ -30,12 +30,12 @@ const Header = ({handleLogout, user}: Props): JSX.Element => {
 
       <ul className={Style.HeaderNav}>
         <li>
-          <LinkedButton path="/aircrafts">
+          <LinkedButton path="/aircrafts" style={"primary"}>
             AIRCRAFTS
           </LinkedButton>
         </li>
         <li>
-          <LinkedButton path="/airports">
+          <LinkedButton path="/airports" style={"primary"}>
             AIRPORTS
           </LinkedButton>
         </li>

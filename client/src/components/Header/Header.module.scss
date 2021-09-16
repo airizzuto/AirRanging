@@ -3,7 +3,7 @@
 @use "../../styles/mixins" as *;
 
 @import "../Menu/Menu.module.scss";
-@import "../Buttons/ButtonStyles.module.scss";
+@import "../Buttons/ButtonStyles.scss";
 
 .HeaderContainer {
   @include blurring;

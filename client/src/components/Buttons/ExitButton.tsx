@@ -1,4 +1,4 @@
-import Style from "./ButtonStyles.module.scss";
+import "./ButtonStyles.scss";
 
 interface Props {
   handleClick: React.MouseEventHandler<HTMLButtonElement>;
@@ -7,7 +7,7 @@ interface Props {
 const ExitButton: React.FC<Props> = ({ handleClick }) => {
 
   return (
-    <div className={Style.exit}>
+    <div className={"exit"}>
       <button onClick={handleClick}>
         X
       </button>
