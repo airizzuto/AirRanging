@@ -1,3 +1,4 @@
+
 import { AircraftData } from "../types/Aircraft/Aircraft";
 import { UserPublic } from "../types/User/User";
 
@@ -6,8 +7,6 @@ export const getUserData = (): UserPublic | null => {
 
   return user ? { username: user } : null;
 };
-
-// TODO: fetch saved
 
 export const isUserOwner =  (aircraft: AircraftData): boolean => {
   return getUserData()?.username === aircraft.authorUsername;

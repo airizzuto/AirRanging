@@ -204,7 +204,7 @@ namespace App.Controllers.V1
                 return NotFound("Aircraft id not found.");
             }
 
-            _logger.LogInfo($"Returning aircraft {aircraftId}.");
+            _logger.LogInfo($" Returning aircraft {aircraftId}.");
 
             var resource = _mapper.Map<AircraftReadDTO>(aircraft);
             return Ok(resource);
