@@ -109,13 +109,13 @@ const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
 
               <div className={Style.Buttons}>
                 <div className={Style.LoginButton}>
-                  <button 
+                  <Button 
                     type="submit"
                     disabled={isSubmitting}
-                    className={Style.LoginButton}
+                    style={"primary"}
                   >
                     Login
-                  </button>
+                  </Button>
                 </div>
                 <span>- OR -</span>
                 <LinkButton path="/registration" handleClick={handleClose} style={"undecorated"}>

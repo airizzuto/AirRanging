@@ -113,11 +113,11 @@
       grid-area: terms;
       @include font.info;
       @include text-shadow;
-      @include hyperlink-behavior;
       color: color.$light1;
       place-self: center;
 
       a {
+        @include hyperlink-behavior;
         color: color.$light2;
       }
     }

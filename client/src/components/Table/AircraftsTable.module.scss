@@ -77,12 +77,11 @@
       @include button.controls;
     }
 
-    .SelectButton { // TODO: improve
+    .SelectButton { // TODO: fix style inheritance
       display: flex;
       justify-content: end;
 
       button {
-        @include button.decorated;
         padding: 0.5rem 2rem;
       }
     }

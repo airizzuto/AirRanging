@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import userService from '../../../services/userService';
 import { ForgotPasswordModel } from '../../../types/User/User';
 import { forgotPasswordSchema } from '../../../validators/userValidators';
+import { Button } from '../../Generics/Buttons/Button';
 
 import "./ForgotPassword.scss";
 
@@ -44,9 +45,9 @@ const ForgotPassword = () => {
             </div>
 
             <div className="submitButton">
-              <button type="submit" disabled={isSubmitting}>
+              <Button type="submit" disabled={isSubmitting} style={"primary"}>
                 Submit
-              </button>
+              </Button>
             </div>
           </Form>
         }

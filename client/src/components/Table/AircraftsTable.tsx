@@ -1,6 +1,7 @@
 import React from "react";
 import { Column, usePagination, useRowSelect, useSortBy, useTable } from "react-table";
 import { AircraftData } from "../../types/Aircraft/Aircraft";
+import { Button } from "../Generics/Buttons/Button";
 
 import Style from "./AircraftsTable.module.scss";
 
@@ -148,7 +149,12 @@ const AircraftsTable: React.FC<Props> = ({ columns, data, handleAircraftSelectio
         
         {/* TODO: handle selection */}
         <div className={Style.SelectButton}>
-          <button onClick={() => handleAircraftSelection(selected)}>Select</button>
+          <Button 
+            handleClick={() => handleAircraftSelection(selected)}
+            style={"primary"}
+          >
+            Select
+          </Button>
         </div>
       </div>
     </div>

@@ -2,7 +2,6 @@
 @use "../../../styles/fonts" as font;
 @use "../../../styles/components/separators" as separator;
 @use "../../../styles/components/boxes" as box;
-@use "../../../styles/components/buttons" as button;
 @use "../../../styles/mixins" as *;
 
 .LoginContainer {
@@ -179,14 +178,7 @@
     
         .LoginButton {
           width: 100%;
-          
           place-self: center;
-    
-          button {
-            @include button.decorated;
-            color: color.$light1;
-            background-color: color.$light2;
-          }
         }
       }
     }

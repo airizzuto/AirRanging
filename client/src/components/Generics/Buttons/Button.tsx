@@ -8,6 +8,7 @@ interface ButtonProps {
   backgroundImage?: string;
   handleClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
+  type?: "button" | "submit" | "reset" | undefined;
   style: ButtonStyles;
 }
 
@@ -19,9 +20,9 @@ interface LinkProps {
 }
 
 
-export const Button: React.FC<ButtonProps> = ({ children, handleClick, disabled, style }) => {
+export const Button: React.FC<ButtonProps> = ({ children, handleClick, disabled, type, style }) => {
   return (
-    <button className={style} onClick={handleClick} disabled={disabled}>
+    <button className={style} onClick={handleClick} disabled={disabled} type={type}>
       {children}
     </button>
   );
