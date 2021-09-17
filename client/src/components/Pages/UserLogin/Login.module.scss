@@ -14,29 +14,32 @@
   .Login {
     @include text-shadow;
     @include drop-shadow;
+    
+    display: grid;
+    grid-template-rows: min-content min-content 1fr;
+    grid-template-areas: "login-header" "separator" "login-form";
 
     margin: 2rem 0 2rem 0;
+    padding: 1rem 2rem 1rem 2rem;
     place-content: center;
+    
+    max-height: 70%;
+    height: fit-content;
+    min-height: 30rem;
+    width: max-content;
+    
     color: color.$light1;
     background-color: color.$dark1;
-  
-    min-height: 70%;
-    width: max-content;
-    padding: 0rem 2rem 1rem 2rem;
-  
-    display: grid;
-    grid-template-rows: 1fr min-content minmax(2fr, max-content);
-    grid-template-areas: "login-header" "separator" "login-form";
-  
     border-radius: 10px;
   
     z-index: 13;
-  
+
     .LoginHeader {
       grid-area: login-header;
       display: grid;
       grid-template-columns: 3fr 1fr;
       grid-template-areas: "login-title login-exit";
+      align-self: center;
   
       .LoginTitle {
         @include font.header-1;
