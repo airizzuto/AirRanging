@@ -2,7 +2,7 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
 
-import "./SearchbarDropdown.scss";
+import "./DropdownSearchbar.scss";
 
 interface Props {
   handleSelection: React.Dispatch<React.SetStateAction<any | null>>;
@@ -11,7 +11,7 @@ interface Props {
 
 /* React select documentation https://react-select.com/home */
 
-const SearchbarDropdown: React.FC<Props> = ({
+const DropdownSearchbar: React.FC<Props> = ({
   handleSelection, handleFilter
 }) => {
 
@@ -51,4 +51,4 @@ const SearchbarDropdown: React.FC<Props> = ({
   );
 };
 
-export default SearchbarDropdown;
+export default DropdownSearchbar;

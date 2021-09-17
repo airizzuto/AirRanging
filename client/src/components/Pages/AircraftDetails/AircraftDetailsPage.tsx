@@ -9,7 +9,7 @@ import { isUserOwner } from "../../../helpers/userHelper";
 import { AircraftData } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EWeightCategory, EIcaoWakeCategory, EFuelType } from "../../../types/Aircraft/AircraftEnums";
 import { aircraftSchema } from "../../../validators/aircraftValidators";
-import AlertBox from "../../Alerts/AlertBox";
+import AlertBox from "../../Generics/Alerts/AlertBox";
 import EnumOptions from "../AircraftCreate/EnumOptions";
 
 import "./AircraftDetails.scss";

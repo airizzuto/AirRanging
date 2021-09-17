@@ -15,7 +15,7 @@ interface Props {
   handleAircraftDelete: (aircraftId: string) => Promise<void>;
 }
 
-const AircraftsTable: React.FC<Props> = ({ columns, data, handleAircraftSelection, handleAircraftSave, handleAircraftUnsave, handleAircraftDelete }) => {
+const AircraftsTable: React.FC<Props> = ({ columns, data, handleAircraftSelection }) => {
 
   const [selected, setSelected] = React.useState<any>();
 

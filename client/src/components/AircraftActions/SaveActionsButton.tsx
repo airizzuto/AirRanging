@@ -1,6 +1,7 @@
 import React from 'react';
 import { isAircraftInUserList } from '../../helpers/aircraftHelper';
 import { AircraftData } from '../../types/Aircraft/Aircraft';
+import { Button } from '../Generics/Buttons/Button';
 
 interface Props {
   aircraft: AircraftData;
@@ -10,10 +11,15 @@ interface Props {
 }
 
 const SaveActionsButton: React.FC<Props> = ({aircraft, aircraftsSaved, handleAircraftUnsave, handleAircraftSave}) => {
-  if (isAircraftInUserList(aircraft, aircraftsSaved)) {
-    return <button onClick={() => handleAircraftUnsave(aircraft.id)}>SAVED</button>;
-  }
-  return <button onClick={() => handleAircraftSave(aircraft.id)}>SAVE</button>;
+  return (
+    isAircraftInUserList(aircraft, aircraftsSaved)
+    ? <Button handleClick={() => handleAircraftUnsave(aircraft.id)} style={"primary"}>
+        SAVED
+      </Button>
+    : <Button handleClick={() => handleAircraftSave(aircraft.id)} style={"primary"}>
+        SAVE
+      </Button>
+  );
 };
 
 export default SaveActionsButton;

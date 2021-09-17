@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 
-import DecoratedButton from "../../Buttons/DecoratedButton";
+import { Button } from "../../Generics/Buttons/Button";
 
 import "./EmailConfirmationFail.scss";
 
@@ -12,12 +12,12 @@ const EmailConfirmationFail = () => {
     <div className="EmailConfirmationFail">
       <p>Email already confirmed or expired.</p>
 
-      <DecoratedButton
+      <Button
         style={"primary"}
-        onClick={() => history.push("/login")}
+        handleClick={() => history.push("/login")}
       >
         Login
-      </DecoratedButton>
+      </Button>
     </div>
   );
 };

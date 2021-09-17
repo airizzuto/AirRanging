@@ -58,8 +58,18 @@
 };
 
 @mixin no-decorations {
-  a:hover {
+  @include font.button;
+  @include text-shadow;
+  @include button-behavior;
+
+  border: none;
+  background: none;
+  color: color.$light1;
+
+  &:hover {
+    color: color.$accent1;
     cursor: pointer;
+    transition: color 0.4s;
   }
 }
 

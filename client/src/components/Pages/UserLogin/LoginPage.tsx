@@ -7,11 +7,11 @@ import { userLoginSchema } from "../../../validators/userValidators";
 import { getUserData } from "../../../helpers/userHelper";
 import { UserPublic } from "../../../types/User/User";
 
-import AlertBox from "../../Alerts/AlertBox";
-import ExitButton from "../../Buttons/ExitButton";
+import AlertBox from "../../Generics/Alerts/AlertBox";
 
 import Style from "./Login.module.scss";
 import CheckboxStyle from "../../../styles/components/_checkbox.module.scss";
+import { Button } from "../../Generics/Buttons/Button";
 
 interface Props {
   setUser: Dispatch<SetStateAction<UserPublic | null>>;
@@ -56,7 +56,7 @@ const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
         <div className={Style.LoginHeader}>
           <h1>Login</h1>
           <div className={Style.CloseButton}>
-            <ExitButton handleClick={handleClose} />
+            <Button handleClick={handleClose} style={"exit"}>X</Button>
           </div>
         </div>
 

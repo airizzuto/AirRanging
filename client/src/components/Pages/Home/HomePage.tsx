@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useModalClose } from "../../../hooks/useModalClose";
 import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
-import ModalTab from "../../Buttons/ModalTab";
-import DraggableModal from "../../Modals/DraggableModal";
+import ModalTab from "../../Generics/Buttons/ModalTab";
+import DraggableModal from "../../Generics/Modals/DraggableModal";
 import PlanningModal from "./PlanningModal";
 
 import { AircraftData, AircraftState } from "../../../types/Aircraft/Aircraft";

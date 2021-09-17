@@ -5,7 +5,7 @@ import userService from '../../../services/userService';
 import { UserRegistrationForm } from '../../../types/User/User';
 import { userRegistrationSchema } from '../../../validators/userValidators';
 
-import AlertBox from '../../Alerts/AlertBox';
+import AlertBox from '../../Generics/Alerts/AlertBox';
 
 import Style from "./UserRegistration.module.scss";
 

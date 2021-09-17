@@ -3,7 +3,7 @@ import { isUserOwner } from '../../../helpers/userHelper';
 import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
-import LinkedButton from '../../Buttons/LinkedButton';
+import { LinkButton } from '../../Generics/Buttons/Button';
 
 interface Props {
   user: UserPublic | null;
@@ -34,7 +34,10 @@ const ActionButtons: React.FC<Props> = ({
           handleAircraftUnsave={handleAircraftUnsave}
         />
     // user not logged
-    : <LinkedButton path={`/login`} style={"primary"}>SAVE</LinkedButton>
+    : <LinkButton buttonSettings={{ style: "primary" }} path={`/login`}>
+        SAVE
+      </LinkButton>
+    
   );
 };
 

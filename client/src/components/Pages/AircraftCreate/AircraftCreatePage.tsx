@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { NewAircraft } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/Aircraft/AircraftEnums";
 import { aircraftSchema } from "../../../validators/aircraftValidators";
-import AlertBox from "../../Alerts/AlertBox";
+import AlertBox from "../../Generics/Alerts/AlertBox";
 
 import Style from "./AircraftCreate.module.scss";
 import EnumOptions from "./EnumOptions";

@@ -2,8 +2,8 @@ import { mapAircraftToFilter } from "../../../helpers/aircraftHelper";
 import aircraftService from "../../../services/aircraftService";
 import { AircraftData } from "../../../types/Aircraft/Aircraft";
 
-import DecoratedButton from "../../Buttons/DecoratedButton";
-import SearchbarDropdown from "../../Searchbar/SearchbarDropdown";
+import { Button } from "../../Generics/Buttons/Button";
+import DropdownSearchbar from "../../Generics/Filters/DropdownSearchbar";
 // import aircrafts from "../../data/aircrafts-mock";
 
 import Style from "./AircraftSelectModal.module.scss";
@@ -33,7 +33,7 @@ const AircraftSelectModal: React.FC<Props> = ({
       {/* TODO: toggle owned */}
 
       <div className={Style.SearchBar}>
-        <SearchbarDropdown
+        <DropdownSearchbar
           handleSelection={handleAircraftSelection}
           handleFilter={handleAircraftsSelectionFilter}
         />
@@ -91,7 +91,9 @@ const AircraftSelectModal: React.FC<Props> = ({
       }
       
       <div className={Style.Select}>
-        <DecoratedButton onClick={handleSelectClick} style="primary">Select</DecoratedButton>
+        <Button handleClick={handleSelectClick} style="primary">
+          Select
+        </Button>
       </div>
     </div>
   );

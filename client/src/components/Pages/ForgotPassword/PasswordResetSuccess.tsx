@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import DecoratedButton from "../../Buttons/DecoratedButton";
+import { Button } from "../../Generics/Buttons/Button";
 
 import "./PasswordResetSuccess.scss";
 
@@ -12,12 +12,12 @@ const PasswordResetSuccess = () => {
 
       <p>You can now login with your new password.</p>
 
-      <DecoratedButton 
+      <Button 
         style={"primary"}
-        onClick={() => history.push("/login")}
+        handleClick={() => history.push("/login")}
       >
         Login
-      </DecoratedButton>
+      </Button>
     </div>
   );
 };

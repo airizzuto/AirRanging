@@ -4,11 +4,12 @@ import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 
 import AircraftsTable from '../../Table/AircraftsTable';
-import DropdownFilter from '../../Dropdown/DropdownSelect';
-import LinkedButton from '../../Buttons/LinkedButton';
 import ActionButtons from './ActionButtons';
 
 import Style from "./Aircrafts.module.scss";
+import {Button, LinkButton} from '../../Generics/Buttons/Button';
+import { Link } from 'react-router-dom';
+import DropdownOptions from '../../Generics/Filters/DropdownOptions';
 
 interface Props {
   aircrafts: AircraftData[];
@@ -106,9 +107,12 @@ const Aircrafts: React.FC<Props> = ({
               handleAircraftSave={handleAircraftSave}
               handleAircraftUnsave={handleAircraftUnsave}
             />
-            <LinkedButton path={`/aircrafts/details/${cell.row.original.id}`} style={"primary"}>
+            <LinkButton
+              buttonSettings={{style: "primary"}}
+              path={`/aircrafts/details/${cell.row.original.id}`}
+            >
               VIEW
-            </LinkedButton>
+            </LinkButton>
           </div>
         )
       },
@@ -131,7 +135,7 @@ const Aircrafts: React.FC<Props> = ({
 
         {/* TODO: Grouped Select Dropdown filter */}
         <div className={Style.Dropdown}>
-          <DropdownFilter options={null}/>
+          <DropdownOptions />
         </div>
 
         <div className={Style.FilterOptions}>
@@ -147,9 +151,11 @@ const Aircrafts: React.FC<Props> = ({
         </div>
        
         <div className={Style.CreateNew}>
-          <LinkedButton path="/aircrafts/create" style={"primary"}>
-            Create Aircraft
-          </LinkedButton>
+          <Button style={"primary"}>
+            <Link to="/aircrafts/create">
+              Create Aircraft
+            </Link>
+          </Button>
         </div>
       </div>
 

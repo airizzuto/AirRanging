@@ -1,0 +1,39 @@
+@use "../../../styles/mixins" as *;
+@use "../../../styles/colors" as color;
+@use "../../../styles/components/boxes" as box;
+
+
+.Dropdown-Container {
+
+  .Dropdown__control {
+    @include box.light;
+    color: color.$dark1;
+    padding: 0;
+
+    .Dropdown__placeholder {
+      color: color.$neutral;
+    }
+      
+    .Dropdown__value-container {
+      color: color.$dark1;
+    }
+
+
+    .Dropdown__indicators {
+      svg {
+        color: color.$neutral;
+      }
+    }
+  }
+
+  .Dropdown__menu {
+    color: color.$dark1;
+
+    .Dropdown__menu-list {
+
+      .Dropdown-option {
+        
+      }
+    }
+  }
+}

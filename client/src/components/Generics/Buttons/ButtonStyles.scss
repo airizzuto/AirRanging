@@ -1,17 +1,27 @@
-@use "../../styles/colors" as color;
-@use "../../styles/fonts" as font;
-@use "../../styles/components/buttons" as button;
-@use "../../styles/mixins" as *;
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/components/buttons" as button;
+@use "../../../styles/mixins" as *;
 
 .primary {
   @include button.decorated;
   color: color.$light1;
   background-color: color.$light2;
+
+  a {
+    color: color.$light1;
+    text-decoration: none;
+  }
 };
 
 .primary:disabled {
   color: color.$light1-disabled;
   background-color: color.$light2-disabled;
+
+  a {
+    color: color.$light1-disabled;
+    text-decoration: none;
+  }
 }
 
 .danger {
@@ -26,9 +36,7 @@
 }
 
 .exit {
-  button {
-    @include button.small-light;
-  }
+  @include button.small-light;
 };
 
 .undecorated {

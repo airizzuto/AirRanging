@@ -1,7 +1,7 @@
 import React from "react";
 
-import Slider from "../../Sliders/Slider";
-import DecoratedButton from "../../Buttons/DecoratedButton";
+import Slider from "../../Generics/Sliders/Slider";
+import { Button } from "../../Generics/Buttons/Button";
 
 import { AircraftState } from "../../../types/Aircraft/Aircraft";
 
@@ -90,7 +90,9 @@ const PlanningModal: React.FC<Props> = ({
       
 
       <div className={Style.AcceptButton}>
-        <DecoratedButton onClick={handleAccept} style="primary">Accept</DecoratedButton>
+        <Button handleClick={handleAccept} style="primary">
+          Accept
+        </Button>
       </div>
     </div>
   );

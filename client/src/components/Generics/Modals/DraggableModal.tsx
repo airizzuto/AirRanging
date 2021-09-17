@@ -1,6 +1,5 @@
 import Draggable from "react-draggable";
-
-import ExitButton from "../Buttons/ExitButton";
+import { Button } from "../Buttons/Button";
 
 import Style from "./DraggableModal.module.scss";
 
@@ -25,7 +24,9 @@ const Modal: React.FC<Props> = ({ label, handleClose, show, children }) => {
         <div className={Style.ModalHeader} id="modalHeader">
           <h1 className={Style.ModalTitle}>{label}</h1>
           <div className={Style.CloseButton}>
-            <ExitButton handleClick={handleClose} />
+            <Button handleClick={handleClose} style={"exit"}>
+              X
+            </Button>
           </div>
         </div>
         <hr className={Style.Separator}/>
