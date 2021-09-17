@@ -18,12 +18,12 @@
   border-radius: 10px;
 
   background-color: color.$light2;
-};
 
-.primary:disabled {
-  color: color.$light1-disabled;
-  background-color: color.$light2-disabled;
-}
+  &:disabled{
+    color: color.$light1-disabled;
+    background-color: color.$light2-disabled;
+  }
+};
 
 .danger {
   @include font.button;
@@ -41,12 +41,13 @@
   border-radius: 10px;
 
   background-color: color.$danger;
+
+  &:disabled {
+    color: color.$light1-disabled;
+    background-color: color.$danger-disabled;
+  }
 };
 
-.danger:disabled {
-  color: color.$light1-disabled;
-  background-color: color.$danger-disabled;
-}
 
 .exit {
   @include font.button;
@@ -54,6 +55,7 @@
   @include text-shadow;
   @include button-behavior;
   
+  color: color.$light1;
   background-color: color.$light2;
 
   text-align: center;
@@ -62,9 +64,8 @@
 
   border-style: none;
   border-radius: 5px;
-  color: color.$light1;
 
-  :disabled {
+  &:disabled {
     color: color.$light1-disabled;
   }
 };
@@ -76,4 +77,8 @@
 
   border: none;
   background: none;
+
+  &:disabled {
+    color: color.$light1-disabled;
+  }
 }

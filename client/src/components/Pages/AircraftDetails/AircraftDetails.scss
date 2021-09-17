@@ -38,28 +38,18 @@
     flex-direction: row;
     justify-content: right;
     align-content: center;
+  
     gap: 2rem;
     margin-bottom: 0.5rem;
+    
+    .Delete {
+      justify-content: left;
+    }
 
     button {
-      @include button.decorated;
-      min-width: 8rem;
-      color: color.$light1;
-      background-color: color.$light2;
-    }
-
-    .Delete {
-        justify-content: left;
-
-      button {
-        color: color.$light1;
-        background-color: color.$danger;
-      }
-
-      button:disabled{
-        color: color.$light1-disabled;
-        background-color: color.$danger-disabled;
-      }
+      min-width: max-content;
+      padding: 0.5rem 1rem;
     }
   }
+  
 };

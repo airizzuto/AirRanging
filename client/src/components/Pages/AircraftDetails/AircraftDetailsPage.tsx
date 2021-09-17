@@ -305,13 +305,13 @@ const AircraftDetails: React.FC<Props> = ({
                   <div>
                   {
                     isEditMode
-                    ? <button onClick={() => setIsEditMode(true)}>
+                    ? <Button handleClick={() => setIsEditMode(true)} style={"primary"}>
                         EDIT
-                      </button>
+                      </Button>
                     // TODO: disable if user not logged
-                    : <button>
+                    : <Button style={"primary"}>
                         CLONE
-                      </button>
+                      </Button>
                       
                   }
                   </div>
@@ -320,12 +320,12 @@ const AircraftDetails: React.FC<Props> = ({
                     {
                       isEditMode
                       // TODO: on click handle submit and switch edit mode
-                      ? <button type="submit" >
+                      ? <Button type="submit" style={"primary"}>
                           SUBMIT
-                        </button>
-                      : <button>
+                        </Button>
+                      : <Button style={"primary"}>
                           SELECT
-                        </button>
+                        </Button>
                     }
                   </div>
                 </div>

@@ -3,7 +3,7 @@ import { isUserOwner } from '../../../helpers/userHelper';
 import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
-import { LinkButton } from '../../Generics/Buttons/Button';
+import { Button, LinkButton } from '../../Generics/Buttons/Button';
 
 interface Props {
   user: UserPublic | null;
@@ -25,7 +25,7 @@ const ActionButtons: React.FC<Props> = ({
     // user logged
     ? isUserOwner(aircraft)
       // user is owner
-      ? <button disabled={true}>OWNED</button>
+      ? <Button disabled={true} style={"primary"}>OWNED</Button>
       // user is not owner
       : <SaveActionsButton
           aircraft={aircraft}
