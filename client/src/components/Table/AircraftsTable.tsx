@@ -13,7 +13,6 @@ interface Props {
   handleAircraftSelection: (selected: AircraftData | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
-  handleAircraftDelete: (aircraftId: string) => Promise<void>;
 }
 
 const AircraftsTable: React.FC<Props> = ({ columns, data, handleAircraftSelection }) => {

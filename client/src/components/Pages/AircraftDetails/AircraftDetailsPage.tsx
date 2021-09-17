@@ -14,14 +14,26 @@ import EnumOptions from "../AircraftCreate/EnumOptions";
 
 import "./AircraftDetails.scss";
 import Spinner from "../../../styles/components/_spinner.module.scss";
+import SaveActionsButton from "../../AircraftActions/SaveActionsButton";
+import { Button } from "../../Generics/Buttons/Button";
 
 interface Props {
   aircraftsSaved: AircraftData[] | null;
   handleAircraftEdit: (aircraftId: string, editedAircraft: AircraftData) => Promise<void>;
   handleAircraftSelect: (selected: AircraftData | null) => void;
+  handleAircraftSave: (aircraftId: string) => Promise<void>;
+  handleAircraftUnsave: (aircraftId: string) => Promise<void>;
+  handleAircraftDelete: (aircraftId: string) => Promise<void>;
 }
 
-const AircraftDetails: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, handleAircraftSelect }) => {
+const AircraftDetails: React.FC<Props> = ({
+  aircraftsSaved,
+  handleAircraftEdit,
+  handleAircraftSelect,
+  handleAircraftSave,
+  handleAircraftUnsave,
+  handleAircraftDelete
+}) => {
   const { aircraftId }: any = useParams();
   const history = useHistory();
 
@@ -29,7 +41,6 @@ const AircraftDetails: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, 
   const [aircraft, setAircraft] = useState<AircraftData>();
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAircraftOwned, setIsAircraftOwned] = useState(false);
-  const [isAircraftSaved, setIsAircraftSaved] = useState(false);
 
   useEffect(() => {
     aircraftService.getAircraftById(aircraftId)
@@ -42,12 +53,6 @@ const AircraftDetails: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, 
       setIsAircraftOwned(isUserOwner(aircraft));
     }
   }, [aircraft]);
-
-  useEffect(() => {
-    if (aircraft) {
-      setIsAircraftSaved(aircraftsSaved?.find(a => a.id == aircraft.id) != null);
-    }
-  }, [aircraft, aircraftsSaved]);
 
   useEffect(() => {
     if (aircraft && isAircraftOwned) {
@@ -282,17 +287,15 @@ const AircraftDetails: React.FC<Props> = ({ aircraftsSaved, handleAircraftEdit, 
                   <div>
                   {
                     isAircraftOwned
-                    ? <button className={"Delete"}>
+                    ? <Button style={"danger"} handleClick={() => handleAircraftDelete}>
                         DELETE
-                      </button>
-                    : isAircraftSaved
-                      ? <button>
-                          SAVED
-                        </button>
-                      // TODO: disable if user not logged
-                      : <button>
-                          SAVE
-                        </button>
+                      </Button>
+                    : <SaveActionsButton
+                        aircraft={aircraft}
+                        aircraftsSaved={aircraftsSaved}
+                        handleAircraftSave={handleAircraftSave}
+                        handleAircraftUnsave={handleAircraftUnsave}
+                      />
                   }
                   </div>
 

@@ -215,9 +215,12 @@ const App = (): JSX.Element =>{
               exact path="/aircrafts/details/:aircraftId"
             >
               <AircraftDetails
+                aircraftsSaved={aircraftsSaved}
                 handleAircraftEdit={handleAircraftEdit}
                 handleAircraftSelect={handleAircraftSelection}
-                aircraftsSaved={aircraftsSaved}
+                handleAircraftSave={handleAircraftSave}
+                handleAircraftUnsave={handleAircraftUnsave}
+                handleAircraftDelete={handleAircraftDelete}
               />
             </Route>
 

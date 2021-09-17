@@ -30,7 +30,6 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftSave,
   handleAircraftUnsave,
   handleAircraftSelection,
-  handleAircraftDelete
 }) => {
   const [filterInput, setFilterInput] = React.useState("");
 
@@ -167,7 +166,6 @@ const Aircrafts: React.FC<Props> = ({
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftSave={handleAircraftSave}
                 handleAircraftUnsave={handleAircraftUnsave}
-                handleAircraftDelete={handleAircraftDelete}
               />
             </div>
           : <div className={Style.AircraftsLoading}>
