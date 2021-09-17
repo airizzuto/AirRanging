@@ -30,7 +30,6 @@
   }
 
   .HeaderNav {
-    @include hyperlink-behavior;
     grid-area: navigation;
     min-height: 100%;
 
