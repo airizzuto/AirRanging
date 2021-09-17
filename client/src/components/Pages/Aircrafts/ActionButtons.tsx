@@ -34,7 +34,7 @@ const ActionButtons: React.FC<Props> = ({
           handleAircraftUnsave={handleAircraftUnsave}
         />
     // user not logged
-    : <LinkButton buttonSettings={{ style: "primary" }} path={`/login`}>
+    : <LinkButton style={"primary"} path={`/login`}>
         SAVE
       </LinkButton>
     

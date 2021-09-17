@@ -50,7 +50,6 @@
 
   .HeaderAccount {
     @include font.nav;
-    @include hyperlink-behavior;
     grid-area: user;
 
     display: grid;
@@ -67,10 +66,6 @@
       column-gap: 2vw;
     }
 
-    a {
-      color: color.$light1;
-    }
-
     li {
       place-self: center;
       min-width: max-content;
@@ -81,13 +76,14 @@
       grid-template-rows: 1fr 1fr;
       grid-template-columns: 1fr;
       grid-template-areas: "logged-label" "username";
+      column-gap: 0.5rem;
       height: fit-content;
+      width: fit-content;
       place-self: center;
       text-align: center;
 
       label {
         grid-area: logged-label;
-        color: color.$light1;
       }
 
       span {

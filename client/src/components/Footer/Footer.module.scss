@@ -29,7 +29,6 @@
 
   .Links{
     @include text-shadow;
-    @include hyperlink-behavior;
 
     grid-area: links;
     display: flex;
@@ -37,6 +36,8 @@
     justify-content: flex-end;
 
     a {
+      @include hyperlink-behavior;
+
       text-decoration: none;
       padding: 0 2vh;
       color: color.$light1;

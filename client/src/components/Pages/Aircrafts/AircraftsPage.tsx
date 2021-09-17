@@ -7,8 +7,7 @@ import AircraftsTable from '../../Table/AircraftsTable';
 import ActionButtons from './ActionButtons';
 
 import Style from "./Aircrafts.module.scss";
-import {Button, LinkButton} from '../../Generics/Buttons/Button';
-import { Link } from 'react-router-dom';
+import {LinkButton} from '../../Generics/Buttons/Button';
 import DropdownOptions from '../../Generics/Filters/DropdownOptions';
 
 interface Props {
@@ -108,7 +107,7 @@ const Aircrafts: React.FC<Props> = ({
               handleAircraftUnsave={handleAircraftUnsave}
             />
             <LinkButton
-              buttonSettings={{style: "primary"}}
+              style={"primary"}
               path={`/aircrafts/details/${cell.row.original.id}`}
             >
               VIEW
@@ -151,11 +150,9 @@ const Aircrafts: React.FC<Props> = ({
         </div>
        
         <div className={Style.CreateNew}>
-          <Button style={"primary"}>
-            <Link to="/aircrafts/create">
-              Create Aircraft
-            </Link>
-          </Button>
+          <LinkButton path="/aircrafts/create" style={"primary"}>
+            Create Aircraft
+          </LinkButton>
         </div>
       </div>
 

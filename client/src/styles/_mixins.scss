@@ -31,11 +31,11 @@
 
 
 @mixin hyperlink-behavior {
-  a {
-    text-decoration: none
-  };
+  color: color.$light1;
+  text-decoration: none;
 
-  a:hover {
+  &:hover {
+    cursor: pointer;
     color: color.$accent1;
     transition: color 0.4s;
   }
@@ -45,7 +45,7 @@
   decoration: none;
   text-decoration: none;
   
-  :hover {
+  &:hover {
     cursor: pointer;
     color: color.$accent1;
     transition: color 0.4s;

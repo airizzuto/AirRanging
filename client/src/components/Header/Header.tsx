@@ -26,12 +26,12 @@ const Header = ({handleLogout, user}: Props): JSX.Element => (
 
     <ul className={Style.HeaderNav}>
       <li>
-        <LinkButton buttonSettings= {{ style:"primary" }} path="/aircrafts">
+        <LinkButton style={"primary"} path="/aircrafts">
           AIRCRAFTS
         </LinkButton>
       </li>
       <li>
-        <LinkButton buttonSettings= {{ style:"primary" }} path="/airports">
+        <LinkButton style={"primary"} path="/airports">
           AIRPORTS
         </LinkButton>
       </li>
@@ -41,14 +41,14 @@ const Header = ({handleLogout, user}: Props): JSX.Element => (
       {!user
         ? <ul>
           <li>
-            <Link to="/login">
+            <LinkButton path="/login" style={"undecorated"}>
               LOGIN
-            </Link>
+            </LinkButton>
           </li>
           <li>
-            <Link to="/registration">
+            <LinkButton path="/registration" style={"undecorated"}>
               SIGN UP
-            </Link>
+            </LinkButton>
           </li>
         </ul>
         : <ul>
