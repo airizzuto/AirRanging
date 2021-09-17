@@ -11,7 +11,7 @@ import AlertBox from "../../Generics/Alerts/AlertBox";
 
 import Style from "./Login.module.scss";
 import CheckboxStyle from "../../../styles/components/_checkbox.module.scss";
-import { Button } from "../../Generics/Buttons/Button";
+import { Button, LinkButton } from "../../Generics/Buttons/Button";
 
 interface Props {
   setUser: Dispatch<SetStateAction<UserPublic | null>>;
@@ -118,11 +118,9 @@ const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
                   </button>
                 </div>
                 <span>- OR -</span>
-                <div className={Style.RegistrationButton}>
-                  <Link to="/registration" onClick={handleClose}>
-                    Register
-                  </Link>
-                </div>
+                <LinkButton path="/registration" handleClick={handleClose} style={"undecorated"}>
+                  Register
+                </LinkButton>
               </div>
 
             </Form>

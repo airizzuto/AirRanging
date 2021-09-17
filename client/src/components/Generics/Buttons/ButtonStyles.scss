@@ -1,32 +1,45 @@
 @use "../../../styles/colors" as color;
 @use "../../../styles/fonts" as font;
-@use "../../../styles/components/buttons" as button;
 @use "../../../styles/mixins" as *;
 
 .primary {
-  @include button.decorated;
-  color: color.$light1;
-  background-color: color.$light2;
+  @include font.button;
+  @include drop-shadow;
+  @include text-shadow;
+  @include hyperlink-behavior;
+  @include button-behavior;
 
-  a {
-    color: color.$light1;
-    text-decoration: none;
-  }
+  width: 100%;
+
+  text-align: center;
+  padding: 0.5rem;
+
+  border-style: none;
+  border-radius: 10px;
+
+  background-color: color.$light2;
 };
 
 .primary:disabled {
   color: color.$light1-disabled;
   background-color: color.$light2-disabled;
-
-  a {
-    color: color.$light1-disabled;
-    text-decoration: none;
-  }
 }
 
 .danger {
-  @include button.decorated;
-  color: color.$light1;
+  @include font.button;
+  @include drop-shadow;
+  @include text-shadow;
+  @include button-behavior;
+  @include hyperlink-behavior;
+
+  width: 100%;
+
+  text-align: center;
+  padding: 0.5rem;
+
+  border-style: none;
+  border-radius: 10px;
+
   background-color: color.$danger;
 };
 
@@ -36,9 +49,31 @@
 }
 
 .exit {
-  @include button.small-light;
+  @include font.button;
+  @include drop-shadow;
+  @include text-shadow;
+  @include button-behavior;
+  
+  background-color: color.$light2;
+
+  text-align: center;
+
+  padding: 5px 10px;
+
+  border-style: none;
+  border-radius: 5px;
+  color: color.$light1;
+
+  :disabled {
+    color: color.$light1-disabled;
+  }
 };
 
 .undecorated {
-  @include button.no-decorations;
+  @include font.button;
+  @include text-shadow;
+  @include hyperlink-behavior;
+
+  border: none;
+  background: none;
 }

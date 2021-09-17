@@ -12,9 +12,10 @@ interface ButtonProps {
 }
 
 interface LinkProps {
-  buttonSettings: ButtonProps;
   path: string;
+  handleClick?: React.MouseEventHandler<HTMLAnchorElement>;
   children?: React.ReactElement | string;
+  style: ButtonStyles;
 }
 
 
@@ -26,12 +27,10 @@ export const Button: React.FC<ButtonProps> = ({ children, handleClick, disabled,
   );
 };
 
-export const LinkButton: React.FC<LinkProps> = ({buttonSettings, path, children}) => {
+export const LinkButton: React.FC<LinkProps> = ({path, children, style, handleClick}) => {
   return (
-    <Button {...buttonSettings}>
-      <Link to={path} className={"undecorated"}>
-        {children}
-      </Link>
-    </Button>
+    <Link to={path} className={style} onClick={handleClick}>
+      {children}
+    </Link>
   );
 };

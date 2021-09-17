@@ -101,19 +101,9 @@
     gap: 1rem;
   
     button {
-      @include button.decorated;
-      background-color: color.$light2;
-      color: color.$light1;
       min-width: 6rem;
     }
-  
-    button:disabled {
-      @include button.decorated;
-      background-color: color.$light2;
-      color: color.$light1;
-    }
   }
-
 }
 
 @media (max-width: 600px) {

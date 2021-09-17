@@ -91,7 +91,7 @@ const AircraftSelectModal: React.FC<Props> = ({
       }
       
       <div className={Style.Select}>
-        <Button handleClick={handleSelectClick} style="primary">
+        <Button handleClick={handleSelectClick} style={"primary"}>
           Select
         </Button>
       </div>
