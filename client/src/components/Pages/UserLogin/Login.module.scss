@@ -179,6 +179,12 @@
         .LoginButton {
           width: 100%;
           place-self: center;
+    
+          button {
+            @include button.decorated;
+            color: color.$light1;
+            background-color: color.$light2;
+          }
         }
       }
     }
