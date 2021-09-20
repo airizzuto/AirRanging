@@ -147,7 +147,20 @@ const deleteAircraft = async (aircraftId: string) => {
   );
 
   // return response.status;
-  return response.data;
+  return response;
+};
+
+const cloneAircraft = async (aircraftId: string) => {
+  const config = {
+    headers: { Authorization: `Bearer ${getStoredToken()}` },
+  };
+
+  const response = await axios.post(
+    BASE_URL + `/api/aircrafts/${aircraftId}/clone`,
+    config
+  );
+
+  return response;
 };
 
 
@@ -163,4 +176,5 @@ export default {
   unsaveAircraft,
   editAircraft,
   deleteAircraft,
+  cloneAircraft,
 };
