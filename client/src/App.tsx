@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 
 import aircraftService from "./services/aircraftService";
 import userService from "./services/userService";
@@ -34,6 +34,7 @@ import Footer from "./components/Footer/Footer";
 import "./App.scss";
 
 const App = (): JSX.Element =>{
+  const history = useHistory();
 
   const [user, setUser] = useState<UserPublic | null>(null);
   const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
@@ -112,13 +113,14 @@ const App = (): JSX.Element =>{
 
   const handleAircraftEdit = async (aircraftId: string, editedAircraft: AircraftData) => {
     await aircraftService.editAircraft(aircraftId, editedAircraft)
-      .then(() => setAircrafts(
-        aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : editedAircraft)
-      )).catch(error => console.log("ERROR: editing aircraft - ", error));
+      .then(_ => setAircrafts(aircrafts.map(aircraft => 
+        aircraft.id !== aircraftId ? aircraft : editedAircraft
+      ))).catch(error => console.log("ERROR: editing aircraft - ", error));
   };
 
   const handleAircraftSave = async (aircraftId: string) => {
     await aircraftService.saveAircraft(aircraftId)
+      // TODO: abstract
       .then(async () => {
         // Updates saved aircrafts list
         refreshSavedAircrafts();
@@ -132,6 +134,7 @@ const App = (): JSX.Element =>{
 
   const handleAircraftUnsave = async (aircraftId: string) => {
     await bookmarkService.unsaveAircraft(aircraftId)
+      // TODO: abstract
       .then(async () => {
         // Updates saved aircrafts list
         refreshSavedAircrafts();
@@ -149,20 +152,30 @@ const App = (): JSX.Element =>{
       ...selected,
       loadedFuel: selected.fuelCapacity,
       currentMaxRange: selected.maxRange
-    })
-    : setAircraftSelected(null);
+    })    : setAircraftSelected(null);
   };
 
-  // TODO: handle aircraft delete
+  // TODO: test aircraft delete
   const handleAircraftDelete = async (aircraftId: string) => {
-    if (aircraftSelected) {
+    // Deselects aircraft to be deleted if its the same as the one currently selected
+    if (aircraftSelected?.id === aircraftId) {
       setAircraftSelected(null);
     }
+
     await aircraftService.deleteAircraft(aircraftId)
       .then(_ => refreshAircrafts())
-      .catch(error => 
+      .catch(error =>
         console.error(`ERROR: deleting aircraft ${aircraftId}: `, error)
       );
+  };
+
+  // TODO: test aircraft cloning
+  const handleAircraftCloning = async (aircraftId: string) => {
+    await aircraftService.cloneAircraft(aircraftId)
+      .then(response => {
+        refreshAircrafts();
+        history.push(`/aircrafts/${response.data.id}`);
+      }).catch(error => console.error("ERROR: cloning aircraft: ", error));
   };
 
   /* User state handlers */
@@ -221,6 +234,7 @@ const App = (): JSX.Element =>{
                 handleAircraftSave={handleAircraftSave}
                 handleAircraftUnsave={handleAircraftUnsave}
                 handleAircraftDelete={handleAircraftDelete}
+                handleAircraftCloning={handleAircraftCloning}
               />
             </Route>
 
