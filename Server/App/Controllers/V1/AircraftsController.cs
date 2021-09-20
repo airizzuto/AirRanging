@@ -256,7 +256,7 @@ namespace App.Controllers.V1
         /// <response code="400">Unable to clone the aircraft due to validation error</response>
         /// <response code="401">Unable to clone the aircraft due to user not logged in</response>
         /// <response code="404">Aircraft ID not found.</response>
-        [HttpPost("{id}/clone")]
+        [HttpPost("{aircraftId}/clone")]
         public async Task<IActionResult> CloneAircraft(string aircraftId)
         {
             var userId = HttpContext.GetUserId();
