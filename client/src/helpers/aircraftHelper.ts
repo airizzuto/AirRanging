@@ -9,11 +9,11 @@ import { AircraftData } from "../types/Aircraft/Aircraft";
  */
 export const mapAircraftToFilter = (
   data: AircraftData[],
-  labelProp: string
 ) => {
-  return data.map(resource => ({
-    value: resource,
-    label: resource[labelProp as keyof AircraftData]
+  return data.map(aircraft => ({
+    value: aircraft,
+    // FIXME: aircraft variant null
+    label: `${aircraft.model}/${aircraft.variant}/${aircraft.authorUsername}/${aircraft.savesCount}`,
   }));
 };
 
