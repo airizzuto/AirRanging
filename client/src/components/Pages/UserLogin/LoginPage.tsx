@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Formik, Form, Field, FormikHelpers, ErrorMessage } from 'formik';
 
@@ -23,7 +23,7 @@ interface Values {
 }
 
 const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
-  const [alert, setAlert] = React.useState("");
+  const [alert, setAlert] = useState("");
   const history = useHistory();
 
   const handleClose = () => {

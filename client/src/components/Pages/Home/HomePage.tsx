@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useModalClose } from "../../../hooks/useModalClose";
 import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 
@@ -28,7 +28,8 @@ const Home: React.FC<Props> = ({
   const [isModalActive, setIsModalActive] = useState(false); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = useState(false);
   const [displayAircraftsModal, setDisplaySelectionModal] = useState(false);
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (!selectedAircraft) {
       setIsModalActive(true);
       setDisplaySelectionModal(true);
