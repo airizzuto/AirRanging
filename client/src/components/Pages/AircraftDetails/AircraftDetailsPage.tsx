@@ -24,6 +24,7 @@ interface Props {
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
   handleAircraftDelete: (aircraftId: string) => Promise<void>;
+  handleAircraftCloning: (aircraftId: string) => Promise<void>;
 }
 
 const AircraftDetails: React.FC<Props> = ({
@@ -32,7 +33,8 @@ const AircraftDetails: React.FC<Props> = ({
   handleAircraftSelect,
   handleAircraftSave,
   handleAircraftUnsave,
-  handleAircraftDelete
+  handleAircraftDelete,
+  handleAircraftCloning
 }) => {
   const { aircraftId }: any = useParams();
   const history = useHistory();
@@ -81,9 +83,24 @@ const AircraftDetails: React.FC<Props> = ({
     }
   };
 
+  const handleCloning = async (aircraftId: string) => {
+    try {
+      await handleAircraftCloning(aircraftId);
+    } catch(error: any) {
+      console.error(error);
+      setAlert(error);
+      setTimeout(() => setAlert(""), 10000);
+    }
+  };
+
   return (
     <div className={"Container"}>
-      <h1>Aircraft Details: {aircraft?.model} {aircraft?.variant}</h1>
+      <h1>
+        Aircraft Page - {isEditMode ? "Edit" : "View"} Mode
+      </h1>
+      <h2>
+        {aircraft?.authorUsername} / {aircraft?.manufacturer} {aircraft?.model} - {aircraft?.variant}
+      </h2>
 
       <hr />
 
@@ -309,7 +326,7 @@ const AircraftDetails: React.FC<Props> = ({
                         EDIT
                       </Button>
                     // TODO: disable if user not logged
-                    : <Button style={"primary"}>
+                    : <Button style={"primary"} handleClick={() => handleCloning(aircraftId)}>
                         CLONE
                       </Button>
                       
