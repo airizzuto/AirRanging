@@ -1,4 +1,4 @@
 
 export const convertNauticalToMeters = (distance: number) => {
-  return distance * 1852;
+  return distance * 1852.001;
 };
