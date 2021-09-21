@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { useHistory, useParams } from "react-router-dom";
 
-import aircraftService from "../../../services/aircraftService";
 import { getUserData, isUserOwner } from "../../../helpers/userHelper";
 import { isUserAuthenticated } from "../../../helpers/tokenHelper";
 
@@ -20,6 +19,7 @@ import { Button } from "../../Generics/Buttons/Button";
 import propsToLabel from "../../../utils/propsToLabel";
 
 interface Props {
+  aircrafts: AircraftData[];
   aircraftsSaved: AircraftData[] | null;
   handleAircraftEdit: (aircraftId: string, editedAircraft: AircraftData) => Promise<void>;
   handleAircraftSelect: (selected: AircraftData | null) => void;
@@ -30,6 +30,7 @@ interface Props {
 }
 
 const AircraftDetails: React.FC<Props> = ({
+  aircrafts,
   aircraftsSaved,
   handleAircraftEdit,
   handleAircraftSelect,
@@ -47,10 +48,8 @@ const AircraftDetails: React.FC<Props> = ({
   const [isAircraftOwned, setIsAircraftOwned] = useState(false);
 
   useEffect(() => {
-    aircraftService.getAircraftById(aircraftId)
-      .then(response => setAircraft(response.data))
-      .catch(error => console.error(`Fetching aircraft ${aircraftId}:`, error));
-  }, [aircraftId]);
+    setAircraft(aircrafts.find(aircraft => aircraft.id === aircraftId));
+  }, []);
   
   useEffect(() => {
     if (aircraft) {

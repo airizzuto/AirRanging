@@ -228,6 +228,7 @@ const App = (): JSX.Element =>{
               exact path="/aircrafts/details/:aircraftId"
             >
               <AircraftDetails
+                aircrafts={aircrafts}
                 aircraftsSaved={aircraftsSaved}
                 handleAircraftEdit={handleAircraftEdit}
                 handleAircraftSelect={handleAircraftSelection}
