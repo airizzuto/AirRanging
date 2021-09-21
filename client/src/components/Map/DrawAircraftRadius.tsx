@@ -1,8 +1,8 @@
 import { Circle, Marker } from '@react-google-maps/api';
 import React from 'react';
-import { convertNauticalToMeters } from '../../helpers/mapHelper';
+import { convertNauticalToMeters } from '../../utils/unitsConvertions';
 import { AircraftState } from '../../types/Aircraft/Aircraft';
-import { Coordinates } from '../../types/Map/Map';
+import { Coordinates } from '../../types/Map/MapTypes';
 
 import markerIcon from "./PointSelected.svg";
 

@@ -1,4 +1,5 @@
 import { AircraftData } from "../types/Aircraft/Aircraft";
+import propsToLabel from "../utils/propsToLabel";
 
 /**
  * Adapts aircraft data to be used by the react-select searchbar.
@@ -12,12 +13,16 @@ export const mapAircraftToFilter = (
 ) => {
   return data.map(aircraft => ({
     value: aircraft,
-    // FIXME: aircraft variant null
-    label: `${aircraft.model}/${aircraft.variant}/${aircraft.authorUsername}/${aircraft.savesCount}`,
+    label: propsToLabel([aircraft.manufacturer, aircraft.model, aircraft.variant, aircraft.authorUsername, aircraft.savesCount])
   }));
 };
 
-
+/**
+ * 
+ * @param aircraft Aircraft to be compared.
+ * @param userAicrafts List of AircraftData.
+ * @returns True if aircraft is found in userAircrafts.
+ */
 export const isAircraftInUserList = (
   aircraft: AircraftData,
   userAicrafts: AircraftData[] | null
