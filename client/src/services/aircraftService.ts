@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
-import { AircraftData, NewAircraft } from "../types/Aircraft/Aircraft";
+import { AircraftData, CloneAircraft, NewAircraft } from "../types/Aircraft/Aircraft";
 
 const getAllAircrafts = async () => {
   const response = await axios.get(
@@ -94,7 +94,6 @@ const saveAircraft = async (aircraftId: string) => {
         config
       );
 
-      // return response.status;
       return response;
     }
   } catch(error) {
@@ -114,7 +113,6 @@ const unsaveAircraft = async (aircraftId: string) => {
         config
       );
     
-      // return response.status;
       return response.status;
     }
   } catch(error) {
@@ -146,17 +144,17 @@ const deleteAircraft = async (aircraftId: string) => {
     config
   );
 
-  // return response.status;
   return response;
 };
 
-const cloneAircraft = async (aircraftId: string) => {
+const cloneAircraft = async (aircraft: CloneAircraft) => {
   const config = {
     headers: { Authorization: `Bearer ${getStoredToken()}` },
   };
 
   const response = await axios.post(
-    BASE_URL + `/api/aircrafts/${aircraftId}/clone`,
+    BASE_URL + `/api/aircrafts/`,
+    aircraft,
     config
   );
 
