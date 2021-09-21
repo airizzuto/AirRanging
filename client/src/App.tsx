@@ -8,7 +8,7 @@ import { isUserAuthenticated } from "./helpers/tokenHelper";
 import { getUserData } from "./helpers/userHelper";
 
 import { UserPublic } from "./types/User/User";
-import { AircraftData, AircraftState, NewAircraft } from "./types/Aircraft/Aircraft";
+import { AircraftData, AircraftState, CloneAircraft, NewAircraft } from "./types/Aircraft/Aircraft";
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
@@ -62,6 +62,7 @@ const App = (): JSX.Element =>{
       refreshSavedAircrafts();
       refreshOwnedAircrafts();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, aircrafts]);
 
   /* Aircrafts state handlers */
@@ -71,7 +72,7 @@ const App = (): JSX.Element =>{
       .then((response) => setAircrafts([...response.data]))
       .catch(error => {
         setAircrafts([]);
-        console.log("ERROR: Retrieving all aircrafts - ", error);
+        console.error("ERROR: Retrieving all aircrafts - ", error);
       });
   };
 
@@ -81,7 +82,7 @@ const App = (): JSX.Element =>{
         .then((response) => setAircraftsSaved([...response.data]))
         .catch(error => {
           setAircraftsSaved([]);
-          console.log("ERROR: retrieving saved aicrafts - ", error);
+          console.error("ERROR: retrieving saved aicrafts - ", error);
         })
     : setAircraftsSaved([]);
   };
@@ -92,7 +93,7 @@ const App = (): JSX.Element =>{
         .then((response) => setAircraftsOwned([...response.data]))
         .catch(error => {
           setAircraftsOwned([]);
-          console.log("ERROR: retrieving owned aicrafts - ", error);
+          console.error("ERROR: retrieving owned aicrafts - ", error);
         })
     : setAircraftsOwned([]);
   };
@@ -101,21 +102,21 @@ const App = (): JSX.Element =>{
     filter
       ? await aircraftService.searchAircraftByModel(filter)
           .then((response) => setAircrafts([...response.data]))
-          .catch(error => console.log("ERROR: filtering aicrafts - ", error))
+          .catch(error => console.error("ERROR: filtering aicrafts - ", error))
       : refreshAircrafts();
   };
 
   const handleAircraftCreate = async (newAircraft: NewAircraft) => {
     await aircraftService.createAircraft(newAircraft)
       .then((response) => setAircrafts(aircrafts.concat(response)))
-      .catch(error => console.log("ERROR: creating aircraft - ", error));
+      .catch(error => console.error("ERROR: creating aircraft - ", error));
   };
 
   const handleAircraftEdit = async (aircraftId: string, editedAircraft: AircraftData) => {
     await aircraftService.editAircraft(aircraftId, editedAircraft)
       .then(_ => setAircrafts(aircrafts.map(aircraft => 
         aircraft.id !== aircraftId ? aircraft : editedAircraft
-      ))).catch(error => console.log("ERROR: editing aircraft - ", error));
+      ))).catch(error => console.error("ERROR: editing aircraft - ", error));
   };
 
   const handleAircraftSave = async (aircraftId: string) => {
@@ -123,13 +124,13 @@ const App = (): JSX.Element =>{
       // TODO: abstract
       .then(async () => {
         // Updates saved aircrafts list
-        refreshSavedAircrafts();
+        await refreshSavedAircrafts();
         // Refreshes saved aircraft in aircrafts list
         await aircraftService.getAircraftById(aircraftId)
           .then(response => setAircrafts(
               aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
           )).catch(error => console.error(`Fetching aircraft ${aircraftId}: `, error));
-      }).catch(error => console.log("ERROR: retrieving aircraft - ", error));
+      }).catch(error => console.error("ERROR: retrieving aircraft - ", error));
   };
 
   const handleAircraftUnsave = async (aircraftId: string) => {
@@ -137,13 +138,13 @@ const App = (): JSX.Element =>{
       // TODO: abstract
       .then(async () => {
         // Updates saved aircrafts list
-        refreshSavedAircrafts();
+        await refreshSavedAircrafts();
         // Refreshes saved aircraft in aircrafts list
         await aircraftService.getAircraftById(aircraftId)
           .then(response => setAircrafts(
               aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
           )).catch(error => console.error(`Fetching aircraft ${aircraftId}: `, error));
-      }).catch(error => console.log("ERROR: retrieving aircraft - ", error));
+      }).catch(error => console.error("ERROR: retrieving aircraft - ", error));
   };
 
   const handleAircraftSelection = (selected: AircraftData | null) => {
@@ -163,18 +164,18 @@ const App = (): JSX.Element =>{
     }
 
     await aircraftService.deleteAircraft(aircraftId)
-      .then(_ => refreshAircrafts())
+      .then(async () => await refreshAircrafts())
       .catch(error =>
         console.error(`ERROR: deleting aircraft ${aircraftId}: `, error)
       );
   };
 
   // TODO: test aircraft cloning
-  const handleAircraftCloning = async (aircraftId: string) => {
-    await aircraftService.cloneAircraft(aircraftId)
-      .then(response => {
-        refreshAircrafts();
-        history.push(`/aircrafts/${response.data.id}`);
+  const handleAircraftCloning = async (aircraft: CloneAircraft) => {
+    await aircraftService.cloneAircraft(aircraft)
+      .then(async (response) => {
+        await refreshAircrafts()
+          .then(_ => history.push(`/aircrafts/${response.data.id}`));
       }).catch(error => console.error("ERROR: cloning aircraft: ", error));
   };
 
