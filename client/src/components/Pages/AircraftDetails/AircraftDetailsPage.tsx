@@ -4,7 +4,8 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { useHistory, useParams } from "react-router-dom";
 
 import aircraftService from "../../../services/aircraftService";
-import { isUserOwner } from "../../../helpers/userHelper";
+import { getUserData, isUserOwner } from "../../../helpers/userHelper";
+import { isUserAuthenticated } from "../../../helpers/tokenHelper";
 
 import { AircraftData } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EWeightCategory, EIcaoWakeCategory, EFuelType } from "../../../types/Aircraft/AircraftEnums";
@@ -16,6 +17,7 @@ import "./AircraftDetails.scss";
 import Spinner from "../../../styles/components/_spinner.module.scss";
 import SaveActionsButton from "../../AircraftActions/SaveActionsButton";
 import { Button } from "../../Generics/Buttons/Button";
+import propsToLabel from "../../../utils/propsToLabel";
 
 interface Props {
   aircraftsSaved: AircraftData[] | null;
@@ -36,7 +38,7 @@ const AircraftDetails: React.FC<Props> = ({
   handleAircraftDelete,
   handleAircraftCloning
 }) => {
-  const { aircraftId }: any = useParams();
+  const { aircraftId }= useParams<{aircraftId: string}>();
   const history = useHistory();
 
   const [alert, setAlert] = useState("");
@@ -56,36 +58,34 @@ const AircraftDetails: React.FC<Props> = ({
     }
   }, [aircraft]);
 
-  useEffect(() => {
-    if (aircraft && isAircraftOwned) {
-      setIsEditMode(true);
-    }
-
-    setIsEditMode(false);
-  }, [aircraft, isAircraftOwned]);
-
   {/* TODO: user logged check on save/clone handlers. Route to login */}
 
-  const handleSubmit = (editedAircraft : AircraftData) => { 
+  const handleSubmit = async (editedAircraft : AircraftData) => {
     try {
       setAlert("");
 
-      if (isEditMode) {
-        handleAircraftEdit(editedAircraft.id , editedAircraft);
-      }
+      await handleAircraftEdit(editedAircraft.id , editedAircraft);
 
-      handleAircraftSelect(editedAircraft);
-      history.push("/");
-    } catch(error: any) {
-      console.error(error);
-      setAlert(error);
-      setTimeout(() => setAlert(""), 10000);
-    }
+      } catch(error: any) {
+        console.error(error);
+        setAlert(error);
+        setTimeout(() => setAlert(""), 10000);
+      }
+    };
+
+  const handleSelect = (aircraftSelected: AircraftData) => {
+    handleAircraftSelect(aircraftSelected);
+    history.push("/");
   };
 
   const handleCloning = async (aircraftId: string) => {
     try {
-      await handleAircraftCloning(aircraftId);
+      setAlert("");
+
+      if (await isUserAuthenticated()) {
+        await handleAircraftCloning(aircraftId);
+      }
+
     } catch(error: any) {
       console.error(error);
       setAlert(error);
@@ -99,7 +99,10 @@ const AircraftDetails: React.FC<Props> = ({
         Aircraft Page - {isEditMode ? "Edit" : "View"} Mode
       </h1>
       <h2>
-        {aircraft?.authorUsername} / {aircraft?.manufacturer} {aircraft?.model} - {aircraft?.variant}
+        {propsToLabel({
+          props: [aircraft?.authorUsername, aircraft?.manufacturer, aircraft?.model, aircraft?.variant],
+          separator: " / "
+        })}
       </h2>
 
       <hr />
@@ -321,15 +324,22 @@ const AircraftDetails: React.FC<Props> = ({
                   {/* TODO: route to cloned aircraft */}
                   <div>
                   {
-                    isEditMode
-                    ? <Button handleClick={() => setIsEditMode(true)} style={"primary"}>
-                        EDIT
-                      </Button>
-                    // TODO: disable if user not logged
-                    : <Button style={"primary"} handleClick={() => handleCloning(aircraftId)}>
+                    isAircraftOwned
+                    ? isEditMode
+                      ? <Button handleClick={() => setIsEditMode(true)} style={"primary"}>
+                          EDIT
+                        </Button>
+                      : <Button style={"primary"} handleClick={() => setIsEditMode(false)}>
+                          VIEW
+                        </Button>
+                    // TODO: if user not logged route to login
+                    : <Button 
+                        style={"primary"}
+                        handleClick={() => handleCloning(aircraftId)}
+                        disabled={getUserData() === null}
+                      >
                         CLONE
                       </Button>
-                      
                   }
                   </div>
 
@@ -340,7 +350,7 @@ const AircraftDetails: React.FC<Props> = ({
                       ? <Button type="submit" style={"primary"}>
                           SUBMIT
                         </Button>
-                      : <Button style={"primary"}>
+                      : <Button style={"primary"} handleClick={() => handleSelect(aircraft)}>
                           SELECT
                         </Button>
                     }

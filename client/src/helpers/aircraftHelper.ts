@@ -13,7 +13,10 @@ export const mapAircraftToFilter = (
 ) => {
   return data.map(aircraft => ({
     value: aircraft,
-    label: propsToLabel([aircraft.manufacturer, aircraft.model, aircraft.variant, aircraft.authorUsername, aircraft.savesCount])
+    label: propsToLabel({
+      props: [aircraft.manufacturer, aircraft.model, aircraft.variant, aircraft.authorUsername, aircraft.savesCount],
+      undefinedReplacement: "N/A",
+      separator: " / "})
   }));
 };
 
