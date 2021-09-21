@@ -61,6 +61,7 @@ const AircraftDetails: React.FC<Props> = ({
     setAlert("");
 
     await handleAircraftEdit(editedAircraft.id , editedAircraft)
+      .then(_ => setIsEditMode(false))
       .catch(error => {
         console.error(error);
         setAlert(error);
@@ -308,7 +309,7 @@ const AircraftDetails: React.FC<Props> = ({
                 </div>
 
                 <div className={"Options"}>
-                  {/* TODO: handle delete */}
+                  {/* TODO: test delete */}
                   <div>
                   {
                     isAircraftOwned
@@ -324,9 +325,8 @@ const AircraftDetails: React.FC<Props> = ({
                   }
                   </div>
 
-                  {/* TODO: handle edit mode*/}
-                  {/* TODO: handle clone */}
-                  {/* TODO: route to cloned aircraft */}
+                  {/* TODO: test edit mode*/}
+                  {/* TODO: test clone */}
                   <div>
                   {
                     isAircraftOwned
@@ -351,7 +351,6 @@ const AircraftDetails: React.FC<Props> = ({
                   <div>
                     {
                       isEditMode
-                      // TODO: on click handle submit and switch edit mode
                       ? <Button type="submit" style={"primary"}>
                           SUBMIT
                         </Button>
