@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { getUserData, isUserOwner } from "../../../helpers/userHelper";
 import { isUserAuthenticated } from "../../../helpers/tokenHelper";
 
-import { AircraftData } from "../../../types/Aircraft/Aircraft";
+import { AircraftData, CloneAircraft } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EWeightCategory, EIcaoWakeCategory, EFuelType } from "../../../types/Aircraft/AircraftEnums";
 import { aircraftSchema } from "../../../validators/aircraftValidators";
 import AlertBox from "../../Generics/Alerts/AlertBox";
@@ -26,7 +26,7 @@ interface Props {
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
   handleAircraftDelete: (aircraftId: string) => Promise<void>;
-  handleAircraftCloning: (aircraftId: string) => Promise<void>;
+  handleAircraftCloning: (aircraftToClone: CloneAircraft) => Promise<void>;
 }
 
 const AircraftDetails: React.FC<Props> = ({
@@ -49,7 +49,7 @@ const AircraftDetails: React.FC<Props> = ({
 
   useEffect(() => {
     setAircraft(aircrafts.find(aircraft => aircraft.id === aircraftId));
-  }, []);
+  }, [aircrafts, aircraftId]);
   
   useEffect(() => {
     if (aircraft) {
@@ -60,13 +60,14 @@ const AircraftDetails: React.FC<Props> = ({
   const handleSubmit = async (editedAircraft : AircraftData) => {
     setAlert("");
 
-    await handleAircraftEdit(editedAircraft.id , editedAircraft)
-      .then(_ => setIsEditMode(false))
-      .catch(error => {
-        console.error(error);
-        setAlert(error);
-        setTimeout(() => setAlert(""), 10000);
-      });
+    try {
+      handleAircraftEdit(editedAircraft.id , editedAircraft);
+      setIsEditMode(false);
+    } catch(error: any) {
+      console.error(error);
+      setAlert(error);
+      setTimeout(() => setAlert(""), 10000);
+    }
   };
 
   const handleSelect = (aircraftSelected: AircraftData) => {
@@ -87,11 +88,11 @@ const AircraftDetails: React.FC<Props> = ({
     }
   };
 
-  const handleCloning = async (aircraftId: string) => {
+  const handleCloning = async (aircraftToClone: AircraftData) => {
     setAlert("");
 
     if (await isUserAuthenticated()) {
-      await handleAircraftCloning(aircraftId)
+      await handleAircraftCloning(aircraftToClone)
         .catch(error => {
           console.error(error);
           setAlert(error);
@@ -170,7 +171,7 @@ const AircraftDetails: React.FC<Props> = ({
                       name="variant"
                       placeholder="Variant"
                       disabled={isSubmitting || !isEditMode}
-                      value={aircraft.variant}
+                      value={aircraft.variant ? aircraft.variant : ""}
                     />
                     <ErrorMessage component="span" name="variant" />
                   </div>
@@ -182,7 +183,7 @@ const AircraftDetails: React.FC<Props> = ({
                       name="registration"
                       placeholder="Registration"
                       disabled={isSubmitting || !isEditMode}
-                      value={aircraft.registration}
+                      value={aircraft.registration ? aircraft.registration : ""}
                     />
                     <ErrorMessage component="span" name="registration" />
                   </div>
@@ -313,7 +314,7 @@ const AircraftDetails: React.FC<Props> = ({
                   <div>
                   {
                     isAircraftOwned
-                    ? <Button style={"danger"} handleClick={() => handleAircraftDelete}>
+                    ? <Button handleClick={() => handleAircraftDelete} style={"danger"}>
                         DELETE
                       </Button>
                     : <SaveActionsButton
@@ -321,6 +322,7 @@ const AircraftDetails: React.FC<Props> = ({
                         aircraftsSaved={aircraftsSaved}
                         handleAircraftSave={handleSave}
                         handleAircraftUnsave={handleAircraftUnsave}
+                        disabled={getUserData() === null}
                       />
                   }
                   </div>
@@ -330,18 +332,14 @@ const AircraftDetails: React.FC<Props> = ({
                   <div>
                   {
                     isAircraftOwned
-                    ? isEditMode
-                      ? <Button handleClick={() => setIsEditMode(true)} style={"primary"}>
-                          EDIT
-                        </Button>
-                      : <Button style={"primary"} handleClick={() => setIsEditMode(false)}>
-                          VIEW
-                        </Button>
+                    ? <Button handleClick={() => setIsEditMode(!isEditMode)} style={"primary"}>
+                        {isEditMode ? "EDIT" : "VIEW"}
+                      </Button>
                     // TODO: if user not logged route to login
                     : <Button 
-                        style={"primary"}
-                        handleClick={() => handleCloning(aircraftId)}
+                        handleClick={() => handleCloning(aircraft)}
                         disabled={getUserData() === null}
+                        style={"primary"}
                       >
                         CLONE
                       </Button>
@@ -354,7 +352,7 @@ const AircraftDetails: React.FC<Props> = ({
                       ? <Button type="submit" style={"primary"}>
                           SUBMIT
                         </Button>
-                      : <Button style={"primary"} handleClick={() => handleSelect(aircraft)}>
+                      : <Button handleClick={() => handleSelect(aircraft)} style={"primary"}>
                           SELECT
                         </Button>
                     }
