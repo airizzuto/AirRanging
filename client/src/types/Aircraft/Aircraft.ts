@@ -42,3 +42,4 @@ type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit
 
 export type NewAircraft = UnionOmit<Aircraft, 'id'>;
 
+export type CloneAircraft = UnionOmit<AircraftData, "id" | "savesCount" | "authorUsername">;
