@@ -24,7 +24,7 @@ namespace App.Controllers.V1
     /// <para> GetAircraftOwnedByUser    - GET    -  api/aircrafts/owned      </para>
     /// <para> GetAircraftId             - GET    -  api/aircrafts/5          </para>
     /// <para> PartialUpdateAircraftId   - PUT    -  api/aircrafts/5          </para>
-    /// <para> CreateAircraft            - POST   -  api/aircrafts/create     </para>
+    /// <para> CreateAircraft            - POST   -  api/aircrafts            </para>
     /// <para> CloneAircraftId           - POST   -  api/aircrafts/5/clone    </para>
     /// <para> FullUpdateAircraftId      - PATCH  -  api/aircrafts/5          </para>
     /// <para> DeleteAircraftId          - DELETE -  api/aircrafts/5          </para>
@@ -217,7 +217,7 @@ namespace App.Controllers.V1
         /// <response code="201">Aircraft created successfully in database</response>
         /// <response code="400">Unable to create the aircraft due to validation error</response>
         /// <response code="401">Unable to create the aircraft due to user not logged in</response>
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> CreateAircraft(AircraftCreateDTO aircraftCreateDto)
         {
             var userId = HttpContext.GetUserId();
@@ -272,7 +272,7 @@ namespace App.Controllers.V1
                 _logger.LogError($" Aircraft {aircraftId} not found.");
                 return NotFound("Aircraft id not found.");
             }
-           
+
             var aircraftCopy = await _repository.Aircraft.CreateAircraftAsync(existingAircraft, userId);
             await _repository.Bookmark.CreateBookmarkAsync(userId, aircraftCopy.Id);
 
