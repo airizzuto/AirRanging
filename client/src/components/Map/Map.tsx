@@ -2,7 +2,7 @@ import React from 'react';
 import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import { containerStyle, DEFAULT_MAP_CENTER, DEFAULT_MAP_OPTIONS, LIBRARIES } from '../../settings/google-maps/mapSettings';
 
-import { Coordinates } from '../../types/Map/Map';
+import { Coordinates } from '../../types/Map/MapTypes';
 import { AircraftState } from '../../types/Aircraft/Aircraft';
 
 import Spinner from "../../styles/components/_spinner.module.scss";
