@@ -58,38 +58,45 @@ const AircraftDetails: React.FC<Props> = ({
     }
   }, [aircraft]);
 
-  {/* TODO: user logged check on save/clone handlers. Route to login */}
-
   const handleSubmit = async (editedAircraft : AircraftData) => {
-    try {
-      setAlert("");
+    setAlert("");
 
-      await handleAircraftEdit(editedAircraft.id , editedAircraft);
-
-      } catch(error: any) {
+    await handleAircraftEdit(editedAircraft.id , editedAircraft)
+      .catch(error => {
         console.error(error);
         setAlert(error);
         setTimeout(() => setAlert(""), 10000);
-      }
-    };
+      });
+  };
 
   const handleSelect = (aircraftSelected: AircraftData) => {
     handleAircraftSelect(aircraftSelected);
     history.push("/");
   };
 
+  const handleSave = async (aircraftId: string) => {
+    setAlert("");
+
+    if (await isUserAuthenticated()) {
+      await handleAircraftSave(aircraftId)
+        .catch(error => {
+          console.error(error);
+          setAlert(error);
+          setTimeout(() => setAlert(""), 10000);
+        });
+    }
+  };
+
   const handleCloning = async (aircraftId: string) => {
-    try {
-      setAlert("");
+    setAlert("");
 
-      if (await isUserAuthenticated()) {
-        await handleAircraftCloning(aircraftId);
-      }
-
-    } catch(error: any) {
-      console.error(error);
-      setAlert(error);
-      setTimeout(() => setAlert(""), 10000);
+    if (await isUserAuthenticated()) {
+      await handleAircraftCloning(aircraftId)
+        .catch(error => {
+          console.error(error);
+          setAlert(error);
+          setTimeout(() => setAlert(""), 10000);
+        });
     }
   };
 
@@ -303,7 +310,6 @@ const AircraftDetails: React.FC<Props> = ({
 
                 <div className={"Options"}>
                   {/* TODO: handle delete */}
-                  {/* TODO: handle save/unsave */}
                   <div>
                   {
                     isAircraftOwned
@@ -313,7 +319,7 @@ const AircraftDetails: React.FC<Props> = ({
                     : <SaveActionsButton
                         aircraft={aircraft}
                         aircraftsSaved={aircraftsSaved}
-                        handleAircraftSave={handleAircraftSave}
+                        handleAircraftSave={handleSave}
                         handleAircraftUnsave={handleAircraftUnsave}
                       />
                   }
