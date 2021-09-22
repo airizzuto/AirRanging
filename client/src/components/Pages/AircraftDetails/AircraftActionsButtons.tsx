@@ -7,14 +7,6 @@ import { Button } from '../../Generics/Buttons/Button';
 
 import "./actionsButtons.scss";
 
-interface Props {
-  aircraft: AircraftData;
-  aircraftsSaved: AircraftData[] | null;
-  isEditMode: boolean;
-  isAircraftOwned: boolean;
-  handlers: IAircraftButtonsHandlers;
-}
-
 export interface IAircraftButtonsHandlers {
   handleEdit: (aircraftId: string, editedAircraft: AircraftData) => Promise<void>;
   handleSelect: (selected: AircraftData) => void;
@@ -26,6 +18,14 @@ export interface IAircraftButtonsHandlers {
     ) => Promise<void>
   handleCloning: (aircraftToClone: AircraftData) => Promise<void>;
   handleEditModeSwitch: () => void;
+}
+
+interface Props {
+  aircraft: AircraftData;
+  aircraftsSaved: AircraftData[] | null;
+  isEditMode: boolean;
+  isAircraftOwned: boolean;
+  handlers: IAircraftButtonsHandlers;
 }
 
 const AircraftActionsButtons: React.FC<Props> = ({ 
@@ -60,11 +60,11 @@ const AircraftActionsButtons: React.FC<Props> = ({
       {
         isAircraftOwned
         ? <Button 
-            type="button"
-            handleClick={() => handlers.handleEditModeSwitch}
+            type={isEditMode ? "reset" : "button"}
+            handleClick={() => handlers.handleEditModeSwitch()}
             style={"primary"}
           >
-            {isEditMode ? "EDIT" : "VIEW"}
+            {isEditMode ? "VIEW" : "EDIT"}
           </Button>
         // TODO: if user not logged route to login
         : <Button 

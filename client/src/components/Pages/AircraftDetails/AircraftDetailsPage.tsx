@@ -123,8 +123,7 @@ const AircraftDetails: React.FC<Props> = ({
 
       <hr />
 
-      <div>
-      {aircraft 
+      {aircraft
       ? <div>
           <div className={"AlertNotification"}>
             <AlertBox alertText={alert}/>
@@ -139,18 +138,16 @@ const AircraftDetails: React.FC<Props> = ({
               handleSelect,
               handleSubmit,
               handleEdit: handleAircraftEdit,
+              handleEditModeSwitch,
               handleDelete,
               handleSave,
               handleAircraftUnsave,
-              handleEditModeSwitch,
               handleCloning,
             }}
           />
-
         </div>
-        : <div className={Spinner.spinner}></div>
-        }
-      </div>
+      : <div className={Spinner.spinner}></div>
+      }
     </div>
   );
 };
