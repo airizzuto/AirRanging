@@ -242,7 +242,7 @@ namespace App.Controllers.V1
 
             return CreatedAtAction(
                 actionName: nameof(GetAircraftById),
-                routeValues: new { id = aircraftReadDto.Id },
+                routeValues: new { aircraftId = aircraftReadDto.Id },
                 value: aircraftReadDto
             );
         }
@@ -286,7 +286,7 @@ namespace App.Controllers.V1
 
             return CreatedAtAction(
                 actionName: nameof(GetAircraftById),
-                routeValues: new { id = aircraftReadDto.Id },
+                routeValues: new { aircraftId = aircraftReadDto.Id },
                 value: aircraftReadDto
             );
         }
