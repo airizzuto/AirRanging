@@ -281,7 +281,7 @@ namespace App.Controllers.V1
             var aircraftReadDto = _mapper.Map<AircraftReadDTO>(aircraftCopy);
 
             _logger.LogInfo(
-                $" User: {userId} created aircraft {aircraftReadDto.Id}."
+                $" User: {userId} cloned {aircraftId}. New aircraft {aircraftReadDto.Id}."
             );
 
             return CreatedAtAction(
