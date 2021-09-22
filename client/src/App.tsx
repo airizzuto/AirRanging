@@ -153,7 +153,8 @@ const App = (): JSX.Element =>{
       ...selected,
       loadedFuel: selected.fuelCapacity,
       currentMaxRange: selected.maxRange
-    })    : setAircraftSelected(null);
+    })
+    : setAircraftSelected(null);
   };
 
   // TODO: test aircraft delete
@@ -175,7 +176,7 @@ const App = (): JSX.Element =>{
     await aircraftService.cloneAircraft(aircraft)
       .then(async (response) => {
         await refreshAircrafts()
-          .then(_ => history.push(`/aircrafts/${response.data.id}`));
+          .then(_ => history.push(`/aircrafts/details/${response.data.id}`));
       }).catch(error => console.error("ERROR: cloning aircraft: ", error));
   };
 
