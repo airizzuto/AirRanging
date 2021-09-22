@@ -7,26 +7,26 @@ import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from '../../../types/Aircraft/AircraftEnums';
 import { aircraftSchema } from '../../../validators/aircraftValidators';
 
-import { Button } from '../../Generics/Buttons/Button';
-
 import "./AircraftDetails.scss";
+import AircraftActionsButtons, { IAircraftButtonsHandlers } from './AircraftActionsButtons';
 
 interface Props {
   aircraft: AircraftData;
-  handleSubmit: (editedAircraft: AircraftData) => Promise<void>;
-  handleSelect: (aircraftSelected: AircraftData) => void;
+  aircraftsSaved: AircraftData[] | null;
+  isAircraftOwned: boolean;
   isEditMode: boolean;
+  handlers: IAircraftButtonsHandlers;
 }
 
 const AircraftForm: React.FC<Props> = ({
-  aircraft, handleSubmit, handleSelect, isEditMode
+  aircraft, aircraftsSaved, isEditMode, isAircraftOwned, handlers
 }) => {
   return (
     <Formik 
       initialValues={aircraft}
       validationSchema={aircraftSchema}
       onSubmit={async (values: AircraftData, { setSubmitting }: FormikHelpers<AircraftData>) => {
-        await handleSubmit(values);
+        await handlers.handleSubmit(values);
         setSubmitting(false);
     }}
     >
@@ -210,19 +210,13 @@ const AircraftForm: React.FC<Props> = ({
             </div>
           </div>
 
-          <div className={"Options"}>
-            <div>
-            {
-              isEditMode
-              ? <Button type="submit" style={"primary"}>
-                  SUBMIT
-                </Button>
-              : <Button handleClick={() => handleSelect(aircraft)} style={"primary"}>
-                  SELECT
-                </Button>
-            }
-            </div>
-          </div>
+          <AircraftActionsButtons
+            aircraft={aircraft}
+            isEditMode={isEditMode}
+            isAircraftOwned={isAircraftOwned}
+            aircraftsSaved={aircraftsSaved}
+            handlers={handlers}
+          />
       </Form>
       }
     </Formik>

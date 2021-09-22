@@ -14,10 +14,20 @@ interface Props {
 const SaveActionsButton: React.FC<Props> = ({aircraft, aircraftsSaved, disabled, handleAircraftUnsave, handleAircraftSave}) => {
   return (
     isAircraftInUserList(aircraft, aircraftsSaved)
-    ? <Button handleClick={() => handleAircraftUnsave(aircraft.id)} style={"primary"} disabled={disabled}>
+    ? <Button 
+        type="button"
+        handleClick={() => handleAircraftUnsave(aircraft.id)}
+        style={"primary"}
+        disabled={disabled}
+      >
         SAVED
       </Button>
-    : <Button handleClick={() => handleAircraftSave(aircraft.id)} style={"primary"} disabled={disabled}>
+    : <Button
+        type="button"
+        handleClick={() => handleAircraftSave(aircraft.id)}
+        style={"primary"}
+        disabled={disabled}
+      >
         SAVE
       </Button>
   );

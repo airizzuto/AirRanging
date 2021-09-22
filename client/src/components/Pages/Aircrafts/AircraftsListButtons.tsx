@@ -13,7 +13,7 @@ interface Props {
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }
 
-const ActionButtons: React.FC<Props> = ({
+const AircraftsListButtons: React.FC<Props> = ({
   user,
   aircraft,
   aircraftsSaved,
@@ -41,4 +41,4 @@ const ActionButtons: React.FC<Props> = ({
   );
 };
 
-export default ActionButtons;
+export default AircraftsListButtons;

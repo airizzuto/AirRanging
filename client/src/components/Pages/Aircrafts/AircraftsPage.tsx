@@ -4,7 +4,7 @@ import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 
 import AircraftsTable from '../../Table/AircraftsTable';
-import ActionButtons from './ActionButtons';
+import AircraftsListButtons from './AircraftsListButtons';
 
 import Style from "./Aircrafts.module.scss";
 import {LinkButton} from '../../Generics/Buttons/Button';
@@ -98,7 +98,7 @@ const Aircrafts: React.FC<Props> = ({
         // accessor: "aircraftDetails",
         Cell: ({ cell }: any) => (
           <div className={Style.SaveOptions}>
-            <ActionButtons 
+            <AircraftsListButtons 
               user={user} 
               aircraft={cell.row.original}
               aircraftsSaved={aircraftsSaved}

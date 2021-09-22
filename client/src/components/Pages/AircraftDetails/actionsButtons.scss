@@ -1,0 +1,19 @@
+
+.actionsButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-content: center;
+
+  gap: 2rem;
+  margin-bottom: 0.5rem;
+  
+  .Delete {
+    justify-content: left;
+  }
+
+  button {
+    min-width: max-content;
+    padding: 0.5rem 1rem;
+  }
+}

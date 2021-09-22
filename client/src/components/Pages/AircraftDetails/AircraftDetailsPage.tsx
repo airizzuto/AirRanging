@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-import { getUserData, isUserOwner } from "../../../helpers/userHelper";
 import { isUserAuthenticated } from "../../../helpers/tokenHelper";
+import { isUserOwner } from "../../../helpers/userHelper";
+import propsToLabel from "../../../utils/propsToLabel";
 
 import { AircraftData, CloneAircraft } from "../../../types/Aircraft/Aircraft";
+
 import AlertBox from "../../Generics/Alerts/AlertBox";
+import AircraftForm from "./AircraftForm";
 
 import "./AircraftDetails.scss";
 import Spinner from "../../../styles/components/_spinner.module.scss";
-import SaveActionsButton from "../../AircraftActions/SaveActionsButton";
-import { Button } from "../../Generics/Buttons/Button";
-import propsToLabel from "../../../utils/propsToLabel";
-import AircraftForm from "./AircraftForm";
 
 interface Props {
   aircrafts: AircraftData[];
@@ -71,6 +70,10 @@ const AircraftDetails: React.FC<Props> = ({
     history.push("/");
   };
 
+  const handleEditModeSwitch = () => {
+    setIsEditMode(!isEditMode);
+  };
+
   const handleSave = async (aircraftId: string) => {
     setAlert("");
 
@@ -123,54 +126,27 @@ const AircraftDetails: React.FC<Props> = ({
       <div>
       {aircraft 
       ? <div>
-          <AircraftForm 
-            aircraft={aircraft} 
-            handleSelect={handleSelect}
-            handleSubmit={handleSubmit} 
-            isEditMode={isEditMode}
-          />
-
           <div className={"AlertNotification"}>
             <AlertBox alertText={alert}/>
           </div>
 
-          <div className={"Options"}>
-            {/* TODO: test delete */}
-            <div>
-              {
-                isAircraftOwned
-                ? <Button handleClick={() => handleDelete(aircraftId, aircraft.model, aircraft.variant)} style={"danger"}>
-                    DELETE
-                  </Button>
-                : <SaveActionsButton
-                    aircraft={aircraft}
-                    aircraftsSaved={aircraftsSaved}
-                    handleAircraftSave={handleSave}
-                    handleAircraftUnsave={handleAircraftUnsave}
-                    disabled={getUserData() === null}
-                  />
-              }
-            </div>
+          <AircraftForm 
+            aircraft={aircraft} 
+            isEditMode={isEditMode}
+            isAircraftOwned={isAircraftOwned}
+            aircraftsSaved={aircraftsSaved}
+            handlers={{
+              handleSelect,
+              handleSubmit,
+              handleEdit: handleAircraftEdit,
+              handleDelete,
+              handleSave,
+              handleAircraftUnsave,
+              handleEditModeSwitch,
+              handleCloning,
+            }}
+          />
 
-            {/* TODO: test edit mode*/}
-            {/* TODO: test clone */}
-            <div>
-              {
-                isAircraftOwned
-                ? <Button handleClick={() => setIsEditMode(!isEditMode)} style={"primary"}>
-                    {isEditMode ? "EDIT" : "VIEW"}
-                  </Button>
-                // TODO: if user not logged route to login
-                : <Button 
-                    handleClick={() => handleCloning(aircraft)}
-                    disabled={getUserData() === null}
-                    style={"primary"}
-                  >
-                    CLONE
-                  </Button>
-              }
-            </div>
-          </div>
         </div>
         : <div className={Spinner.spinner}></div>
         }
