@@ -61,7 +61,7 @@ const AircraftDetails: React.FC<Props> = ({
     setAlert("");
 
     try {
-      handleAircraftEdit(editedAircraft.id , editedAircraft);
+      await handleAircraftEdit(editedAircraft.id , editedAircraft);
       setIsEditMode(false);
     } catch(error: any) {
       console.error(error);
@@ -99,6 +99,15 @@ const AircraftDetails: React.FC<Props> = ({
           setTimeout(() => setAlert(""), 10000);
         });
     }
+  };
+
+  const handleDelete = async (aircraftId: string, aircraftModel: string, aircraftVariant?: string) => {
+    if (window.confirm(
+      `Are you sure you want to delete ${aircraftModel} - ${aircraftVariant} aircraft?`)
+      ) {
+        await handleAircraftDelete(aircraftId);
+        history.push("/");
+      }
   };
 
   return (
@@ -314,7 +323,7 @@ const AircraftDetails: React.FC<Props> = ({
                   <div>
                   {
                     isAircraftOwned
-                    ? <Button handleClick={() => handleAircraftDelete} style={"danger"}>
+                    ? <Button handleClick={() => handleDelete(aircraftId, aircraft.model, aircraft.variant)} style={"danger"}>
                         DELETE
                       </Button>
                     : <SaveActionsButton
