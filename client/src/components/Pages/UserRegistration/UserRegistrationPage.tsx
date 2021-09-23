@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, FormikHelpers } from 'formik';
 import userService from '../../../services/userService';
 import { UserRegistrationForm } from '../../../types/User/User';
 import { userRegistrationSchema } from '../../../validators/userValidators';
@@ -8,6 +8,7 @@ import { userRegistrationSchema } from '../../../validators/userValidators';
 import AlertBox from '../../Generics/Alerts/AlertBox';
 
 import Style from "./UserRegistration.module.scss";
+import FieldGroup from '../../Generics/FormGroups/FieldGroup';
 
 const UserRegistration = () => {
   const [alert, setAlert] = React.useState("");
@@ -53,29 +54,29 @@ const UserRegistration = () => {
         {({isSubmitting}) => 
           <Form className={Style.RegistrationForm} autoComplete="on">
             <div className={Style.RegistrationFields}>
-              <div className={Style.FormGroup}>
-                <label>Username:</label>
-                <Field type="text" name="username" placeholder="Username" autoComplete="off"/>
-                <ErrorMessage component="span" name="username" />
-              </div>
+              <FieldGroup 
+                label="Username" type="text" autoComplete="off"
+                placeholder="Username"
+                valueName="username"
+              />
 
-              <div className={Style.FormGroup}>
-                <label>Email:</label>
-                <Field type="email" name="email" placeholder="Email"/>
-                <ErrorMessage component="span" name="email" />
-              </div>
+              <FieldGroup 
+                label="Email" type="email"
+                placeholder="Email"
+                valueName="email"
+              />
 
-              <div className={Style.FormGroup}>
-                <label>Password:</label>
-                <Field type="password" name="password" placeholder="Password"/>
-                <ErrorMessage component="span" name="password" />
-              </div>
+              <FieldGroup 
+                label="Password" type="password"
+                placeholder="Password"
+                valueName="password"
+              />
 
-              <div className={Style.FormGroup}>
-                <label>Confirm Password:</label>
-                <Field type="password" name="confirmPassword" placeholder="Confirm Password"/>
-                <ErrorMessage component="span" name="confirmPassword" />
-              </div>
+              <FieldGroup 
+                label="Confirm Password" type="password"
+                placeholder="Confirm Password"
+                valueName="confirmPassword"
+              />
             </div>
 
             <div className={Style.Alert}>
