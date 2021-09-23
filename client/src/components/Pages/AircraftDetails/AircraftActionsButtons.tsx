@@ -5,7 +5,7 @@ import { AircraftData } from '../../../types/Aircraft/Aircraft';
 import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
 import { Button } from '../../Generics/Buttons/Button';
 
-import "./actionsButtons.scss";
+import "./ActionsButtons.scss";
 
 export interface IAircraftButtonsHandlers {
   handleEdit: (aircraftId: string, editedAircraft: AircraftData) => Promise<void>;
@@ -32,7 +32,7 @@ const AircraftActionsButtons: React.FC<Props> = ({
   aircraft, isEditMode, isAircraftOwned, aircraftsSaved, handlers
 }) => {
   return (
-    <div className={"actionsButtons"}>
+    <div className={"ActionsButtons"}>
       <div>
       {
         isAircraftOwned

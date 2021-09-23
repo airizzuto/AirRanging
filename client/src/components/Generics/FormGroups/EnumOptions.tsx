@@ -1,5 +1,5 @@
 import { ErrorMessage, Field } from 'formik';
-import "./formGroup.scss";
+import "./FormGroup.scss";
 
 interface Props {
   enumerator: any;
@@ -21,7 +21,7 @@ const EnumOptions: React.FC<Props> = ({
 }) => {
 
   return (
-    <div className="formGroup">
+    <div className="FormGroup">
       <label>{labelName}</label>
       <Field 
         name={name}

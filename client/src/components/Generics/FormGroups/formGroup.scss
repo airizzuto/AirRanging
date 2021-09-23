@@ -3,7 +3,7 @@
 @use "../../../styles/components/boxes" as box;
 @use "../../../styles/mixins" as *;
 
-.formGroup {
+.FormGroup {
   display: grid;
   grid-template-columns: 1fr 3fr 2fr;
   grid-template-rows: 1fr;
