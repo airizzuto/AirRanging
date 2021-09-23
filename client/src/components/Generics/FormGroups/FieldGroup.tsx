@@ -1,22 +1,23 @@
 import React from 'react';
 import { ErrorMessage, Field } from 'formik';
 
-import "./formGroup.scss";
+import "./FormGroup.scss";
 
 interface FieldProps {
   label: string;
-  type: "text" | "number";
+  type: "text" | "number" | "password" | "email";
   valueName: string;
   placeholder?: string;
   isDisabled?: boolean;
+  autoComplete?: "on" | "off";
   value?: any;
 }
 
 const FieldGroup: React.FC<FieldProps> = ({
-   label, type, valueName, value, placeholder, isDisabled
+   label, type, valueName, value, placeholder, isDisabled, autoComplete
  }) => {
   return (
-    <div className={"formGroup"}>
+    <div className={"FormGroup"}>
       <label>{label}:</label>
       <Field 
         type={type}
@@ -24,6 +25,7 @@ const FieldGroup: React.FC<FieldProps> = ({
         placeholder={placeholder}
         disabled={isDisabled}
         value={value}
+        autocomplete={autoComplete}
       />
       <ErrorMessage component="span" name={valueName} />
     </div>
