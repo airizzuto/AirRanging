@@ -1,13 +1,16 @@
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { Form, Formik, FormikHelpers } from "formik";
+
+import { aircraftSchema } from "../../../validators/aircraftValidators";
 import { NewAircraft } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/Aircraft/AircraftEnums";
-import { aircraftSchema } from "../../../validators/aircraftValidators";
+
 import AlertBox from "../../Generics/Alerts/AlertBox";
+import EnumOptions from "../../Generics/FormGroups/EnumOptions";
+import FieldGroup from "../../Generics/FormGroups/FieldGroup";
 
 import Style from "./AircraftCreate.module.scss";
-import EnumOptions from "./EnumOptions";
 
 interface Props {
   handleCreate: (newAircraft: NewAircraft) => void;
@@ -18,7 +21,7 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
 
   const history = useHistory();
 
-  const handleSubmit = (newAircraft : NewAircraft) => { 
+  const handleSubmit = (newAircraft: NewAircraft) => { 
     try {
       setAlert("");
       handleCreate(newAircraft);
@@ -67,93 +70,113 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
             //TODO: Field render={ disabled={isSubmitting} }
             <Form className={Style.Form}>
               <div className={Style.Fields}>
-                <div className={Style.FieldGroup}>
-                  <label>ICAO ID:</label>
-                  <Field type="text" name="icaoId" placeholder="ICAO ID"/>
-                  <ErrorMessage component="span" name="icaoId" />
-                </div>
-    
-                <div className={Style.FieldGroup}>
-                  <label>Manufacturer:</label>
-                  <Field type="text" name="manufacturer" placeholder="Manufacturer" disabled={isSubmitting} />
-                  <ErrorMessage component="span" name="manufacturer" />
-                </div>
-    
-                <div className={Style.FieldGroup}>
-                  <label>Model:</label>
-                  <Field type="text" name="model" placeholder="Model" disabled={isSubmitting}/>
-                  <ErrorMessage component="span" name="model" />
-                </div>
-    
-                <div className={Style.FieldGroup}>
-                  <label>Variant:</label>
-                  <Field type="text" name="variant" placeholder="Variant" disabled={isSubmitting}/>
-                  <ErrorMessage component="span" name="variant" />
-                </div>
+                <FieldGroup 
+                  label="ICAO ID" type="text" 
+                  valueName="icaoId"
+                  placeholder="ICAO ID" 
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <label>Registration:</label>
-                  <Field type="text" name="registration" placeholder="Registration" disabled={isSubmitting}/>
-                  <ErrorMessage component="span" name="registration" />
-                </div>
-    
-                <div className={Style.FieldGroup}>
-                  <EnumOptions enumerator={EAircraftType} labelName="Aircraft Type" name="aircraftType" isDisabled={isSubmitting}/>
-                </div>
+                <FieldGroup 
+                  label="Manufacturer" type="text" 
+                  valueName="manufacturer"
+                  placeholder="Manufacturer"
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <EnumOptions enumerator={EEngineType} labelName="Engine Type" name="engineType" isDisabled={isSubmitting}/>
-                </div>
+                <FieldGroup 
+                  label="Model" type="text" 
+                  valueName="model"
+                  placeholder="Model" 
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <label>Engine Count:</label>
-                  <Field type="number" name="engineCount" disabled={isSubmitting}/>
-                  <ErrorMessage component="span" name="engineCount" />
-                </div>
+                <FieldGroup 
+                  label="Variant" type="text" 
+                  valueName="variant"
+                  placeholder="Variant" 
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <EnumOptions enumerator={EWeightCategory} labelName="Weight Category" name="weightCategory" isDisabled={isSubmitting}/>
-                </div>
+                <FieldGroup 
+                  label="Registration" type="text" 
+                  valueName="registration"
+                  placeholder="Registration" 
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <EnumOptions enumerator={EIcaoWakeCategory} labelName="ICAO Wake Category" name="icaoWakeCategory" isDisabled={isSubmitting}/>
-                </div>
+                <EnumOptions
+                  enumerator={EAircraftType}
+                  labelName="Type"
+                  name="ype"
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <EnumOptions enumerator={EFuelType} labelName="Fuel Type" name="fuelType" isDisabled={isSubmitting}/>
-                </div>
+                <EnumOptions
+                  enumerator={EEngineType}
+                  labelName="Engine Type"
+                  name="engineType"
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <label>Max Takeoff Weight:</label>
-                  <Field type="number" name="maxTakeoffWeight" disabled={isSubmitting}/>
-                  <ErrorMessage component="span" name="maxTakeoffWeight" />
-                </div>
+                <FieldGroup 
+                  label="Engine Count" type="number" 
+                  valueName="engineCount"
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <label>Cruise Speed:</label>
-                  <Field type="number" name="cruiseSpeed" disabled={isSubmitting}/>
-                  <ErrorMessage component="span" name="cruiseSpeed" />
-                </div>
+                <EnumOptions 
+                  enumerator={EWeightCategory}
+                  labelName="Weight Category"
+                  name="weightCategory"
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <label>Fuel Capacity:</label>
-                  <Field type="number" name="fuelCapacity" disabled={isSubmitting}/>
-                  <ErrorMessage component="span" name="fuelCapacity" />
-                </div>
+                <EnumOptions 
+                  enumerator={EIcaoWakeCategory}
+                  labelName="ICAO Wake Category"
+                  name="icaoWakeCategory"
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <label>Max Range:</label>
-                  <Field type="number" name="maxRange" disabled={isSubmitting}/>
-                  <ErrorMessage component="span" name="maxRange" />
-                </div>
+                <EnumOptions 
+                  enumerator={EFuelType}
+                  labelName="Fuel Type"
+                  name="fuelType"
+                  isDisabled={isSubmitting}
+                />
 
-                <div className={Style.FieldGroup}>
-                  <label>Service Ceiling:</label>
-                  <Field type="number" name="serviceCeiling" disabled={isSubmitting}/>
-                  <ErrorMessage component="span" name="serviceCeiling" />
-                </div>
+                <FieldGroup 
+                  label="Max Takeoff Weight" type="number" 
+                  valueName="maxTakeoffWeight"
+                  isDisabled={isSubmitting}
+                />
+
+                <FieldGroup 
+                  label="Cruise Speed" type="number" 
+                  valueName="cruiseSpeed"
+                  isDisabled={isSubmitting}
+                />
+
+                <FieldGroup 
+                  label="Fuel Capacity" type="number" 
+                  valueName="fuelCapacity"
+                  isDisabled={isSubmitting}
+                />
+
+                <FieldGroup 
+                  label="Max Range" type="number" 
+                  valueName="maxRange"
+                  isDisabled={isSubmitting}
+                />
+
+                <FieldGroup 
+                  label="Service Ceiling" type="number" 
+                  valueName="serviceCeiling"
+                  isDisabled={isSubmitting}
+                />
               </div>
-    
+
               <div className={Style.AlertNotification}>
                 <AlertBox alertText={alert}/>
               </div>
@@ -166,7 +189,6 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
           </Form>
           }
         </Formik>
-
       </div>
   );
 };
