@@ -55,12 +55,11 @@ const AircraftActionsButtons: React.FC<Props> = ({
       </div>
 
       {/* TODO: test edit mode*/}
-      {/* TODO: test clone */}
       <div>
       {
         isAircraftOwned
         ? <Button 
-            type={isEditMode ? "reset" : "button"}
+            type={isEditMode ? "button" : "reset" }
             handleClick={() => handlers.handleEditModeSwitch()}
             style={"primary"}
           >

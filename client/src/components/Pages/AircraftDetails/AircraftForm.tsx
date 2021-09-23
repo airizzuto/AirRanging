@@ -19,132 +19,143 @@ interface Props {
   handlers: IAircraftButtonsHandlers;
 }
 
-// TODO: fix edit forms not updating on change
 const AircraftForm: React.FC<Props> = ({
   aircraft, aircraftsSaved, isEditMode, isAircraftOwned, handlers
 }) => {
+  
   return (
-    <Formik 
-      initialValues={aircraft}
+    <Formik
+      initialValues={{...aircraft}}
       validationSchema={aircraftSchema}
       onSubmit={async (values: AircraftData, { setSubmitting }: FormikHelpers<AircraftData>) => {
         await handlers.handleSubmit(values);
         setSubmitting(false);
-    }}
+      }
+    }
     >
-      {({ isSubmitting }) => 
+      {({ values, isSubmitting }) => 
         <Form className={"Form"}>
           <div className={"Fields"}>
-
             <FieldGroup 
-              label="ICAO ID" type="text" valueName="icaoId"
+              label="ICAO ID" type="text"
+              value={values.icaoId}
+              valueName="icaoId"
               placeholder="ICAO ID" 
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.icaoId}
             />
 
             <FieldGroup 
-              label="Manufacturer" type="text" valueName="manufacturer"
+              label="Manufacturer" type="text"
+              value={values.manufacturer}
+              valueName="manufacturer"
               placeholder="Manufacturer" 
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.manufacturer}
             />
 
             <FieldGroup 
-              label="Model" type="text" valueName="model"
+              label="Model" type="text"
+              value={values.model}
+              valueName="model"
               placeholder="Model" 
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.model}
             />
 
             <FieldGroup 
-              label="Variant" type="text" valueName="variant"
+              label="Variant" type="text"
+              value={values.variant}
+              valueName="variant"
               placeholder="Variant" 
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.variant ? aircraft.variant : ""}
             />
 
             <FieldGroup 
-              label="Registration" type="text" valueName="registration"
+              label="Registration" type="text"
+              value={values.registration}
+              valueName="registration"
               placeholder="Registration" 
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.registration ? aircraft.registration : ""}
             />
 
             <EnumOptions
               enumerator={EAircraftType}
+              value={values.aircraftType}
               labelName="Aircraft Type"
               name="aircraftType"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.aircraftType}
             />
 
             <EnumOptions
               enumerator={EEngineType}
+              value={values.engineType}
               labelName="Engine Type"
               name="engineType"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.engineType}
             />
 
             <FieldGroup 
-              label="Engine Count" type="number" valueName="engineCount"
+              label="Engine Count" type="number"
+              value={values.engineCount}
+              valueName="engineCount"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.engineCount}
             />
 
             <EnumOptions 
               enumerator={EWeightCategory}
+              value={values.weightCategory}
               labelName="Weight Category"
               name="weightCategory"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.weightCategory}
             />
 
             <EnumOptions 
               enumerator={EIcaoWakeCategory}
+              value={values.icaoWakeCategory}
               labelName="ICAO Wake Category"
               name="icaoWakeCategory"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.icaoWakeCategory}
             />
 
             <EnumOptions 
               enumerator={EFuelType}
+              value={values.fuelType}
               labelName="Fuel Type"
               name="fuelType"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.fuelType}
             />
 
             <FieldGroup 
-              label="Max Takeoff Weight" type="number" valueName="maxTakeoffWeight"
+              label="Max Takeoff Weight" type="number"
+              value={values.maxTakeoffWeight}
+              valueName="maxTakeoffWeight"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.maxTakeoffWeight}
             />
 
             <FieldGroup 
-              label="Cruise Speed" type="number" valueName="cruiseSpeed"
+              label="Cruise Speed" type="number"
+              value={values.cruiseSpeed}
+              valueName="cruiseSpeed"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.cruiseSpeed}
             />
 
             <FieldGroup 
-              label="Fuel Capacity" type="number" valueName="fuelCapacity"
+              label="Fuel Capacity" type="number"
+              value={values.fuelCapacity}
+              valueName="fuelCapacity"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.fuelCapacity}
             />
 
             <FieldGroup 
-              label="Max Range" type="number" valueName="maxRange"
+              label="Max Range" type="number"
+              value={values.maxRange}
+              valueName="maxRange"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.maxRange}
             />
 
             <FieldGroup 
-              label="Service Ceiling" type="number" valueName="serviceCeiling"
+              label="Service Ceiling" type="number"
+              value={values.serviceCeiling}
+              valueName="serviceCeiling"
               isDisabled={isSubmitting || !isEditMode}
-              value={aircraft.serviceCeiling}
             />
           </div>
 

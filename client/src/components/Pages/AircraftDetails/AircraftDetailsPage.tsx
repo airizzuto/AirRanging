@@ -52,10 +52,9 @@ const AircraftDetails: React.FC<Props> = ({
     }
   }, [aircraft]);
 
-  const handleSubmit = async (editedAircraft : AircraftData) => {
-    setAlert("");
-
+  const handleSubmit = async (editedAircraft: AircraftData) => {
     try {
+      setAlert("");
       await handleAircraftEdit(editedAircraft.id , editedAircraft);
       setIsEditMode(false);
     } catch(error: any) {
