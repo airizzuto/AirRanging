@@ -301,7 +301,7 @@ namespace App.Controllers.V1
         /// <response code="403">User does not own this aircraft</response>
         /// <response code="404">Aircraft ID not found</response>
         [HttpPut("{aircraftId}")]
-        public async Task<IActionResult> UpdateAircraft(string aircraftId, AircraftUpdateDTO aircraftUpdateDTO)
+        public async Task<IActionResult> UpdateAircraft([FromRoute] string aircraftId, [FromBody] AircraftUpdateDTO aircraftUpdateDTO)
         {
             var userId = HttpContext.GetUserId();
             if (userId == null)
