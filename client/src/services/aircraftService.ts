@@ -127,7 +127,7 @@ const editAircraft = async (aircraftId: string, aircraftUpdated: AircraftData) =
 
   const response = await axios.put(
     BASE_URL + `/api/aircrafts/${aircraftId}`,
-    {aircraftId, aircraftUpdated},
+    {...aircraftUpdated},
     config
   );
 
