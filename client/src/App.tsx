@@ -65,6 +65,7 @@ const App = (): JSX.Element =>{
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, aircrafts]);
 
+  
   /* Aircrafts state handlers */
 
   const refreshAircrafts = async () => {
@@ -157,7 +158,6 @@ const App = (): JSX.Element =>{
     : setAircraftSelected(null);
   };
 
-  // TODO: test aircraft delete
   const handleAircraftDelete = async (aircraftId: string) => {
     // Deselects aircraft to be deleted if its the same as the one currently selected
     if (aircraftSelected?.id === aircraftId) {
@@ -171,7 +171,6 @@ const App = (): JSX.Element =>{
       );
   };
 
-  // TODO: test aircraft cloning
   const handleAircraftCloning = async (aircraft: CloneAircraft) => {
     await aircraftService.cloneAircraft(aircraft)
       .then(async (response) => {
@@ -179,6 +178,7 @@ const App = (): JSX.Element =>{
           .then(_ => history.push(`/aircrafts/details/${response.data.id}`));
       }).catch(error => console.error("ERROR: cloning aircraft: ", error));
   };
+
 
   /* User state handlers */
 
