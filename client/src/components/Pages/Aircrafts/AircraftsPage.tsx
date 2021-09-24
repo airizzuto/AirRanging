@@ -11,8 +11,8 @@ import {LinkButton} from '../../Generics/Buttons/Button';
 import DropdownOptions from '../../Generics/Filters/DropdownOptions';
 
 interface Props {
-  aircrafts: AircraftData[];
   user: UserPublic | null;
+  aircrafts: AircraftData[];
   aircraftsSaved: AircraftData[] | null;
   aircraftsOwned: AircraftData[] | null;
   handleAircraftsFilter: (filter: string) => Promise<void>;
@@ -128,7 +128,7 @@ const Aircrafts: React.FC<Props> = ({
         <input className={Style.SearchBar}
           value={filterInput}
           onChange={handleFilterChange}
-          placeholder={"Search aircraft model"}
+          placeholder={"Search aircraft"}
         />
 
         {/* TODO: Grouped Select Dropdown filter */}

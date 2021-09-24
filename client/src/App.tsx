@@ -36,6 +36,24 @@ import "./App.scss";
 const App = (): JSX.Element =>{
   const history = useHistory();
 
+  /* TODO: refactor filter handler
+    1. DONE: Fetch data sets
+
+    2. TODO: New currentAircrafts[] state
+
+    3. TODO: Filter by data set
+      New filters selected state? filterSets: {showOwned: boolean, showSaved: boolean}
+
+      filterSetFunction() => 
+        if (showOwned) setCurrentAircrafts(currentAircrafts.concat(owned))
+        if (showSaved) setCurrentAircrafts(currentAircrafts.concat(saved))
+        else setCurrentAircrafts(currentAircrafts(aircrafts))
+
+    4. TODO (partial): Filter by property
+      filterPropsFunction() =>
+        setCurrentAircrafts(currentAircraft.filter(aircraft => aircraft[prop] === filter))
+  */
+
   const [user, setUser] = useState<UserPublic | null>(null);
   const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
   const [aircraftsSaved, setAircraftsSaved] = useState<AircraftData[]>([]);
