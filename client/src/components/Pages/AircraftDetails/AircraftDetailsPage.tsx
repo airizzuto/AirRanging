@@ -55,7 +55,9 @@ const AircraftDetails: React.FC<Props> = ({
   const handleSubmit = async (editedAircraft: AircraftData) => {
     try {
       setAlert("");
-      await handleAircraftEdit(editedAircraft.id , editedAircraft);
+      await isUserAuthenticated()
+        .then(async () => await handleAircraftEdit(editedAircraft.id , editedAircraft));
+  
       setIsEditMode(false);
     } catch(error: any) {
       console.error(error);
