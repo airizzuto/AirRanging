@@ -99,8 +99,8 @@
     flex-direction: row;
     gap: 1rem;
   
-    button {
-      min-width: min-content;
+    button, a {
+      min-width: 5.5rem;
     }
   }
 }

@@ -1,5 +1,7 @@
 @use "./colors" as color;
 
+$font-family-primary: "Roboto";
+
 $size-5: 2.047rem;
 $size-4: 1.728rem;
 $size-3: 1.44rem;
@@ -8,51 +10,61 @@ $size-1: 1rem;
 $size-0: 0.833rem;
 
 @mixin header-1 {
+  font-family: $font-family-primary;
   font-weight: 400;
   font-size: $size-4;
 }
 
 @mixin header-2 {
+  font-family: $font-family-primary;
   font-weight: 400;
   font-size: $size-3;
 }
 
 @mixin header-3 {
+  font-family: $font-family-primary;
   font-weight: 500;
   font-size: $size-2;
 }
 
 @mixin nav {
+  font-family: $font-family-primary;
   font-weight: 600;
   font-size: $size-3;
 }
 
 @mixin main {
+  font-family: $font-family-primary;
   font-weight: 500;
   font-size: $size-1;
 }
 
 @mixin button {
+  font-family: $font-family-primary;
   font-weight: 600;
   font-size: $size-3;
 }
 
 @mixin button-2 {
+  font-family: $font-family-primary;
   font-weight: 600;
   font-size: $size-2;
 }
 
 @mixin info {
+  font-family: $font-family-primary;
   font-weight: 400;
   font-size: $size-1;
 }
 
 @mixin footer {
+  font-family: $font-family-primary;
   font-weight: 300;
   font-size: $size-1;
 }
 
 @mixin error-alert {
   @include info;
+  font-family: $font-family-primary;
   color: color.$accent2;
 }
