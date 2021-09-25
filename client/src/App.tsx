@@ -43,16 +43,25 @@ const App = (): JSX.Element =>{
 
     3. DONE: Filter by data set
       dataFilters: {showOwned: boolean, showSaved: boolean}
+      
+    4. TODO: Filter by field
+      dataFilterByField: { fieldFilter: AircraftFields, filterInfo: string }
+      
+      fieldFilter defaults to model
 
-    4. TODO: Filter handler
-      filterSetFunction() => 
-        if (showOwned) setCurrentAircrafts(currentAircrafts.concat(owned))
-        if (showSaved) setCurrentAircrafts(currentAircrafts.concat(saved))
-        else setCurrentAircrafts(currentAircrafts(aircrafts))
+    5. TODO: Filter handler
+      filterHandler(filters) => {
+        filterSetFunction() => {
+          if (filters.showOwned) setCurrentAircrafts(currentAircrafts.concat(owned))
+          if (filters.showSaved) setCurrentAircrafts(currentAircrafts.concat(saved))
+          else setCurrentAircrafts(initialAircrafts)
+        }
+        filterPropsFunction() =>{
+          if (filters.byField && filters.filterInfo)
+            setCurrentAircrafts(currentAircraft.filter(aircraft => aircraft[field] === filter))
+        }
+      }
 
-    5. TODO (partial): Filter by property
-      filterPropsFunction() =>
-        setCurrentAircrafts(currentAircraft.filter(aircraft => aircraft[prop] === filter))
   */
 
   const [user, setUser] = useState<UserPublic | null>(null);
