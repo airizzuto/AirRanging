@@ -39,25 +39,28 @@ const App = (): JSX.Element =>{
   /* TODO: refactor filter handler
     1. DONE: Fetch data sets
 
-    2. TODO: New currentAircrafts[] state
+    2. DONE: New currentAircrafts[] state
 
-    3. TODO: Filter by data set
-      New filters selected state? filterSets: {showOwned: boolean, showSaved: boolean}
+    3. DONE: Filter by data set
+      dataFilters: {showOwned: boolean, showSaved: boolean}
 
+    4. TODO: Filter handler
       filterSetFunction() => 
         if (showOwned) setCurrentAircrafts(currentAircrafts.concat(owned))
         if (showSaved) setCurrentAircrafts(currentAircrafts.concat(saved))
         else setCurrentAircrafts(currentAircrafts(aircrafts))
 
-    4. TODO (partial): Filter by property
+    5. TODO (partial): Filter by property
       filterPropsFunction() =>
         setCurrentAircrafts(currentAircraft.filter(aircraft => aircraft[prop] === filter))
   */
 
   const [user, setUser] = useState<UserPublic | null>(null);
-  const [aircrafts, setAircrafts] = useState<AircraftData[]>([]);
+  const [initialAircrafts, setInitialAircrafts] = useState<AircraftData[]>([]);
   const [aircraftsSaved, setAircraftsSaved] = useState<AircraftData[]>([]);
   const [aircraftsOwned, setAircraftsOwned] = useState<AircraftData[]>([]);
+  // TODO: const [currentAircrafts, setCurrentAircrafts] = useState<AircraftData[]>([]);
+  // TODO: const [dataFilters, setDataFilter] = useState({showOwned: false, showSaved: false});
   const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
 
   // Sets initial aircrafts
@@ -81,16 +84,16 @@ const App = (): JSX.Element =>{
       refreshOwnedAircrafts();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, aircrafts]);
+  }, [user, initialAircrafts]);
 
   
   /* Aircrafts state handlers */
 
   const refreshAircrafts = async () => {
     await aircraftService.getAllAircrafts()
-      .then((response) => setAircrafts([...response.data]))
+      .then((response) => setInitialAircrafts([...response.data]))
       .catch(error => {
-        setAircrafts([]);
+        setInitialAircrafts([]);
         console.error("ERROR: Retrieving all aircrafts - ", error);
       });
   };
@@ -117,23 +120,24 @@ const App = (): JSX.Element =>{
     : setAircraftsOwned([]);
   };
 
+  // TODO: refactor to use currentAircrafts
   const handleAircraftsFilter = async (filter: string) => {
     filter
-      ? await aircraftService.searchAircraftByModel(filter)
-          .then((response) => setAircrafts([...response.data]))
+      ? await aircraftService.searchAircraftByModel(filter) // TODO: Take from initialAircrafts
+          .then((response) => setInitialAircrafts([...response.data])) // TODO: Set in currentAircrafts
           .catch(error => console.error("ERROR: filtering aicrafts - ", error))
-      : refreshAircrafts();
+      : refreshAircrafts(); // TODO: Set initialAircrafts in currentAircrafts
   };
 
   const handleAircraftCreate = async (newAircraft: NewAircraft) => {
     await aircraftService.createAircraft(newAircraft)
-      .then((response) => setAircrafts(aircrafts.concat(response)))
+      .then((response) => setInitialAircrafts(initialAircrafts.concat(response)))
       .catch(error => console.error("ERROR: creating aircraft - ", error));
   };
 
   const handleAircraftEdit = async (aircraftId: string, editedAircraft: AircraftData) => {
     await aircraftService.editAircraft(aircraftId, editedAircraft)
-      .then(_ => setAircrafts(aircrafts.map(aircraft => 
+      .then(_ => setInitialAircrafts(initialAircrafts.map(aircraft => 
         aircraft.id !== aircraftId ? aircraft : editedAircraft
       ))).catch(error => console.error("ERROR: editing aircraft - ", error));
   };
@@ -146,8 +150,8 @@ const App = (): JSX.Element =>{
         await refreshSavedAircrafts();
         // Refreshes saved aircraft in aircrafts list
         await aircraftService.getAircraftById(aircraftId)
-          .then(response => setAircrafts(
-              aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
+          .then(response => setInitialAircrafts(
+              initialAircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
           )).catch(error => console.error(`Fetching aircraft ${aircraftId}: `, error));
       }).catch(error => console.error("ERROR: retrieving aircraft - ", error));
   };
@@ -160,8 +164,8 @@ const App = (): JSX.Element =>{
         await refreshSavedAircrafts();
         // Refreshes saved aircraft in aircrafts list
         await aircraftService.getAircraftById(aircraftId)
-          .then(response => setAircrafts(
-              aircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
+          .then(response => setInitialAircrafts(
+              initialAircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
           )).catch(error => console.error(`Fetching aircraft ${aircraftId}: `, error));
       }).catch(error => console.error("ERROR: retrieving aircraft - ", error));
   };
@@ -222,7 +226,7 @@ const App = (): JSX.Element =>{
         <Switch>
             <Route exact path="/">
               <Home 
-                aircrafts={aircrafts}
+                aircrafts={initialAircrafts}
                 selectedAircraft={aircraftSelected}
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftsFiltering={handleAircraftsFilter}
@@ -233,7 +237,7 @@ const App = (): JSX.Element =>{
             <Route exact path="/aircrafts">
               <Aircrafts
                 user={user}
-                aircrafts={aircrafts}
+                aircrafts={initialAircrafts}
                 aircraftsSaved={aircraftsSaved}
                 aircraftsOwned={aircraftsOwned}
                 handleAircraftsFilter={handleAircraftsFilter} 
@@ -248,7 +252,7 @@ const App = (): JSX.Element =>{
               exact path="/aircrafts/details/:aircraftId"
             >
               <AircraftDetails
-                aircrafts={aircrafts}
+                aircrafts={initialAircrafts}
                 aircraftsSaved={aircraftsSaved}
                 handleAircraftEdit={handleAircraftEdit}
                 handleAircraftSelect={handleAircraftSelection}
