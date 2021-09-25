@@ -1,4 +1,5 @@
 
+import { AircraftData } from "../../types/Aircraft/Aircraft";
 import Style from "./InfoOverlay.module.scss";
 
 /* TODO: Information overlay
@@ -11,10 +12,18 @@ import Style from "./InfoOverlay.module.scss";
   4. TODO: Map point selected coordinates
 */
 
-const InfoOverlay = () => {
+interface Props {
+  aircraftSelected: AircraftData[] | null;
+  // mapInformation: MapInfo;
+  // pointsInformation: PointInfo[];
+}
+
+const InfoOverlay: React.FC<Props> = () => {
   return (
     <div className={Style.InfoContainer}>
-      
+      {/* AircraftSection */}
+      {/* MapInfo */}
+      {/* GeneralInfo */}
     </div>
   );
 };
