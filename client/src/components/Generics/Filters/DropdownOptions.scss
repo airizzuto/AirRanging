@@ -9,6 +9,7 @@
     @include box.light;
     color: color.$dark1;
     padding: 0;
+    border-radius: 5px;
 
     .Dropdown__placeholder {
       color: color.$neutral;
