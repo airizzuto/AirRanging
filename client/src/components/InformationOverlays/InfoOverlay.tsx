@@ -21,9 +21,20 @@ interface Props {
 const InfoOverlay: React.FC<Props> = () => {
   return (
     <div className={Style.InfoContainer}>
-      {/* AircraftSection */}
-      {/* MapInfo */}
-      {/* GeneralInfo */}
+      {/*
+        <AircraftSection 
+          aircraftSelected={aircraftSelected} 
+        />
+      */}
+      {/*
+        <MapInfo 
+          mapInformation={mapInformation}
+          pointsInformation={pointsInformation}
+        />
+      */}
+      {/* 
+        <GeneralInfo />
+      */}
     </div>
   );
 };
