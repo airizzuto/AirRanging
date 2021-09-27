@@ -1,18 +1,39 @@
 import React from "react";
 
-import Slider from "../../Generics/Sliders/Slider";
-import { Button } from "../../Generics/Buttons/Button";
+import { calculateRange } from "../../../helpers/fuelCalculation";
 
 import { AircraftState } from "../../../types/Aircraft/Aircraft";
 
+import Slider from "../../Generics/Sliders/Slider";
+import { Button } from "../../Generics/Buttons/Button";
+
 import Style from "./PlanningModal.module.scss";
-import { calculateRange } from "../../../helpers/fuelCalculation";
+
+/* TODO: Refactor style:
+
+  1. Aircraft selection section:
+    - TODO: Show owned.
+    - TODO: Show saved.
+    - DONE: Searchbar.
+    - TODO: Aircraft Detail Button. (routes to aircraft page)
+    - TODO: Save Aircraft Button.
+  
+  2. Planning section:
+    - TODO: Unit conversion.
+    - DONE: Fuel slider.
+    - TODO: Max Range input / result.
+    - TBD: Cruise Speed.
+    - TBD: Cruise Altitude.
+    - TBD: PNR.
+
+*/
 
 interface Props {
   aircraft?: AircraftState | null;
   aircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
   handleAccept: () => void;
 }
+
 const PlanningModal: React.FC<Props> = ({ 
   aircraft,
   aircraftState,
