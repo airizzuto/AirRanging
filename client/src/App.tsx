@@ -61,15 +61,14 @@ const App = (): JSX.Element =>{
             setCurrentAircrafts(currentAircraft.filter(aircraft => aircraft[field] === filter))
         }
       }
-
   */
 
   const [user, setUser] = useState<UserPublic | null>(null);
   const [initialAircrafts, setInitialAircrafts] = useState<AircraftWithSocials[]>([]);
   const [aircraftsSaved, setAircraftsSaved] = useState<AircraftWithSocials[]>([]);
   const [aircraftsOwned, setAircraftsOwned] = useState<AircraftWithSocials[]>([]);
-  // TODO: const [currentAircrafts, setCurrentAircrafts] = useState<AircraftData[]>([]);
-  // TODO: const [dataFilters, setDataFilter] = useState({showOwned: false, showSaved: false});
+  // const [currentAircrafts, setCurrentAircrafts] = useState<AircraftWithSocials[]>([]);
+  // const [filter, setFilter] = useState<AircraftsSets>({owned: false, saved: false});
   const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
 
   // Sets initial aircrafts
