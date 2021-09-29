@@ -6,7 +6,6 @@
 @import "../Generics/Buttons/ButtonStyles.scss";
 
 .HeaderContainer {
-  @include blurring;
   @include text-shadow;
 
   height: 100%;
@@ -17,6 +16,8 @@
   grid-template-columns: 1fr 4fr 1fr;
   grid-template-areas: "logo navigation user";
   column-gap: 3rem;
+
+  background-color: color.$dark1;
 
   z-index: 10;
 
