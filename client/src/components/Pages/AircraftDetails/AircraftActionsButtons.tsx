@@ -1,6 +1,6 @@
 import React from 'react';
 import { getUserData } from '../../../helpers/userHelper';
-import { AircraftData } from '../../../types/Aircraft/Aircraft';
+import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 
 import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
 import { Button } from '../../Generics/Buttons/Button';
@@ -8,21 +8,21 @@ import { Button } from '../../Generics/Buttons/Button';
 import "./ActionsButtons.scss";
 
 export interface IAircraftButtonsHandlers {
-  handleEdit: (aircraftId: string, editedAircraft: AircraftData) => Promise<void>;
-  handleSelect: (selected: AircraftData) => void;
-  handleSubmit: (editedAircraft: AircraftData) => Promise<void>;
+  handleEdit: (aircraftId: string, editedAircraft: AircraftWithSocials) => Promise<void>;
+  handleSelect: (selected: AircraftWithSocials) => void;
+  handleSubmit: (editedAircraft: AircraftWithSocials) => Promise<void>;
   handleSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
   handleDelete: (
     aircraftId: string, aircraftModel: string, aircraftVariant?: string | undefined
     ) => Promise<void>
-  handleCloning: (aircraftToClone: AircraftData) => Promise<void>;
+  handleCloning: (aircraftToClone: AircraftWithSocials) => Promise<void>;
   handleEditModeSwitch: () => void;
 }
 
 interface Props {
-  aircraft: AircraftData;
-  aircraftsSaved: AircraftData[] | null;
+  aircraft: AircraftWithSocials;
+  aircraftsSaved: AircraftWithSocials[] | null;
   isEditMode: boolean;
   isAircraftOwned: boolean;
   handlers: IAircraftButtonsHandlers;

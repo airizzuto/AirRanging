@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AircraftData } from '../../../types/Aircraft/Aircraft';
+import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 
 import AircraftsTable from '../../Table/AircraftsTable';
@@ -12,11 +12,11 @@ import DropdownOptions from '../../Generics/Filters/DropdownOptions';
 
 interface Props {
   user: UserPublic | null;
-  aircrafts: AircraftData[];
-  aircraftsSaved: AircraftData[] | null;
-  aircraftsOwned: AircraftData[] | null;
+  aircrafts: AircraftWithSocials[];
+  aircraftsSaved: AircraftWithSocials[] | null;
+  aircraftsOwned: AircraftWithSocials[] | null;
   handleAircraftsFilter: (filter: string) => Promise<void>;
-  handleAircraftSelection: (selected: AircraftData | null) => void;
+  handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
   handleAircraftDelete: (aircraftId: string) => Promise<void>;

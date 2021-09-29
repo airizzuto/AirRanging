@@ -1,4 +1,4 @@
-import { AircraftData } from "../types/Aircraft/Aircraft";
+import { AircraftWithSocials } from "../types/Aircraft/Aircraft";
 import propsToLabel from "../utils/propsToLabel";
 
 /**
@@ -9,7 +9,7 @@ import propsToLabel from "../utils/propsToLabel";
  * @returns mapped data array to value containing element properties and a label to display it in search.
  */
 export const mapAircraftToFilter = (
-  data: AircraftData[],
+  data: AircraftWithSocials[],
 ) => {
   return data.map(aircraft => ({
     value: aircraft,
@@ -27,8 +27,8 @@ export const mapAircraftToFilter = (
  * @returns True if aircraft is found in userAircrafts.
  */
 export const isAircraftInUserList = (
-  aircraft: AircraftData,
-  userAicrafts: AircraftData[] | null
+  aircraft: AircraftWithSocials,
+  userAicrafts: AircraftWithSocials[] | null
 ): boolean => {
   if (!userAicrafts) {
     return false;

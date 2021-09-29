@@ -8,7 +8,7 @@ import { isUserAuthenticated } from "./helpers/tokenHelper";
 import { getUserData } from "./helpers/userHelper";
 
 import { UserPublic } from "./types/User/User";
-import { AircraftData, AircraftState, CloneAircraft, NewAircraft } from "./types/Aircraft/Aircraft";
+import { AircraftWithSocials, AircraftState, CloneAircraft, AircraftWithoutIDs } from "./types/Aircraft/Aircraft";
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
@@ -65,9 +65,9 @@ const App = (): JSX.Element =>{
   */
 
   const [user, setUser] = useState<UserPublic | null>(null);
-  const [initialAircrafts, setInitialAircrafts] = useState<AircraftData[]>([]);
-  const [aircraftsSaved, setAircraftsSaved] = useState<AircraftData[]>([]);
-  const [aircraftsOwned, setAircraftsOwned] = useState<AircraftData[]>([]);
+  const [initialAircrafts, setInitialAircrafts] = useState<AircraftWithSocials[]>([]);
+  const [aircraftsSaved, setAircraftsSaved] = useState<AircraftWithSocials[]>([]);
+  const [aircraftsOwned, setAircraftsOwned] = useState<AircraftWithSocials[]>([]);
   // TODO: const [currentAircrafts, setCurrentAircrafts] = useState<AircraftData[]>([]);
   // TODO: const [dataFilters, setDataFilter] = useState({showOwned: false, showSaved: false});
   const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
@@ -138,13 +138,13 @@ const App = (): JSX.Element =>{
       : refreshAircrafts(); // TODO: Set initialAircrafts in currentAircrafts
   };
 
-  const handleAircraftCreate = async (newAircraft: NewAircraft) => {
+  const handleAircraftCreate = async (newAircraft: AircraftWithoutIDs) => {
     await aircraftService.createAircraft(newAircraft)
       .then((response) => setInitialAircrafts(initialAircrafts.concat(response)))
       .catch(error => console.error("ERROR: creating aircraft - ", error));
   };
 
-  const handleAircraftEdit = async (aircraftId: string, editedAircraft: AircraftData) => {
+  const handleAircraftEdit = async (aircraftId: string, editedAircraft: AircraftWithSocials) => {
     await aircraftService.editAircraft(aircraftId, editedAircraft)
       .then(_ => setInitialAircrafts(initialAircrafts.map(aircraft => 
         aircraft.id !== aircraftId ? aircraft : editedAircraft
@@ -179,7 +179,7 @@ const App = (): JSX.Element =>{
       }).catch(error => console.error("ERROR: retrieving aircraft - ", error));
   };
 
-  const handleAircraftSelection = (selected: AircraftData | null) => {
+  const handleAircraftSelection = (selected: AircraftWithSocials | null) => {
     selected
     ? setAircraftSelected({
       ...selected,

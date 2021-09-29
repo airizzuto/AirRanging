@@ -1,6 +1,6 @@
 import React from "react";
 import { Column, usePagination, useRowSelect, useSortBy, useTable } from "react-table";
-import { AircraftData } from "../../types/Aircraft/Aircraft";
+import { AircraftWithSocials } from "../../types/Aircraft/Aircraft";
 import { Button } from "../Generics/Buttons/Button";
 
 import Style from "./AircraftsTable.module.scss";
@@ -9,8 +9,8 @@ import Style from "./AircraftsTable.module.scss";
 
 interface Props {
   columns: Column[];
-  data: AircraftData[];
-  handleAircraftSelection: (selected: AircraftData | null) => void;
+  data: AircraftWithSocials[];
+  handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }

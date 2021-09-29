@@ -21,25 +21,27 @@ export interface Aircraft {
   serviceCeiling: number;
 }
 
-export interface AircraftData extends Aircraft{
+export interface AircraftWithSocials extends Aircraft{
   savesCount: number;
   authorUsername: string;
 }
 
-export interface AircraftState extends AircraftData {
+export interface AircraftState extends AircraftWithSocials {
   loadedFuel: number;
   currentMaxRange: number;
 }
 
 // TODO: Implement paginated model
 export interface AircraftsPaginated {
-  aircrafts: AircraftData[];
+  aircrafts: AircraftWithSocials[];
   metadata: Pagination;
 }
 
 // Define special omit for unions
 type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
 
-export type NewAircraft = UnionOmit<Aircraft, 'id'>;
+export type AircraftWithoutIDs = UnionOmit<Aircraft, 'id'>;
 
-export type CloneAircraft = UnionOmit<AircraftData, "id" | "savesCount" | "authorUsername">;
+export type AircraftFields = keyof AircraftWithSocials;
+
+export type CloneAircraft = UnionOmit<AircraftWithSocials, "id" | "savesCount" | "authorUsername">;

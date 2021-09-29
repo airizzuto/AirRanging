@@ -1,5 +1,5 @@
 
-import { AircraftData } from "../../types/Aircraft/Aircraft";
+import { AircraftWithSocials } from "../../types/Aircraft/Aircraft";
 import Style from "./InfoOverlay.module.scss";
 
 /* TODO: Information overlay
@@ -13,7 +13,7 @@ import Style from "./InfoOverlay.module.scss";
 */
 
 interface Props {
-  aircraftSelected: AircraftData[] | null;
+  aircraftSelected: AircraftWithSocials[] | null;
   // mapInformation: MapInfo;
   // pointsInformation: PointInfo[];
 }

@@ -1,6 +1,6 @@
 import { mapAircraftToFilter } from "../../../helpers/aircraftHelper";
 import aircraftService from "../../../services/aircraftService";
-import { AircraftData } from "../../../types/Aircraft/Aircraft";
+import { AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
 
 import { Button } from "../../Generics/Buttons/Button";
 import DropdownSearchbar from "../../Generics/Filters/DropdownSearchbar";
@@ -9,8 +9,8 @@ import DropdownSearchbar from "../../Generics/Filters/DropdownSearchbar";
 import Style from "./AircraftSelectModal.module.scss";
 
 interface Props {
-  aircraftSelected: AircraftData | null;
-  handleAircraftSelection: (selected: AircraftData | null) => void;
+  aircraftSelected: AircraftWithSocials | null;
+  handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleSelectClick: () => void;
 }
 

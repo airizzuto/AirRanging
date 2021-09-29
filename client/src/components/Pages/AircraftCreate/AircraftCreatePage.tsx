@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
 
 import { aircraftSchema } from "../../../validators/aircraftValidators";
-import { NewAircraft } from "../../../types/Aircraft/Aircraft";
+import { AircraftWithoutIDs } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/Aircraft/AircraftEnums";
 
 import AlertBox from "../../Generics/Alerts/AlertBox";
@@ -13,7 +13,7 @@ import FieldGroup from "../../Generics/FormGroups/FieldGroup";
 import Style from "./AircraftCreate.module.scss";
 
 interface Props {
-  handleCreate: (newAircraft: NewAircraft) => void;
+  handleCreate: (newAircraft: AircraftWithoutIDs) => void;
 }
 
 const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
@@ -21,7 +21,7 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
 
   const history = useHistory();
 
-  const handleSubmit = (newAircraft: NewAircraft) => { 
+  const handleSubmit = (newAircraft: AircraftWithoutIDs) => { 
     try {
       setAlert("");
       handleCreate(newAircraft);
@@ -33,7 +33,7 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
     }
   };
 
-  const initialFormValues: NewAircraft = {
+  const initialFormValues: AircraftWithoutIDs = {
     icaoId: "",
     manufacturer: "",
     model: "",
@@ -61,7 +61,7 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
         <Formik 
           initialValues={initialFormValues}
           validationSchema={aircraftSchema}
-          onSubmit={async (values: NewAircraft, { setSubmitting }: FormikHelpers<NewAircraft>) => {
+          onSubmit={async (values: AircraftWithoutIDs, { setSubmitting }: FormikHelpers<AircraftWithoutIDs>) => {
             await handleSubmit(values);
             setSubmitting(false);
         }}

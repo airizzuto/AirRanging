@@ -1,11 +1,11 @@
 import React from 'react';
 import { isAircraftInUserList } from '../../helpers/aircraftHelper';
-import { AircraftData } from '../../types/Aircraft/Aircraft';
+import { AircraftWithSocials } from '../../types/Aircraft/Aircraft';
 import { Button } from '../Generics/Buttons/Button';
 
 interface Props {
-  aircraft: AircraftData;
-  aircraftsSaved: AircraftData[] | null;
+  aircraft: AircraftWithSocials;
+  aircraftsSaved: AircraftWithSocials[] | null;
   disabled?: boolean,
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;

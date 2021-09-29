@@ -6,16 +6,16 @@ import ModalTab from "../../Generics/Buttons/ModalTab";
 import DraggableModal from "../../Generics/Modals/DraggableModal";
 import PlanningModal from "./PlanningModal";
 
-import { AircraftData, AircraftState } from "../../../types/Aircraft/Aircraft";
+import { AircraftWithSocials, AircraftState } from "../../../types/Aircraft/Aircraft";
 
 import Style from "./Home.module.scss";
 import AircraftSelect from "./AircraftSelectModal";
 // import InfoFooter from "./InfoFooter";
 
 interface Props {
-  aircrafts: AircraftData[];
+  aircrafts: AircraftWithSocials[];
   selectedAircraft: AircraftState | null;
-  handleAircraftSelection: (selected: AircraftData | null) => void ;
+  handleAircraftSelection: (selected: AircraftWithSocials | null) => void ;
   handleAircraftsFiltering: (filter: string) => Promise<void>;
   handleAircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
 }

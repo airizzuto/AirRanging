@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { AircraftData } from '../../types/Aircraft/Aircraft';
+import { AircraftWithSocials } from '../../types/Aircraft/Aircraft';
 import { Button } from '../Generics/Buttons/Button';
 
 import Style from "./AircraftInfoSections.module.scss";
 
 interface Props {
-  aircraftSelected: AircraftData | null;
+  aircraftSelected: AircraftWithSocials | null;
 }
 
 const AircraftInfoSelection: React.FC<Props> = ({aircraftSelected}) => {

@@ -5,7 +5,7 @@ import { isUserAuthenticated } from "../../../helpers/tokenHelper";
 import { isUserOwner } from "../../../helpers/userHelper";
 import propsToLabel from "../../../utils/propsToLabel";
 
-import { AircraftData, CloneAircraft } from "../../../types/Aircraft/Aircraft";
+import { AircraftWithSocials, CloneAircraft } from "../../../types/Aircraft/Aircraft";
 
 import AlertBox from "../../Generics/Alerts/AlertBox";
 import AircraftForm from "./AircraftForm";
@@ -14,10 +14,10 @@ import "./AircraftDetails.scss";
 import Spinner from "../../../styles/components/_spinner.module.scss";
 
 interface Props {
-  aircrafts: AircraftData[];
-  aircraftsSaved: AircraftData[] | null;
-  handleAircraftEdit: (aircraftId: string, editedAircraft: AircraftData) => Promise<void>;
-  handleAircraftSelect: (selected: AircraftData | null) => void;
+  aircrafts: AircraftWithSocials[];
+  aircraftsSaved: AircraftWithSocials[] | null;
+  handleAircraftEdit: (aircraftId: string, editedAircraft: AircraftWithSocials) => Promise<void>;
+  handleAircraftSelect: (selected: AircraftWithSocials | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
   handleAircraftDelete: (aircraftId: string) => Promise<void>;
@@ -38,7 +38,7 @@ const AircraftDetails: React.FC<Props> = ({
   const history = useHistory();
 
   const [alert, setAlert] = useState("");
-  const [aircraft, setAircraft] = useState<AircraftData>();
+  const [aircraft, setAircraft] = useState<AircraftWithSocials>();
   const [isEditMode, setIsEditMode] = useState(false);
   const [isAircraftOwned, setIsAircraftOwned] = useState(false);
 
@@ -52,7 +52,7 @@ const AircraftDetails: React.FC<Props> = ({
     }
   }, [aircraft]);
 
-  const handleSubmit = async (editedAircraft: AircraftData) => {
+  const handleSubmit = async (editedAircraft: AircraftWithSocials) => {
     try {
       setAlert("");
       await isUserAuthenticated()
@@ -66,7 +66,7 @@ const AircraftDetails: React.FC<Props> = ({
     }
   };
 
-  const handleSelect = (aircraftSelected: AircraftData) => {
+  const handleSelect = (aircraftSelected: AircraftWithSocials) => {
     handleAircraftSelect(aircraftSelected);
     history.push("/");
   };
@@ -88,7 +88,7 @@ const AircraftDetails: React.FC<Props> = ({
     }
   };
 
-  const handleCloning = async (aircraftToClone: AircraftData) => {
+  const handleCloning = async (aircraftToClone: AircraftWithSocials) => {
     setAlert("");
 
     if (await isUserAuthenticated()) {

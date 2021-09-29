@@ -3,7 +3,7 @@ import React from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 
 import EnumOptions from '../../Generics/FormGroups/EnumOptions';
-import { AircraftData } from '../../../types/Aircraft/Aircraft';
+import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from '../../../types/Aircraft/AircraftEnums';
 import { aircraftSchema } from '../../../validators/aircraftValidators';
 
@@ -12,8 +12,8 @@ import AircraftActionsButtons, { IAircraftButtonsHandlers } from './AircraftActi
 import FieldGroup from '../../Generics/FormGroups/FieldGroup';
 
 interface Props {
-  aircraft: AircraftData;
-  aircraftsSaved: AircraftData[] | null;
+  aircraft: AircraftWithSocials;
+  aircraftsSaved: AircraftWithSocials[] | null;
   isAircraftOwned: boolean;
   isEditMode: boolean;
   handlers: IAircraftButtonsHandlers;
@@ -27,7 +27,7 @@ const AircraftForm: React.FC<Props> = ({
     <Formik
       initialValues={{...aircraft}}
       validationSchema={aircraftSchema}
-      onSubmit={async (values: AircraftData, { setSubmitting }: FormikHelpers<AircraftData>) => {
+      onSubmit={async (values: AircraftWithSocials, { setSubmitting }: FormikHelpers<AircraftWithSocials>) => {
         await handlers.handleSubmit(values);
         setSubmitting(false);
       }

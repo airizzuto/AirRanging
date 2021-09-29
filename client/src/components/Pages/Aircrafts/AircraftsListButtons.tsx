@@ -1,14 +1,14 @@
 import React from 'react';
 import { isUserOwner } from '../../../helpers/userHelper';
-import { AircraftData } from '../../../types/Aircraft/Aircraft';
+import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
 import { Button, LinkButton } from '../../Generics/Buttons/Button';
 
 interface Props {
   user: UserPublic | null;
-  aircraft: AircraftData;
-  aircraftsSaved: AircraftData[] | null;
+  aircraft: AircraftWithSocials;
+  aircraftsSaved: AircraftWithSocials[] | null;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }

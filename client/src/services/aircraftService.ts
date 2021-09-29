@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
-import { AircraftData, CloneAircraft, NewAircraft } from "../types/Aircraft/Aircraft";
+import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs } from "../types/Aircraft/Aircraft";
 
 const getAllAircrafts = async () => {
   const response = await axios.get(
@@ -61,7 +61,7 @@ const searchAircraftByModel = async (query: string) => {
   return response;
 };
 
-const createAircraft = async (newAircraft: NewAircraft) => {
+const createAircraft = async (newAircraft: AircraftWithoutIDs) => {
   try {
     if (await isUserAuthenticated()) {
       const config = {
@@ -120,7 +120,7 @@ const unsaveAircraft = async (aircraftId: string) => {
   }
 };
 
-const editAircraft = async (aircraftId: string, aircraftUpdated: AircraftData) => {
+const editAircraft = async (aircraftId: string, aircraftUpdated: AircraftWithSocials) => {
   const config = {
     headers: { Authorization: `Bearer ${getStoredToken()}` },
   };
