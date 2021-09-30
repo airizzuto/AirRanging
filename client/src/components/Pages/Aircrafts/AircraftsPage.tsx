@@ -2,20 +2,22 @@ import React from 'react';
 
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
+import { Filters } from '../../../types/Aircraft/Filter';
 
 import AircraftsTable from '../../Table/AircraftsTable';
+import {LinkButton} from '../../Generics/Buttons/Button';
+import DropdownOptions from '../../Generics/Filters/DropdownOptions';
 import AircraftsListButtons from './AircraftsListButtons';
 
 import Style from "./Aircrafts.module.scss";
-import {LinkButton} from '../../Generics/Buttons/Button';
-import DropdownOptions from '../../Generics/Filters/DropdownOptions';
 
 interface Props {
   user: UserPublic | null;
   aircrafts: AircraftWithSocials[];
   aircraftsSaved: AircraftWithSocials[] | null;
   aircraftsOwned: AircraftWithSocials[] | null;
-  handleAircraftsFilter: (filter: string) => Promise<void>;
+  filter: Filters;
+  handleAircraftsFilter: (filter: Filters) => Promise<void>;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
@@ -26,17 +28,15 @@ const Aircrafts: React.FC<Props> = ({
   user,
   aircrafts,
   aircraftsSaved,
+  filter,
   handleAircraftsFilter,
   handleAircraftSave,
   handleAircraftUnsave,
   handleAircraftSelection,
 }) => {
-  const [filterInput, setFilterInput] = React.useState("");
-
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value;
-    setFilterInput(value);
-    handleAircraftsFilter(value);
+    e.preventDefault();
+    handleAircraftsFilter({...filter, search: e.target.value});
   };
 
   const columns = React.useMemo(
@@ -126,8 +126,8 @@ const Aircrafts: React.FC<Props> = ({
         <h1 className={Style.Title}>Browse Aircrafts</h1>
   
         <input className={Style.SearchBar}
-          value={filterInput}
-          onChange={handleFilterChange}
+          value={filter.search}
+          onChange={event => handleFilterChange(event)}
           placeholder={"Search aircraft"}
         />
 

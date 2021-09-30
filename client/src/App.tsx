@@ -81,6 +81,7 @@ const App = (): JSX.Element =>{
   // Sets initial aircrafts
   useEffect(() => {
     refreshAircrafts();
+    setCurrentAircrafts([...initialAircrafts]);
   }, []);
 
   // Sets user if a valid token is found in localStorage
@@ -101,12 +102,24 @@ const App = (): JSX.Element =>{
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, initialAircrafts]);
 
-  
+  useEffect(() => {
+    console.log("DEBUG: effect filter: ", filter);
+    
+    filterSearch(currentAircrafts, filter)
+      .then(response => (response.length > 0)
+        ? setCurrentAircrafts(response)
+        : setCurrentAircrafts(initialAircrafts)
+    );
+
+    console.log("DEBUG: effect current aircrafts: ", currentAircrafts);
+  },[filter, initialAircrafts, aircraftsSaved, aircraftsOwned]);
+
+
   /* Aircrafts state handlers */
 
   const refreshAircrafts = async () => {
     await aircraftService.getAllAircrafts()
-      .then((response) => setInitialAircrafts([...response.data]))
+      .then((response) => setInitialAircrafts(response.data))
       .catch(error => {
         setInitialAircrafts([]);
         console.error("ERROR: Retrieving all aircrafts - ", error);
@@ -116,7 +129,7 @@ const App = (): JSX.Element =>{
   const refreshSavedAircrafts = async () => {
     user
     ? await aircraftService.getAircraftsSavedByUser()
-        .then((response) => setAircraftsSaved([...response.data]))
+        .then((response) => setAircraftsSaved(response.data))
         .catch(error => {
           setAircraftsSaved([]);
           console.error("ERROR: retrieving saved aicrafts - ", error);
@@ -127,7 +140,7 @@ const App = (): JSX.Element =>{
   const refreshOwnedAircrafts = async () => {
     user
     ? await aircraftService.getAircraftsOwnedByUser()
-        .then((response) => setAircraftsOwned([...response.data]))
+        .then((response) => setAircraftsOwned(response.data))
         .catch(error => {
           setAircraftsOwned([]);
           console.error("ERROR: retrieving owned aicrafts - ", error);
@@ -137,18 +150,16 @@ const App = (): JSX.Element =>{
 
   const handleSearchFilter = async (search: string) => {
     setFilter({...filter, search: search});
-    const data: AircraftWithSocials[] = filterSearch(currentAircrafts, filter);
-    setCurrentAircrafts(data);
-    return data;
+    
+    return currentAircrafts;
   };
 
   // TODO: refactor to use currentAircrafts
-  const handleAircraftsFilter = async (filter: string) => {
-    filter
-      ? await aircraftService.searchAircraftByModel(filter) // TODO: Take from initialAircrafts
-          .then((response) => setInitialAircrafts([...response.data])) // TODO: Set in currentAircrafts
-          .catch(error => console.error("ERROR: filtering aicrafts - ", error))
-      : refreshAircrafts(); // TODO: Set initialAircrafts in currentAircrafts
+  const handleAircraftsFilter = async (filter: Filters) => {
+    setFilter({...filter});
+    await aircraftService.searchAircraftByModel(filter) // TODO: Take from initialAircrafts
+      .then((response) => setInitialAircrafts([...response.data])) // TODO: Set in currentAircrafts
+      .catch(error => console.error("ERROR: filtering aicrafts - ", error));
   };
 
   const handleAircraftCreate = async (newAircraft: AircraftWithoutIDs) => {
@@ -248,7 +259,7 @@ const App = (): JSX.Element =>{
         <Switch>
             <Route exact path="/">
               <Home 
-                aircrafts={initialAircrafts}
+                initialAircrafts={initialAircrafts}
                 selectedAircraft={aircraftSelected}
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftsSearch={handleSearchFilter}
@@ -262,6 +273,7 @@ const App = (): JSX.Element =>{
                 aircrafts={initialAircrafts}
                 aircraftsSaved={aircraftsSaved}
                 aircraftsOwned={aircraftsOwned}
+                filter={filter}
                 handleAircraftsFilter={handleAircraftsFilter} 
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftSave={handleAircraftSave}

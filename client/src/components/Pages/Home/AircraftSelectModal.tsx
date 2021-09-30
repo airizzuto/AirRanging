@@ -1,4 +1,3 @@
-import { mapAircraftToFilter } from "../../../helpers/aircraftHelper";
 import { AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
 
 import { Button } from "../../Generics/Buttons/Button";
@@ -8,6 +7,7 @@ import DropdownSearchbar from "../../Generics/Filters/DropdownSearchbar";
 import Style from "./AircraftSelectModal.module.scss";
 
 interface Props {
+  initialAircrafts: AircraftWithSocials[];
   aircraftSelected: AircraftWithSocials | null;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleAircraftsSearch: (search: string) => Promise<AircraftWithSocials[]>;
@@ -15,18 +15,12 @@ interface Props {
 }
 
 const AircraftSelectModal: React.FC<Props> = ({
+  initialAircrafts,
   aircraftSelected,
   handleAircraftSelection,
   handleAircraftsSearch,
   handleSelectClick,
 }) => {
-
-  const handleAircraftsSelectionFilter = async (input: string) => {
-    const aircraftsFiltered = handleAircraftsSearch(input)
-      .then(response => mapAircraftToFilter(response));
-    
-      return aircraftsFiltered;
-  };
 
   return (
     <div className={Style.AircraftSelect}>
@@ -34,8 +28,9 @@ const AircraftSelectModal: React.FC<Props> = ({
 
       <div className={Style.SearchBar}>
         <DropdownSearchbar
+          defaultOptions={initialAircrafts}
           handleSelection={handleAircraftSelection}
-          handleFilter={handleAircraftsSelectionFilter}
+          handleFilter={handleAircraftsSearch}
         />
       </div>
 

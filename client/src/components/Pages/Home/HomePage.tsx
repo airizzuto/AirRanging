@@ -13,7 +13,7 @@ import AircraftSelect from "./AircraftSelectModal";
 // import InfoFooter from "./InfoFooter";
 
 interface Props {
-  aircrafts: AircraftWithSocials[];
+  initialAircrafts: AircraftWithSocials[];
   selectedAircraft: AircraftState | null;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void ;
   handleAircraftsSearch: (search: string) => Promise<AircraftWithSocials[]>;
@@ -21,6 +21,7 @@ interface Props {
 }
 
 const Home: React.FC<Props> = ({
+  initialAircrafts,
   selectedAircraft,
   handleAircraftSelection,
   handleAircraftsSearch,
@@ -93,6 +94,7 @@ const Home: React.FC<Props> = ({
         handleClose={() => useModalClose(setDisplaySelectionModal)}
       >
         <AircraftSelect 
+          initialAircrafts={initialAircrafts}
           aircraftSelected={selectedAircraft} 
           handleAircraftSelection={handleAircraftSelection}
           handleAircraftsSearch={handleAircraftsSearch}

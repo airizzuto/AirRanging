@@ -2,6 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
 import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs } from "../types/Aircraft/Aircraft";
+import { Filters } from "../types/Aircraft/Filter";
 
 const getAllAircrafts = async () => {
   const response = await axios.get(
@@ -53,9 +54,9 @@ const getAircraftsSavedByUser = async () => {
   return response;
 };
 
-const searchAircraftByModel = async (query: string) => {
+const searchAircraftByField = async (filter: Filters) => {
   const response = await axios.get(
-    BASE_URL + `/api/aircrafts/search?Model=${query}`
+    BASE_URL + `/api/aircrafts/search?${filter.field}=${filter.search}`
   );
 
   return response;
@@ -168,7 +169,7 @@ export default {
   getAircraftById,
   getAircraftsOwnedByUser,
   getAircraftsSavedByUser,
-  searchAircraftByModel,
+  searchAircraftByModel: searchAircraftByField,
   createAircraft,
   saveAircraft,
   unsaveAircraft,
