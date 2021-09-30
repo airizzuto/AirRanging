@@ -16,13 +16,14 @@ interface Props {
   aircrafts: AircraftWithSocials[];
   selectedAircraft: AircraftState | null;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void ;
-  handleAircraftsFiltering: (filter: string) => Promise<void>;
+  handleAircraftsSearch: (search: string) => Promise<AircraftWithSocials[]>;
   handleAircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
 }
 
 const Home: React.FC<Props> = ({
   selectedAircraft,
   handleAircraftSelection,
+  handleAircraftsSearch,
   handleAircraftState
 }) => {
   const [isModalActive, setIsModalActive] = useState(false); // One active modal at once
@@ -94,6 +95,7 @@ const Home: React.FC<Props> = ({
         <AircraftSelect 
           aircraftSelected={selectedAircraft} 
           handleAircraftSelection={handleAircraftSelection}
+          handleAircraftsSearch={handleAircraftsSearch}
           handleSelectClick={() => handleModalDisplay(setDisplayPlanningModal, displayPlanningModal)}
         />
       </DraggableModal>

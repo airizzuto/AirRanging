@@ -5,7 +5,7 @@ export interface AircraftsSets {
     saved: boolean;
 }
 
-export interface AircraftsFilters extends AircraftsSets {
+export interface Filters extends AircraftsSets {
     field: AircraftFields;
     search: string;
 }

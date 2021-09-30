@@ -1,5 +1,4 @@
 import { mapAircraftToFilter } from "../../../helpers/aircraftHelper";
-import aircraftService from "../../../services/aircraftService";
 import { AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
 
 import { Button } from "../../Generics/Buttons/Button";
@@ -11,19 +10,20 @@ import Style from "./AircraftSelectModal.module.scss";
 interface Props {
   aircraftSelected: AircraftWithSocials | null;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
+  handleAircraftsSearch: (search: string) => Promise<AircraftWithSocials[]>;
   handleSelectClick: () => void;
 }
 
 const AircraftSelectModal: React.FC<Props> = ({
-  aircraftSelected, 
+  aircraftSelected,
   handleAircraftSelection,
+  handleAircraftsSearch,
   handleSelectClick,
 }) => {
 
   const handleAircraftsSelectionFilter = async (input: string) => {
-    const aircraftsFiltered = await aircraftService
-      .searchAircraftByModel(input)
-      .then(response => mapAircraftToFilter(response.data));
+    const aircraftsFiltered = handleAircraftsSearch(input)
+      .then(response => mapAircraftToFilter(response));
     
       return aircraftsFiltered;
   };

@@ -9,6 +9,7 @@ import { getUserData } from "./helpers/userHelper";
 
 import { UserPublic } from "./types/User/User";
 import { AircraftWithSocials, AircraftState, CloneAircraft, AircraftWithoutIDs } from "./types/Aircraft/Aircraft";
+import { Filters } from "./types/Aircraft/Filter";
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
@@ -32,6 +33,7 @@ import Footer from "./components/Footer/Footer";
 // import Map from "./components/Map/Map";
 
 import "./App.scss";
+import { filterSearch } from "./helpers/aircraftsFilters";
 
 const App = (): JSX.Element =>{
   const history = useHistory();
@@ -67,8 +69,13 @@ const App = (): JSX.Element =>{
   const [initialAircrafts, setInitialAircrafts] = useState<AircraftWithSocials[]>([]);
   const [aircraftsSaved, setAircraftsSaved] = useState<AircraftWithSocials[]>([]);
   const [aircraftsOwned, setAircraftsOwned] = useState<AircraftWithSocials[]>([]);
-  // const [currentAircrafts, setCurrentAircrafts] = useState<AircraftWithSocials[]>([]);
-  // const [filter, setFilter] = useState<AircraftsSets>({owned: false, saved: false});
+  const [currentAircrafts, setCurrentAircrafts] = useState<AircraftWithSocials[]>([]);
+  const [filter, setFilter] = useState<Filters>({
+    owned: false,
+    saved: false,
+    field: "model",
+    search: ""
+  });
   const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
 
   // Sets initial aircrafts
@@ -126,6 +133,13 @@ const App = (): JSX.Element =>{
           console.error("ERROR: retrieving owned aicrafts - ", error);
         })
     : setAircraftsOwned([]);
+  };
+
+  const handleSearchFilter = async (search: string) => {
+    setFilter({...filter, search: search});
+    const data: AircraftWithSocials[] = filterSearch(currentAircrafts, filter);
+    setCurrentAircrafts(data);
+    return data;
   };
 
   // TODO: refactor to use currentAircrafts
@@ -237,7 +251,7 @@ const App = (): JSX.Element =>{
                 aircrafts={initialAircrafts}
                 selectedAircraft={aircraftSelected}
                 handleAircraftSelection={handleAircraftSelection}
-                handleAircraftsFiltering={handleAircraftsFilter}
+                handleAircraftsSearch={handleSearchFilter}
                 handleAircraftState={setAircraftSelected}
               />
             </Route>
