@@ -1,7 +1,8 @@
 // import { CSSProperties } from 'react';
 
 import Select from 'react-select';
-import "./DropdownOptions.scss";
+import { AircraftFields } from '../../../types/Aircraft/AircraftEnums';
+import "./DropdownSearchbar.scss";
 
 // const groupStyles: CSSProperties = {
 //   display: 'flex',
@@ -22,16 +23,14 @@ import "./DropdownOptions.scss";
 //   textAlign: 'center',
 // };
 
-const DropdownOptions = ({options}: any) => {
-  const formatGroupLabel = (data: any) => (
-    <div className={"groupStyle"}>
-      <span>{data.label}</span>
-      <span className={"groupBadges"}>{data.options.length}</span>
-    </div>
-  );
+const DropdownOptions = (
+  {options}: any,
+  placeholder: keyof AircraftFields,
+  handleFieldSelection, // TODO:
+) => {
 
   const settingsProps = {
-    isClearable: true,
+    isClearable: false,
     isDisabled: false,
     isLoading: false,
     isRtl: false,
@@ -42,11 +41,11 @@ const DropdownOptions = ({options}: any) => {
   return (
     <>
       <Select
-        className="Dropdown-Container"
-        classNamePrefix="Dropdown"
-        defaultValue={null}
+        className="Searchbar-Container"
+        classNamePrefix="Searchbar"
         options={options}
-        formatGroupLabel={formatGroupLabel}
+        placeholder={placeholder.toString}
+        onChange={handleFieldSelection}
         {...settingsProps}
       />
     </>

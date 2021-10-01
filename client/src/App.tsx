@@ -34,6 +34,7 @@ import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
 import { filterSearch } from "./helpers/aircraftsFilters";
+import { AircraftFields } from "./types/Aircraft/AircraftEnums";
 
 const App = (): JSX.Element =>{
   const history = useHistory();
@@ -73,7 +74,7 @@ const App = (): JSX.Element =>{
   const [filter, setFilter] = useState<Filters>({
     owned: false,
     saved: false,
-    field: "model",
+    field: AircraftFields.Model,
     search: ""
   });
   const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);

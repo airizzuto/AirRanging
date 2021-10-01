@@ -3,6 +3,7 @@ import React from 'react';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import { Filters } from '../../../types/Aircraft/Filter';
+import { AircraftFields } from '../../../types/Aircraft/AircraftEnums';
 
 import AircraftsTable from '../../Table/AircraftsTable';
 import {LinkButton} from '../../Generics/Buttons/Button';
@@ -133,7 +134,13 @@ const Aircrafts: React.FC<Props> = ({
 
         {/* TODO: Grouped Select Dropdown filter */}
         <div className={Style.Dropdown}>
-          <DropdownOptions />
+          <DropdownOptions
+            placeholder={AircraftFields.Model}
+            options={Object.keys(AircraftFields).map(prop => ({
+              label: prop,
+              value: prop,
+            }))}
+          />
         </div>
 
         <div className={Style.FilterOptions}>
