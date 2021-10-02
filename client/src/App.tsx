@@ -81,12 +81,15 @@ const App = (): JSX.Element =>{
 
   // Sets initial aircrafts
   useEffect(() => {
+    console.log("INFO: EFFECT - data refresh");
+
     refreshAircrafts();
-    setCurrentAircrafts(initialAircrafts);
   }, []);
 
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
+    console.log("INFO: EFFECT - user check");
+
     isUserAuthenticated()
       .then((isAuthenticated) =>
         isAuthenticated
@@ -96,6 +99,8 @@ const App = (): JSX.Element =>{
 
   // Sets user saved aircrafts
   useEffect(() => {
+    console.log("INFO: EFFECT - user aircrafts refresh");
+
     if (user) {
       refreshSavedAircrafts();
       refreshOwnedAircrafts();
@@ -104,16 +109,11 @@ const App = (): JSX.Element =>{
   }, [user, initialAircrafts]);
 
   useEffect(() => {
-    console.log("DEBUG: effect filter: ", filter);
+    console.log("INFO: EFFECT - filter: ", filter);
     
-    filterSearch(currentAircrafts, filter)
-      .then(response => (response.length > 0)
-        ? setCurrentAircrafts(response)
-        : setCurrentAircrafts(initialAircrafts)
-    );
+    refreshFilterAircrafts();
 
-    console.log("DEBUG: effect current aircrafts: ", currentAircrafts);
-  },[filter, initialAircrafts, aircraftsSaved, aircraftsOwned]);
+  },[filter, initialAircrafts]);
 
 
   /* Aircrafts state handlers */
@@ -123,7 +123,7 @@ const App = (): JSX.Element =>{
       .then((response) => setInitialAircrafts(response.data))
       .catch(error => {
         setInitialAircrafts([]);
-        console.error("ERROR: Retrieving all aircrafts - ", error);
+        console.error("ERROR: retrieving all aircrafts - ", error);
       });
   };
 
@@ -149,9 +149,17 @@ const App = (): JSX.Element =>{
     : setAircraftsOwned([]);
   };
 
+  const refreshFilterAircrafts = async () => {
+    await filterSearch(currentAircrafts, filter)
+      .then(response => (response.length > 0)
+        ? setCurrentAircrafts(response)
+        : setCurrentAircrafts(initialAircrafts)
+      );
+  };
+
   const handleSearchFilter = async (search: string) => {
     setFilter({...filter, search: search});
-    
+    await refreshFilterAircrafts();
     return currentAircrafts;
   };
 
@@ -159,7 +167,7 @@ const App = (): JSX.Element =>{
   const handleAircraftsFilter = async (filter: Filters) => {
     setFilter({...filter});
     await aircraftService.searchAircraftByModel(filter) // TODO: Take from initialAircrafts
-      .then((response) => setInitialAircrafts([...response.data])) // TODO: Set in currentAircrafts
+      .then((response) => setCurrentAircrafts([...response.data])) // TODO: Set in currentAircrafts
       .catch(error => console.error("ERROR: filtering aicrafts - ", error));
   };
 
@@ -186,7 +194,7 @@ const App = (): JSX.Element =>{
         await aircraftService.getAircraftById(aircraftId)
           .then(response => setInitialAircrafts(
               initialAircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
-          )).catch(error => console.error(`Fetching aircraft ${aircraftId}: `, error));
+          )).catch(error => console.error(`ERROR: fetching aircraft ${aircraftId}: `, error));
       }).catch(error => console.error("ERROR: retrieving aircraft - ", error));
   };
 
@@ -260,7 +268,7 @@ const App = (): JSX.Element =>{
         <Switch>
             <Route exact path="/">
               <Home 
-                initialAircrafts={initialAircrafts}
+                initialAircrafts={currentAircrafts}
                 selectedAircraft={aircraftSelected}
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftsSearch={handleSearchFilter}
@@ -271,7 +279,7 @@ const App = (): JSX.Element =>{
             <Route exact path="/aircrafts">
               <Aircrafts
                 user={user}
-                aircrafts={initialAircrafts}
+                aircrafts={currentAircrafts}
                 aircraftsSaved={aircraftsSaved}
                 aircraftsOwned={aircraftsOwned}
                 filter={filter}
@@ -287,7 +295,7 @@ const App = (): JSX.Element =>{
               exact path="/aircrafts/details/:aircraftId"
             >
               <AircraftDetails
-                aircrafts={initialAircrafts}
+                aircrafts={currentAircrafts}
                 aircraftsSaved={aircraftsSaved}
                 handleAircraftEdit={handleAircraftEdit}
                 handleAircraftSelect={handleAircraftSelection}
