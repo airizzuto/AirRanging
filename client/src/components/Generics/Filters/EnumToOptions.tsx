@@ -1,15 +1,12 @@
 import React from 'react';
 
-import Style from "./EnumToOptions.module.scss";
-
 interface Props {
   enumerator: any;
-  handleChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
-const EnumToOptions: React.FC<Props> = ({enumerator, handleChange}) => {
+const EnumToOptions: React.FC<Props> = ({enumerator}) => {
   return (
-    <select onChange={handleChange} className={Style.Container}>
+    <>
       {Object.keys(enumerator).map((key) => {
         return (
           <option key={key} value={key}>
@@ -18,7 +15,7 @@ const EnumToOptions: React.FC<Props> = ({enumerator, handleChange}) => {
         );
       })}
       
-    </select>
+    </>
   );
 };
 

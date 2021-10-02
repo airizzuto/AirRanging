@@ -10,7 +10,7 @@ import {LinkButton} from '../../Generics/Buttons/Button';
 import AircraftsListButtons from './AircraftsListButtons';
 
 import Style from "./Aircrafts.module.scss";
-import EnumToOptions from '../../Generics/Filters/EnumToOptions';
+import DropdownSelect from '../../Generics/Filters/DropdownSelect';
 
 interface Props {
   user: UserPublic | null;
@@ -143,8 +143,8 @@ const Aircrafts: React.FC<Props> = ({
           onChange={event => handleSearchChange(event)}
           placeholder={"Search aircraft"}
         />
-
-        <EnumToOptions
+        
+        <DropdownSelect 
           enumerator={AircraftFieldsOptions}
           handleChange={() => handleFieldChange}
         />

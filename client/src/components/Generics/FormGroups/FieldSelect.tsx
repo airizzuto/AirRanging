@@ -1,4 +1,5 @@
 import { ErrorMessage, Field } from 'formik';
+import EnumToOptions from '../Filters/EnumToOptions';
 import "./FormGroup.scss";
 
 interface Props {
@@ -30,9 +31,7 @@ const FieldSelect: React.FC<Props> = ({
         disabled={isDisabled}
         value={value}
       >
-        {Object.keys(enumerator).map(key => {
-          return <option value={key} key={key}>{enumerator[key]}</option>;
-        })}
+        <EnumToOptions enumerator={enumerator} />
       </Field>
       <ErrorMessage component="span" name={name} />
     </div>
