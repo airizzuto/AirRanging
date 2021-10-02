@@ -172,7 +172,7 @@ const Aircrafts: React.FC<Props> = ({
       <hr />
 
       {
-        aircrafts
+        aircrafts.length > 0
           ? <div className={Style.AircraftsTable}>
               <AircraftsTable 
                 data={aircrafts}
