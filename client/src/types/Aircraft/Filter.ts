@@ -1,4 +1,4 @@
-import { AircraftWithSocials } from "./Aircraft";
+import { AircraftFieldsTypes } from "./Aircraft";
 
 export interface AircraftsSets {
     owned: boolean;
@@ -6,6 +6,6 @@ export interface AircraftsSets {
 }
 
 export interface Filters extends AircraftsSets {
-    field: keyof AircraftWithSocials;
+    field: AircraftFieldsTypes;
     search: string;
 }

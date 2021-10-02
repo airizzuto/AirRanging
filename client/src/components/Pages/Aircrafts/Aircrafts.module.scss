@@ -40,11 +40,16 @@
     }
 
     .Dropdown {
+      @include box.light;
       grid-area: dropdown;
       align-self: center;
       border-radius: 5px;
 
       z-index: 5;
+
+      .DropdownOption {
+        color: color.$dark1;
+      }
     }
 
     .FilterOptions {

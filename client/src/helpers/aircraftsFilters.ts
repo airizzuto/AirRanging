@@ -15,5 +15,5 @@ export const filterSearch = async (
     data: AircraftWithSocials[],
     filter: Filters,
 ): Promise<AircraftWithSocials[]> => {
-    return data.filter(x => x[filter.field] === filter.search);
+    return data.filter(aircraft => aircraft[filter.field as keyof AircraftWithSocials] === filter.search);
 };

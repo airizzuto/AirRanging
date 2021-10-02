@@ -107,7 +107,7 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
                 <EnumOptions
                   enumerator={EAircraftType}
                   labelName="Type"
-                  name="ype"
+                  name="type"
                   isDisabled={isSubmitting}
                 />
 

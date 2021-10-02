@@ -34,7 +34,7 @@ import Footer from "./components/Footer/Footer";
 
 import "./App.scss";
 import { filterSearch } from "./helpers/aircraftsFilters";
-import { AircraftFields } from "./types/Aircraft/AircraftEnums";
+import { AircraftFieldsOptions } from "./types/Aircraft/AircraftEnums";
 
 const App = (): JSX.Element =>{
   const history = useHistory();
@@ -74,7 +74,7 @@ const App = (): JSX.Element =>{
   const [filter, setFilter] = useState<Filters>({
     owned: false,
     saved: false,
-    field: AircraftFields.Model,
+    field: AircraftFieldsOptions.Model,
     search: ""
   });
   const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
@@ -82,7 +82,7 @@ const App = (): JSX.Element =>{
   // Sets initial aircrafts
   useEffect(() => {
     refreshAircrafts();
-    setCurrentAircrafts([...initialAircrafts]);
+    setCurrentAircrafts(initialAircrafts);
   }, []);
 
   // Sets user if a valid token is found in localStorage

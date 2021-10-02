@@ -3,14 +3,13 @@ import React from 'react';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import { Filters } from '../../../types/Aircraft/Filter';
-import { AircraftFields } from '../../../types/Aircraft/AircraftEnums';
 
 import AircraftsTable from '../../Table/AircraftsTable';
 import {LinkButton} from '../../Generics/Buttons/Button';
-import DropdownOptions from '../../Generics/Filters/DropdownOptions';
 import AircraftsListButtons from './AircraftsListButtons';
 
 import Style from "./Aircrafts.module.scss";
+import { AircraftFieldsOptions } from '../../../types/Aircraft/AircraftEnums';
 
 interface Props {
   user: UserPublic | null;
@@ -35,9 +34,22 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftUnsave,
   handleAircraftSelection,
 }) => {
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
     handleAircraftsFilter({...filter, search: e.target.value});
+  };
+
+  const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    handleAircraftsFilter({...filter, field: e.target.value as keyof AircraftWithSocials});
+  };
+
+  const handleShowOwnedToggle = (isToggled: boolean) => {
+    handleAircraftsFilter({...filter, owned: isToggled});
+  };
+
+  const handleShowSavedToggle = (isToggled: boolean) => {
+    handleAircraftsFilter({...filter, saved: isToggled});
   };
 
   const columns = React.useMemo(
@@ -119,7 +131,6 @@ const Aircrafts: React.FC<Props> = ({
     [user, aircraftsSaved, handleAircraftSave, handleAircraftUnsave]
   );
 
-
   return (
     <div className={Style.AircraftsView}>
 
@@ -128,30 +139,31 @@ const Aircrafts: React.FC<Props> = ({
   
         <input className={Style.SearchBar}
           value={filter.search}
-          onChange={event => handleFilterChange(event)}
+          onChange={event => handleSearchChange(event)}
           placeholder={"Search aircraft"}
         />
 
         {/* TODO: Grouped Select Dropdown filter */}
-        <div className={Style.Dropdown}>
-          <DropdownOptions
-            placeholder={AircraftFields.Model}
-            options={Object.keys(AircraftFields).map(prop => ({
-              label: prop,
-              value: prop,
-            }))}
-          />
-        </div>
+        <select onChange={() => handleFieldChange} className={Style.Dropdown}>
+          {Object.keys(AircraftFieldsOptions).map((key) => {
+            return (
+              <option key={key} value={key} className={Style.DropdownOption}>
+                {key as keyof typeof AircraftFieldsOptions}
+              </option>
+            );
+          })}
+        </select>
 
+        {/* TODO: abstract saved/owned filters to component */}
         <div className={Style.FilterOptions}>
           <div className={Style.CheckboxItem}> {/* TODO: filter owned */}
             <label>Show owned</label>
-            <input type="checkbox" />
+            <input type="checkbox" checked={filter.owned} onChange={() => handleShowOwnedToggle}/>
           </div>
 
           <div className={Style.CheckboxItem}> {/* TODO: filter saved */}
             <label>Show saved</label>
-            <input type="checkbox" />
+            <input type="checkbox" checked={filter.saved} onChange={() => handleShowSavedToggle}/>
           </div>
         </div>
        
