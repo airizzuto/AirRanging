@@ -16,7 +16,7 @@ interface Props {
  * @param name: Name reference
  * @returns Iterates enumerator members and passes them as options for the form selector dropdown
  */
-const EnumOptions: React.FC<Props> = ({
+const FieldSelect: React.FC<Props> = ({
   enumerator, labelName, name, isDisabled, value
 }) => {
 
@@ -40,4 +40,4 @@ const EnumOptions: React.FC<Props> = ({
   );
 };
 
-export default EnumOptions;
+export default FieldSelect;

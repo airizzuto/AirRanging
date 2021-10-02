@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Form, Formik, FormikHelpers } from 'formik';
 
-import EnumOptions from '../../Generics/FormGroups/EnumOptions';
+import FieldSelect from '../../Generics/FormGroups/FieldSelect';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from '../../../types/Aircraft/AircraftEnums';
 import { aircraftSchema } from '../../../validators/aircraftValidators';
@@ -76,7 +76,7 @@ const AircraftForm: React.FC<Props> = ({
               isDisabled={isSubmitting || !isEditMode}
             />
 
-            <EnumOptions
+            <FieldSelect
               enumerator={EAircraftType}
               value={values.aircraftType}
               labelName="Aircraft Type"
@@ -84,7 +84,7 @@ const AircraftForm: React.FC<Props> = ({
               isDisabled={isSubmitting || !isEditMode}
             />
 
-            <EnumOptions
+            <FieldSelect
               enumerator={EEngineType}
               value={values.engineType}
               labelName="Engine Type"
@@ -99,7 +99,7 @@ const AircraftForm: React.FC<Props> = ({
               isDisabled={isSubmitting || !isEditMode}
             />
 
-            <EnumOptions 
+            <FieldSelect 
               enumerator={EWeightCategory}
               value={values.weightCategory}
               labelName="Weight Category"
@@ -107,7 +107,7 @@ const AircraftForm: React.FC<Props> = ({
               isDisabled={isSubmitting || !isEditMode}
             />
 
-            <EnumOptions 
+            <FieldSelect 
               enumerator={EIcaoWakeCategory}
               value={values.icaoWakeCategory}
               labelName="ICAO Wake Category"
@@ -115,7 +115,7 @@ const AircraftForm: React.FC<Props> = ({
               isDisabled={isSubmitting || !isEditMode}
             />
 
-            <EnumOptions 
+            <FieldSelect 
               enumerator={EFuelType}
               value={values.fuelType}
               labelName="Fuel Type"

@@ -3,13 +3,14 @@ import React from 'react';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import { Filters } from '../../../types/Aircraft/Filter';
+import { AircraftFieldsOptions } from '../../../types/Aircraft/AircraftEnums';
 
 import AircraftsTable from '../../Table/AircraftsTable';
 import {LinkButton} from '../../Generics/Buttons/Button';
 import AircraftsListButtons from './AircraftsListButtons';
 
 import Style from "./Aircrafts.module.scss";
-import { AircraftFieldsOptions } from '../../../types/Aircraft/AircraftEnums';
+import EnumToOptions from '../../Generics/Filters/EnumToOptions';
 
 interface Props {
   user: UserPublic | null;
@@ -143,16 +144,10 @@ const Aircrafts: React.FC<Props> = ({
           placeholder={"Search aircraft"}
         />
 
-        {/* TODO: Grouped Select Dropdown filter */}
-        <select onChange={() => handleFieldChange} className={Style.Dropdown}>
-          {Object.keys(AircraftFieldsOptions).map((key) => {
-            return (
-              <option key={key} value={key} className={Style.DropdownOption}>
-                {key as keyof typeof AircraftFieldsOptions}
-              </option>
-            );
-          })}
-        </select>
+        <EnumToOptions
+          enumerator={AircraftFieldsOptions}
+          handleChange={() => handleFieldChange}
+        />
 
         {/* TODO: abstract saved/owned filters to component */}
         <div className={Style.FilterOptions}>

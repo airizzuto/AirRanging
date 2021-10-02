@@ -7,7 +7,7 @@ import { AircraftWithoutIDs } from "../../../types/Aircraft/Aircraft";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/Aircraft/AircraftEnums";
 
 import AlertBox from "../../Generics/Alerts/AlertBox";
-import EnumOptions from "../../Generics/FormGroups/EnumOptions";
+import FieldSelect from "../../Generics/FormGroups/FieldSelect";
 import FieldGroup from "../../Generics/FormGroups/FieldGroup";
 
 import Style from "./AircraftCreate.module.scss";
@@ -104,14 +104,14 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
                   isDisabled={isSubmitting}
                 />
 
-                <EnumOptions
+                <FieldSelect
                   enumerator={EAircraftType}
                   labelName="Type"
                   name="type"
                   isDisabled={isSubmitting}
                 />
 
-                <EnumOptions
+                <FieldSelect
                   enumerator={EEngineType}
                   labelName="Engine Type"
                   name="engineType"
@@ -124,21 +124,21 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
                   isDisabled={isSubmitting}
                 />
 
-                <EnumOptions 
+                <FieldSelect 
                   enumerator={EWeightCategory}
                   labelName="Weight Category"
                   name="weightCategory"
                   isDisabled={isSubmitting}
                 />
 
-                <EnumOptions 
+                <FieldSelect 
                   enumerator={EIcaoWakeCategory}
                   labelName="ICAO Wake Category"
                   name="icaoWakeCategory"
                   isDisabled={isSubmitting}
                 />
 
-                <EnumOptions 
+                <FieldSelect 
                   enumerator={EFuelType}
                   labelName="Fuel Type"
                   name="fuelType"
