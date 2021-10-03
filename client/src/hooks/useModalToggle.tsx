@@ -1,3 +1,4 @@
+// TODO: refactor to useToggle
 
 const useModalToggle = (
   setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
