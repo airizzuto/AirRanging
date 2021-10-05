@@ -71,6 +71,30 @@ namespace App.Controllers.V1
             return Ok(aircraftsResponse);
         }
 
+        // GET api/aircrafts/paginated
+        /// <summary>
+        /// Retrieves all aircrafts in the database
+        /// </summary>
+        /// <response code="200">Retrieves all aircrafts in the database</response>
+        [HttpGet("paginated")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircraftsPaginated([FromQuery] AircraftParameters parameters)
+        {
+            var aircrafts = await _repository.Aircraft.GetAllAircraftsAsync();
+
+            var aircraftsSorted = _repository.Aircraft.SortAircrafts(aircrafts, parameters);
+
+            var aircraftsPaginated = _repository.Aircraft.PaginatedAircrafts(aircraftsSorted, parameters);
+
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircraftsPaginated);
+
+            _logger.LogInfo(
+                $"Returning all {aircraftsResponse.Count()} aircrafts from db."
+            );
+
+            return Ok(aircraftsResponse);
+        }
+
         // GET api/aircrafts/search
         /// <summary>
         /// Retrieves all aircrafts in the database
@@ -79,18 +103,18 @@ namespace App.Controllers.V1
         [HttpGet("search")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> SearchAircrafts(
-            [FromQuery] AircraftParameters aircraftParameters)
+            [FromQuery] AircraftParameters parameters)
         {
             var aircrafts = await _repository.Aircraft.GetAllAircraftsAsync();
 
-            var aircraftsFiltered = _repository.Aircraft.FilterAircrafts(aircrafts, aircraftParameters);
+            var aircraftsFiltered = _repository.Aircraft.FilterAircrafts(aircrafts, parameters);
 
             var aircraftsSorted = _repository.Aircraft.SortAircrafts(
-                aircraftsFiltered, aircraftParameters
+                aircraftsFiltered, parameters
             );
 
             var aircraftsPaginated = _repository.Aircraft.PaginatedAircrafts(
-                aircraftsSorted, aircraftParameters
+                aircraftsSorted, parameters
             );
 
             var metadata = new
@@ -282,7 +306,6 @@ namespace App.Controllers.V1
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
 
             await _repository.Aircraft.CreateAircraftAsync(aircraftModel, userId);
-            await _repository.Bookmark.CreateBookmarkAsync(userId, aircraftModel.Id);
 
             await _repository.SaveAsync();
 
@@ -326,7 +349,6 @@ namespace App.Controllers.V1
             }
 
             var aircraftCopy = await _repository.Aircraft.CreateAircraftAsync(existingAircraft, userId);
-            await _repository.Bookmark.CreateBookmarkAsync(userId, aircraftCopy.Id);
 
             await _repository.SaveAsync();
 

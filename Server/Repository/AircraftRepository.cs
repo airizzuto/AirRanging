@@ -93,6 +93,7 @@ namespace Repository
             aircraft.Id = Guid.NewGuid();
             aircraft.UserId = userId;
             aircraft.AuthorUsername = user.UserName;
+            aircraft.SavesCount = 1;
 
             await DbContext.AddAsync(aircraft);
 
@@ -138,7 +139,6 @@ namespace Repository
             return _filterHelper.ApplyFilter(aircrafts, parameters);
         }
 
-        // FIXME:
         public IEnumerable<Aircraft> SortAircrafts(IEnumerable<Aircraft> aircrafts, AircraftParameters parameters)
         {
             var queryableAircrafts = aircrafts.AsQueryable();
