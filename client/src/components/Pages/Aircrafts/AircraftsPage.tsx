@@ -18,7 +18,7 @@ interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;
   aircraftsOwned: AircraftWithSocials[] | null;
   filter: Filters;
-  handleAircraftsFilter: (filter: Filters) => Promise<void>;
+  handleAircraftsFilters: (filter: Filters) => Promise<void>;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
@@ -30,27 +30,27 @@ const Aircrafts: React.FC<Props> = ({
   aircrafts,
   aircraftsSaved,
   filter,
-  handleAircraftsFilter,
+  handleAircraftsFilters,
   handleAircraftSave,
   handleAircraftUnsave,
   handleAircraftSelection,
 }) => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    handleAircraftsFilter({...filter, search: e.target.value});
+    handleAircraftsFilters({...filter, search: e.target.value});
   };
 
   const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    handleAircraftsFilter({...filter, field: e.target.value as keyof AircraftWithSocials});
+    handleAircraftsFilters({...filter, field: e.target.value as keyof AircraftWithSocials});
   };
 
   const handleShowOwnedToggle = () => {
-    handleAircraftsFilter({...filter, set: "owned"});
+    handleAircraftsFilters({...filter, set: "owned"});
   };
 
   const handleShowSavedToggle = () => {
-    handleAircraftsFilter({...filter, set: "saved"});
+    handleAircraftsFilters({...filter, set: "saved"});
   };
 
   const columns = React.useMemo(

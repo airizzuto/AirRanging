@@ -11,6 +11,12 @@ export const filterSets = async (
     return data;
 };
 
+/**
+ * Filters data stored in state.
+ * @param data 
+ * @param filter 
+ * @returns Filtered data.
+ */
 export const filterSearch = async (
     data: AircraftWithSocials[],
     filter: Filters,

@@ -5,6 +5,7 @@ import { faMap, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import ModalTab from "../../Generics/Buttons/ModalTab";
 import DraggableModal from "../../Generics/Modals/DraggableModal";
 import PlanningModal from "./PlanningModal";
+import { Filters } from "../../../types/Aircraft/Filter";
 
 import { AircraftWithSocials, AircraftState } from "../../../types/Aircraft/Aircraft";
 
@@ -14,17 +15,21 @@ import AircraftSelect from "./AircraftSelectModal";
 
 interface Props {
   initialAircrafts: AircraftWithSocials[];
+  currentAircrafts: AircraftWithSocials[];
   selectedAircraft: AircraftState | null;
+  filters: Filters;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void ;
-  handleAircraftsSearch: (search: string) => Promise<AircraftWithSocials[]>;
+  handleAircraftsFilters: (filter: Filters) => Promise<void>;
   handleAircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
 }
 
 const Home: React.FC<Props> = ({
   initialAircrafts,
+  currentAircrafts,
   selectedAircraft,
+  filters,
   handleAircraftSelection,
-  handleAircraftsSearch,
+  handleAircraftsFilters,
   handleAircraftState
 }) => {
   const [isModalActive, setIsModalActive] = useState(false); // One active modal at once
@@ -36,7 +41,7 @@ const Home: React.FC<Props> = ({
       setIsModalActive(true);
       setDisplaySelectionModal(true);
     }
-  }, []);
+  }, [selectedAircraft]);
 
   const handleModalDisplay = (
     setDisplayModal: React.Dispatch<React.SetStateAction<boolean>>,
@@ -95,9 +100,11 @@ const Home: React.FC<Props> = ({
       >
         <AircraftSelect 
           initialAircrafts={initialAircrafts}
-          aircraftSelected={selectedAircraft} 
+          currentAircrafts={currentAircrafts}
+          aircraftSelected={selectedAircraft}
+          filters={filters}
           handleAircraftSelection={handleAircraftSelection}
-          handleAircraftsSearch={handleAircraftsSearch}
+          handleAircraftsFilters={handleAircraftsFilters}
           handleSelectClick={() => handleModalDisplay(setDisplayPlanningModal, displayPlanningModal)}
         />
       </DraggableModal>
