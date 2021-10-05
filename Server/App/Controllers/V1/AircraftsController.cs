@@ -20,7 +20,7 @@ namespace App.Controllers.V1
     /// Aircraft model controller endpoints:
     /// <para> GetAllAircrafts           - GET    -  api/aircrafts            </para>
     /// <para> GetAllAircraftsPaginated  - GET    -  api/aircrafts/paginated  </para>
-    /// <para> GetAircraftByParameters   - GET    -  api/aircrafts/search     </para>
+    /// <para> SearchAircrafts           - GET    -  api/aircrafts/all        </para>
     /// <para> GetAircraftOwnedByUser    - GET    -  api/aircrafts/owned      </para>
     /// <para> GetAircraftSavedByUser    - GET    -  api/aircrafts/saved      </para>
     /// <para> GetAircraftId             - GET    -  api/aircrafts/5          </para>
@@ -100,7 +100,7 @@ namespace App.Controllers.V1
         /// Retrieves all aircrafts in the database
         /// </summary>
         /// <response code="200">Retrieves all aircrafts in the database</response>
-        [HttpGet("search")]
+        [HttpGet("all")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> SearchAircrafts(
             [FromQuery] AircraftParameters parameters)
