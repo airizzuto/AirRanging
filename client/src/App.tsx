@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
+import useDebounce from "./hooks/useDebounce";
 
 import aircraftService from "./services/aircraftService";
 import userService from "./services/userService";
@@ -10,6 +11,7 @@ import { getUserData } from "./helpers/userHelper";
 import { UserPublic } from "./types/User/User";
 import { AircraftWithSocials, AircraftState, CloneAircraft, AircraftWithoutIDs } from "./types/Aircraft/Aircraft";
 import { Filters } from "./types/Aircraft/Filter";
+import { AircraftFieldsOptions } from "./types/Aircraft/AircraftEnums";
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
@@ -33,8 +35,7 @@ import Footer from "./components/Footer/Footer";
 // import Map from "./components/Map/Map";
 
 import "./App.scss";
-import { filterSearch } from "./helpers/aircraftsFilters";
-import { AircraftFieldsOptions } from "./types/Aircraft/AircraftEnums";
+// import { filterSearch } from "./helpers/aircraftsFilters";
 
 const App = (): JSX.Element =>{
   const history = useHistory();
@@ -71,11 +72,12 @@ const App = (): JSX.Element =>{
   const [aircraftsSaved, setAircraftsSaved] = useState<AircraftWithSocials[]>([]);
   const [aircraftsOwned, setAircraftsOwned] = useState<AircraftWithSocials[]>([]);
   const [currentAircrafts, setCurrentAircrafts] = useState<AircraftWithSocials[]>([]);
-  const [filter, setFilter] = useState<Filters>({
+  const [filters, setFilters] = useState<Filters>({
     set: "all",
     field: AircraftFieldsOptions.Model,
     search: ""
   });
+  const debouncedFilter = useDebounce(filters, 500);
   const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
 
   // Sets initial aircrafts
@@ -108,11 +110,13 @@ const App = (): JSX.Element =>{
   }, [user, initialAircrafts]);
 
   useEffect(() => {
-    console.info("INFO: EFFECT - filter: ", filter);
+    console.info("INFO: EFFECT - filter: ", debouncedFilter);
     
-    refreshFilterAircrafts();
+    aircraftService.searchAircrafts(debouncedFilter) // TODO: Take from initialAircrafts
+      .then((response) => setCurrentAircrafts([...response.data])) // TODO: Set in currentAircrafts
+      .catch(error => console.error("ERROR: filtering aicrafts - ", error));
 
-  },[filter, initialAircrafts]);
+  },[debouncedFilter, initialAircrafts]);
 
 
   /* Aircrafts state handlers */
@@ -148,26 +152,17 @@ const App = (): JSX.Element =>{
     : setAircraftsOwned([]);
   };
 
-  const refreshFilterAircrafts = async () => {
-    await filterSearch(currentAircrafts, filter)
-      .then(response => (response.length > 0)
-        ? setCurrentAircrafts(response)
-        : setCurrentAircrafts(initialAircrafts)
-      );
-  };
+  // used for search in frontend
+  // const refreshFilterAircrafts = async () => {
+  //   await filterSearch(currentAircrafts, filter)
+  //     .then(response => (response.length > 0)
+  //       ? setCurrentAircrafts(response)
+  //       : setCurrentAircrafts(initialAircrafts)
+  //     );
+  // };
 
-  const handleSearchFilter = async (search: string) => {
-    setFilter({...filter, search: search});
-    await refreshFilterAircrafts();
-    return currentAircrafts;
-  };
-
-  // TODO: refactor to use currentAircrafts
-  const handleAircraftsFilter = async (filter: Filters) => {
-    setFilter({...filter});
-    await aircraftService.searchAircrafts(filter) // TODO: Take from initialAircrafts
-      .then((response) => setCurrentAircrafts([...response.data])) // TODO: Set in currentAircrafts
-      .catch(error => console.error("ERROR: filtering aicrafts - ", error));
+  const handleAircraftsFilters = async (filter: Filters) => {
+    setFilters({...filter});
   };
 
   const handleAircraftCreate = async (newAircraft: AircraftWithoutIDs) => {
@@ -267,10 +262,12 @@ const App = (): JSX.Element =>{
         <Switch>
             <Route exact path="/">
               <Home 
-                initialAircrafts={currentAircrafts}
+                initialAircrafts={initialAircrafts}
+                currentAircrafts={currentAircrafts}
+                filters={filters}
                 selectedAircraft={aircraftSelected}
                 handleAircraftSelection={handleAircraftSelection}
-                handleAircraftsSearch={handleSearchFilter}
+                handleAircraftsFilters={handleAircraftsFilters}
                 handleAircraftState={setAircraftSelected}
               />
             </Route>
@@ -281,8 +278,8 @@ const App = (): JSX.Element =>{
                 aircrafts={currentAircrafts}
                 aircraftsSaved={aircraftsSaved}
                 aircraftsOwned={aircraftsOwned}
-                filter={filter}
-                handleAircraftsFilter={handleAircraftsFilter} 
+                filter={filters}
+                handleAircraftsFilters={handleAircraftsFilters}
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftSave={handleAircraftSave}
                 handleAircraftUnsave={handleAircraftUnsave}
