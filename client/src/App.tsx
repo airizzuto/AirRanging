@@ -72,8 +72,7 @@ const App = (): JSX.Element =>{
   const [aircraftsOwned, setAircraftsOwned] = useState<AircraftWithSocials[]>([]);
   const [currentAircrafts, setCurrentAircrafts] = useState<AircraftWithSocials[]>([]);
   const [filter, setFilter] = useState<Filters>({
-    owned: false,
-    saved: false,
+    set: "all",
     field: AircraftFieldsOptions.Model,
     search: ""
   });
@@ -81,14 +80,14 @@ const App = (): JSX.Element =>{
 
   // Sets initial aircrafts
   useEffect(() => {
-    console.log("INFO: EFFECT - data refresh");
+    console.info("INFO: EFFECT - data refresh");
 
     refreshAircrafts();
   }, []);
 
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
-    console.log("INFO: EFFECT - user check");
+    console.info("INFO: EFFECT - user check");
 
     isUserAuthenticated()
       .then((isAuthenticated) =>
@@ -99,7 +98,7 @@ const App = (): JSX.Element =>{
 
   // Sets user saved aircrafts
   useEffect(() => {
-    console.log("INFO: EFFECT - user aircrafts refresh");
+    console.info("INFO: EFFECT - user aircrafts refresh");
 
     if (user) {
       refreshSavedAircrafts();
@@ -109,7 +108,7 @@ const App = (): JSX.Element =>{
   }, [user, initialAircrafts]);
 
   useEffect(() => {
-    console.log("INFO: EFFECT - filter: ", filter);
+    console.info("INFO: EFFECT - filter: ", filter);
     
     refreshFilterAircrafts();
 
@@ -166,7 +165,7 @@ const App = (): JSX.Element =>{
   // TODO: refactor to use currentAircrafts
   const handleAircraftsFilter = async (filter: Filters) => {
     setFilter({...filter});
-    await aircraftService.searchAircraftByModel(filter) // TODO: Take from initialAircrafts
+    await aircraftService.searchAircrafts(filter) // TODO: Take from initialAircrafts
       .then((response) => setCurrentAircrafts([...response.data])) // TODO: Set in currentAircrafts
       .catch(error => console.error("ERROR: filtering aicrafts - ", error));
   };

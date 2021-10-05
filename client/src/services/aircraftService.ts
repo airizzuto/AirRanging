@@ -12,14 +12,6 @@ const getAllAircrafts = async () => {
   return response;
 };
 
-const getAllAircraftsPaginated = async () => {
-  const response = await axios.get(
-    BASE_URL + "/api/aircrafts/paginated"
-  );
-
-  return response;
-};
-
 const getAircraftById = async (aircraftId: string) => {
   const response = await axios.get(
     BASE_URL + `/api/aircrafts/${aircraftId}`
@@ -47,16 +39,31 @@ const getAircraftsSavedByUser = async () => {
   };
   
   const response = await axios.get(
-    BASE_URL + `/api/bookmarks/saved`,
+    BASE_URL + `/api/aircrafts/saved`,
     config
   );
 
   return response;
 };
 
-const searchAircraftByField = async (filter: Filters) => {
+const searchAircrafts = async (filter: Filters) => {
+  /*
+    const endpoint = /api/
+
+    const dataSet = filter.saved ? 
+
+    user && (filter.saved || filter.owned) ? create config with token : null
+
+    config ? endpoint + /${filter.}
+  */
+
+  const config = {
+    headers: { Authorization: `Bearer ${getStoredToken()}` }
+  };
+
   const response = await axios.get(
-    BASE_URL + `/api/aircrafts/search?${filter.field}=${filter.search}`
+    BASE_URL + `/api/aircrafts/${filter.set}?${filter.field}=${filter.search}`,
+    config
   );
 
   return response;
@@ -165,11 +172,10 @@ const cloneAircraft = async (aircraft: CloneAircraft) => {
 
 export default {
   getAllAircrafts,
-  getAllAircraftsPaginated,
   getAircraftById,
   getAircraftsOwnedByUser,
   getAircraftsSavedByUser,
-  searchAircraftByModel: searchAircraftByField,
+  searchAircrafts,
   createAircraft,
   saveAircraft,
   unsaveAircraft,

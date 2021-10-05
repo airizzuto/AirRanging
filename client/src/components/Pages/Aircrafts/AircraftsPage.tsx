@@ -45,12 +45,12 @@ const Aircrafts: React.FC<Props> = ({
     handleAircraftsFilter({...filter, field: e.target.value as keyof AircraftWithSocials});
   };
 
-  const handleShowOwnedToggle = (isToggled: boolean) => {
-    handleAircraftsFilter({...filter, owned: isToggled});
+  const handleShowOwnedToggle = () => {
+    handleAircraftsFilter({...filter, set: "owned"});
   };
 
-  const handleShowSavedToggle = (isToggled: boolean) => {
-    handleAircraftsFilter({...filter, saved: isToggled});
+  const handleShowSavedToggle = () => {
+    handleAircraftsFilter({...filter, set: "saved"});
   };
 
   const columns = React.useMemo(
@@ -153,12 +153,20 @@ const Aircrafts: React.FC<Props> = ({
         <div className={Style.FilterOptions}>
           <div className={Style.CheckboxItem}> {/* TODO: filter owned */}
             <label>Show owned</label>
-            <input type="checkbox" checked={filter.owned} onChange={() => handleShowOwnedToggle}/>
+            <input
+              type="checkbox"
+              checked={(filter.set === "owned")}
+              onChange={() => handleShowOwnedToggle}
+            />
           </div>
 
           <div className={Style.CheckboxItem}> {/* TODO: filter saved */}
             <label>Show saved</label>
-            <input type="checkbox" checked={filter.saved} onChange={() => handleShowSavedToggle}/>
+            <input
+              type="checkbox"
+              checked={filter.set === "saved"}
+              onChange={() => handleShowSavedToggle}
+            />
           </div>
         </div>
        
