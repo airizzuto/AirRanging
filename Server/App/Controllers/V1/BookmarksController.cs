@@ -18,7 +18,6 @@ namespace App.Controllers.V1
     /// Bookmark model controller endpoints:
     /// <para> GetUserBookmarks             - GET    -  api/bookmarks        </para>
     /// <para> GetUserBookmarkedAircraftId  - GET    -  api/bookmarks/5      </para>
-    /// <para> GetAircraftsSavedByUser      - GET    -  api/bookmarks/saved  </para>
     /// <para> SaveAircraftId               - POST   -  api/bookmarks/5      </para>
     /// <para> UnsaveAircraftId             - DELETE -  api/bookmarks/5      </para>
     /// </summary>
@@ -40,32 +39,6 @@ namespace App.Controllers.V1
             _logger = logger;
             _repository = repository;
             _mapper = mapper;
-        }
-
-        // GET api/bookmarks
-        /// <summary>
-        /// Retrieves all user aircrafts bookmarked by the user.
-        /// </summary>
-        /// <response code="200">Retrieves all aircrafts saved by user</response>
-        /// <response code="401">Unauthorized. User not logged in.</response>
-        [HttpGet]
-        public async Task<ActionResult<PagedList<AircraftReadDTO>>> GetUserBookmarkedAircrafts()
-        {
-            var userId = HttpContext.GetUserId();
-            if (userId == null)
-            {
-                _logger.LogError($"User not logged in. Unable to create aircraft.");
-
-                return Unauthorized();
-            }
-
-            var aircrafts = await _repository.Bookmark.GetAircraftsBookmarkedAsync(userId);
-
-            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
-
-            _logger.LogInfo($"Returning {aircraftsResponse.Count()} bookmarked aircrafts from db.");
-
-            return Ok(aircraftsResponse);
         }
 
         // GET api/bookmarks/5
@@ -100,33 +73,33 @@ namespace App.Controllers.V1
         }
 
         
-        // GET api/bookmarks/saved
-        /// <summary>
-        /// Retrieves aircrafts created by user.
-        /// </summary>
-        /// <response code="200">Aircrafts retrieved successfully</response>
-        /// <response code="401">User not logged in. Unable to retrieve user aircrafts</response>
-        [HttpGet("saved")]
-        public async Task<IActionResult> GetSavedAircrafts()
-        {
-            var userId = HttpContext.GetUserId();
-            if (userId == null)
-            {
-                _logger.LogError($" User not logged in.");
+        // // GET api/bookmarks/saved
+        // /// <summary>
+        // /// Retrieves aircrafts created by user.
+        // /// </summary>
+        // /// <response code="200">Aircrafts retrieved successfully</response>
+        // /// <response code="401">User not logged in. Unable to retrieve user aircrafts</response>
+        // [HttpGet]
+        // public async Task<IActionResult> GetUserBookmarks()
+        // {
+        //     var userId = HttpContext.GetUserId();
+        //     if (userId == null)
+        //     {
+        //         _logger.LogError($" User not logged in.");
 
-                return Unauthorized("User not logged in.");
-            }
+        //         return Unauthorized("User not logged in.");
+        //     }
 
-            var aircrafts = await _repository.Bookmark.GetAircraftsBookmarkedAsync(userId);
+        //     var aircrafts = await _repository.Bookmark.GetAircraftsBookmarkedAsync(userId);
 
-            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+        //     var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
-            _logger.LogInfo(
-                $" Returning paginated {aircraftsResponse.Count()} aircrafts from db."
-            );
+        //     _logger.LogInfo(
+        //         $" Returning paginated {aircraftsResponse.Count()} aircrafts from db."
+        //     );
 
-            return Ok(aircraftsResponse);
-        }
+        //     return Ok(aircraftsResponse);
+        // }
 
         // POST api/bookmarks/
         /// <summary>

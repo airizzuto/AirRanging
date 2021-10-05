@@ -11,6 +11,8 @@ namespace App.Extensions.Configurations
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {
             services.AddScoped<ISortHelper<Aircraft>, SortHelper<Aircraft>>();
+            services.AddScoped<IAircraftsFilterHelper, AircraftsFilterHelper>();
+            services.AddScoped<IAircraftsPaginationHelper, AircraftsPaginationHelper>();
 
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
