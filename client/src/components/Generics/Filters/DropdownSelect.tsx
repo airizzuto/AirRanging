@@ -1,20 +1,35 @@
 import React from 'react';
-import EnumToOptions from './EnumToOptions';
+
+import AsyncSelect from 'react-select/async';
 
 import Style from "./Dropdown.module.scss";
 
 interface Props {
   enumerator: any;
-  handleChange?: React.ChangeEventHandler<HTMLSelectElement>;
+  handleChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const DropdownSelect: React.FC<Props> = ({enumerator, handleChange}) => {
+  const selectProps = {
+    isClearable: false,
+    isDisabled: false,
+    isLoading: false,
+    isRtl: false,
+    isSearchable: false,
+  };
+
   return (
-    <select onChange={() => handleChange} className={Style.Container}>
-      <EnumToOptions
-        enumerator={enumerator}
-      />
-    </select>
+    <AsyncSelect
+      className={Style.Container}
+      defaultOptions={Object.keys(enumerator)
+        .map((key) => ({
+          label: key,
+          value: enumerator[key]
+        }))
+      }
+      onChange={() => handleChange}
+      {...selectProps}
+    />
   );
 };
 

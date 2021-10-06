@@ -3,22 +3,23 @@ import React from 'react';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import { Filters } from '../../../types/Aircraft/Filter';
-import { AircraftFieldsOptions } from '../../../types/Aircraft/AircraftEnums';
+import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
 
 import AircraftsTable from '../../Table/AircraftsTable';
 import {LinkButton} from '../../Generics/Buttons/Button';
 import AircraftsListButtons from './AircraftsListButtons';
 
 import Style from "./Aircrafts.module.scss";
-import DropdownSelect from '../../Generics/Filters/DropdownSelect';
+import Dropdown from "../../Generics/Filters/Dropdown.module.scss";
+import EnumToOptions from '../../Generics/Filters/EnumToOptions';
 
 interface Props {
   user: UserPublic | null;
   aircrafts: AircraftWithSocials[];
   aircraftsSaved: AircraftWithSocials[] | null;
   aircraftsOwned: AircraftWithSocials[] | null;
-  filter: Filters;
-  handleAircraftsFilters: (filter: Filters) => Promise<void>;
+  filters: Filters;
+  handleAircraftsFilters: (filter: Filters) => void;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
@@ -29,7 +30,7 @@ const Aircrafts: React.FC<Props> = ({
   user,
   aircrafts,
   aircraftsSaved,
-  filter,
+  filters,
   handleAircraftsFilters,
   handleAircraftSave,
   handleAircraftUnsave,
@@ -37,20 +38,24 @@ const Aircrafts: React.FC<Props> = ({
 }) => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    handleAircraftsFilters({...filter, search: e.target.value});
+
+    handleAircraftsFilters({...filters, search: e.target.value});
   };
 
-  const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    e.preventDefault();
-    handleAircraftsFilters({...filter, field: e.target.value as keyof AircraftWithSocials});
+  const handleFieldChange = (value: string) => {
+    handleAircraftsFilters({
+      ...filters,
+      field: AircraftSearchOptions[value as keyof typeof AircraftSearchOptions] as keyof AircraftWithSocials
+    });
+    console.log("DEBUG: field change - ", filters);
   };
 
   const handleShowOwnedToggle = () => {
-    handleAircraftsFilters({...filter, set: "owned"});
+    handleAircraftsFilters({...filters, set: "owned"});
   };
 
   const handleShowSavedToggle = () => {
-    handleAircraftsFilters({...filter, set: "saved"});
+    handleAircraftsFilters({...filters, set: "saved"});
   };
 
   const columns = React.useMemo(
@@ -76,6 +81,10 @@ const Aircrafts: React.FC<Props> = ({
         accessor: 'aircraftType',
       },
       {
+        Header: 'Engine Count',
+        accessor: 'engineCount',
+      },
+      {
         Header: 'Engine Type',
         accessor: 'engineType',
       },
@@ -84,12 +93,8 @@ const Aircrafts: React.FC<Props> = ({
         accessor: 'fuelType',
       },
       {
-        Header: 'Engine Count',
-        accessor: 'engineCount',
-      },
-      {
-        Header: 'Weight Category',
-        accessor: 'weightCategory',
+        Header: 'MTOW',
+        accessor: 'maxTakeoffWeight',
       },
       {
         Header: 'Max Range',
@@ -139,15 +144,20 @@ const Aircrafts: React.FC<Props> = ({
         <h1 className={Style.Title}>Browse Aircrafts</h1>
   
         <input className={Style.SearchBar}
-          value={filter.search}
+          type="search"
+          value={filters.search}
           onChange={event => handleSearchChange(event)}
           placeholder={"Search aircraft"}
         />
-        
-        <DropdownSelect 
-          enumerator={AircraftFieldsOptions}
+
+        <select className={Dropdown.Container} onChange={(e) => handleFieldChange(e.target.value)}>
+          <EnumToOptions enumerator={AircraftSearchOptions} />
+        </select>
+
+        {/* <DropdownSelect
+          enumerator={AircraftSearchOptions}
           handleChange={() => handleFieldChange}
-        />
+        /> */}
 
         {/* TODO: abstract saved/owned filters to component */}
         <div className={Style.FilterOptions}>
@@ -155,7 +165,7 @@ const Aircrafts: React.FC<Props> = ({
             <label>Show owned</label>
             <input
               type="checkbox"
-              checked={(filter.set === "owned")}
+              checked={(filters.set === "owned")}
               onChange={() => handleShowOwnedToggle}
             />
           </div>
@@ -164,7 +174,7 @@ const Aircrafts: React.FC<Props> = ({
             <label>Show saved</label>
             <input
               type="checkbox"
-              checked={filter.set === "saved"}
+              checked={filters.set === "saved"}
               onChange={() => handleShowSavedToggle}
             />
           </div>

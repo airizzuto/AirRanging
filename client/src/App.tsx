@@ -11,7 +11,7 @@ import { getUserData } from "./helpers/userHelper";
 import { UserPublic } from "./types/User/User";
 import { AircraftWithSocials, AircraftState, CloneAircraft, AircraftWithoutIDs } from "./types/Aircraft/Aircraft";
 import { Filters } from "./types/Aircraft/Filter";
-import { AircraftFieldsOptions } from "./types/Aircraft/AircraftEnums";
+import { AircraftSearchOptions } from "./types/Aircraft/AircraftEnums";
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
@@ -40,33 +40,6 @@ import "./App.scss";
 const App = (): JSX.Element =>{
   const history = useHistory();
 
-  /* TODO: refactor filter handler
-    1. DONE: Fetch data sets
-
-    2. DONE: New currentAircrafts[] state
-
-    3. DONE: Filter by data set
-      dataFilters: {showOwned: boolean, showSaved: boolean}
-      
-    4. TODO: Filter by field
-      dataFilterByField: { fieldFilter: AircraftFields, filterInfo: string }
-      
-      fieldFilter defaults to model
-
-    5. TODO: Filter handler
-      filterHandler(filters) => {
-        filterSetFunction() => {
-          if (filters.showOwned) setCurrentAircrafts(currentAircrafts.concat(owned))
-          if (filters.showSaved) setCurrentAircrafts(currentAircrafts.concat(saved))
-          else setCurrentAircrafts(initialAircrafts)
-        }
-        filterPropsFunction() =>{
-          if (filters.byField && filters.filterInfo)
-            setCurrentAircrafts(currentAircraft.filter(aircraft => aircraft[field] === filter))
-        }
-      }
-  */
-
   const [user, setUser] = useState<UserPublic | null>(null);
   const [initialAircrafts, setInitialAircrafts] = useState<AircraftWithSocials[]>([]);
   const [aircraftsSaved, setAircraftsSaved] = useState<AircraftWithSocials[]>([]);
@@ -74,7 +47,7 @@ const App = (): JSX.Element =>{
   const [currentAircrafts, setCurrentAircrafts] = useState<AircraftWithSocials[]>([]);
   const [filters, setFilters] = useState<Filters>({
     set: "all",
-    field: AircraftFieldsOptions.Model,
+    field: AircraftSearchOptions.Model,
     search: ""
   });
   const debouncedFilter = useDebounce(filters, 500);
@@ -161,8 +134,8 @@ const App = (): JSX.Element =>{
   //     );
   // };
 
-  const handleAircraftsFilters = async (filter: Filters) => {
-    setFilters({...filter});
+  const handleAircraftsFilters = (filters: Filters) => {
+    setFilters({...filters});
   };
 
   const handleAircraftCreate = async (newAircraft: AircraftWithoutIDs) => {
@@ -278,7 +251,7 @@ const App = (): JSX.Element =>{
                 aircrafts={currentAircrafts}
                 aircraftsSaved={aircraftsSaved}
                 aircraftsOwned={aircraftsOwned}
-                filter={filters}
+                filters={filters}
                 handleAircraftsFilters={handleAircraftsFilters}
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftSave={handleAircraftSave}

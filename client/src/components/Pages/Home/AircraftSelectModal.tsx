@@ -13,7 +13,7 @@ interface Props {
   aircraftSelected: AircraftWithSocials | null;
   filters: Filters;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
-  handleAircraftsFilters: (filter: Filters) => Promise<void>;
+  handleAircraftsFilters: (filter: Filters) => void;
   handleSelectClick: () => void;
 }
 
@@ -38,6 +38,7 @@ const AircraftSelectModal: React.FC<Props> = ({
           filters={filters}
           initialOptions={initialAircrafts}
           currentOptions={currentAircrafts}
+          placeholder="Search aircrafts..."
         />
       </div>
 

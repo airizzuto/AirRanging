@@ -1,7 +1,6 @@
 @use "../../../styles/colors" as color;
 @use "../../../styles/components/boxes" as box;
 
-
 .Container {
   @include box.light;
   grid-area: dropdown;
@@ -9,8 +8,8 @@
   border-radius: 5px;
 
   z-index: 5;
+}
 
-  option {
-    color: color.$dark1;
-  }
+.Options {
+  color: color.$dark1;
 }

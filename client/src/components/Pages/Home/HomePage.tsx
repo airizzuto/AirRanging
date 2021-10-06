@@ -19,7 +19,7 @@ interface Props {
   selectedAircraft: AircraftState | null;
   filters: Filters;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void ;
-  handleAircraftsFilters: (filter: Filters) => Promise<void>;
+  handleAircraftsFilters: (filter: Filters) => void;
   handleAircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
 }
 

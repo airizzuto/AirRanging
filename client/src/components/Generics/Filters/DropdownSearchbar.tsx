@@ -12,16 +12,17 @@ import "./DropdownSearchbar.scss";
 
 interface Props {
   handleSelection: React.Dispatch<React.SetStateAction<any | null>>;
-  handleFilter: (filter: Filters) => Promise<void>;
+  handleFilter: (filter: Filters) => void;
   initialOptions: AircraftWithSocials[];
   currentOptions: AircraftWithSocials[];
   filters: Filters;
+  placeholder?: string;
 }
 
 /* React select documentation https://react-select.com/home */
 
 const DropdownSearchbar: React.FC<Props> = ({
-  handleSelection, handleFilter, initialOptions, currentOptions, filters
+  handleSelection, handleFilter, initialOptions, currentOptions, filters, placeholder
 }) => {
 
   const handleSearch = (inputValue: string) => {
@@ -47,6 +48,7 @@ const DropdownSearchbar: React.FC<Props> = ({
       <AsyncSelect
         className="Searchbar-Container"
         classNamePrefix="Searchbar"
+        placeholder={placeholder}
         cacheOptions
         defaultOptions={mapAircraftToFilter(initialOptions)}
         options={mapAircraftToFilter(currentOptions)}

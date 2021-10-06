@@ -47,16 +47,10 @@ export enum EWeightCategory
   Small = "Small",
 }
 
-export const AircraftFieldsOptions = {
+export const AircraftSearchOptions = {
   "ICAO ID": "icaoId",
   "Manufacturer": "manufacturer",
   "Model": "model",
   "Variant": "variant",
   "Registration": "registration",
-  "Aircraft Type": "aircraftType",
-  "Engine Type": "engineType",
-  "Engine Count": "engineCount",
-  "Weight Category": "weightCategory",
-  "Wake Category": "wakeCategory",
-  "Fuel Type": "fuelType",
 } as const;
