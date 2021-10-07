@@ -13,16 +13,34 @@ namespace Repository
 
         private IAircraftRepository _aircraft;
         private IApplicationUserRepository _applicationUser;
-        private readonly ISortHelper<Aircraft> _aircraftSortHelper;
-
         private IBookmarkRepository _bookmark;
+        private readonly ISortHelper<Aircraft> _aircraftsSortHelper;
+        private readonly IAircraftsFilterHelper _aircraftsFilterHelper;
+        private readonly IAircraftsPaginationHelper _aircraftsPaginationHelper;
+
+        public RepositoryWrapper(
+            ApplicationDbContext context,
+            ISortHelper<Aircraft> aircraftsSortHelper,
+            IAircraftsFilterHelper aircraftsFilterHelper,
+            IAircraftsPaginationHelper aircraftsPaginationHelper
+        ) {
+            _context = context;
+            _aircraftsSortHelper = aircraftsSortHelper;
+            _aircraftsFilterHelper = aircraftsFilterHelper;
+            _aircraftsPaginationHelper = aircraftsPaginationHelper;
+        }
 
         public IAircraftRepository Aircraft {
             get
             {
                 if (_aircraft == null)
                 {
-                    _aircraft = new AircraftRepository(_context, _aircraftSortHelper);
+                    _aircraft = new AircraftRepository(
+                        _context,
+                        _aircraftsSortHelper,
+                        _aircraftsFilterHelper,
+                        _aircraftsPaginationHelper
+                    );
                 }
 
                 return _aircraft;
@@ -53,14 +71,7 @@ namespace Repository
             }
         }
 
-        public RepositoryWrapper(
-            ApplicationDbContext context,
-            ISortHelper<Aircraft> aircraftSortHelper
-            )
-        {
-            _context = context;
-            _aircraftSortHelper = aircraftSortHelper;
-        }
+
 
         public async Task SaveAsync()
         {

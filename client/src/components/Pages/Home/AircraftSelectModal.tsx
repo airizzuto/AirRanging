@@ -1,4 +1,5 @@
 import { AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
+import { Filters } from "../../../types/Aircraft/Filter";
 
 import { Button } from "../../Generics/Buttons/Button";
 import DropdownSearchbar from "../../Generics/Filters/DropdownSearchbar";
@@ -8,17 +9,21 @@ import Style from "./AircraftSelectModal.module.scss";
 
 interface Props {
   initialAircrafts: AircraftWithSocials[];
+  currentAircrafts: AircraftWithSocials[];
   aircraftSelected: AircraftWithSocials | null;
+  filters: Filters;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
-  handleAircraftsSearch: (search: string) => Promise<AircraftWithSocials[]>;
+  handleAircraftsFilters: (filter: Filters) => void;
   handleSelectClick: () => void;
 }
 
 const AircraftSelectModal: React.FC<Props> = ({
   initialAircrafts,
+  currentAircrafts,
   aircraftSelected,
+  filters,
   handleAircraftSelection,
-  handleAircraftsSearch,
+  handleAircraftsFilters,
   handleSelectClick,
 }) => {
 
@@ -28,9 +33,12 @@ const AircraftSelectModal: React.FC<Props> = ({
 
       <div className={Style.SearchBar}>
         <DropdownSearchbar
-          defaultOptions={initialAircrafts}
           handleSelection={handleAircraftSelection}
-          handleFilter={handleAircraftsSearch}
+          handleFilter={handleAircraftsFilters}
+          filters={filters}
+          initialOptions={initialAircrafts}
+          currentOptions={currentAircrafts}
+          placeholder="Search aircrafts..."
         />
       </div>
 

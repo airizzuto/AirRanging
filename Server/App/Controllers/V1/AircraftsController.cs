@@ -20,8 +20,9 @@ namespace App.Controllers.V1
     /// Aircraft model controller endpoints:
     /// <para> GetAllAircrafts           - GET    -  api/aircrafts            </para>
     /// <para> GetAllAircraftsPaginated  - GET    -  api/aircrafts/paginated  </para>
-    /// <para> GetAircraftByParameters   - GET    -  api/aircrafts/search     </para>
+    /// <para> SearchAircrafts           - GET    -  api/aircrafts/all        </para>
     /// <para> GetAircraftOwnedByUser    - GET    -  api/aircrafts/owned      </para>
+    /// <para> GetAircraftSavedByUser    - GET    -  api/aircrafts/saved      </para>
     /// <para> GetAircraftId             - GET    -  api/aircrafts/5          </para>
     /// <para> PartialUpdateAircraftId   - PUT    -  api/aircrafts/5          </para>
     /// <para> CreateAircraft            - POST   -  api/aircrafts            </para>
@@ -57,11 +58,9 @@ namespace App.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult<IEnumerable<AircraftReadDTO>> GetAllAircrafts(
-            [FromQuery] AircraftParameters aircraftParameters)
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircrafts()
         {
-            var aircrafts = _repository.Aircraft
-                .GetAllAircrafts(aircraftParameters);
+            var aircrafts = await _repository.Aircraft.GetAllAircraftsAsync();
 
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
@@ -79,30 +78,18 @@ namespace App.Controllers.V1
         /// <response code="200">Retrieves all aircrafts in the database</response>
         [HttpGet("paginated")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircraftsPaginated(
-            [FromQuery] AircraftParameters aircraftParameters)
+        public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> GetAllAircraftsPaginated([FromQuery] AircraftParameters parameters)
         {
-            var aircrafts = await _repository.Aircraft
-                .GetAllAircraftsPaginatedAsync(aircraftParameters);
+            var aircrafts = await _repository.Aircraft.GetAllAircraftsAsync();
 
-            var metadata = new
-            {
-                aircrafts.TotalCount,
-                aircrafts.PageSize,
-                aircrafts.CurrentPage,
-                aircrafts.TotalPages,
-                aircrafts.HasNext,
-                aircrafts.HasPrevious
-            };
+            var aircraftsSorted = _repository.Aircraft.SortAircrafts(aircrafts, parameters);
 
-            Response.Headers.Add(
-                "X-Pagination", JsonConvert.SerializeObject(metadata)
-            );
+            var aircraftsPaginated = _repository.Aircraft.PaginatedAircrafts(aircraftsSorted, parameters);
 
-            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircraftsPaginated);
 
             _logger.LogInfo(
-                $" Returning all paginated {aircraftsResponse.Count()} aircrafts from db."
+                $"Returning all {aircraftsResponse.Count()} aircrafts from db."
             );
 
             return Ok(aircraftsResponse);
@@ -113,29 +100,38 @@ namespace App.Controllers.V1
         /// Retrieves all aircrafts in the database
         /// </summary>
         /// <response code="200">Retrieves all aircrafts in the database</response>
-        [HttpGet("search")]
+        [HttpGet("all")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AircraftReadDTO>>> SearchAircrafts(
-            [FromQuery] AircraftParameters aircraftParameters)
+            [FromQuery] AircraftParameters parameters)
         {
-            var aircrafts = await _repository.Aircraft
-                .GetAircraftsWithSearchAsync(aircraftParameters);
+            var aircrafts = await _repository.Aircraft.GetAllAircraftsAsync();
+
+            var aircraftsFiltered = _repository.Aircraft.FilterAircrafts(aircrafts, parameters);
+
+            var aircraftsSorted = _repository.Aircraft.SortAircrafts(
+                aircraftsFiltered, parameters
+            );
+
+            var aircraftsPaginated = _repository.Aircraft.PaginatedAircrafts(
+                aircraftsSorted, parameters
+            );
 
             var metadata = new
             {
-                aircrafts.TotalCount,
-                aircrafts.PageSize,
-                aircrafts.CurrentPage,
-                aircrafts.TotalPages,
-                aircrafts.HasNext,
-                aircrafts.HasPrevious
+                aircraftsPaginated.TotalCount,
+                aircraftsPaginated.PageSize,
+                aircraftsPaginated.CurrentPage,
+                aircraftsPaginated.TotalPages,
+                aircraftsPaginated.HasNext,
+                aircraftsPaginated.HasPrevious
             };
 
             Response.Headers.Add(
                 "X-Pagination", JsonConvert.SerializeObject(metadata)
             );
 
-            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircraftsPaginated);
 
             _logger.LogInfo(
                 $" Returning all search paginated {aircraftsResponse.Count()} aircrafts from db."
@@ -149,6 +145,7 @@ namespace App.Controllers.V1
         /// Retrieves aircrafts created by user.
         /// </summary>
         /// <response code="200">Aircrafts retrieved successfully</response>
+        /// <response code="204">No aircrafts to return</response>
         /// <response code="401">User not logged in. Unable to retrieve user aircrafts</response>
         [HttpGet("owned")]
         public async Task<IActionResult> GetOwnedAircrafts(
@@ -162,26 +159,105 @@ namespace App.Controllers.V1
                 return Unauthorized("User not logged in.");
             }
 
-            var aircrafts = await _repository.Aircraft.GetAircraftsOwnedAsync(userId, parameters);
+            var aircrafts = await _repository.Aircraft.GetAircraftsOwnedAsync(userId);
+
+            var aircraftsFiltered = _repository.Aircraft.FilterAircrafts(aircrafts, parameters);
+
+            if (!aircraftsFiltered.Any())
+            {
+                _logger.LogInfo(
+                    $" Returning owned 0 paginated aircrafts from db."
+                );
+                return NoContent();
+            }
+
+            var aircraftsSorted = _repository.Aircraft.SortAircrafts(
+                aircraftsFiltered, parameters
+            );
+
+            var aircraftsPaginated = _repository.Aircraft.PaginatedAircrafts(
+                aircraftsSorted, parameters
+            );
 
             var metadata = new
             {
-                aircrafts.TotalCount,
-                aircrafts.PageSize,
-                aircrafts.CurrentPage,
-                aircrafts.TotalPages,
-                aircrafts.HasNext,
-                aircrafts.HasPrevious
+                aircraftsPaginated.TotalCount,
+                aircraftsPaginated.PageSize,
+                aircraftsPaginated.CurrentPage,
+                aircraftsPaginated.TotalPages,
+                aircraftsPaginated.HasNext,
+                aircraftsPaginated.HasPrevious
             };
 
             Response.Headers.Add(
                 "X-Pagination", JsonConvert.SerializeObject(metadata)
             );
 
-            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircraftsPaginated);
 
             _logger.LogInfo(
-                $" Returning owned paginated {aircraftsResponse.Count()} aircrafts from db."
+                $" Returning owned {aircraftsResponse.Count()} paginated aircrafts from db."
+            );
+
+            return Ok(aircraftsResponse);
+        }
+
+        // GET api/aircrafts/saved
+        /// <summary>
+        /// Retrieves aircrafts saved by user.
+        /// </summary>
+        /// <response code="200">Aircrafts retrieved successfully</response>
+        /// <response code="204">No aircrafts to return</response>
+        /// <response code="401">User not logged in. Unable to retrieve user aircrafts</response>
+        [HttpGet("saved")]
+        public async Task<IActionResult> GetSavedAircrafts(
+            [FromQuery] AircraftParameters parameters)
+        {
+            var userId = HttpContext.GetUserId();
+            if (userId == null)
+            {
+                _logger.LogError($" User not logged in.");
+
+                return Unauthorized("User not logged in.");
+            }
+
+            var aircrafts = await _repository.Bookmark.GetAircraftsBookmarkedAsync(userId);
+
+            var aircraftsFiltered = _repository.Aircraft.FilterAircrafts(aircrafts, parameters);
+
+            if (!aircraftsFiltered.Any())
+            {
+                _logger.LogInfo(
+                    $" Returning owned 0 paginated aircrafts from db."
+                );
+                return NoContent();
+            }
+
+            var aircraftsSorted = _repository.Aircraft.SortAircrafts(
+                aircraftsFiltered, parameters
+            );
+
+            var aircraftsPaginated = _repository.Aircraft
+                .PaginatedAircrafts(aircraftsSorted, parameters);
+
+            var metadata = new
+            {
+                aircraftsPaginated.TotalCount,
+                aircraftsPaginated.PageSize,
+                aircraftsPaginated.CurrentPage,
+                aircraftsPaginated.TotalPages,
+                aircraftsPaginated.HasNext,
+                aircraftsPaginated.HasPrevious
+            };
+
+            Response.Headers.Add(
+                "X-Pagination", JsonConvert.SerializeObject(metadata)
+            );
+
+            var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircraftsPaginated);
+
+            _logger.LogInfo(
+                $" Returning saved paginated {aircraftsResponse.Count()} aircrafts from db."
             );
 
             return Ok(aircraftsResponse);
@@ -230,7 +306,6 @@ namespace App.Controllers.V1
             var aircraftModel = _mapper.Map<Aircraft>(aircraftCreateDto);
 
             await _repository.Aircraft.CreateAircraftAsync(aircraftModel, userId);
-            await _repository.Bookmark.CreateBookmarkAsync(userId, aircraftModel.Id);
 
             await _repository.SaveAsync();
 
@@ -274,7 +349,6 @@ namespace App.Controllers.V1
             }
 
             var aircraftCopy = await _repository.Aircraft.CreateAircraftAsync(existingAircraft, userId);
-            await _repository.Bookmark.CreateBookmarkAsync(userId, aircraftCopy.Id);
 
             await _repository.SaveAsync();
 

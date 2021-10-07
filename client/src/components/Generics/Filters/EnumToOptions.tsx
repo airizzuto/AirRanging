@@ -9,12 +9,11 @@ const EnumToOptions: React.FC<Props> = ({enumerator}) => {
     <>
       {Object.keys(enumerator).map((key) => {
         return (
-          <option key={key} value={key}>
+          <option key={key} value={key} >
             {key}
           </option>
         );
       })}
-      
     </>
   );
 };

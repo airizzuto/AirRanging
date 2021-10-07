@@ -1,25 +1,27 @@
 @use "../../../styles/mixins" as *;
 @use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
 @use "../../../styles/components/boxes" as box;
 
-
 .Dropdown-Container {
-
+  grid-area: dropdown;
+  align-self: center;
+  z-index: 5;
+  
   .Dropdown__control {
     @include box.light;
     color: color.$dark1;
-    padding: 0;
     border-radius: 5px;
+    padding: 0;
 
-    .Dropdown__placeholder {
+    .Dropdown-placeholder {
       color: color.$neutral;
     }
-      
+  
     .Dropdown__value-container {
-      color: color.$dark1;
+      color: color.$light1;
     }
-
-
+  
     .Dropdown__indicators {
       svg {
         color: color.$neutral;
@@ -29,12 +31,5 @@
 
   .Dropdown__menu {
     color: color.$dark1;
-
-    .Dropdown__menu-list {
-
-      .Dropdown-option {
-        
-      }
-    }
   }
 }

@@ -1,14 +1,18 @@
+import { useEffect, useState } from 'react';
 
-/* 
-  1. TODO: debounce effect
-  2. TODO: apply to any function that uses an user input to trigger an api request (search filter)
-*/
-const useDebounce = () => {
-  return (
-    <>
-      
-    </>
-  );
-};
+// https://usehooks-typescript.com/react-hook/use-debounce
+function useDebounce<T>(value: T, delay?: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), delay || 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
 
 export default useDebounce;

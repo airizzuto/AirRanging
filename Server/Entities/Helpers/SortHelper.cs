@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
@@ -8,7 +9,7 @@ namespace Entities.Helpers
 {
     public class SortHelper<T> : ISortHelper<T>
     {
-        public IQueryable<T> ApplySort(IQueryable<T> entities, string orderByQueryString)
+        public IEnumerable<T> ApplySort(IQueryable<T> entities, string orderByQueryString)
         {
             if (!entities.Any()) return entities;
 
@@ -35,7 +36,7 @@ namespace Entities.Helpers
 
             var orderQuery = orderQueryBuilder.ToString().TrimEnd(',', ' ');
 
-            return entities.OrderBy(orderQuery);
+            return entities.OrderBy(orderQuery).ToList();
         }
     }
 }

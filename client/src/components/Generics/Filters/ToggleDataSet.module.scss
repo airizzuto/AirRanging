@@ -1,0 +1,27 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/components/boxes" as box;
+
+// TODO: checkbox style
+.CheckboxItem {
+  display: flex;
+  flex-direction: row;
+
+  label {
+    @include font.main;
+    text-align: center;
+  }
+
+  input {
+    @include box.light;
+
+    height: 0.8rem;
+    width: 80%;
+    place-self: center;
+  }
+
+  input:hover {
+    color: color.$accent1;
+    transition: color 0.4s;
+  }
+}

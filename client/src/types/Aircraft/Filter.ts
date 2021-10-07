@@ -1,11 +1,12 @@
 import { AircraftFieldsTypes } from "./Aircraft";
 
 export interface AircraftsSets {
-    owned: boolean;
-    saved: boolean;
+    set: AircraftsDataSets;
 }
 
 export interface Filters extends AircraftsSets {
     field: AircraftFieldsTypes;
     search: string;
 }
+
+export type AircraftsDataSets = "all" | "saved" | "owned";

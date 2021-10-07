@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Entities.Helpers
 {
     public interface ISortHelper<T>
     {
-        IQueryable<T> ApplySort(IQueryable<T> entities, string orderByQueryString);
+        IEnumerable<T> ApplySort(IQueryable<T> entities, string orderByQueryString);
     }
 }
