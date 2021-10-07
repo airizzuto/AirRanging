@@ -46,29 +46,7 @@
       column-gap: 1rem;
       place-self: center;
 
-      // TODO: checkbox style
-      .CheckboxItem {
-        display: flex;
-        flex-direction: row;
-
-        label {
-          @include font.main;
-          text-align: center;
-        }
-
-        input {
-          @include box.light;
-
-          height: 0.8rem;
-          width: 80%;
-          place-self: center;
-        }
-
-        input:hover {
-          color: color.$accent1;
-          transition: color 0.4s;
-        }
-      }
+      
     }
 
     .CreateNew {

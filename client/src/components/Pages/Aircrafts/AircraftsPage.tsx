@@ -12,6 +12,7 @@ import AircraftsListButtons from './AircraftsListButtons';
 import Style from "./Aircrafts.module.scss";
 import Dropdown from "../../Generics/Filters/Dropdown.module.scss";
 import EnumToOptions from '../../Generics/Filters/EnumToOptions';
+import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
 
 interface Props {
   user: UserPublic | null;
@@ -36,6 +37,7 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftUnsave,
   handleAircraftSelection,
 }) => {
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
 
@@ -47,23 +49,10 @@ const Aircrafts: React.FC<Props> = ({
       ...filters,
       field: AircraftSearchOptions[value as keyof typeof AircraftSearchOptions] as keyof AircraftWithSocials
     });
-    console.log("DEBUG: field change - ", filters);
-  };
-
-  const handleShowOwnedToggle = () => {
-    handleAircraftsFilters({...filters, set: "owned"});
-  };
-
-  const handleShowSavedToggle = () => {
-    handleAircraftsFilters({...filters, set: "saved"});
   };
 
   const columns = React.useMemo(
     () => [
-      {
-        Header: 'ICAO',
-        accessor: 'icaoId',
-      },
       {
         Header: 'Manufacturer',
         accessor: 'manufacturer',
@@ -75,6 +64,10 @@ const Aircrafts: React.FC<Props> = ({
       {
         Header: 'Variant',
         accessor: 'variant',
+      },
+      {
+        Header: 'Registration',
+        accessor: 'registration',
       },
       {
         Header: 'Aircraft Type',
@@ -150,34 +143,26 @@ const Aircrafts: React.FC<Props> = ({
           placeholder={"Search aircraft"}
         />
 
-        <select className={Dropdown.Container} onChange={(e) => handleFieldChange(e.target.value)}>
+        <select className={Dropdown.Container}
+          onChange={(e) => handleFieldChange(e.target.value)}
+        >
           <EnumToOptions enumerator={AircraftSearchOptions} />
         </select>
 
-        {/* <DropdownSelect
-          enumerator={AircraftSearchOptions}
-          handleChange={() => handleFieldChange}
-        /> */}
-
-        {/* TODO: abstract saved/owned filters to component */}
         <div className={Style.FilterOptions}>
-          <div className={Style.CheckboxItem}> {/* TODO: filter owned */}
-            <label>Show owned</label>
-            <input
-              type="checkbox"
-              checked={(filters.set === "owned")}
-              onChange={() => handleShowOwnedToggle}
-            />
-          </div>
-
-          <div className={Style.CheckboxItem}> {/* TODO: filter saved */}
-            <label>Show saved</label>
-            <input
-              type="checkbox"
-              checked={filters.set === "saved"}
-              onChange={() => handleShowSavedToggle}
-            />
-          </div>
+          <ToggleDataSet
+            label={"Show saved"}
+            set={"saved"}
+            handleFilter={handleAircraftsFilters}
+            filters={filters}
+          />
+  
+          <ToggleDataSet
+            label={"Show owned"}
+            set={"owned"}
+            handleFilter={handleAircraftsFilters}
+            filters={filters}
+          />
         </div>
        
         <div className={Style.CreateNew}>
@@ -190,7 +175,7 @@ const Aircrafts: React.FC<Props> = ({
       <hr />
 
       {
-        aircrafts
+        aircrafts.length > 0
           ? <div className={Style.AircraftsTable}>
               <AircraftsTable 
                 data={aircrafts}
