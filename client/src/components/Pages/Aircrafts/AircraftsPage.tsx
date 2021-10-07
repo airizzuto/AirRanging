@@ -6,13 +6,13 @@ import { Filters } from '../../../types/Aircraft/Filter';
 import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
 
 import AircraftsTable from '../../Table/AircraftsTable';
-import {LinkButton} from '../../Generics/Buttons/Button';
 import AircraftsListButtons from './AircraftsListButtons';
-
-import Style from "./Aircrafts.module.scss";
+import {LinkButton} from '../../Generics/Buttons/Button';
 import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
 import Searchbar from '../../Generics/Filters/Searchbar';
 import DropdownSelect from '../../Generics/Filters/DropdownSelect';
+
+import Style from "./Aircrafts.module.scss";
 
 interface Props {
   user: UserPublic | null;
@@ -37,13 +37,6 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftUnsave,
   handleAircraftSelection,
 }) => {
-
-  // const handleFieldChange = (value: string) => {
-  //   handleAircraftsFilters({
-  //     ...filters,
-  //     field: AircraftSearchOptions[value as keyof typeof AircraftSearchOptions] as keyof AircraftWithSocials
-  //   });
-  // };
 
   // TODO: mapper function
   const columns = React.useMemo(
@@ -145,11 +138,6 @@ const Aircrafts: React.FC<Props> = ({
           handleFilter={handleAircraftsFilters}
           enumerator={AircraftSearchOptions}
         />
-        {/* <select className={Dropdown.Container}
-          onChange={(e) => handleFieldChange(e.target.value)}
-        >
-          <EnumToOptions enumerator={AircraftSearchOptions} />
-        </select> */}
 
         <div className={Style.FilterOptions}>
           <ToggleDataSet
@@ -191,7 +179,6 @@ const Aircrafts: React.FC<Props> = ({
               <p>Loading aircrafts...</p> {/* TODO: spinner */}
             </div>
       }
-
     </div>
   );
 };
