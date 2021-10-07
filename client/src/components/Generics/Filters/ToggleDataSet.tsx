@@ -10,19 +10,31 @@ interface Props {
   filters: Filters;
 }
 
+/**
+ * Toggle for data set selection.
+ * @param label
+ * @param set
+ * @param handleFilter
+ * @param filters
+ * @returns React component
+ */
 const ToggleDataSet: React.FC<Props> = ({label, set, handleFilter, filters}) => {
+  const isToggled = filters.set === set;
 
-  const handleSetToggle = (set: AircraftsDataSets) => {
-    handleFilter({...filters, set: set});
+  const handleSetToggle = () => {
+    console.log(`DEBUG: toggle set: ${set}, filter state: ${filters}`);
+    isToggled
+    ? handleFilter({...filters, set: "all"})
+    : handleFilter({...filters, set: set});
   };
 
   return (
-    <div className={Style.CheckboxItem}> {/* TODO: filter saved */}
+    <div className={Style.CheckboxItem}>
       <label>{label}</label>
       <input
         type="checkbox"
-        checked={filters.set === set}
-        onChange={() => handleSetToggle}
+        checked={isToggled}
+        onChange={() => handleSetToggle()}
       />
     </div>
   );
