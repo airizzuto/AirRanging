@@ -32,8 +32,7 @@
       color: color.$light1;
     }
 
-    .SearchBar {
-      @include box.light;
+    .Searchbar {
       grid-area: search-bar;
       align-self: center;
       border-radius: 5px;
@@ -45,8 +44,6 @@
       flex-direction: row;
       column-gap: 1rem;
       place-self: center;
-
-      
     }
 
     .CreateNew {

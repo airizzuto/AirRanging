@@ -13,6 +13,7 @@ import Style from "./Aircrafts.module.scss";
 import Dropdown from "../../Generics/Filters/Dropdown.module.scss";
 import EnumToOptions from '../../Generics/Filters/EnumToOptions';
 import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
+import Searchbar from '../../Generics/Filters/Searchbar';
 
 interface Props {
   user: UserPublic | null;
@@ -37,12 +38,6 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftUnsave,
   handleAircraftSelection,
 }) => {
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    e.preventDefault();
-
-    handleAircraftsFilters({...filters, search: e.target.value});
-  };
 
   const handleFieldChange = (value: string) => {
     handleAircraftsFilters({
@@ -135,13 +130,14 @@ const Aircrafts: React.FC<Props> = ({
 
       <div className={Style.SubHeader}>
         <h1 className={Style.Title}>Browse Aircrafts</h1>
-  
-        <input className={Style.SearchBar}
-          type="search"
-          value={filters.search}
-          onChange={event => handleSearchChange(event)}
-          placeholder={"Search aircraft"}
-        />
+
+        <div className={Style.Searchbar}>
+          <Searchbar
+            filters={filters}
+            handleFilter={handleAircraftsFilters}
+            placeholder={"Search aircrafts"}
+          />
+        </div>
 
         <select className={Dropdown.Container}
           onChange={(e) => handleFieldChange(e.target.value)}
