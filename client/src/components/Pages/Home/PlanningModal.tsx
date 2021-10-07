@@ -2,12 +2,15 @@ import React from "react";
 
 import { calculateRange } from "../../../helpers/fuelCalculation";
 
-import { AircraftState } from "../../../types/Aircraft/Aircraft";
+import { AircraftState, AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
 
 import Slider from "../../Generics/Sliders/Slider";
 import { Button } from "../../Generics/Buttons/Button";
 
 import Style from "./PlanningModal.module.scss";
+import DropdownSearchbar from "../../Generics/Filters/DropdownSearchbar";
+import { Filters } from "../../../types/Aircraft/Filter";
+import ToggleDataSet from "../../Generics/Filters/ToggleDataSet";
 
 /* TODO: Refactor style:
 
@@ -31,28 +34,40 @@ import Style from "./PlanningModal.module.scss";
 interface Props {
   aircraft?: AircraftState | null;
   aircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
+  initialAircrafts: AircraftWithSocials[];
+  currentAircrafts: AircraftWithSocials[];
+  aircraftSelected: AircraftState | null;
+  filters: Filters;
+  handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
+  handleAircraftsFilters: (filter: Filters) => void;
   handleAccept: () => void;
 }
 
 const PlanningModal: React.FC<Props> = ({ 
-  aircraft,
+  initialAircrafts,
+  currentAircrafts,
+  aircraftSelected,
   aircraftState,
+  filters,
+  handleAircraftSelection,
+  handleAircraftsFilters,
   handleAccept,
+  
 }: Props) => {
   const handleFuelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
 
-    if (aircraft) {
+    if (aircraftSelected) {
       const parsedValue = Number(value);
 
       const maxRangeValue = Number(calculateRange({
-        maxRange: aircraft.maxRange,
-        fuelCapacity: aircraft.fuelCapacity,
+        maxRange: aircraftSelected.maxRange,
+        fuelCapacity: aircraftSelected.fuelCapacity,
         fuelLoaded: parsedValue
       }).toFixed(2));
 
       aircraftState({
-        ...aircraft,
+        ...aircraftSelected,
         loadedFuel: parsedValue,
         currentMaxRange: maxRangeValue
       });
@@ -65,8 +80,30 @@ const PlanningModal: React.FC<Props> = ({
       <h1>Planning</h1>
 
       <div className={Style.Selection}>
-        {/* TODO: data sets toggles */}
-        {/* TODO: aircraft searchbar with dropdown */}
+        <div className={Style.Toggles}>
+          <ToggleDataSet 
+            label={"Show saved"}
+            set={"saved"}
+            handleFilter={handleAircraftsFilters}
+            filters={filters}
+          />
+          <ToggleDataSet 
+            label={"Show owned"}
+            set={"owned"}
+            handleFilter={handleAircraftsFilters}
+            filters={filters}
+          />
+        </div>
+        <div className={Style.Searchbar}>
+          <DropdownSearchbar
+            handleSelection={handleAircraftSelection}
+            handleFilter={handleAircraftsFilters}
+            filters={filters}
+            initialOptions={initialAircrafts}
+            currentOptions={currentAircrafts}
+            placeholder="Search aircrafts..."
+          />
+        </div>
         {/* TODO: view details button */}
         {/* TODO: save button */}
       </div>
@@ -77,13 +114,13 @@ const PlanningModal: React.FC<Props> = ({
         <div className={Style.SliderInput}>
           <label>Fuel Loaded:</label>
           <div className={Style.output}>
-            {aircraft ? aircraft.loadedFuel : 0}
+            {aircraftSelected ? aircraftSelected.loadedFuel : 0}
           </div>
           <div className={Style.range}>
             <Slider name="loadedFuel"
               min={0}
-              max={aircraft ? aircraft.fuelCapacity : 0}
-              value={aircraft ? aircraft.loadedFuel : 0}
+              max={aircraftSelected ? aircraftSelected.fuelCapacity : 0}
+              value={aircraftSelected ? aircraftSelected.loadedFuel : 0}
               handler={handleFuelChange}
             />
           </div>
@@ -93,7 +130,7 @@ const PlanningModal: React.FC<Props> = ({
         <div className={Style.ValueInput}>
           <label>Range:</label>
           <span className={Style.output}>
-            {aircraft ? aircraft.currentMaxRange : 0}
+            {aircraftSelected ? aircraftSelected.currentMaxRange : 0}
           </span>
           {/* TODO: distance unit selection dropdown */}
         </div>

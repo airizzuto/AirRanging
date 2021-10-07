@@ -146,7 +146,7 @@ const Aircrafts: React.FC<Props> = ({
             handleFilter={handleAircraftsFilters}
             filters={filters}
           />
-  
+
           <ToggleDataSet
             label={"Show owned"}
             set={"owned"}
@@ -154,7 +154,7 @@ const Aircrafts: React.FC<Props> = ({
             filters={filters}
           />
         </div>
-       
+
         <div className={Style.CreateNew}>
           <LinkButton path="/aircrafts/create" style={"primary"}>
             Create Aircraft
