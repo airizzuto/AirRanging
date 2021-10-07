@@ -59,21 +59,22 @@ const PlanningModal: React.FC<Props> = ({
     }
   };
 
-
-  // TODO: split render to planning or select depending on aircraft state null or present
+  // TODO: abstract input fields into components
   return (
-    <div className={Style.Planning}>
-      <div className={Style.PropertiesContainer}>
-        <h2>Properties</h2>
+    <div className={Style.Container}>
+      <h1>Planning</h1>
 
-        <div className={Style.Selected}>
-          <label>Selected Aircraft:</label>
-          {/* Replace "select an aircraft" with a dropdown or switch to select */}
-          <span>{aircraft ? aircraft.model : "Select an aircraft"}</span>
-          {/* TODO: additional aircraft info */}
-        </div>
+      <div className={Style.Selection}>
+        {/* TODO: data sets toggles */}
+        {/* TODO: aircraft searchbar with dropdown */}
+        {/* TODO: view details button */}
+        {/* TODO: save button */}
+      </div>
 
-        <div className={Style.SliderProp}>
+      <hr className={Style.Separator}/>
+
+      <div className={Style.Inputs}>
+        <div className={Style.SliderInput}>
           <label>Fuel Loaded:</label>
           <div className={Style.output}>
             {aircraft ? aircraft.loadedFuel : 0}
@@ -86,31 +87,37 @@ const PlanningModal: React.FC<Props> = ({
               handler={handleFuelChange}
             />
           </div>
+          {/* TODO: fuel units selection dropdown */}
         </div>
-        {/* TODO: GS/TAS */}
+
+        <div className={Style.ValueInput}>
+          <label>Range:</label>
+          <span className={Style.output}>
+            {aircraft ? aircraft.currentMaxRange : 0}
+          </span>
+          {/* TODO: distance unit selection dropdown */}
+        </div>
+
+        <div className={Style.ValueInput}>
+          <label>Cruise Speed:</label>
+          <span className={Style.output}>
+            {/*TODO:*/}*WIP*
+          </span>
+          {/* TODO: velocity unit selection dropdown */}
+        </div>
+
+        <div className={Style.ValueInput}>
+          <label>Cruise Altitude:</label>
+          <span className={Style.output}>
+            {/*TODO:*/}*WIP*
+          </span>
+          {/* TODO: altitude unit selection dropdown */}
+        </div>
       </div>
 
-      {/* TODO: move to info overlay */}
       <hr className={Style.Separator} />
-      {aircraft
-        ? <div className={Style.ResultsGroup}>
-            <h2>Information</h2>
-              <div className={Style.Results}>
-                <label>Max Range:</label>
-                <span className={Style.output}>
-                  {aircraft.currentMaxRange}
-                </span>
-              </div>
-              <div className={Style.Results}>
-                <label>Radius of Action (PNR):</label>
-                <span className={Style.output}>{/*TODO:*/}*WIP*</span>
-              </div>
-          </div>
-        : <div>No aircraft selected</div>
-      }
-      
 
-      <div className={Style.AcceptButton}>
+      <div className={Style.Accept}>
         <Button handleClick={handleAccept} style="primary">
           Accept
         </Button>

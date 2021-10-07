@@ -4,40 +4,40 @@
 @use "../../../styles/components/boxes" as box;
 @use "../../../styles/mixins" as *;
 
-.Planning {
+.Container {
   @include box-shadow;
   display: grid;
-  grid-template-rows: 1fr min-content 1fr min-content;
+  grid-auto-rows: max-content;
   grid-template-columns: 1fr;
-  grid-template-areas: "properties" "separator" "results" "accept";
   row-gap: 1rem;
 
-  .PropertiesContainer {
-    grid-area: properties;
+  .Selection {
+    @include text-shadow;
 
     display: grid;
-    grid-auto-rows: max-content;
-    grid-template-columns: 1fr;
-    row-gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "toggles searchbar aircraft-buttons";
 
-    .Selected {
-      @include text-shadow;
-
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-areas: "properties-label selected";
-
-      label {
-        grid-area: properties-label;
-      }
+    .Toggles {
+      grid-area: toggles;
     }
 
-    .SliderProp {
+    .Searchbar {
+      grid-area: searchbar;
+    }
+
+    .AircraftButtons {
+      grid-area: aircraft-buttons;
+    }
+  }
+
+  .Inputs {
+    .SliderInput {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       grid-template-areas: 
-        "properties-label properties-output"
+        "property-label property-output"
         "modifier modifier";
       row-gap: 0.5rem;
 
@@ -46,88 +46,61 @@
       }
 
       .output {
-        grid-area: properties-output;
+        grid-area: property-output;
         width: max-content;
       }
 
       label {
-        grid-area: properties-label;
+        grid-area: property-label;
         align-self: center;
         width: 100%;
       }
     }
 
-    .InputField {
+    .ValueInput {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
-      grid-template-areas: "properties-label properties-input";
+      grid-template-areas: "property-label property-input";
 
       label {
-        grid-area: properties-label;
+        grid-area: property-label;
         align-self: center;
       }
 
       input {
         @include box.light;
-        grid-area: properties-input;
+        grid-area: property-input;
         align-self: center;
         width: max-content;
       }
     }
   }
+}
 
-  .Separator {
-    @include separator.style;
-    grid-area: separator;
+.Separator {
+  @include separator.style;
+  width: 95%;
+}
 
-    width: 95%;
-  }
+.Accept {
+  display: flex;
+  grid-area: accept;
+  height: fit-content;
+  justify-self: flex-end;
+  width: 50%;
+}
 
-  .ResultsGroup {
-    grid-area: results;
+label {
+  @include text-shadow;
+}
 
-    display: grid;
-    grid-auto-rows: max-content;
-    row-gap: 1rem;
-    grid-template-columns: 1fr;
+.output {
+  @include box.light;
+}
 
-    .Results {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-areas: "results-label results-output";
-
-      label {
-        grid-area: results-label;
-        align-self: center;
-      }
-
-      .output {
-        place-self: center;
-        grid-area: results-output;
-      }
-    }
-  }
-
-  .AcceptButton {
-    display: flex;
-    grid-area: accept;
-    height: fit-content;
-    justify-self: flex-end;
-    width: 50%;
-  }
-
-  label {
-    @include text-shadow;
-  }
-
-  .output {
-    @include box.light;
-  }
-
-  h2 {
-    @include text-shadow;
-    @include font.header-3;
-    margin: 0;
-  }
+h1 {
+  @include text-shadow;
+  @include font.header-3;
+  margin: 0;
 }
