@@ -1,26 +1,32 @@
+@use "../../../styles/mixins" as *;
 @use "../../../styles/colors" as color;
 @use "../../../styles/fonts" as font;
 @use "../../../styles/components/boxes" as box;
 
-// TODO: checkbox style
-.CheckboxItem {
+.Checkbox {
   display: flex;
   flex-direction: row;
 
   label {
     @include font.main;
+    @include text-shadow;
     text-align: center;
   }
 
-  input {
+  // TODO: checkbox style
+  input[type=checkbox] {
     @include box.light;
-
     height: 0.8rem;
-    width: 80%;
+    width: 0.8rem;
     place-self: center;
   }
 
-  input:hover {
+  input[type="checkbox"]:hover {
+    color: adjust-color($color: color.$light1, $lightness: 80%);
+    transition: color 0.4s;
+  }
+
+  input[type="checkbox"]:checked {
     color: color.$accent1;
     transition: color 0.4s;
   }

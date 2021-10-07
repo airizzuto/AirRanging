@@ -22,16 +22,16 @@ const ToggleDataSet: React.FC<Props> = ({label, set, handleFilter, filters}) => 
   const isToggled = filters.set === set;
 
   const handleSetToggle = () => {
-    console.log(`DEBUG: toggle set: ${set}, filter state: ${filters}`);
     isToggled
     ? handleFilter({...filters, set: "all"})
     : handleFilter({...filters, set: set});
   };
 
   return (
-    <div className={Style.CheckboxItem}>
-      <label>{label}</label>
+    <div className={Style.Checkbox}>
+      <label htmlFor="checkboxToggle">{label}</label>
       <input
+        id="checkboxToggle"
         type="checkbox"
         checked={isToggled}
         onChange={() => handleSetToggle()}
