@@ -6,7 +6,7 @@ import DraggableModal from "../../Generics/Modals/DraggableModal";
 import PlanningModal from "./PlanningModal";
 import { Filters } from "../../../types/Aircraft/Filter";
 
-import { AircraftWithSocials, AircraftState } from "../../../types/Aircraft/Aircraft";
+import { AircraftWithSocials, AircraftSelected } from "../../../types/Aircraft/Aircraft";
 
 import Style from "./Home.module.scss";
 // import InfoFooter from "./InfoFooter";
@@ -14,20 +14,26 @@ import Style from "./Home.module.scss";
 interface Props {
   initialAircrafts: AircraftWithSocials[];
   currentAircrafts: AircraftWithSocials[];
-  selectedAircraft: AircraftState | null;
+  aircraftsSaved: AircraftWithSocials[] | null;
+  selectedAircraft: AircraftSelected | null;
   filters: Filters;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void ;
   handleAircraftsFilters: (filter: Filters) => void;
-  handleAircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
+  handleAircraftSave: (aircraftId: string) => Promise<void>;
+  handleAircraftUnsave: (aircraftId: string) => Promise<void>;
+  handleAircraftState: React.Dispatch<React.SetStateAction<AircraftSelected | null>>;
 }
 
 const Home: React.FC<Props> = ({
   initialAircrafts,
   currentAircrafts,
+  aircraftsSaved,
   selectedAircraft,
   filters,
   handleAircraftSelection,
   handleAircraftsFilters,
+  handleAircraftSave,
+  handleAircraftUnsave,
   handleAircraftState
 }) => {
   // const [isModalActive, setIsModalActive] = useState(true); // One active modal at once
@@ -53,15 +59,18 @@ const Home: React.FC<Props> = ({
         // eslint-disable-next-line react-hooks/rules-of-hooks
         handleClose={() => setDisplayPlanningModal(false)}
       >
-        <PlanningModal 
+        <PlanningModal
           // eslint-disable-next-line react-hooks/rules-of-hooks
           aircraftState={handleAircraftState}
           initialAircrafts={initialAircrafts}
           currentAircrafts={currentAircrafts}
+          aircraftsSaved={aircraftsSaved}
           aircraftSelected={selectedAircraft}
           filters={filters}
           handleAircraftSelection={handleAircraftSelection}
           handleAircraftsFilters={handleAircraftsFilters}
+          handleAircraftSave={handleAircraftSave}
+          handleAircraftUnsave={handleAircraftUnsave}
           handleAccept={() => setDisplayPlanningModal(false)}
         />
       </DraggableModal>

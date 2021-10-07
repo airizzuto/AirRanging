@@ -2,15 +2,16 @@ import React from "react";
 
 import { calculateRange } from "../../../helpers/fuelCalculation";
 
-import { AircraftState, AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
+import { AircraftSelected, AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
 
 import Slider from "../../Generics/Sliders/Slider";
-import { Button } from "../../Generics/Buttons/Button";
+import { Button, LinkButton } from "../../Generics/Buttons/Button";
 
 import Style from "./PlanningModal.module.scss";
 import DropdownSearchbar from "../../Generics/Filters/DropdownSearchbar";
 import { Filters } from "../../../types/Aircraft/Filter";
 import ToggleDataSet from "../../Generics/Filters/ToggleDataSet";
+import SaveActionsButton from "../../AircraftActions/SaveActionsButton";
 
 /* TODO: Refactor style:
 
@@ -32,25 +33,30 @@ import ToggleDataSet from "../../Generics/Filters/ToggleDataSet";
 */
 
 interface Props {
-  aircraft?: AircraftState | null;
-  aircraftState: React.Dispatch<React.SetStateAction<AircraftState | null>>;
+  aircraftState: React.Dispatch<React.SetStateAction<AircraftSelected | null>>;
   initialAircrafts: AircraftWithSocials[];
   currentAircrafts: AircraftWithSocials[];
-  aircraftSelected: AircraftState | null;
+  aircraftsSaved: AircraftWithSocials[] | null;
+  aircraftSelected: AircraftSelected | null;
   filters: Filters;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleAircraftsFilters: (filter: Filters) => void;
+  handleAircraftSave: (aircraftId: string) => Promise<void>;
+  handleAircraftUnsave: (aircraftId: string) => Promise<void>;
   handleAccept: () => void;
 }
 
-const PlanningModal: React.FC<Props> = ({ 
+const PlanningModal: React.FC<Props> = ({
   initialAircrafts,
   currentAircrafts,
   aircraftSelected,
+  aircraftsSaved,
   aircraftState,
   filters,
   handleAircraftSelection,
   handleAircraftsFilters,
+  handleAircraftSave,
+  handleAircraftUnsave,
   handleAccept,
   
 }: Props) => {
@@ -104,8 +110,24 @@ const PlanningModal: React.FC<Props> = ({
             placeholder="Search aircrafts..."
           />
         </div>
-        {/* TODO: view details button */}
-        {/* TODO: save button */}
+
+        <div className={Style.AircraftButtons}>
+          {/* TODO: view details button */}
+          <LinkButton
+            style={"primary"}
+            disabled={aircraftSelected === null}
+            path={`/aircrafts/${aircraftSelected?.id}`}
+          >
+            Details
+          </LinkButton>
+          {/* TODO: save button */}
+          <SaveActionsButton
+            aircraft={aircraftSelected}
+            aircraftsSaved={aircraftsSaved}
+            handleAircraftSave={handleAircraftSave}
+            handleAircraftUnsave={handleAircraftUnsave}
+          />
+        </div>
       </div>
 
       <hr className={Style.Separator}/>

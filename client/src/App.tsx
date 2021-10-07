@@ -9,7 +9,7 @@ import { isUserAuthenticated } from "./helpers/tokenHelper";
 import { getUserData } from "./helpers/userHelper";
 
 import { UserPublic } from "./types/User/User";
-import { AircraftWithSocials, AircraftState, CloneAircraft, AircraftWithoutIDs } from "./types/Aircraft/Aircraft";
+import { AircraftWithSocials, AircraftSelected, CloneAircraft, AircraftWithoutIDs } from "./types/Aircraft/Aircraft";
 import { Filters } from "./types/Aircraft/Filter";
 import { AircraftSearchOptions } from "./types/Aircraft/AircraftEnums";
 
@@ -50,7 +50,7 @@ const App = (): JSX.Element =>{
     search: ""
   });
   const debouncedFilter = useDebounce(filters, 500);
-  const [aircraftSelected, setAircraftSelected] = useState<AircraftState | null>(null);
+  const [aircraftSelected, setAircraftSelected] = useState<AircraftSelected | null>(null);
 
   // Sets initial aircrafts
   useEffect(() => {
@@ -233,14 +233,15 @@ const App = (): JSX.Element =>{
       <div className="Main">
         <Switch>
             <Route exact path="/">
-              <Home 
+              <Home
                 initialAircrafts={initialAircrafts}
                 currentAircrafts={currentAircrafts}
+                aircraftsSaved={aircraftsSaved}
                 filters={filters}
                 selectedAircraft={aircraftSelected}
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftsFilters={handleAircraftsFilters}
-                handleAircraftState={setAircraftSelected}
+                handleAircraftState={setAircraftSelected} handleAircraftSave={handleAircraftSave} handleAircraftUnsave={handleAircraftUnsave}
               />
             </Route>
 

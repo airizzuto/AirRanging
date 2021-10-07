@@ -13,13 +13,15 @@
 
   .Selection {
     @include text-shadow;
-
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "toggles searchbar aircraft-buttons";
+    grid-template-columns: 1fr;
+    grid-template-areas: "toggles" "searchbar" "aircraft-buttons";
 
     .Toggles {
       grid-area: toggles;
+      display: flex;
+      flex-direction: row;
+      align-content: space-around;
     }
 
     .Searchbar {
