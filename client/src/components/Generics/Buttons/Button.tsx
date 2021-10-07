@@ -17,6 +17,7 @@ interface LinkProps {
   handleClick?: React.MouseEventHandler<HTMLAnchorElement>;
   children?: React.ReactElement | string;
   style: ButtonStyles;
+  disabled?: boolean;
 }
 
 /**
@@ -41,13 +42,19 @@ export const Button: React.FC<ButtonProps> = ({ children, handleClick, disabled,
  * @param path: url path to be passed to the Link React Router DOM component for routing.
  * @param children: any ReactElement or string wrapped by this button component.
  * @param handleClick: handler function used by this button.
+ * @param disabled: optional conditional check that disables or enables button use.
  * @param style: button style selected from ButtonStyles.
  * @returns button component.
  */
-export const LinkButton: React.FC<LinkProps> = ({path, children, style, handleClick}) => {
+export const LinkButton: React.FC<LinkProps> = ({path, children, style, handleClick, disabled}) => {
+
   return (
-    <Link to={path} className={style} onClick={handleClick}>
-      {children}
-    </Link>
+    disabled 
+    ? <Link to={path} className={style} onClick={handleClick}>
+        {children}
+      </Link>
+    : <Button style={style} disabled={disabled}>
+        {children}
+      </Button>
   );
 };
