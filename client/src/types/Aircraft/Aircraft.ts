@@ -26,7 +26,7 @@ export interface AircraftWithSocials extends Aircraft{
   authorUsername: string;
 }
 
-export interface AircraftState extends AircraftWithSocials {
+export interface AircraftSelected extends AircraftWithSocials {
   loadedFuel: number;
   currentMaxRange: number;
 }

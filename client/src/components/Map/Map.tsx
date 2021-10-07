@@ -3,7 +3,7 @@ import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import { containerStyle, DEFAULT_MAP_CENTER, DEFAULT_MAP_OPTIONS, LIBRARIES } from '../../settings/google-maps/mapSettings';
 
 import { Coordinates } from '../../types/Map/MapTypes';
-import { AircraftState } from '../../types/Aircraft/Aircraft';
+import { AircraftSelected } from '../../types/Aircraft/Aircraft';
 
 import Spinner from "../../styles/components/_spinner.module.scss";
 import DrawAircraftRadius from './DrawAircraftRadius';
@@ -12,7 +12,7 @@ import DrawAircraftRadius from './DrawAircraftRadius';
 // TODO REMOVE: reference video https://www.youtube.com/watch?v=WZcxJGmLbSo&t=0s
 
 interface Props {
-  selectedAircraft: AircraftState | null;
+  selectedAircraft: AircraftSelected | null;
 }
 
 const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
