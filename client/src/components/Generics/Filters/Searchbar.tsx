@@ -19,11 +19,11 @@ const Searchbar: React.FC<Props> = ({filters, handleFilter, placeholder}) => {
   return (
     <>
       <input className={Style.Searchbar}
-          type="search"
-          value={filters.search}
-          onChange={event => handleSearchChange(event)}
-          placeholder={placeholder}
-        />
+        type="search"
+        value={filters.search}
+        onChange={event => handleSearchChange(event)}
+        placeholder={placeholder}
+      />
     </>
   );
 };

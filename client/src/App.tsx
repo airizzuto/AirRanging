@@ -35,7 +35,6 @@ import Footer from "./components/Footer/Footer";
 // import Map from "./components/Map/Map";
 
 import "./App.scss";
-// import { filterSearch } from "./helpers/aircraftsFilters";
 
 const App = (): JSX.Element =>{
   const history = useHistory();
