@@ -23,6 +23,6 @@ namespace Entities.DTOs.V1.Aircrafts
         public decimal FuelCapacity { get; set; }
         public decimal MaxRange { get; set; }
         public uint ServiceCeiling { get; set; }
-        public int EnteredServiceAtDate { get; set; }
+        public int EnteredServiceAtYear { get; set; }
     }
 }

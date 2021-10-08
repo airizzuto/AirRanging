@@ -23,7 +23,7 @@ namespace Entities.Models.Aircrafts
         public int CruiseSpeed { get; set; }
         public uint MaxRange { get; set; }
         public uint ServiceCeiling { get; set; }
-        public int EnteredServiceAtDate { get; set; }
+        public int EnteredServiceAtYear { get; set; }
         public string AuthorUsername { get; set; }
         public DateTime CreatedDate { get; set; }
     }

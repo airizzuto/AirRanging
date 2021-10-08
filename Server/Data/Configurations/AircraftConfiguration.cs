@@ -65,6 +65,8 @@ namespace Data.Configurations
 
             builder.Property(a => a.ServiceCeiling);
 
+            builder.Property(a => a.EnteredServiceAtYear);
+
             builder.Property(a => a.SavesCount)
                 .HasDefaultValue(1);
 

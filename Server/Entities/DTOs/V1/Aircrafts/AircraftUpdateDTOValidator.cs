@@ -65,10 +65,6 @@ namespace Entities.DTOs.V1.Aircrafts
                 .GreaterThanOrEqualTo((uint)0)
                 .LessThan(uint.MaxValue);
 
-            RuleFor(x => x.EnteredServiceAtDate)
-                .GreaterThan(int.MinValue)
-                .LessThan(int.MaxValue);
-
             RuleFor(x => x.MaxRange)
                 .NotEmpty().WithMessage(
                     "Max Range is required for calculations"
@@ -79,6 +75,10 @@ namespace Entities.DTOs.V1.Aircrafts
             RuleFor(x => x.ServiceCeiling)
                 .GreaterThanOrEqualTo((uint)0) // TODO: TBD Max Ceiling Validation
                 .LessThan((uint)1_000_000); // TODO: TBD Max Ceiling Validation
+
+            RuleFor(x => x.EnteredServiceAtYear)
+                .GreaterThan(int.MinValue)
+                .LessThan(int.MaxValue);
         }
     }
 }

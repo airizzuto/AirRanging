@@ -58,7 +58,7 @@ namespace Entities.DTOs.V1.Aircrafts
                 .GreaterThanOrEqualTo((uint)0)
                 .LessThan(uint.MaxValue);
 
-            RuleFor(x => x.EnteredServiceAtDate)
+            RuleFor(x => x.EnteredServiceAtYear)
                 .GreaterThan(int.MinValue)
                 .LessThan(int.MaxValue);
 

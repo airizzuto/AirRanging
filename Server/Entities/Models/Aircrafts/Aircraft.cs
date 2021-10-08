@@ -26,7 +26,7 @@ namespace Entities.Models.Aircrafts
         public decimal FuelCapacity { get; set; }
         public decimal MaxRange { get; set; }
         public uint ServiceCeiling { get; set; }
-        public int EnteredServiceAtDate { get; set; }
+        public int EnteredServiceAtYear { get; set; }
 
         public uint SavesCount { get; set; }
         public string AuthorUsername { get; set; }
