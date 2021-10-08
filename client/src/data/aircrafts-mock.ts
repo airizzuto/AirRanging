@@ -17,10 +17,13 @@ const aircrafts: Aircraft[] = [
     icaoWakeCategory: EIcaoWakeCategory.Light,
     fuelType: EFuelType.AvGas,
     maxTakeoffWeight: 1670,
+    minRunwayLength: 0,
     cruiseSpeed: 107,
     fuelCapacity: 26,
     maxRange: 415,
     serviceCeiling: 14700,
+    enteredServiceAtYear: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "25ddc4bd-d325-426b-beaa-4db5dd506881",
@@ -36,10 +39,13 @@ const aircrafts: Aircraft[] = [
     icaoWakeCategory: EIcaoWakeCategory.Light,
     fuelType: EFuelType.AvGas,
     maxTakeoffWeight: 1670,
+    minRunwayLength: 0,
     cruiseSpeed: 107,
     fuelCapacity: 38,
     maxRange: 691,
     serviceCeiling: 14700,
+    enteredServiceAtYear: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "e21fb48a-c642-4c00-9d49-1d2d907ca1e4",
@@ -59,6 +65,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 56,
     maxRange: 696,
     serviceCeiling: 13500,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "a8e4b73e-8dd5-41aa-9a38-83e6c89d5adf",
@@ -78,6 +87,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 6400,
     maxRange: 3300,
     serviceCeiling: 39100,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "d057f04c-1317-465f-8442-a201fe03a821",
@@ -97,6 +109,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 11466,
     maxRange: 3400,
     serviceCeiling: 42000,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "d654d58a-27ae-4f66-ae65-a690362f981e",
@@ -116,6 +131,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 6875,
     maxRange: 2935,
     serviceCeiling: 41000,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "c66e1ed9-d520-4d25-b5e0-f760d0a3e94e",
@@ -135,6 +153,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 6400,
     maxRange: 3100,
     serviceCeiling: 39100,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "8f282838-6095-4ec1-9aee-7f93a3b0b17a",
@@ -152,6 +173,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 223673,
     maxRange: 6430,
     serviceCeiling: 41100,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "9b1e2ceb-2dd0-4cbd-89e5-d8a7813bf822",
@@ -170,6 +194,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 85,
     maxRange: 434,
     serviceCeiling: 42500,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "b56714f3-8aa5-45d5-8f72-b6aae4aebc4b",
@@ -188,6 +215,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 175,
     maxRange: 851,
     serviceCeiling: 42500,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "9f591e4c-a083-42de-bb5c-142292491795",
@@ -206,6 +236,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 370,
     maxRange: 391,
     serviceCeiling: 42000,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "38f08a09-c882-46e1-8656-819c1000994f",
@@ -224,6 +257,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 269,
     maxRange: 651,
     serviceCeiling: 41900,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
   {
     id: "2ef294e3-60fa-4e8d-98c3-12ae6da79e9d",
@@ -242,6 +278,9 @@ const aircrafts: Aircraft[] = [
     fuelCapacity: 410,
     maxRange: 1100,
     serviceCeiling: 44000,
+    enteredServiceAtYear: 0,
+    minRunwayLength: 0,
+    createdAtDate: Date.now(),
   },
 ];
 

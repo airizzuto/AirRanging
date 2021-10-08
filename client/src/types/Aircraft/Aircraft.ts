@@ -21,12 +21,12 @@ export interface Aircraft {
   maxRange: number;
   serviceCeiling: number;
   enteredServiceAtYear: number;
+  createdAtDate: number;
 }
 
 export interface AircraftWithSocials extends Aircraft{
   savesCount: number;
   authorUsername: string;
-  createdDate: Date;
 }
 
 export interface AircraftSelected extends AircraftWithSocials {
@@ -43,7 +43,7 @@ export interface AircraftsPaginated {
 // Define special omit for unions
 type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
 
-export type AircraftWithoutIDs = UnionOmit<Aircraft, 'id'>;
+export type AircraftWithoutIDs = UnionOmit<Aircraft, 'id' | "createdAtDate">;
 
 export type AircraftFieldsTypes = keyof AircraftWithSocials;
 
