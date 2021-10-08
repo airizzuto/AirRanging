@@ -75,6 +75,7 @@ namespace Repository
             aircraft.UserId = userId;
             aircraft.AuthorUsername = user.UserName;
             aircraft.SavesCount = 1;
+            aircraft.CreatedDate = DateTime.UtcNow;
 
             await DbContext.AddAsync(aircraft);
 
