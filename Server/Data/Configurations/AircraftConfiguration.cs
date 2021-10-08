@@ -53,6 +53,8 @@ namespace Data.Configurations
 
             builder.Property(a => a.MaxTakeoffWeight);
 
+            builder.Property(a => a.MinRunwayLength);
+
             builder.Property(a => a.CruiseSpeed);
 
             builder.Property(a => a.FuelCapacity)
@@ -65,6 +67,9 @@ namespace Data.Configurations
 
             builder.Property(a => a.SavesCount)
                 .HasDefaultValue(1);
+
+            builder.Property(a => a.CreatedDate)
+                .ValueGeneratedOnAdd();
 
             builder.HasOne(a => a.User)
                 .WithMany(u => u.AircraftsOwned)

@@ -62,25 +62,6 @@ namespace Repository
                 .ToListAsync();
         }
 
-        // /// <summary>
-        // /// Retrieves all aircrafts in context saved by user id.
-        // /// </summary>
-        // /// <param name="userId">User ID</param>
-        // /// <param name="parameters">Aircrafts parameters</param>
-        // /// <returns>Paginated list of Aircraft</returns>
-        // public async Task<PagedList<Aircraft>> GetAircraftsSavedAsync(
-        //     string userId, AircraftParameters parameters)
-        // {
-        //     var user = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-        //     var aircrafts = user.Bookmarks.Select(b => b.Aircraft)
-        //         .ToList()
-        //         .AsQueryable();
-
-        //     var aircraftsSorted = ApplySearch(aircrafts, parameters);
-
-        //     return await ApplyPagination(aircraftsSorted, parameters);
-        // }
-
         /// <summary>
         /// Passes aircraft to be created by context.
         /// </summary>

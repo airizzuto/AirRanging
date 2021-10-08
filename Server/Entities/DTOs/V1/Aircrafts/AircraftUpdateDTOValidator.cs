@@ -17,6 +17,11 @@ namespace Entities.DTOs.V1.Aircrafts
             RuleFor(x => x.Model)
                 .NotEmpty().WithMessage("Model name must be provided")
                 .MaximumLength(255);
+
+            RuleFor(x => x.Variant)
+                .NotEmpty().WithMessage("Model name must be provided")
+                .MaximumLength(255)
+                .Matches(@"^[a-zA-Z1-9]+[-\w]*[a-zA-Z1-9]$").WithMessage("Only alphanumeric characters allowed.");
             
             RuleFor(x => x.AircraftType)
                 .IsInEnum()
@@ -34,19 +39,13 @@ namespace Entities.DTOs.V1.Aircrafts
             RuleFor(x => x.IcaoWakeCategory)
                 .IsInEnum();
 
-            RuleFor(x => x.EngineCount)
+             RuleFor(x => x.EngineCount)
                 .NotEmpty().WithMessage("Aircraft must have an engine")
-                .LessThan(short.MaxValue);
+                .GreaterThan((ushort)0).WithMessage("Aircraft must have an engine")
+                .LessThan(ushort.MaxValue);
             
             RuleFor(x => x.FuelType)
                 .Equal(EFuelType.Electric).When(x => x.EngineType == EEngineType.Electric);
-            
-            RuleFor(x => x.MaxTakeoffWeight)
-                .GreaterThan(0)
-                .LessThan(int.MaxValue);
-            
-            RuleFor(x => x.Variant)
-                .MaximumLength(255);
 
             RuleFor(x => x.CruiseSpeed)
                 .LessThan(300_000); // TODO: TBD VNO Validation
@@ -59,8 +58,16 @@ namespace Entities.DTOs.V1.Aircrafts
                 .LessThan(decimal.MaxValue);
 
             RuleFor(x => x.MaxTakeoffWeight)
-                .GreaterThanOrEqualTo(0)
-                .LessThanOrEqualTo(int.MaxValue);
+                .GreaterThan((uint)0)
+                .LessThan(uint.MaxValue);
+            
+            RuleFor(x => x.MinRunwayLength)
+                .GreaterThanOrEqualTo((uint)0)
+                .LessThan(uint.MaxValue);
+
+            RuleFor(x => x.EnteredServiceAtDate)
+                .GreaterThan(int.MinValue)
+                .LessThan(int.MaxValue);
 
             RuleFor(x => x.MaxRange)
                 .NotEmpty().WithMessage(
@@ -70,8 +77,8 @@ namespace Entities.DTOs.V1.Aircrafts
                 .LessThan(1_000_000); // TODO: TBD MaxRange Validation
             
             RuleFor(x => x.ServiceCeiling)
-                .GreaterThanOrEqualTo(-2000) // TODO: TBD Max Ceiling Validation
-                .LessThan(1_000_000); // TODO: TBD Max Ceiling Validation
+                .GreaterThanOrEqualTo((uint)0) // TODO: TBD Max Ceiling Validation
+                .LessThan((uint)1_000_000); // TODO: TBD Max Ceiling Validation
         }
     }
 }

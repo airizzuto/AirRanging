@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entities.Models.Aircrafts;
@@ -15,12 +16,14 @@ namespace Entities.Helpers
             FilterByManufacturer(ref filteredAircrafts, parameters.Manufacturer);
             FilterByModel(ref filteredAircrafts, parameters.Model);
             FilterByVariant(ref filteredAircrafts, parameters.Variant);
-            FilterByEngineCount(ref filteredAircrafts, parameters.EngineCount);
-            FilterByGreaterThanMaxRange(ref filteredAircrafts, parameters.MaxRange);
             FilterByAircraftType(ref filteredAircrafts, parameters.AircraftType);
+            FilterByEngineCount(ref filteredAircrafts, parameters.EngineCount);
             FilterByEngineType(ref filteredAircrafts, parameters.EngineType);
             FilterByFuelType(ref filteredAircrafts, parameters.FuelType);
+            FilterByGreaterThanMaxRange(ref filteredAircrafts, parameters.MaxRange);
+            FilterByLessThanMinRunwayLength(ref filteredAircrafts, parameters.MinRunwayLength);
             FilterByWeightCategory(ref filteredAircrafts, parameters.WeightCategory);
+            FilterByAuthor(ref filteredAircrafts, parameters.AuthorUsername);
 
             return filteredAircrafts;
         }
@@ -62,33 +65,6 @@ namespace Entities.Helpers
                 a => a.Variant.ToUpper().Contains(variant.Trim().ToUpper()));
         }
 
-        private static void SearchByAuthor(
-            ref IEnumerable<Aircraft> aircrafts, string authorUsername)
-        {
-            if (!aircrafts.Any() || string.IsNullOrWhiteSpace(authorUsername)) return;
-
-            aircrafts = aircrafts.Where(
-                a => a.User.NormalizedUserName.Contains(
-                    authorUsername.Trim().ToUpper())
-            );
-        }
-
-        private static void FilterByEngineCount(
-            ref IEnumerable<Aircraft> aircrafts, uint engineCount)
-        {
-            if (!aircrafts.Any() || engineCount == 0) return;
-
-            aircrafts = aircrafts.Where(a => a.EngineCount == engineCount);
-        }
-
-        private static void FilterByGreaterThanMaxRange(
-            ref IEnumerable<Aircraft> aircrafts, uint maxRange)
-        {
-            if (!aircrafts.Any() || maxRange == 0) return;
-
-            aircrafts = aircrafts.Where(a => a.MaxRange >= maxRange);
-        }
-
         private static void FilterByAircraftType(
             ref IEnumerable<Aircraft> aircrafts, EAircraftType aircraftType)
         {
@@ -107,13 +83,12 @@ namespace Entities.Helpers
             aircrafts = aircrafts.Where(a => a.EngineType == engineType);
         }
 
-        private static void FilterByFuelType(
-            ref IEnumerable<Aircraft> aircrafts, EFuelType fuelType)
+        private static void FilterByEngineCount(
+            ref IEnumerable<Aircraft> aircrafts, uint engineCount)
         {
-            if (!aircrafts.Any() || fuelType == EFuelType.Unknown)
-                return;
+            if (!aircrafts.Any() || engineCount == 0) return;
 
-            aircrafts = aircrafts.Where(a => a.FuelType == fuelType);
+            aircrafts = aircrafts.Where(a => a.EngineCount == engineCount);
         }
 
         private static void FilterByWeightCategory(
@@ -123,6 +98,42 @@ namespace Entities.Helpers
                 return;
 
             aircrafts = aircrafts.Where(a => a.WeightCategory == weightCategory);
+        }
+
+        private static void FilterByFuelType(
+            ref IEnumerable<Aircraft> aircrafts, EFuelType fuelType)
+        {
+            if (!aircrafts.Any() || fuelType == EFuelType.Unknown)
+                return;
+
+            aircrafts = aircrafts.Where(a => a.FuelType == fuelType);
+        }
+
+        private static void FilterByGreaterThanMaxRange(
+            ref IEnumerable<Aircraft> aircrafts, uint maxRange)
+        {
+            if (!aircrafts.Any() || maxRange == 0) return;
+
+            aircrafts = aircrafts.Where(a => a.MaxRange >= maxRange);
+        }
+
+        private static void FilterByLessThanMinRunwayLength(
+            ref IEnumerable<Aircraft> aircrafts, uint minRunwayLength)
+        {
+            if (!aircrafts.Any() || minRunwayLength == 0) return;
+
+            aircrafts = aircrafts.Where(a => a.MinRunwayLength <= minRunwayLength);
+        }
+
+        private static void FilterByAuthor(
+            ref IEnumerable<Aircraft> aircrafts, string authorUsername)
+        {
+            if (!aircrafts.Any() || string.IsNullOrWhiteSpace(authorUsername)) return;
+
+            aircrafts = aircrafts.Where(
+                a => a.User.NormalizedUserName.Contains(
+                    authorUsername.Trim().ToUpper())
+            );
         }
     }
 }
