@@ -61,12 +61,12 @@ const Home: React.FC<Props> = ({
       >
         <PlanningModal
           // eslint-disable-next-line react-hooks/rules-of-hooks
-          aircraftState={handleAircraftState}
           initialAircrafts={initialAircrafts}
           currentAircrafts={currentAircrafts}
           aircraftsSaved={aircraftsSaved}
           aircraftSelected={selectedAircraft}
           filters={filters}
+          handleAircraftState={handleAircraftState}
           handleAircraftSelection={handleAircraftSelection}
           handleAircraftsFilters={handleAircraftsFilters}
           handleAircraftSave={handleAircraftSave}

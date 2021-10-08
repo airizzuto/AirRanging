@@ -33,7 +33,7 @@ import SaveActionsButton from "../../AircraftActions/SaveActionsButton";
 */
 
 interface Props {
-  aircraftState: React.Dispatch<React.SetStateAction<AircraftSelected | null>>;
+  handleAircraftState: React.Dispatch<React.SetStateAction<AircraftSelected | null>>;
   initialAircrafts: AircraftWithSocials[];
   currentAircrafts: AircraftWithSocials[];
   aircraftsSaved: AircraftWithSocials[] | null;
@@ -51,7 +51,7 @@ const PlanningModal: React.FC<Props> = ({
   currentAircrafts,
   aircraftSelected,
   aircraftsSaved,
-  aircraftState,
+  handleAircraftState,
   filters,
   handleAircraftSelection,
   handleAircraftsFilters,
@@ -72,7 +72,7 @@ const PlanningModal: React.FC<Props> = ({
         fuelLoaded: parsedValue
       }).toFixed(2));
 
-      aircraftState({
+      handleAircraftState({
         ...aircraftSelected,
         loadedFuel: parsedValue,
         currentMaxRange: maxRangeValue
@@ -83,8 +83,6 @@ const PlanningModal: React.FC<Props> = ({
   // TODO: abstract input fields into components
   return (
     <div className={Style.Container}>
-      <h1>Planning</h1>
-
       <div className={Style.Selection}>
         <div className={Style.Toggles}>
           <ToggleDataSet 
@@ -100,6 +98,7 @@ const PlanningModal: React.FC<Props> = ({
             filters={filters}
           />
         </div>
+
         <div className={Style.Searchbar}>
           <DropdownSearchbar
             handleSelection={handleAircraftSelection}
@@ -135,10 +134,10 @@ const PlanningModal: React.FC<Props> = ({
       <div className={Style.Inputs}>
         <div className={Style.SliderInput}>
           <label>Fuel Loaded:</label>
-          <div className={Style.output}>
+          <div className={Style.Output}>
             {aircraftSelected ? aircraftSelected.loadedFuel : 0}
           </div>
-          <div className={Style.range}>
+          <div className={Style.Range}>
             <Slider name="loadedFuel"
               min={0}
               max={aircraftSelected ? aircraftSelected.fuelCapacity : 0}
