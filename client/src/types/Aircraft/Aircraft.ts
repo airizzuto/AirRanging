@@ -14,16 +14,19 @@ export interface Aircraft {
   weightCategory: EWeightCategory;
   icaoWakeCategory: EIcaoWakeCategory;
   fuelType: EFuelType;
-  maxTakeoffWeight: number;
-  cruiseSpeed: number;
   fuelCapacity: number;
+  maxTakeoffWeight: number;
+  minRunwayLength: number;
+  cruiseSpeed: number;
   maxRange: number;
   serviceCeiling: number;
+  enteredServiceAtYear: number;
 }
 
 export interface AircraftWithSocials extends Aircraft{
   savesCount: number;
   authorUsername: string;
+  createdDate: Date;
 }
 
 export interface AircraftSelected extends AircraftWithSocials {

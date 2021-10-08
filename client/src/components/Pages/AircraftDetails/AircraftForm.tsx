@@ -124,20 +124,6 @@ const AircraftForm: React.FC<Props> = ({
             />
 
             <FieldGroup 
-              label="Max Takeoff Weight" type="number"
-              value={values.maxTakeoffWeight}
-              valueName="maxTakeoffWeight"
-              isDisabled={isSubmitting || !isEditMode}
-            />
-
-            <FieldGroup 
-              label="Cruise Speed" type="number"
-              value={values.cruiseSpeed}
-              valueName="cruiseSpeed"
-              isDisabled={isSubmitting || !isEditMode}
-            />
-
-            <FieldGroup 
               label="Fuel Capacity" type="number"
               value={values.fuelCapacity}
               valueName="fuelCapacity"
@@ -152,10 +138,36 @@ const AircraftForm: React.FC<Props> = ({
             />
 
             <FieldGroup 
+              label="Max Takeoff Weight" type="number"
+              value={values.maxTakeoffWeight}
+              valueName="maxTakeoffWeight"
+              isDisabled={isSubmitting || !isEditMode}
+            />
+
+            <FieldGroup 
+              label="Min. Runway Length" type="number" 
+              valueName="minRunwayLength"
+              isDisabled={isSubmitting}
+            />
+
+            <FieldGroup 
+              label="Cruise Speed" type="number"
+              value={values.cruiseSpeed}
+              valueName="cruiseSpeed"
+              isDisabled={isSubmitting || !isEditMode}
+            />
+
+            <FieldGroup 
               label="Service Ceiling" type="number"
               value={values.serviceCeiling}
               valueName="serviceCeiling"
               isDisabled={isSubmitting || !isEditMode}
+            />
+
+            <FieldGroup 
+              label="Entered Service Year" type="number" 
+              valueName="enteredServiceAtYear"
+              isDisabled={isSubmitting}
             />
           </div>
 

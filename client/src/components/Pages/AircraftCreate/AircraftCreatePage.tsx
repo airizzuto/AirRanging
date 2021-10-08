@@ -46,10 +46,12 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
     icaoWakeCategory: EIcaoWakeCategory.Light,
     fuelType: EFuelType.AvGas,
     maxTakeoffWeight: 0,
+    minRunwayLength: 0,
     cruiseSpeed: 0,
     fuelCapacity: 0,
     maxRange: 0,
     serviceCeiling: 0,
+    enteredServiceAtYear: 1950,
   };
 
   return (
@@ -146,20 +148,20 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
                 />
 
                 <FieldGroup 
+                  label="Fuel Capacity" type="number" 
+                  valueName="fuelCapacity"
+                  isDisabled={isSubmitting}
+                />
+
+                <FieldGroup 
                   label="Max Takeoff Weight" type="number" 
                   valueName="maxTakeoffWeight"
                   isDisabled={isSubmitting}
                 />
 
                 <FieldGroup 
-                  label="Cruise Speed" type="number" 
-                  valueName="cruiseSpeed"
-                  isDisabled={isSubmitting}
-                />
-
-                <FieldGroup 
-                  label="Fuel Capacity" type="number" 
-                  valueName="fuelCapacity"
+                  label="Min. Runway Length" type="number" 
+                  valueName="minRunwayLength"
                   isDisabled={isSubmitting}
                 />
 
@@ -170,8 +172,20 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
                 />
 
                 <FieldGroup 
+                  label="Cruise Speed" type="number" 
+                  valueName="cruiseSpeed"
+                  isDisabled={isSubmitting}
+                />
+
+                <FieldGroup 
                   label="Service Ceiling" type="number" 
                   valueName="serviceCeiling"
+                  isDisabled={isSubmitting}
+                />
+
+                <FieldGroup 
+                  label="Entered Service Year" type="number" 
+                  valueName="enteredServiceAtYear"
                   isDisabled={isSubmitting}
                 />
               </div>

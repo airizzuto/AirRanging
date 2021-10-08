@@ -36,6 +36,8 @@ export const aircraftSchema: SchemaOf<AircraftWithoutIDs> = object().shape({
     .defined("Aircraft engine count is required"),
   maxTakeoffWeight: number()
     .moreThan(0, "Maximum takeoff weight must be positive"),
+  minRunwayLength: number()
+        .positive(),
   cruiseSpeed: number()
     .positive("Cruise speed must be a positive number"),
   fuelCapacity: number()
@@ -44,5 +46,6 @@ export const aircraftSchema: SchemaOf<AircraftWithoutIDs> = object().shape({
   maxRange: number()
     .moreThan(0, "Max range must be more than 0")
     .defined("Max range is required"),
-  serviceCeiling: number()
+  serviceCeiling: number(),
+  enteredServiceAtYear: number(),
 }).defined();
