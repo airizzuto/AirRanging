@@ -29,9 +29,16 @@ interface LinkProps {
  * @param style: button style selected from ButtonStyles.
  * @returns button component.
  */
-export const Button: React.FC<ButtonProps> = ({ children, handleClick, disabled, type, style }) => {
+export const Button: React.FC<ButtonProps> = ({ 
+  children, handleClick, disabled, type, style
+}) => {
   return (
-    <button className={style} onClick={handleClick} disabled={disabled} type={type}>
+    <button
+      className={style}
+      onClick={handleClick}
+      disabled={disabled}
+      type={type}
+    >
       {children}
     </button>
   );

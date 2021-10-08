@@ -25,6 +25,41 @@
   }
 };
 
+.toggle {
+  @include font.button;
+  @include drop-shadow;
+  @include text-shadow;
+  @include hyperlink-behavior;
+  @include button-behavior;
+
+  width: 100%;
+
+  text-align: center;
+  padding: 0.5rem;
+
+  border: 2px solid color.$light2;
+  border-radius: 5px;
+
+  background-color: color.$dark1;
+};
+
+.toggle-checked{
+  @include font.button;
+  @include drop-shadow;
+  @include text-shadow;
+  @include hyperlink-behavior;
+  @include button-behavior;
+
+  width: 100%;
+
+  text-align: center;
+  padding: 0.5rem;
+
+  border: 2px solid color.$light1;
+  border-radius: 5px;
+  background-color: color.$light2;
+}
+
 .danger {
   @include font.button;
   @include drop-shadow;

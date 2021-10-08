@@ -18,7 +18,7 @@ const SaveActionsButton: React.FC<Props> = ({aircraft, aircraftsSaved, disabled,
       ? <Button 
           type="button"
           handleClick={() => handleAircraftUnsave(aircraft.id)}
-          style={"primary"}
+          style={"toggle-checked"}
           disabled={disabled}
         >
           SAVED
@@ -26,7 +26,7 @@ const SaveActionsButton: React.FC<Props> = ({aircraft, aircraftsSaved, disabled,
       : <Button
           type="button"
           handleClick={() => handleAircraftSave(aircraft.id)}
-          style={"primary"}
+          style={"toggle"}
           disabled={disabled}
         >
           SAVE

@@ -1,6 +1,8 @@
 
-export type ButtonStyles = 
-  | "primary" 
-  | "danger" 
-  | "exit" 
+export type ButtonStyles =
+  | "primary"
+  | "danger"
+  | "toggle"
+  | "toggle-checked"
+  | "exit"
   | "undecorated";
