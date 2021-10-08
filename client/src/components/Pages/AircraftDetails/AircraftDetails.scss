@@ -13,11 +13,20 @@
   grid-auto-rows: auto;
   grid-template-areas: "title" "." "form";
 
+  padding-top: 1rem;
+
   h1 {
     @include text-shadow;
     @include font.header-1;
     
     grid-area: title;
+
+    color: color.$light1;
+  }
+
+  h2 {
+    @include text-shadow;
+    @include font.header-2;
 
     color: color.$light1;
   }
