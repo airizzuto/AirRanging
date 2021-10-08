@@ -40,7 +40,7 @@ const AircraftForm: React.FC<Props> = ({
               label="ICAO ID" type="text"
               value={values.icaoId}
               valueName="icaoId"
-              placeholder="ICAO ID" 
+              placeholder="ICAO ID"
               isDisabled={isSubmitting || !isEditMode}
             />
 
@@ -48,7 +48,7 @@ const AircraftForm: React.FC<Props> = ({
               label="Manufacturer" type="text"
               value={values.manufacturer}
               valueName="manufacturer"
-              placeholder="Manufacturer" 
+              placeholder="Manufacturer"
               isDisabled={isSubmitting || !isEditMode}
             />
 
@@ -56,7 +56,7 @@ const AircraftForm: React.FC<Props> = ({
               label="Model" type="text"
               value={values.model}
               valueName="model"
-              placeholder="Model" 
+              placeholder="Model"
               isDisabled={isSubmitting || !isEditMode}
             />
 
@@ -64,7 +64,7 @@ const AircraftForm: React.FC<Props> = ({
               label="Variant" type="text"
               value={values.variant}
               valueName="variant"
-              placeholder="Variant" 
+              placeholder="Variant"
               isDisabled={isSubmitting || !isEditMode}
             />
 
@@ -72,7 +72,7 @@ const AircraftForm: React.FC<Props> = ({
               label="Registration" type="text"
               value={values.registration}
               valueName="registration"
-              placeholder="Registration" 
+              placeholder="Registration"
               isDisabled={isSubmitting || !isEditMode}
             />
 
@@ -145,9 +145,9 @@ const AircraftForm: React.FC<Props> = ({
             />
 
             <FieldGroup 
-              label="Min. Runway Length" type="number" 
+              label="Min. Runway Length" type="number"
               valueName="minRunwayLength"
-              isDisabled={isSubmitting}
+              isDisabled={isSubmitting || !isEditMode}
             />
 
             <FieldGroup 
@@ -165,9 +165,9 @@ const AircraftForm: React.FC<Props> = ({
             />
 
             <FieldGroup 
-              label="Entered Service Year" type="number" 
+              label="Entered Service Year" type="number"
               valueName="enteredServiceAtYear"
-              isDisabled={isSubmitting}
+              isDisabled={isSubmitting || !isEditMode}
             />
           </div>
 
