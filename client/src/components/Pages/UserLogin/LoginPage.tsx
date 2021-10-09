@@ -12,6 +12,7 @@ import AlertBox from "../../Generics/Alerts/AlertBox";
 import Style from "./Login.module.scss";
 import CheckboxStyle from "../../../styles/components/_checkbox.module.scss";
 import { Button, LinkButton } from "../../Generics/Buttons/Button";
+import ModalHeader from "../../Generics/Modals/ModalHeader";
 
 interface Props {
   setUser: Dispatch<SetStateAction<UserPublic | null>>;
@@ -53,14 +54,10 @@ const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
   return (
     <div className={Style.LoginContainer}>
       <div className={Style.Login}>
-        <div className={Style.LoginHeader}>
-          <h1>Login</h1>
-          <div className={Style.CloseButton}>
-            <Button handleClick={handleClose} style={"exit"}>X</Button>
-          </div>
-        </div>
-
-        <hr />
+        <ModalHeader
+          headerTitle={"Login"}
+          handleClose={handleClose} 
+        />
 
         <Formik 
           initialValues={{ email: "", password: ""}}

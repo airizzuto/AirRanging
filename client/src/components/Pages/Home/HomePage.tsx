@@ -55,7 +55,7 @@ const Home: React.FC<Props> = ({
       <DraggableModal 
         show={displayPlanningModal}
         
-        label="Planning"
+        sectionName="Planning"
         // eslint-disable-next-line react-hooks/rules-of-hooks
         handleClose={() => setDisplayPlanningModal(false)}
       >

@@ -28,26 +28,6 @@
 
   z-index: 3;
 
-  .ModalHeader {
-    @include text-shadow;
-    display: grid;
-    grid-area: modal-header;
-    grid-template-columns: 3fr 1fr;
-    grid-template-areas: "modal-title modal-exit";
-    column-gap: 2rem;
-
-    .ModalTitle {
-      @include font.header-2;
-      grid-area: modal-title;
-      place-self: left center;
-    }
-
-    .CloseButton {
-      grid-area: modal-exit;
-      place-self: center right;
-    }
-  }
-
   .Separator {
     @include separator.style;
     grid-area: separator;

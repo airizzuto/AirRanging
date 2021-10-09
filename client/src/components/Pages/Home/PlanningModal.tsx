@@ -111,7 +111,6 @@ const PlanningModal: React.FC<Props> = ({
         </div>
 
         <div className={Style.AircraftButtons}>
-          {/* TODO: view details button */}
           <LinkButton
             style={"primary"}
             disabled={aircraftSelected === null}
@@ -119,7 +118,6 @@ const PlanningModal: React.FC<Props> = ({
           >
             Details
           </LinkButton>
-          {/* TODO: save button */}
           <SaveActionsButton
             aircraft={aircraftSelected}
             aircraftsSaved={aircraftsSaved}
@@ -145,7 +143,7 @@ const PlanningModal: React.FC<Props> = ({
               handler={handleFuelChange}
             />
           </div>
-          {/* TODO: fuel units selection dropdown */}
+          {/* TODO: units selection dropdown */}
         </div>
 
         <div className={Style.ValueInput}>

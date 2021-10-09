@@ -15,10 +15,6 @@
     @include text-shadow;
     @include drop-shadow;
     
-    display: grid;
-    grid-template-rows: min-content min-content 1fr;
-    grid-template-areas: "login-header" "separator" "login-form";
-
     margin: 2rem 0 2rem 0;
     padding: 1rem 2rem 1rem 2rem;
     place-content: center;
@@ -33,33 +29,6 @@
     border-radius: 10px;
   
     z-index: 13;
-
-    .LoginHeader {
-      grid-area: login-header;
-      display: grid;
-      grid-template-columns: 3fr 1fr;
-      grid-template-areas: "login-title login-exit";
-      align-self: center;
-  
-      .LoginTitle {
-        @include font.header-1;
-        grid-area: login-title;
-        place-self: left center;
-  
-      }
-  
-      .CloseButton {
-        grid-area: login-exit;
-        place-self: center right;
-      }
-    }
-  
-    hr {
-      @include separator.style;
-      width: 95%;
-      margin: 0 0 1rem 0;
-      place-self: center;
-    }
   
     .LoginForm {
       @include text-shadow;
