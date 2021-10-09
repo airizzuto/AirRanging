@@ -10,11 +10,10 @@
   grid-auto-rows: max-content;
   grid-template-columns: 1fr;
   min-width: 20rem;
-  row-gap: 0.5rem;
-  padding-top: 1rem;
+  min-height: 100%;
+  row-gap: 1rem;
 
   .Selection {
-    @include text-shadow;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas: 
@@ -45,84 +44,81 @@
   .Inputs {
     display: flex;
     flex-direction: column;
-    row-gap: 0.5rem;
+    row-gap: 1rem;
 
     .SliderInput {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       grid-template-areas: 
-        "property-label property-output"
+        "property-label value-box"
         "modifier modifier";
-      row-gap: 0.5rem;
+      column-gap: 5rem;
 
       .Range {
         grid-area: modifier;
+        align-self: center;
+
       }
 
-      .Output {
-        grid-area: property-output;
-        width: max-content;
+      .ValueBox {
+        grid-area: value-box;
       }
 
       label {
         grid-area: property-label;
-        align-self: center;
-        width: 100%;
       }
     }
 
     .ValueInput {
-      @include text-shadow;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr;
-      grid-template-areas: "property-label property-input";
-      row-gap: 0.5rem;
+      display: flex;
+      flex-direction: row;
+      width: 100%;
 
       label {
-        grid-area: property-label;
+        @include text-shadow;
         align-self: center;
+        align-self: flex-start;
       }
 
       input {
         @include box.light;
-        grid-area: property-input;
         align-self: center;
         width: max-content;
       }
+
+      .ValueBox {
+        grid-area: value-box;
+        width: max-content;
+        align-self: flex-end;
+      }
     }
   }
-  
+
   .Accept {
-    display: flex;
+      display: flex;
       grid-area: accept;
       height: fit-content;
       justify-self: flex-end;
-      width: 50%;
     }
   }
+}
+
+label {
+  @include text-shadow;
+}
+
+h1 {
+  @include text-shadow;
+  @include font.header-3;
+  margin: 0;
+}
+
+.Separator {
+  @include separator.style;
+  width: 95%;
+}
   
-  .Output {
-    @include box.light;
-  }
-
-  label {
-    @include text-shadow;
-  }
-
-  h1 {
-    @include text-shadow;
-    @include font.header-3;
-    margin: 0;
-  }
-
-  span {
-    @include text-shadow;
-  }
-  
-  .Separator {
-    @include separator.style;
-    width: 95%;
-  }
+.ValueBox {
+  @include box.light;
 }

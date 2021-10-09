@@ -134,7 +134,7 @@ const PlanningModal: React.FC<Props> = ({
       <div className={Style.Inputs}>
         <div className={Style.SliderInput}>
           <label>Fuel Loaded:</label>
-          <div className={Style.Output}>
+          <div className={Style.ValueBox}>
             {aircraftSelected ? aircraftSelected.loadedFuel : 0}
           </div>
           <div className={Style.Range}>
@@ -150,7 +150,7 @@ const PlanningModal: React.FC<Props> = ({
 
         <div className={Style.ValueInput}>
           <label>Range:</label>
-          <span className={Style.output}>
+          <span className={Style.ValueBox}>
             {aircraftSelected ? aircraftSelected.currentMaxRange : 0}
           </span>
           {/* TODO: distance unit selection dropdown */}
@@ -158,7 +158,7 @@ const PlanningModal: React.FC<Props> = ({
 
         <div className={Style.ValueInput}>
           <label>Cruise Speed:</label>
-          <span className={Style.output}>
+          <span className={Style.ValueBox}>
             {/*TODO:*/}*WIP*
           </span>
           {/* TODO: velocity unit selection dropdown */}
@@ -166,7 +166,7 @@ const PlanningModal: React.FC<Props> = ({
 
         <div className={Style.ValueInput}>
           <label>Cruise Altitude:</label>
-          <span className={Style.output}>
+          <span className={Style.ValueBox}>
             {/*TODO:*/}*WIP*
           </span>
           {/* TODO: altitude unit selection dropdown */}
