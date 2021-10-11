@@ -43,6 +43,7 @@ const PlanningSelection: React.FC<Props> = ({
           handleFilter={handleAircraftsFilters}
           filters={filters}
         />
+
         <ToggleDataSet 
           label={"Show owned"}
           set={"owned"}
@@ -68,8 +69,9 @@ const PlanningSelection: React.FC<Props> = ({
           disabled={aircraftSelected === null}
           path={`/aircrafts/${aircraftSelected?.id}`}
         >
-          Details
+          VIEW AIRCRAFT
         </LinkButton>
+
         <SaveActionsButton
           aircraft={aircraftSelected}
           aircraftsSaved={aircraftsSaved}

@@ -24,7 +24,15 @@
   .AircraftButtons {
     grid-area: aircraft-buttons;
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
+    flex-wrap: nowrap;
     column-gap: 1rem;
+    
+    button {
+      padding: 0.5rem 1rem;
+      min-width: 35%;
+      width: fit-content;
+    }
   }
 }
