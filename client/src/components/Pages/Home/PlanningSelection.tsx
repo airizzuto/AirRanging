@@ -8,7 +8,7 @@ import DropdownSearchbar from '../../Generics/Filters/DropdownSearchbar';
 import { LinkButton } from '../../Generics/Buttons/Button';
 import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
 
-import Style from "./Selection.module.scss";
+import Style from "./PlanningSelection.module.scss";
 
 interface Props {
   initialAircrafts: AircraftWithSocials[];
