@@ -4,13 +4,11 @@
 @use "../../../styles/components/boxes" as box;
 @use "../../../styles/mixins" as *;
 
-
-.Selection {
-  
-}
-
-.Inputs {
-  
+.Container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  height: fit-content;
 }
 
 .Accept {

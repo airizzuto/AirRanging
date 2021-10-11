@@ -8,9 +8,11 @@
   @include font.header-1;
 
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-content: center;
 
   width: 100%;
-  height: 100%;
+  height: fit-content;
 }
