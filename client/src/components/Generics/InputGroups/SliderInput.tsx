@@ -12,7 +12,16 @@ interface Props {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-// TODO: SRP for slider input component
+/**
+ * Slider input component with value box
+ * @param label
+ * @param fieldName
+ * @param currentValue
+ * @param minValue
+ * @param maxValue
+ * @param handleChange
+ * @returns React component
+ */
 const SliderInput: React.FC<Props> = ({
   label,
   fieldName,
