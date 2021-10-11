@@ -75,7 +75,7 @@ const PlanningModal: React.FC<Props> = ({
 
         <div className={Style.Accept}>
           <Button handleClick={handleAccept} style="primary">
-            Accept
+            ACCEPT
           </Button>
         </div>
       </div>

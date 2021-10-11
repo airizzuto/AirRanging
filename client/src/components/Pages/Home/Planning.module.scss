@@ -13,9 +13,13 @@
 
 .Accept {
   display: flex;
+  flex-direction: row;
   grid-area: accept;
-  height: fit-content;
-  justify-self: flex-end;
+  justify-content: right;
+
+  button {
+    max-width: 40%;
+  }
 }
 
 .Separator {
