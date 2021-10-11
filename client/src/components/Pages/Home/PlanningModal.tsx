@@ -3,15 +3,15 @@ import React from "react";
 import { calculateRange } from "../../../helpers/fuelCalculation";
 
 import { AircraftSelected, AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
+import { Filters } from "../../../types/Aircraft/Filter";
 
 import Slider from "../../Generics/Sliders/Slider";
-import { Button, LinkButton } from "../../Generics/Buttons/Button";
+import { Button } from "../../Generics/Buttons/Button";
+import ModalHeader from "../../Generics/Modals/ModalHeader";
+import DraggableModalWrapper from "../../Generics/Modals/DraggableModalWrapper";
 
-import Style from "./PlanningModal.module.scss";
-import DropdownSearchbar from "../../Generics/Filters/DropdownSearchbar";
-import { Filters } from "../../../types/Aircraft/Filter";
-import ToggleDataSet from "../../Generics/Filters/ToggleDataSet";
-import SaveActionsButton from "../../AircraftActions/SaveActionsButton";
+import Style from "./Planning.module.scss";
+import PlanningSelection from "./PlanningSelection";
 
 /* TODO: Refactor style:
 
@@ -39,6 +39,8 @@ interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;
   aircraftSelected: AircraftSelected | null;
   filters: Filters;
+  show: boolean;
+  handleModalClose: React.MouseEventHandler<HTMLButtonElement>;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleAircraftsFilters: (filter: Filters) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
@@ -51,8 +53,10 @@ const PlanningModal: React.FC<Props> = ({
   currentAircrafts,
   aircraftSelected,
   aircraftsSaved,
-  handleAircraftState,
   filters,
+  show,
+  handleModalClose,
+  handleAircraftState,
   handleAircraftSelection,
   handleAircraftsFilters,
   handleAircraftSave,
@@ -82,103 +86,80 @@ const PlanningModal: React.FC<Props> = ({
 
   // TODO: abstract input fields into components
   return (
-    <div className={Style.Container}>
-      <div className={Style.Selection}>
-        <div className={Style.Toggles}>
-          <ToggleDataSet 
-            label={"Show saved"}
-            set={"saved"}
-            handleFilter={handleAircraftsFilters}
-            filters={filters}
-          />
-          <ToggleDataSet 
-            label={"Show owned"}
-            set={"owned"}
-            handleFilter={handleAircraftsFilters}
-            filters={filters}
-          />
-        </div>
+    <DraggableModalWrapper isActive={show}>
+      <div className={Style.Container}>
+        <ModalHeader
+          headerTitle={"Planning"}
+          handleClose={handleModalClose}
+        />
+    
+        <hr className={Style.Separator}/>
 
-        <div className={Style.Searchbar}>
-          <DropdownSearchbar
-            handleSelection={handleAircraftSelection}
-            handleFilter={handleAircraftsFilters}
-            filters={filters}
-            initialOptions={initialAircrafts}
-            currentOptions={currentAircrafts}
-            placeholder="Search aircrafts..."
-          />
-        </div>
+        <PlanningSelection 
+          initialAircrafts={initialAircrafts}
+          currentAircrafts={currentAircrafts}
+          aircraftsSaved={aircraftsSaved}
+          aircraftSelected={aircraftSelected}
+          filters={filters}
+          handleAircraftSelection={handleAircraftSelection}
+          handleAircraftsFilters={handleAircraftsFilters}
+          handleAircraftSave={handleAircraftSave}
+          handleAircraftUnsave={handleAircraftUnsave}
+        />
 
-        <div className={Style.AircraftButtons}>
-          <LinkButton
-            style={"primary"}
-            disabled={aircraftSelected === null}
-            path={`/aircrafts/${aircraftSelected?.id}`}
-          >
-            Details
-          </LinkButton>
-          <SaveActionsButton
-            aircraft={aircraftSelected}
-            aircraftsSaved={aircraftsSaved}
-            handleAircraftSave={handleAircraftSave}
-            handleAircraftUnsave={handleAircraftUnsave}
-          />
-        </div>
-      </div>
+        <hr className={Style.Separator}/>
 
-      <hr className={Style.Separator}/>
-
-      <div className={Style.Inputs}>
-        <div className={Style.SliderInput}>
-          <label>Fuel Loaded:</label>
-          <div className={Style.ValueBox}>
-            {aircraftSelected ? aircraftSelected.loadedFuel : 0}
+        <div className={Style.Inputs}>
+          <div className={Style.SliderInput}>
+            <label>Fuel Loaded:</label>
+            <div className={Style.ValueBox}>
+              {aircraftSelected ? aircraftSelected.loadedFuel : 0}
+            </div>
+            <div className={Style.Range}>
+              <Slider name="loadedFuel"
+                min={0}
+                max={aircraftSelected ? aircraftSelected.fuelCapacity : 0}
+                value={aircraftSelected ? aircraftSelected.loadedFuel : 0}
+                handler={handleFuelChange}
+              />
+            </div>
+            {/* TODO: units selection dropdown */}
           </div>
-          <div className={Style.Range}>
-            <Slider name="loadedFuel"
-              min={0}
-              max={aircraftSelected ? aircraftSelected.fuelCapacity : 0}
-              value={aircraftSelected ? aircraftSelected.loadedFuel : 0}
-              handler={handleFuelChange}
-            />
+
+          <div className={Style.ValueInput}>
+            <label>Range:</label>
+            <span className={Style.ValueBox}>
+              {aircraftSelected ? aircraftSelected.currentMaxRange : 0}
+            </span>
+            {/* TODO: distance unit selection dropdown */}
           </div>
-          {/* TODO: units selection dropdown */}
+
+          <div className={Style.ValueInput}>
+            <label>Cruise Speed:</label>
+            <span className={Style.ValueBox}>
+              {/*TODO:*/}*WIP*
+            </span>
+            {/* TODO: velocity unit selection dropdown */}
+          </div>
+
+          <div className={Style.ValueInput}>
+            <label>Cruise Altitude:</label>
+            <span className={Style.ValueBox}>
+              {/*TODO:*/}*WIP*
+            </span>
+            {/* TODO: altitude unit selection dropdown */}
+          </div>
         </div>
 
-        <div className={Style.ValueInput}>
-          <label>Range:</label>
-          <span className={Style.ValueBox}>
-            {aircraftSelected ? aircraftSelected.currentMaxRange : 0}
-          </span>
-          {/* TODO: distance unit selection dropdown */}
-        </div>
+        <hr className={Style.Separator} />
 
-        <div className={Style.ValueInput}>
-          <label>Cruise Speed:</label>
-          <span className={Style.ValueBox}>
-            {/*TODO:*/}*WIP*
-          </span>
-          {/* TODO: velocity unit selection dropdown */}
-        </div>
-
-        <div className={Style.ValueInput}>
-          <label>Cruise Altitude:</label>
-          <span className={Style.ValueBox}>
-            {/*TODO:*/}*WIP*
-          </span>
-          {/* TODO: altitude unit selection dropdown */}
+        <div className={Style.Accept}>
+          <Button handleClick={handleAccept} style="primary">
+            Accept
+          </Button>
         </div>
       </div>
-
-      <hr className={Style.Separator} />
-
-      <div className={Style.Accept}>
-        <Button handleClick={handleAccept} style="primary">
-          Accept
-        </Button>
-      </div>
-    </div>
+    </DraggableModalWrapper>
   );
 };
 

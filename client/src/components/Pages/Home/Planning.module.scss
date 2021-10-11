@@ -1,0 +1,85 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/components/separators" as separator;
+@use "../../../styles/components/boxes" as box;
+@use "../../../styles/mixins" as *;
+
+.Inputs {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+
+  .SliderInput {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "property-label value-box"
+      "modifier modifier";
+    column-gap: 5rem;
+
+    .Range {
+      grid-area: modifier;
+      align-self: center;
+    }
+
+    .ValueBox {
+      grid-area: value-box;
+    }
+
+    label {
+      grid-area: property-label;
+    }
+  }
+
+  .ValueInput {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    label {
+      @include text-shadow;
+      align-self: center;
+      align-self: flex-start;
+    }
+
+    input {
+      @include box.light;
+      align-self: center;
+      width: max-content;
+    }
+
+    .ValueBox {
+      grid-area: value-box;
+      width: max-content;
+      align-self: flex-end;
+    }
+  }
+}
+
+.Accept {
+  display: flex;
+  grid-area: accept;
+  height: fit-content;
+  justify-self: flex-end;
+}
+
+
+label {
+  @include text-shadow;
+}
+
+h1 {
+  @include text-shadow;
+  @include font.header-3;
+  margin: 0;
+}
+
+.Separator {
+  @include separator.style;
+  width: 95%;
+}
+  
+.ValueBox {
+  @include box.light;
+}

@@ -1,0 +1,30 @@
+
+.Selection {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "toggles"
+    "searchbar"
+    "aircraft-buttons";
+  row-gap: 1rem;
+  padding: 1rem 0;
+  
+  .Toggles {
+    grid-area: toggles;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    column-gap: 1rem;
+  }
+
+  .Searchbar {
+    grid-area: searchbar;
+  }
+
+  .AircraftButtons {
+    grid-area: aircraft-buttons;
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+  }
+}
