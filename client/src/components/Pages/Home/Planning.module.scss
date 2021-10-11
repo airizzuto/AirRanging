@@ -9,29 +9,6 @@
   flex-direction: column;
   row-gap: 1rem;
 
-  .SliderInput {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas:
-      "property-label value-box"
-      "modifier modifier";
-    column-gap: 5rem;
-
-    .Range {
-      grid-area: modifier;
-      align-self: center;
-    }
-
-    .ValueBox {
-      grid-area: value-box;
-    }
-
-    label {
-      grid-area: property-label;
-    }
-  }
-
   .ValueInput {
     display: flex;
     flex-direction: row;

@@ -5,13 +5,13 @@ import { calculateRange } from "../../../helpers/fuelCalculation";
 import { AircraftSelected, AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
 import { Filters } from "../../../types/Aircraft/Filter";
 
-import Slider from "../../Generics/Sliders/Slider";
 import { Button } from "../../Generics/Buttons/Button";
 import ModalHeader from "../../Generics/Modals/ModalHeader";
 import DraggableModalWrapper from "../../Generics/Modals/DraggableModalWrapper";
 
 import Style from "./Planning.module.scss";
 import PlanningSelection from "./PlanningSelection";
+import SliderInput from "../../Generics/InputGroups/SliderInput";
 
 /* TODO: Refactor style:
 
@@ -110,21 +110,14 @@ const PlanningModal: React.FC<Props> = ({
         <hr className={Style.Separator}/>
 
         <div className={Style.Inputs}>
-          <div className={Style.SliderInput}>
-            <label>Fuel Loaded:</label>
-            <div className={Style.ValueBox}>
-              {aircraftSelected ? aircraftSelected.loadedFuel : 0}
-            </div>
-            <div className={Style.Range}>
-              <Slider name="loadedFuel"
-                min={0}
-                max={aircraftSelected ? aircraftSelected.fuelCapacity : 0}
-                value={aircraftSelected ? aircraftSelected.loadedFuel : 0}
-                handler={handleFuelChange}
-              />
-            </div>
-            {/* TODO: units selection dropdown */}
-          </div>
+          <SliderInput 
+            label={"Fuel Loaded:"}
+            fieldName={"loadedFuel"}
+            currentValue={aircraftSelected ? aircraftSelected.loadedFuel : 0}
+            minValue={0}
+            maxValue={aircraftSelected ? aircraftSelected.fuelCapacity : 0}
+            handleChange={handleFuelChange}
+          />
 
           <div className={Style.ValueInput}>
             <label>Range:</label>
