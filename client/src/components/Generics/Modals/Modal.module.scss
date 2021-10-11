@@ -3,45 +3,23 @@
 @use "../../../styles/components/separators" as separator;
 @use "../../../styles/mixins" as *;
 
-.Modal {
+.Container {
   @include blurring;
   box-shadow: 1px 2px 1px hsla(0, 0%, 0%, 0.75);
   
   position: relative;
   width: fit-content;
+  height: fit-content;
   min-width: 20%;
   max-height: 80%;
-  height: fit-content;
 
   color: color.$light1;
 
-  grid-template-rows: 1fr auto 9fr;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    "modal-header"
-    "separator"
-    "modal-content";
-
-  border-radius: 10px;
+  border-radius: 5px;
   
-  padding: 1rem 1rem 1rem 1rem;
+  padding: 1rem;
 
   z-index: 3;
-
-  .Separator {
-    @include separator.style;
-    grid-area: separator;
-
-    place-self: center;
-    width: 95%;
-  }
-
-  .ModalContent {
-    @include font.main;
-
-    display: grid;
-    grid-area: modal-content;
-  }
 }
 
 .display-block {

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { faMap, } from "@fortawesome/free-regular-svg-icons";
 
 import ModalTab from "../../Generics/Buttons/ModalTab";
-import DraggableModal from "../../Generics/Modals/DraggableModal";
 import PlanningModal from "./PlanningModal";
 import { Filters } from "../../../types/Aircraft/Filter";
 
@@ -39,7 +38,6 @@ const Home: React.FC<Props> = ({
   // const [isModalActive, setIsModalActive] = useState(true); // One active modal at once
   const [displayPlanningModal, setDisplayPlanningModal] = useState(true);
 
-
   return (
     <div className={Style.Home}>
 
@@ -52,28 +50,21 @@ const Home: React.FC<Props> = ({
       </div>
 
       {/* Map View Properties Modals */}
-      <DraggableModal 
+      <PlanningModal
         show={displayPlanningModal}
-        
-        sectionName="Planning"
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        handleClose={() => setDisplayPlanningModal(false)}
-      >
-        <PlanningModal
-          // eslint-disable-next-line react-hooks/rules-of-hooks
-          initialAircrafts={initialAircrafts}
-          currentAircrafts={currentAircrafts}
-          aircraftsSaved={aircraftsSaved}
-          aircraftSelected={selectedAircraft}
-          filters={filters}
-          handleAircraftState={handleAircraftState}
-          handleAircraftSelection={handleAircraftSelection}
-          handleAircraftsFilters={handleAircraftsFilters}
-          handleAircraftSave={handleAircraftSave}
-          handleAircraftUnsave={handleAircraftUnsave}
-          handleAccept={() => setDisplayPlanningModal(false)}
-        />
-      </DraggableModal>
+        handleModalClose={() => setDisplayPlanningModal(false)}
+        handleAccept={() => setDisplayPlanningModal(false)} // TODO: same as close or other function
+        initialAircrafts={initialAircrafts}
+        currentAircrafts={currentAircrafts}
+        aircraftsSaved={aircraftsSaved}
+        aircraftSelected={selectedAircraft}
+        filters={filters}
+        handleAircraftState={handleAircraftState}
+        handleAircraftSelection={handleAircraftSelection}
+        handleAircraftsFilters={handleAircraftsFilters}
+        handleAircraftSave={handleAircraftSave}
+        handleAircraftUnsave={handleAircraftUnsave}
+      />
 
       {/* TODO:
       <div className={Style.Info}>
