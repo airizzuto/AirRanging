@@ -1,4 +1,6 @@
+@use "../../../styles/mixins" as *;
 
+// TODO: fix alignment of elements
 .SliderInput {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -7,6 +9,10 @@
     "property-label value-box"
     "modifier modifier";
   column-gap: 5rem;
+  
+  label {
+    grid-area: property-label;
+  }
 
   .Range {
     grid-area: modifier;
@@ -14,10 +20,7 @@
   }
 
   .ValueBox {
+    @include text-shadow;
     grid-area: value-box;
-  }
-
-  label {
-    grid-area: property-label;
   }
 }

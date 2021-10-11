@@ -4,34 +4,13 @@
 @use "../../../styles/components/boxes" as box;
 @use "../../../styles/mixins" as *;
 
+
+.Selection {
+  
+}
+
 .Inputs {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-
-  .ValueInput {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-
-    label {
-      @include text-shadow;
-      align-self: center;
-      align-self: flex-start;
-    }
-
-    input {
-      @include box.light;
-      align-self: center;
-      width: max-content;
-    }
-
-    .ValueBox {
-      grid-area: value-box;
-      width: max-content;
-      align-self: flex-end;
-    }
-  }
+  
 }
 
 .Accept {
@@ -41,22 +20,7 @@
   justify-self: flex-end;
 }
 
-
-label {
-  @include text-shadow;
-}
-
-h1 {
-  @include text-shadow;
-  @include font.header-3;
-  margin: 0;
-}
-
 .Separator {
   @include separator.style;
   width: 95%;
-}
-  
-.ValueBox {
-  @include box.light;
 }
