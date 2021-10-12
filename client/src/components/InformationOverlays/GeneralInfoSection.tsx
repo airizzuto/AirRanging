@@ -1,6 +1,6 @@
 import React from "react";
 
-import Style from "./GeneralInfoSections.module.scss";
+import Style from "./GeneralInfoSection.module.scss";
 
 const GeneralInfoSection: React.FC = () => {
   return (

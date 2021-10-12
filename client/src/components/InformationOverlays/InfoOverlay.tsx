@@ -1,40 +1,52 @@
 
-import { AircraftWithSocials } from "../../types/Aircraft/Aircraft";
+import { AircraftSelected } from "../../types/Aircraft/Aircraft";
+import AircraftInfoSection from "./AircraftInfoSection";
+import MapInfoSection from "./MapInfoSection";
+import GeneralInfoSection from "./GeneralInfoSection";
+
 import Style from "./InfoOverlay.module.scss";
 
 /* TODO: Information overlay
   1. TODO: Aircraft selected or none
+    A. Header:
+      - Display Aircraft Selected *MANUFACTURER* - *Model*
+      - Display NO AIRCRAFT SELECTED
+    B. Main:
+      - Aircraft state properties
+      - NOT AVAILABLE
 
-  2. TODO: Aircraft selected states (fuel, weight, speed, range)
+  2. TODO: Aircraft selected info (fuel, weight, speed, range)
 
-  3. TODO: Map center coordinates
+  3. TODO: Map points info. WIP
+    - Coordinates
+    - Name
+    - Elevation
+    - Type
 
-  4. TODO: Map point selected coordinates
+  4. TODO: General Info. WIP
+    - Z Time
+    - Center coordinates
+    - Elevation at center. WIP
+    - L Time
 */
 
 interface Props {
-  aircraftSelected: AircraftWithSocials[] | null;
+  aircraftSelected: AircraftSelected | null;
   // mapInformation: MapInfo;
   // pointsInformation: PointInfo[];
 }
 
-const InfoOverlay: React.FC<Props> = () => {
+const InfoOverlay: React.FC<Props> = ({aircraftSelected}) => {
   return (
     <div className={Style.InfoContainer}>
-      {/*
-        <AircraftSection 
-          aircraftSelected={aircraftSelected} 
-        />
-      */}
-      {/*
-        <MapInfo 
-          mapInformation={mapInformation}
-          pointsInformation={pointsInformation}
-        />
-      */}
-      {/* 
-        <GeneralInfo />
-      */}
+      <AircraftInfoSection 
+        aircraftSelected={aircraftSelected} 
+      />
+      <MapInfoSection
+        // mapInformation={mapInformation}
+        // pointsInformation={pointsInformation}
+      />
+      <GeneralInfoSection />
     </div>
   );
 };
