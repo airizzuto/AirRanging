@@ -1,18 +1,17 @@
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import Style from "./ModalTab.module.scss";
 
 interface Props {
-  icon: IconDefinition;
+  children: React.ReactElement | Array<React.ReactElement>;
   handleTabClick: () => void;
 }
 
-const ModalTab = ({icon, handleTabClick}: Props): JSX.Element => {
+const TabButton = ({children, handleTabClick}: Props): JSX.Element => {
   return (
     <button onClick={handleTabClick} className={Style.Tab}>
-      <FontAwesomeIcon icon={icon} />
+      {children}
     </button>
   );
 };
 
-export default ModalTab;
+export default TabButton;

@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { faMap, } from "@fortawesome/free-regular-svg-icons";
+import { faMap } from "@fortawesome/free-regular-svg-icons";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import ModalTab from "../../Generics/Buttons/ModalTab";
-import PlanningModal from "./PlanningModal";
 import { Filters } from "../../../types/Aircraft/Filter";
-
 import { AircraftWithSocials, AircraftSelected } from "../../../types/Aircraft/Aircraft";
 
+import TabButton from "../../Generics/Buttons/ModalTab";
+import PlanningModal from "./PlanningModal";
+import InfoOverlay from "../../InformationOverlays/InfoOverlay";
+
 import Style from "./Home.module.scss";
-// import InfoFooter from "./InfoFooter";
 
 interface Props {
   initialAircrafts: AircraftWithSocials[];
@@ -35,7 +37,7 @@ const Home: React.FC<Props> = ({
   handleAircraftUnsave,
   handleAircraftState
 }) => {
-  // const [isModalActive, setIsModalActive] = useState(true); // One active modal at once
+  const [displayInfoOverlay, setDisplayInfoOverlay] = useState(false);
   const [displayPlanningModal, setDisplayPlanningModal] = useState(true);
 
   return (
@@ -43,10 +45,17 @@ const Home: React.FC<Props> = ({
 
       {/* Properties Modals Activation Tabs */}
       <div className={Style.ModalTabs}>
-        <ModalTab
-          icon={faMap}
+        <TabButton
           handleTabClick={() => setDisplayPlanningModal(!displayPlanningModal)}
-        />
+        >
+          <FontAwesomeIcon icon={faMap} />
+        </TabButton>
+
+        <TabButton
+          handleTabClick={() => setDisplayInfoOverlay(!displayInfoOverlay)}
+        >
+          <FontAwesomeIcon icon={faInfoCircle} />
+        </TabButton>
       </div>
 
       {/* Map View Properties Modals */}
@@ -66,11 +75,9 @@ const Home: React.FC<Props> = ({
         handleAircraftUnsave={handleAircraftUnsave}
       />
 
-      {/* TODO:
       <div className={Style.Info}>
-        <InfoOverlay />
-      </div> 
-      */}
+        <InfoOverlay aircraftSelected={selectedAircraft} />
+      </div>
 
     </div>
   );
