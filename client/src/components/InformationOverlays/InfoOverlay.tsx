@@ -38,7 +38,7 @@ interface Props {
 
 const InfoOverlay: React.FC<Props> = ({aircraftSelected}) => {
   return (
-    <div className={Style.InfoContainer}>
+    <div className={Style.Container}>
       <AircraftInfoSection 
         aircraftSelected={aircraftSelected} 
       />
