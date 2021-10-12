@@ -3,31 +3,17 @@
 @use "../../../styles/fonts" as font;
 @use "../../../styles/components/boxes" as box;
 
-.Checkbox {
+.Toggle {
   display: flex;
   flex-direction: row;
+
+  .checkmark {
+    height: 1rem;
+  }
 
   label {
     @include font.main;
     @include text-shadow;
     text-align: center;
-  }
-
-  // TODO: checkbox style
-  input[type=checkbox] {
-    @include box.light;
-    height: 0.8rem;
-    width: 0.8rem;
-    place-self: center;
-  }
-
-  input[type="checkbox"]:hover {
-    color: adjust-color($color: color.$light1, $lightness: 80%);
-    transition: color 0.4s;
-  }
-
-  input[type="checkbox"]:checked {
-    color: color.$accent1;
-    transition: color 0.4s;
   }
 }

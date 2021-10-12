@@ -2,6 +2,7 @@ import React from 'react';
 import { AircraftsDataSets, Filters } from '../../../types/Aircraft/Filter';
 
 import Style from "./ToggleDataSet.module.scss";
+import CheckboxStyle from "../../../styles/components/_checkbox.module.scss";
 
 interface Props {
   label: string;
@@ -28,14 +29,16 @@ const ToggleDataSet: React.FC<Props> = ({label, set, handleFilter, filters}) => 
   };
 
   return (
-    <div className={Style.Checkbox}>
-      <label htmlFor="checkboxToggle">{label}</label>
-      <input
-        id="checkboxToggle"
-        type="checkbox"
-        checked={isToggled}
-        onChange={() => handleSetToggle()}
-      />
+    <div className={Style.Toggle}>
+      <label htmlFor="checkboxToggle" className={CheckboxStyle.checkbox}>{label}
+        <input
+          id="checkboxToggle"
+          type="checkbox"
+          checked={isToggled}
+          onChange={() => handleSetToggle()}
+        />
+        <span className={CheckboxStyle.checkmark}></span>
+      </label>
     </div>
   );
 };
