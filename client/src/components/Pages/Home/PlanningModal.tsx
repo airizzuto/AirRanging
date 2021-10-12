@@ -49,8 +49,6 @@ const PlanningModal: React.FC<Props> = ({
           headerTitle={"Planning"}
           handleClose={handleModalClose}
         />
-    
-        <hr className={Style.Separator}/>
 
         <PlanningSelection 
           initialAircrafts={initialAircrafts}
@@ -64,14 +62,10 @@ const PlanningModal: React.FC<Props> = ({
           handleAircraftUnsave={handleAircraftUnsave}
         />
 
-        <hr className={Style.Separator}/>
-
         <PlanningInputs
           aircraftSelected={aircraftSelected}
           handleAircraftState={handleAircraftState}
         />
-
-        <hr className={Style.Separator} />
 
         <div className={Style.Accept}>
           <Button handleClick={handleAccept} style="primary">

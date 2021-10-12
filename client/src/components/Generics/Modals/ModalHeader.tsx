@@ -11,14 +11,12 @@ interface Props {
 
 const ModalHeader: React.FC<Props> = ({ headerTitle, handleClose }) => {
   return (
-    <div className={Style.ModalHeader} id="modalHeader">
-      <h1 className={Style.ModalTitle}>{headerTitle}</h1>
+    <div className={Style.Container} id="modalHeader">
+      <h1>{headerTitle}</h1>
   
-      <div className={Style.CloseButton}>
-        <Button handleClick={handleClose} style={"exit"}>
-          X
-        </Button>
-      </div>
+      <Button handleClick={handleClose} style={"exit"}>
+        X
+      </Button>
     </div>
   );
 };

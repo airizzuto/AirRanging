@@ -7,8 +7,8 @@
 .Container {
   display: flex;
   flex-direction: column;
-  row-gap: 0.5rem;
   height: fit-content;
+  row-gap: 1rem;
 }
 
 .Accept {
@@ -20,9 +20,4 @@
   button {
     max-width: 40%;
   }
-}
-
-.Separator {
-  @include separator.style;
-  width: 95%;
 }
