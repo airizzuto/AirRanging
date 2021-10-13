@@ -4,6 +4,7 @@
 
 // TODO: home overlay position
 .Container {
+  position: relative;
   @include blurring;
   @include text-shadow;
   display: grid;
@@ -11,6 +12,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas: "aircraft-info map-info general-info";
   height: fit-content;
+  min-height: 15vh;
   width: 100%;
   color: color.$light1;
 
