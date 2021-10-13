@@ -4,19 +4,20 @@
 @use "../../../styles/components/boxes" as box;
 @use "../../../styles/mixins" as *;
 
-.LoginContainer {
+.Container {
   @include main-component;
-
+  position: relative;
   display: flex;
   place-content: center;
-  height: 100%;
+  
+  z-index: 2 ;
 
   .Login {
     @include text-shadow;
     @include drop-shadow;
-    
+
     margin: 2rem 0 2rem 0;
-    padding: 1rem 2rem 1rem 2rem;
+    padding: 1rem 2rem;
     place-content: center;
     
     max-height: 70%;
@@ -27,8 +28,6 @@
     color: color.$light1;
     background-color: color.$dark1;
     border-radius: 10px;
-  
-    z-index: 13;
   
     .LoginForm {
       @include text-shadow;

@@ -13,7 +13,7 @@ interface Props {
 }
 
 const Header = ({handleLogout, user}: Props): JSX.Element => (
-  <nav className={Style.HeaderContainer}>
+  <nav className={Style.Container}>
     <div className={Style.Menu}>
       <Menu />
     </div>

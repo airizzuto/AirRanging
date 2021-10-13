@@ -5,8 +5,10 @@
 .TermsAndConditions {
   @include main-component;
   @include text-shadow;
+  position: relative;
 
   display: grid;
+  z-index: 2;
 
   h2{
     @include font.header-1;

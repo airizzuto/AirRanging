@@ -6,6 +6,7 @@
 
 .AircraftsView {
   @include main-component;
+  position: relative;
 
   display: grid;
   grid-template-rows: min-content min-content max-content;
@@ -15,6 +16,7 @@
     "aircraft-table";
   row-gap: 1rem;
   padding-top: 1rem;
+  z-index: 2;
 
   .SubHeader {
     grid-area: sub-header;

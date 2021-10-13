@@ -7,11 +7,13 @@
 
 .RegistrationView {
   @include main-component;
+  position: relative;
   
   display: grid;
   grid-template-rows: auto min-content 8fr;
   grid-template-columns: 1fr;
   grid-template-areas: "title" "separator" "form";
+  z-index: 2;
 
   .RegistrationTitle {
     @include font.header-1;

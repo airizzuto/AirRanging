@@ -52,7 +52,7 @@ const Login: React.FC<Props> = ({ setUser }): React.ReactElement => {
   };
 
   return (
-    <div className={Style.LoginContainer}>
+    <div className={Style.Container}>
       <div className={Style.Login}>
         <ModalHeader
           headerTitle={"Login"}

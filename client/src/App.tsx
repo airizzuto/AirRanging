@@ -32,7 +32,7 @@ import NotFound from "./components/Pages/ErrorPages/NotFoundPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-// import Map from "./components/Map/Map";
+import Map from "./components/Map/Map";
 
 import "./App.scss";
 
@@ -227,7 +227,7 @@ const App = (): JSX.Element =>{
       </div>
 
       <div className="Map">
-        {/* <Map selectedAircraft={aircraftSelected}/> */}
+        <Map selectedAircraft={aircraftSelected}/>
       </div>
 
       <div className="Main">

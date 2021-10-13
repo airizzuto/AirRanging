@@ -5,9 +5,8 @@
 @import "../Menu/Menu.module.scss";
 @import "../Generics/Buttons/ButtonStyles.scss";
 
-.HeaderContainer {
+.Container {
   @include text-shadow;
-
   height: 100%;
   width: 100%;
   min-height: 6rem;
