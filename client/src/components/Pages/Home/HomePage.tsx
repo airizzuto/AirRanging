@@ -37,7 +37,7 @@ const Home: React.FC<Props> = ({
   handleAircraftUnsave,
   handleAircraftState
 }) => {
-  const [displayInfoOverlay, setDisplayInfoOverlay] = useState(false);
+  const [displayInfoOverlay, setDisplayInfoOverlay] = useState(true);
   const [displayPlanningModal, setDisplayPlanningModal] = useState(true);
 
   return (
@@ -50,7 +50,6 @@ const Home: React.FC<Props> = ({
         >
           <FontAwesomeIcon icon={faMap} />
         </TabButton>
-
         <TabButton
           handleTabClick={() => setDisplayInfoOverlay(!displayInfoOverlay)}
         >
@@ -76,7 +75,10 @@ const Home: React.FC<Props> = ({
       />
 
       <div className={Style.Info}>
-        <InfoOverlay aircraftSelected={selectedAircraft} />
+        <InfoOverlay 
+          show={displayInfoOverlay}
+          aircraftSelected={selectedAircraft}
+        />
       </div>
 
     </div>
