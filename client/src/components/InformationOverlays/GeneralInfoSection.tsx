@@ -1,12 +1,18 @@
 import React from "react";
 
-import Style from "./GeneralInfoSection.module.scss";
+import Style from "./Section.module.scss";
 
 const GeneralInfoSection: React.FC = () => {
   return (
-    <div className={Style.Container}>
-      {/* TODO: Info fields */}
-    </div>
+    <>
+      <div className={Style.Header}>
+        <h1>MODE:</h1>
+        <h2>WIP</h2>
+      </div>
+      <div className={Style.Main}>
+        <span>NOT AVAILABLE</span>
+      </div>
+    </>
   );
 };
 
