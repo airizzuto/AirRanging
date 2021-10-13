@@ -5,6 +5,7 @@ import MapInfoSection from "./MapInfoSection";
 import GeneralInfoSection from "./GeneralInfoSection";
 
 import Style from "./InfoOverlay.module.scss";
+import { displayComponent } from "../../utils/displayComponent";
 
 /* TODO: Information overlay
   1. TODO: Aircraft selected or none
@@ -31,14 +32,15 @@ import Style from "./InfoOverlay.module.scss";
 */
 
 interface Props {
+  show: boolean;
   aircraftSelected: AircraftSelected | null;
   // mapInformation: MapInfo;
   // pointsInformation: PointInfo[];
 }
 
-const InfoOverlay: React.FC<Props> = ({aircraftSelected}) => {
+const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
   return (
-    <div className={Style.Container}>
+    <div className={Style.Container} style={displayComponent(show)}>
       <AircraftInfoSection 
         aircraftSelected={aircraftSelected} 
       />

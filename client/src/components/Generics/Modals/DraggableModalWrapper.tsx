@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import Draggable from "react-draggable";
+import { displayComponent } from "../../../utils/displayComponent";
 
 import Style from "./Modal.module.scss";
 
@@ -10,15 +11,13 @@ interface Props {
 
 // TODO: Draggable bounds, dragabble area
 const DraggableModalWrapper: React.FC<Props> = ({isActive, children }) => {
-  const showHideClassName = isActive ? {display: "block"} : {display: "none"};
-
   return (
     <Draggable
       bounds=""
       handle="#modalHeader"
       defaultPosition={{x: 100, y: 50}}
     >
-      <div className={Style.Container} style={showHideClassName}>
+      <div className={Style.Container} style={displayComponent(isActive)}>
         {children}
       </div>
     </Draggable>
