@@ -7,8 +7,10 @@ import CheckboxStyle from "../../../styles/components/_checkbox.module.scss";
 interface Props {
   label: string;
   set: AircraftsDataSets;
+  unset: AircraftsDataSets;
   handleFilter: (filter: Filters) => void;
   filters: Filters;
+  disabled: boolean;
 }
 
 /**
@@ -19,12 +21,12 @@ interface Props {
  * @param filters
  * @returns React component
  */
-const ToggleDataSet: React.FC<Props> = ({label, set, handleFilter, filters}) => {
+const ToggleDataSet: React.FC<Props> = ({label, set, unset, handleFilter, filters, disabled}) => {
   const isToggled = filters.set === set;
 
   const handleSetToggle = () => {
     isToggled
-    ? handleFilter({...filters, set: "all"})
+    ? handleFilter({...filters, set: unset})
     : handleFilter({...filters, set: set});
   };
 
@@ -36,6 +38,7 @@ const ToggleDataSet: React.FC<Props> = ({label, set, handleFilter, filters}) => 
           type="checkbox"
           checked={isToggled}
           onChange={() => handleSetToggle()}
+          disabled={disabled}
         />
         <span className={CheckboxStyle.checkmark}></span>
       </label>

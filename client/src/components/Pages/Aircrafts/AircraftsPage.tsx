@@ -13,6 +13,7 @@ import Searchbar from '../../Generics/Filters/Searchbar';
 import DropdownSelect from '../../Generics/Filters/DropdownSelect';
 
 import Style from "./Aircrafts.module.scss";
+import { getUserData } from '../../../helpers/userHelper';
 
 interface Props {
   user: UserPublic | null;
@@ -143,15 +144,19 @@ const Aircrafts: React.FC<Props> = ({
           <ToggleDataSet
             label={"Show saved"}
             set={"saved"}
+            unset={"all"}
             handleFilter={handleAircraftsFilters}
             filters={filters}
+            disabled={getUserData() === null}
           />
 
           <ToggleDataSet
             label={"Show owned"}
             set={"owned"}
+            unset={"all"}
             handleFilter={handleAircraftsFilters}
             filters={filters}
+            disabled={getUserData() === null}
           />
         </div>
 

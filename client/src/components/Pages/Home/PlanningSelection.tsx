@@ -9,6 +9,7 @@ import { LinkButton } from '../../Generics/Buttons/Button';
 import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
 
 import Style from "./PlanningSelection.module.scss";
+import { getUserData } from '../../../helpers/userHelper';
 
 interface Props {
   initialAircrafts: AircraftWithSocials[];
@@ -40,15 +41,19 @@ const PlanningSelection: React.FC<Props> = ({
         <ToggleDataSet 
           label={"Show saved"}
           set={"saved"}
+          unset={"all"}
           handleFilter={handleAircraftsFilters}
           filters={filters}
+          disabled={getUserData() === null}
         />
 
         <ToggleDataSet 
           label={"Show owned"}
           set={"owned"}
+          unset={"all"}
           handleFilter={handleAircraftsFilters}
           filters={filters}
+          disabled={getUserData() === null}
         />
       </div>
 
