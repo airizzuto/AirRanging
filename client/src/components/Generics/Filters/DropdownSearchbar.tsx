@@ -29,9 +29,9 @@ const DropdownSearchbar: React.FC<Props> = ({
     handleFilter({...filters, search: inputValue});
   };
 
-  const handleChange = (selected: any) => {
+  const handleChange = (selected: AircraftWithSocials | undefined) => {
     selected
-    ? handleSelection(selected.value)
+    ? handleSelection(selected)
     : handleSelection(null);
   };
 
@@ -53,7 +53,7 @@ const DropdownSearchbar: React.FC<Props> = ({
         defaultOptions={mapAircraftToFilter(initialOptions)}
         options={mapAircraftToFilter(currentOptions)}
         loadOptions={(inputValue) => handleSearch(inputValue)}
-        onChange={handleChange}
+        onChange={e => handleChange(e?.value)}
         {...selectProps}
       />
     </>
