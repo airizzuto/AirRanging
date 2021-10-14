@@ -22,12 +22,24 @@ interface Props {
 /* React select documentation https://react-select.com/home */
 
 const DropdownSearchbar: React.FC<Props> = ({
-  handleSelection, handleFilter, initialOptions, currentOptions, filters, placeholder
+  handleSelection, handleFilter, currentOptions, filters, placeholder
 }) => {
 
-  const handleSearch = (inputValue: string) => {
+  // FIXME: not filtering when empty string input
+  const searchFilter = (inputValue: string) => {
     handleFilter({...filters, search: inputValue});
+
+    console.log("DEBUG: filtering search: ", currentOptions, filters);
+
+    return mapAircraftToFilter(currentOptions);
   };
+
+  const promiseOptions = (inputValue: string) =>
+    new Promise<{value: AircraftWithSocials; label: string;}[]>((resolve) => {
+      setTimeout(() => {
+        resolve(searchFilter(inputValue));
+      }, 500);
+  });
 
   const handleChange = (selected: AircraftWithSocials | undefined) => {
     selected
@@ -50,10 +62,9 @@ const DropdownSearchbar: React.FC<Props> = ({
         classNamePrefix="Searchbar"
         placeholder={placeholder}
         cacheOptions
-        defaultOptions={mapAircraftToFilter(initialOptions)}
-        options={mapAircraftToFilter(currentOptions)}
-        loadOptions={(inputValue) => handleSearch(inputValue)}
-        onChange={e => handleChange(e?.value)}
+        defaultOptions={mapAircraftToFilter(currentOptions)}
+        loadOptions={promiseOptions}
+        onChange={(e) => handleChange(e?.value)}
         {...selectProps}
       />
     </>
