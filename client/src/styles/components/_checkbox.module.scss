@@ -36,6 +36,12 @@
   border-radius: 5px;
 }
 
+/* Checkbox grayed when disabled */
+input:disabled ~ .checkmark {
+  background-color: color.$light1-disabled;
+  border-color: color.$dark1;
+}
+
 /* On mouse-over, add a grey background color */
 .checkbox:hover input ~ .checkmark {
   background-color: #ccc;
