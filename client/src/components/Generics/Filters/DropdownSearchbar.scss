@@ -3,6 +3,7 @@
 @use "../../../styles/components/boxes" as box;
 
 .Searchbar-Container {
+  width: 100%;
 
   .Searchbar__control {
     @include box.light;
