@@ -12,14 +12,6 @@ interface ButtonProps {
   style: ButtonStyles;
 }
 
-interface LinkProps {
-  path: string;
-  handleClick?: React.MouseEventHandler<HTMLAnchorElement>;
-  children?: React.ReactElement | string;
-  style: ButtonStyles;
-  disabled?: boolean;
-}
-
 /**
  * Button component
  * @param children: any ReactElement or string wrapped by this button component.
@@ -43,6 +35,14 @@ export const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
+
+interface LinkProps {
+  path: string;
+  handleClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  children?: React.ReactElement | string;
+  style: ButtonStyles;
+  disabled?: boolean;
+}
 
 /**
  * Linked button component used only for routing.
