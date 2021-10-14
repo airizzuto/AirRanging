@@ -85,7 +85,7 @@ const App = (): JSX.Element =>{
     console.info("INFO: EFFECT - filter: ", debouncedFilter);
     
     aircraftService.searchAircrafts(debouncedFilter) // TODO: Take from initialAircrafts
-      .then((response) => setCurrentAircrafts([...response.data])) // TODO: Set in currentAircrafts
+      .then((response) => setCurrentAircrafts([...response.data]))
       .catch(error => console.error("ERROR: filtering aicrafts - ", error));
 
   },[debouncedFilter, initialAircrafts]);
