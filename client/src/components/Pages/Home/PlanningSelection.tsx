@@ -60,6 +60,7 @@ const PlanningSelection: React.FC<Props> = ({
       </div>
 
       <div className={Style.Searchbar}>
+        <label>Selected Aircraft:</label>
         <DropdownSearchbar
           handleSelection={handleAircraftSelection}
           handleFilter={handleAircraftsFilters}
