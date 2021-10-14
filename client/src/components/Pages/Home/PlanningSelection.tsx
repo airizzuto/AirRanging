@@ -38,8 +38,9 @@ const PlanningSelection: React.FC<Props> = ({
   return (
     <div className={Style.Selection}>
       <div className={Style.Toggles}>
-        <ToggleDataSet 
-          label={"Show saved"}
+        <ToggleDataSet
+          id={"checkboxShowSaved"}
+          description={"Show saved"}
           set={"saved"}
           unset={"all"}
           handleFilter={handleAircraftsFilters}
@@ -47,8 +48,9 @@ const PlanningSelection: React.FC<Props> = ({
           disabled={getUserData() === null}
         />
 
-        <ToggleDataSet 
-          label={"Show owned"}
+        <ToggleDataSet
+          id={"checkboxShowOwned"}
+          description={"Show owned"}
           set={"owned"}
           unset={"all"}
           handleFilter={handleAircraftsFilters}

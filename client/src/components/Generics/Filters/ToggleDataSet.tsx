@@ -5,7 +5,8 @@ import Style from "./ToggleDataSet.module.scss";
 import CheckboxStyle from "../../../styles/components/_checkbox.module.scss";
 
 interface Props {
-  label: string;
+  id: string;
+  description: string;
   set: AircraftsDataSets;
   unset: AircraftsDataSets;
   handleFilter: (filter: Filters) => void;
@@ -15,13 +16,16 @@ interface Props {
 
 /**
  * Toggle for data set selection.
+ * @param id
  * @param label
  * @param set
+ * @param unset
  * @param handleFilter
  * @param filters
+ * @param disabled
  * @returns React component
  */
-const ToggleDataSet: React.FC<Props> = ({label, set, unset, handleFilter, filters, disabled}) => {
+const ToggleDataSet: React.FC<Props> = ({id, description, set, unset, handleFilter, filters, disabled}) => {
   const isToggled = filters.set === set;
 
   const handleSetToggle = () => {
@@ -32,9 +36,9 @@ const ToggleDataSet: React.FC<Props> = ({label, set, unset, handleFilter, filter
 
   return (
     <div className={Style.Toggle}>
-      <label htmlFor="checkboxToggle" className={CheckboxStyle.checkbox}>{label}
+      <label htmlFor={id} className={CheckboxStyle.checkbox}>{description}
         <input
-          id="checkboxToggle"
+          id={id}
           type="checkbox"
           checked={isToggled}
           onChange={() => handleSetToggle()}

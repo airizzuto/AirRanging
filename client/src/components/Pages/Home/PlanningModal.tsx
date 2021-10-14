@@ -50,7 +50,7 @@ const PlanningModal: React.FC<Props> = ({
           handleClose={handleModalClose}
         />
 
-        <PlanningSelection 
+        <PlanningSelection
           initialAircrafts={initialAircrafts}
           currentAircrafts={currentAircrafts}
           aircraftsSaved={aircraftsSaved}

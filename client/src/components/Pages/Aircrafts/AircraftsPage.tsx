@@ -142,7 +142,8 @@ const Aircrafts: React.FC<Props> = ({
 
         <div className={Style.FilterOptions}>
           <ToggleDataSet
-            label={"Show saved"}
+            id={"checkboxShowSaved"}
+            description={"Show saved"}
             set={"saved"}
             unset={"all"}
             handleFilter={handleAircraftsFilters}
@@ -151,7 +152,8 @@ const Aircrafts: React.FC<Props> = ({
           />
 
           <ToggleDataSet
-            label={"Show owned"}
+            id={"checkboxShowOwned"}
+            description={"Show owned"}
             set={"owned"}
             unset={"all"}
             handleFilter={handleAircraftsFilters}
