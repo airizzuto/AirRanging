@@ -7,9 +7,7 @@
 
 .Container {
   @include text-shadow;
-  height: 100%;
-  max-width: 100%;
-  padding: 0 3vw;
+  padding: 0 2vw;
 
   display: grid;
   grid-template-rows: 1fr;

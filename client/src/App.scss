@@ -14,7 +14,7 @@
   background-size: cover;
 
   display: grid;
-  grid-template-rows: 15% 82% min-content;
+  grid-template-rows: 6rem auto 1.25rem;
   grid-template-columns: 1fr;
   grid-template-areas:
     "header-nav"
@@ -24,16 +24,18 @@
   overflow: hidden auto;
 
   .Header {
-    position: relative;
     grid-area: header-nav;
-
+    position: fixed;
+    top: 0;
+    min-height: 6rem;
+    width: 100%;
     display: grid;
     z-index: 3;
   }
 
   .Map {
-    position: relative;
     grid-area: main;
+    min-height: fit-content;
     z-index: 1;
   }
 
@@ -44,8 +46,11 @@
   }
 
   .Footer {
-    position: relative;
+    position: static;
     grid-area: footer;
+
+    width: 100%;
+    bottom: 0;
 
     z-index: 3;
   }
