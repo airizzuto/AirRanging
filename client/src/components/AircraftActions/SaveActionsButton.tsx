@@ -27,14 +27,14 @@ const SaveActionsButton: React.FC<Props> = ({aircraft, aircraftsSaved, disabled,
           type="button"
           handleClick={() => handleAircraftSave(aircraft.id)}
           style={"toggle"}
-          disabled={disabled}
+          disabled={disabled} // TODO: route to login
         >
           SAVE
         </Button>
     );
   }
   return (
-    <Button style={'primary'} disabled={true}>
+    <Button style={'primary'} disabled={disabled}>
       SAVE
     </Button>
   );
