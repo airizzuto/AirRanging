@@ -6,7 +6,7 @@
 .Container {
   @include blurring;
   box-shadow: 1px 2px 1px hsla(0, 0%, 0%, 0.75);
-  
+
   position: relative;
   width: fit-content;
   height: fit-content;
@@ -14,8 +14,6 @@
   color: color.$light1;
 
   border-radius: 5px;
-  
-  padding: 1rem;
 
   z-index: 3;
 }
