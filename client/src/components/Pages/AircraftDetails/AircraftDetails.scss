@@ -7,6 +7,7 @@
 
 .Container {
   @include main-component;
+  position: relative;
 
   display: grid;
   grid-template-columns: 1fr;
@@ -14,6 +15,7 @@
   grid-template-areas: "title" "." "form";
 
   padding-top: 1rem;
+  z-index: 2;
 
   h1 {
     @include text-shadow;
