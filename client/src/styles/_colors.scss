@@ -1,7 +1,8 @@
 
 $light1: hsl(0, 0%, 100%);
 $light1-disabled: hsl(0, 0%, 70%);
-$light2: hsla(191, 100%, 47%, 1);
+$light2: hsla(191, 90%, 60%, 1);
+$light3: hsl(191, 85%, 70%);
 $light2-disabled: hsl(190, 70%, 20%);
 $danger: hsl(0, 60%, 45%);
 $danger-disabled: hsl(0, 60%, 25%);
@@ -10,4 +11,5 @@ $dark1: hsl(200, 3%, 22%);
 $dark2: hsl(22, 30%, 32%);
 $accent1: hsl(45, 100%, 50%);
 $accent2: hsl(346, 100%, 75%);
-$bg-semitransparent: hsla(200, 3%, 10%, 0.7);
+$bg-semitransparent: rgba($color: #000000, $alpha: 0.5);
+;
