@@ -4,21 +4,20 @@
 
 .Footer {
   @include font.footer;
+  display: flex;
+  flex-direction: row;
   height: 100%;
   padding: 0 2rem;
 
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-areas: "copyright links";
-
-  align-content: center;
+  justify-content: space-between;
 
   background-color: color.$dark1;
+
+  z-index: 3;
 
   .Copyright{
     @include text-shadow;
     color: color.$light1;
-    grid-area: copyright;
     padding: 0 2vh;
 
     svg {
@@ -29,7 +28,6 @@
   .Links{
     @include text-shadow;
 
-    grid-area: links;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -39,11 +37,10 @@
 
     a {
       @include hyperlink-behavior;
+      flex-wrap: nowrap;
 
       text-decoration: none;
       color: color.$light1;
     }
   }
-
-  z-index: 3;
 }
