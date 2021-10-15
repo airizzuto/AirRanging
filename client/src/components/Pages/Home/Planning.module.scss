@@ -5,10 +5,15 @@
 @use "../../../styles/mixins" as *;
 
 .Container {
-  display: flex;
-  flex-direction: column;
+  @include blurring;
+  background-color: color.$bg-semitransparent;
+
   height: fit-content;
   padding: 1rem;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
   row-gap: 0.5rem;
 
   z-index: 4;
