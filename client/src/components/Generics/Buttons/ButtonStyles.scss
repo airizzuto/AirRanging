@@ -41,6 +41,12 @@
   border-radius: 5px;
 
   background-color: color.$dark1;
+
+  &:disabled{
+    color: color.$light1-disabled;
+    border: none;
+    background-color: color.$light2-disabled;
+  }
 };
 
 .toggle-checked{

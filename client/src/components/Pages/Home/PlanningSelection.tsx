@@ -85,6 +85,7 @@ const PlanningSelection: React.FC<Props> = ({
           aircraftsSaved={aircraftsSaved}
           handleAircraftSave={handleAircraftSave}
           handleAircraftUnsave={handleAircraftUnsave}
+          disabled={getUserData() === null}
         />
       </div>
     </div>
