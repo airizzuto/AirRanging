@@ -15,7 +15,7 @@ const DraggableModalWrapper: React.FC<Props> = ({isActive, children }) => {
     <Draggable
       bounds=""
       handle="#modalHeader"
-      defaultPosition={{x: 100, y: 50}}
+      defaultPosition={{x: 80, y: 10}}
     >
       <div className={Style.Container} style={displayComponent(isActive)}>
         {children}
