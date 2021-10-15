@@ -12,7 +12,7 @@
   color: color.$light1;
 
   .Header {
-    height: 15%;
+    height: 20%;
     background-color: rgba($color: color.$dark1, $alpha: 0.75);
     
     display: flex;
@@ -33,24 +33,19 @@
   }
   
   .Main {
-    height: 85%;
+    height: 80%;
     background-color: color.$bg-semitransparent;
-
+    align-items: center;
+    padding: 1rem;
     tr {
-      display: grid;
-      grid-template-rows: 1fr;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 2rem;
-      align-self: center;
-  
       .Label {
         color: color.$light2;
       }
+    }
 
-      span {
-        text-justify: center;
-        place-self: center;
-      }
+    span {
+      text-justify: center;
+      place-self: center;
     }
   }
 }
