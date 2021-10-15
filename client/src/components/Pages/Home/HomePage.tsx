@@ -42,38 +42,39 @@ const Home: React.FC<Props> = ({
 
   return (
     <div className={Style.Home}>
+      <div className={Style.Main}>
+        {/* Properties Modals Activation Tabs */}
+        <div className={Style.ModalTabs}>
+          <TabButton
+            handleTabClick={() => setDisplayPlanningModal(!displayPlanningModal)}
+          >
+            <FontAwesomeIcon icon={faMap} />
+          </TabButton>
+          <TabButton
+            handleTabClick={() => setDisplayInfoOverlay(!displayInfoOverlay)}
+          >
+            <FontAwesomeIcon icon={faInfoCircle} />
+          </TabButton>
+        </div>
 
-      {/* Properties Modals Activation Tabs */}
-      <div className={Style.ModalTabs}>
-        <TabButton
-          handleTabClick={() => setDisplayPlanningModal(!displayPlanningModal)}
-        >
-          <FontAwesomeIcon icon={faMap} />
-        </TabButton>
-        <TabButton
-          handleTabClick={() => setDisplayInfoOverlay(!displayInfoOverlay)}
-        >
-          <FontAwesomeIcon icon={faInfoCircle} />
-        </TabButton>
+        {/* Map View Properties Modals */}
+        <PlanningModal
+          show={displayPlanningModal}
+          handleModalClose={() => setDisplayPlanningModal(false)}
+          handleAccept={() => setDisplayPlanningModal(false)} // TODO: same as close or other function
+          initialAircrafts={initialAircrafts}
+          currentAircrafts={currentAircrafts}
+          aircraftsSaved={aircraftsSaved}
+          aircraftSelected={selectedAircraft}
+          filters={filters}
+          handleAircraftState={handleAircraftState}
+          handleAircraftSelection={handleAircraftSelection}
+          handleAircraftsFilters={handleAircraftsFilters}
+          handleAircraftSave={handleAircraftSave}
+          handleAircraftUnsave={handleAircraftUnsave}
+        />
       </div>
-
-      {/* Map View Properties Modals */}
-      <PlanningModal
-        show={displayPlanningModal}
-        handleModalClose={() => setDisplayPlanningModal(false)}
-        handleAccept={() => setDisplayPlanningModal(false)} // TODO: same as close or other function
-        initialAircrafts={initialAircrafts}
-        currentAircrafts={currentAircrafts}
-        aircraftsSaved={aircraftsSaved}
-        aircraftSelected={selectedAircraft}
-        filters={filters}
-        handleAircraftState={handleAircraftState}
-        handleAircraftSelection={handleAircraftSelection}
-        handleAircraftsFilters={handleAircraftsFilters}
-        handleAircraftSave={handleAircraftSave}
-        handleAircraftUnsave={handleAircraftUnsave}
-      />
-
+      
       <div className={Style.Info}>
         <InfoOverlay 
           show={displayInfoOverlay}

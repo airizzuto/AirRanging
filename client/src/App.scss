@@ -1,7 +1,6 @@
 @use "./styles/colors" as color;
 @use "./styles/mixins" as *;
 
-
 .App {
   display: grid;
 
@@ -15,45 +14,41 @@
   background-size: cover;
 
   display: grid;
-  grid-template-rows: 6rem 1fr min-content;
+  grid-template-rows: 15% 82% min-content;
   grid-template-columns: 1fr;
-  grid-template-areas: "header-nav" "main" "footer";
+  grid-template-areas:
+    "header-nav"
+    "main"
+    "footer";
 
   overflow: hidden auto;
-    
+
   .Header {
-    grid-area: header-nav;
     position: relative;
-    
-    width: 100%;
+    grid-area: header-nav;
+
+    display: grid;
     z-index: 3;
   }
 
   .Map {
     position: relative;
-
     grid-area: main;
-    height: 100%;
-    width: 100%;
     z-index: 1;
   }
 
   .Main {
     position: relative;
     grid-area: main;
-
-    width: 100%;
     z-index: auto;
   }
 
   .Footer {
     position: relative;
     grid-area: footer;
-    height: 100%;
-    width: 100%;
+
     z-index: 3;
   }
-
 }
 
 @media (max-width: 600px) {
