@@ -11,15 +11,15 @@ interface Props {
 const AircraftInfoSection: React.FC<Props> = ({aircraftSelected}) => {
   return (
     !aircraftSelected
-    ? <>
+    ? <div className={Style.Section}>
         <div className={Style.Header}>
           <h1>NO AIRCRAFT SELECTED</h1>
         </div>
         <div className={Style.Main}>
           <span>NOT AVAILABLE</span>
         </div>
-      </>
-    : <>
+      </div>
+    : <div className={Style.Section}>
         <div className={Style.Header}>
           <h1>{aircraftSelected.manufacturer}</h1>
           <h2>{aircraftSelected.model} {aircraftSelected.variant}</h2>
@@ -43,7 +43,7 @@ const AircraftInfoSection: React.FC<Props> = ({aircraftSelected}) => {
             <td>{aircraftSelected.currentMaxRange}</td>
           </tr>
         </table>
-      </>
+      </div>
   );
 };
 

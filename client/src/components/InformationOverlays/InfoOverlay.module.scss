@@ -4,32 +4,15 @@
 
 // TODO: home overlay position
 .Container {
-  position: relative;
-  @include blurring;
   @include text-shadow;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: "aircraft-info map-info general-info";
-  height: fit-content;
+
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
   min-height: 15vh;
+  height: 100%;
   width: 100%;
+  min-height: 15vh;
   color: color.$light1;
 
-  .AircraftInfoSection {
-    display: grid;
-    grid-area: aircraft-info;
-  }
-
-  .MapInfoSection {
-    display: grid;
-    grid-area: map-info;
-    border-left: 1px solid rgba($color: color.$light1, $alpha: 0.6);
-    border-right: 1px solid rgba($color: color.$light1, $alpha: 0.6);
-  }
-
-  .GeneralInfoSection {
-    display: grid;
-    grid-area: general-info;
-  }
 }
