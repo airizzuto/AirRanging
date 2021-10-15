@@ -1,6 +1,6 @@
 import React from "react";
 
-import Style from "./Section.module.scss";
+import Style from "./OverlaySection.module.scss";
 
 const GeneralInfoSection: React.FC = () => {
   return (

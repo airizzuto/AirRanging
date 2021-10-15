@@ -9,9 +9,11 @@
   flex-direction: column;
   flex: 1 1 0;
 
+  color: color.$light1;
+
   .Header {
-    height: min-content;
-    background-color: rgba($color: color.$dark1, $alpha: 0.8);
+    height: 15%;
+    background-color: rgba($color: color.$dark1, $alpha: 0.75);
     
     display: flex;
     flex-direction: row;
@@ -31,7 +33,7 @@
   }
   
   .Main {
-    height: 100%;
+    height: 85%;
     background-color: color.$bg-semitransparent;
 
     tr {

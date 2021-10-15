@@ -5,14 +5,8 @@
 // TODO: home overlay position
 .Container {
   @include text-shadow;
-
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  min-height: 15vh;
   height: 100%;
-  width: 100%;
-  min-height: 15vh;
-  color: color.$light1;
-
 }

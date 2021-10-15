@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AircraftSelected } from '../../types/Aircraft/Aircraft';
 
-import Style from "./Section.module.scss";
+import Style from "./OverlaySection.module.scss";
 
 interface Props {
   aircraftSelected: AircraftSelected | null;

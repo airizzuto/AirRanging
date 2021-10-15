@@ -1,5 +1,5 @@
 
-import Style from "./Section.module.scss";
+import Style from "./OverlaySection.module.scss";
 
 // TODO: interface
 
