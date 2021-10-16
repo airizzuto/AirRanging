@@ -74,8 +74,8 @@ const PlanningSelection: React.FC<Props> = ({
       <div className={Style.AircraftButtons}>
         <LinkButton
           style={"primary"}
-          disabled={aircraftSelected === null}
-          path={`/aircrafts/${aircraftSelected?.id}`}
+          disabled={!aircraftSelected}
+          path={`/aircrafts/details/${aircraftSelected?.id}`}
         >
           VIEW AIRCRAFT
         </LinkButton>
