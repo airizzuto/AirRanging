@@ -32,7 +32,7 @@ import NotFound from "./components/Pages/ErrorPages/NotFoundPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Map from "./components/Map/Map";
+// import Map from "./components/Map/Map";
 
 import "./App.scss";
 
@@ -54,14 +54,14 @@ const App = (): JSX.Element =>{
 
   // Sets initial aircrafts
   useEffect(() => {
-    console.info("INFO: EFFECT - data refresh");
+    console.debug("INFO: EFFECT - data refresh");
 
     refreshAircrafts();
   }, []);
 
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
-    console.info("INFO: EFFECT - user check");
+    console.debug("INFO: EFFECT - user check");
 
     isUserAuthenticated()
       .then((isAuthenticated) =>
@@ -72,7 +72,7 @@ const App = (): JSX.Element =>{
 
   // Sets user saved aircrafts
   useEffect(() => {
-    console.info("INFO: EFFECT - user aircrafts refresh");
+    console.debug("INFO: EFFECT - user aircrafts refresh");
 
     if (user) {
       refreshSavedAircrafts();
@@ -82,12 +82,15 @@ const App = (): JSX.Element =>{
   }, [user, initialAircrafts]);
 
   useEffect(() => {
-    console.info("INFO: EFFECT - filter: ", debouncedFilter);
+    console.debug("INFO: EFFECT - filter: ", debouncedFilter);
     
     aircraftService.searchAircrafts(debouncedFilter) // TODO: Take from initialAircrafts
       .then((response) => setCurrentAircrafts([...response.data]))
       .catch(error => console.error("ERROR: filtering aicrafts - ", error));
 
+    return () => {
+      setCurrentAircrafts(initialAircrafts);
+    };
   },[debouncedFilter, initialAircrafts]);
 
 
@@ -174,7 +177,7 @@ const App = (): JSX.Element =>{
         await aircraftService.getAircraftById(aircraftId)
           .then(response => setInitialAircrafts(
               initialAircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
-          )).catch(error => console.error(`Fetching aircraft ${aircraftId}: `, error));
+          )).catch(error => console.error(`ERROR: fetching aircraft ${aircraftId} - `, error));
       }).catch(error => console.error("ERROR: retrieving aircraft - ", error));
   };
 
@@ -227,7 +230,7 @@ const App = (): JSX.Element =>{
       </div>
 
       <div className="Map">
-        <Map selectedAircraft={aircraftSelected}/>
+        {/* <Map selectedAircraft={aircraftSelected}/> */}
       </div>
 
       <div className="Main">
