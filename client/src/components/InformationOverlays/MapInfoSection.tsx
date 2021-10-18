@@ -6,8 +6,8 @@ import Style from "./OverlaySection.module.scss";
 const MapInfoSection = () => {
   return (
     <div className={Style.Section} style={{
-      borderLeft:"1px solid #FFFFFF55",
-      borderRight:"1px solid #FFFFFF55"
+      borderLeft:"1px solid #777777BB",
+      borderRight:"1px solid #777777BB"
     }}>
       <div className={Style.Header}>
         <h1>NO POIs SELECTED</h1>
