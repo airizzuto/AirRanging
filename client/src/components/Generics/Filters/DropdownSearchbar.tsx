@@ -13,7 +13,6 @@ import "./DropdownSearchbar.scss";
 interface Props {
   handleSelection: React.Dispatch<React.SetStateAction<any | null>>;
   handleFilter: (filter: Filters) => void;
-  initialOptions: AircraftWithSocials[];
   currentOptions: AircraftWithSocials[];
   filters: Filters;
   placeholder?: string;
@@ -29,7 +28,7 @@ const DropdownSearchbar: React.FC<Props> = ({
   const searchFilter = (inputValue: string) => {
     handleFilter({...filters, search: inputValue});
 
-    console.log("DEBUG: filtering search: ", currentOptions, filters);
+    console.debug("DEBUG: filtering search: ", currentOptions, filters);
 
     return mapAircraftToFilter(currentOptions);
   };
