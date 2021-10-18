@@ -25,6 +25,7 @@ interface Props {
 
 
 const PlanningSelection: React.FC<Props> = ({
+  initialAircrafts,
   currentAircrafts,
   aircraftsSaved,
   aircraftSelected,
@@ -64,6 +65,7 @@ const PlanningSelection: React.FC<Props> = ({
           handleSelection={handleAircraftSelection}
           handleFilter={handleAircraftsFilters}
           filters={filters}
+          initialOptions={initialAircrafts}
           currentOptions={currentAircrafts}
           placeholder="Search aircrafts..."
         />

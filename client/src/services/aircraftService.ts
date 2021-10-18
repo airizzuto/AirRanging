@@ -47,20 +47,11 @@ const getAircraftsSavedByUser = async () => {
 };
 
 const searchAircrafts = async (filter: Filters) => {
-  /*
-    const endpoint = /api/
-
-    const dataSet = filter.saved ? 
-
-    user && (filter.saved || filter.owned) ? create config with token : null
-
-    config ? endpoint + /${filter.}
-  */
-
   const config = {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };
 
+  // TODO: multi-query
   const response = await axios.get(
     BASE_URL + `/api/aircrafts/${filter.set}?${filter.field}=${filter.search}`,
     config

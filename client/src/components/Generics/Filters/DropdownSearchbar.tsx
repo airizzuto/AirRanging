@@ -13,6 +13,7 @@ import "./DropdownSearchbar.scss";
 interface Props {
   handleSelection: React.Dispatch<React.SetStateAction<any | null>>;
   handleFilter: (filter: Filters) => void;
+  initialOptions: AircraftWithSocials[];
   currentOptions: AircraftWithSocials[];
   filters: Filters;
   placeholder?: string;
@@ -21,10 +22,13 @@ interface Props {
 /* React select documentation https://react-select.com/home */
 
 const DropdownSearchbar: React.FC<Props> = ({
-  handleSelection, handleFilter, currentOptions, filters, placeholder
+  handleSelection, handleFilter, initialOptions, currentOptions, filters, placeholder
 }) => {
 
-  // FIXME: not filtering when empty string input
+  const handleInputChange = (newValue: string) => {
+    return newValue.replace(/\W/g, '');
+  };
+
   const searchFilter = (inputValue: string) => {
     handleFilter({...filters, search: inputValue});
 
@@ -33,12 +37,14 @@ const DropdownSearchbar: React.FC<Props> = ({
     return mapAircraftToFilter(currentOptions);
   };
 
-  const promiseOptions = (inputValue: string) =>
-    new Promise<{value: AircraftWithSocials; label: string;}[]>((resolve) => {
-      setTimeout(() => {
-        resolve(searchFilter(inputValue));
-      }, 500);
-  });
+  const loadOptions = (
+    inputValue: string,
+    callback: (options: {value: AircraftWithSocials; label: string;}[]) => void,
+  ) => {
+    setTimeout(() => {
+      callback(searchFilter(inputValue));
+    }, 500);
+  };
 
   const handleChange = (selected: AircraftWithSocials | undefined) => {
     selected
@@ -61,9 +67,10 @@ const DropdownSearchbar: React.FC<Props> = ({
         classNamePrefix="Searchbar"
         placeholder={placeholder}
         cacheOptions
-        defaultOptions={mapAircraftToFilter(currentOptions)}
-        loadOptions={promiseOptions}
+        defaultOptions={mapAircraftToFilter(initialOptions)}
+        loadOptions={loadOptions}
         onChange={(e) => handleChange(e?.value)}
+        onInputChange={handleInputChange}
         {...selectProps}
       />
     </>
