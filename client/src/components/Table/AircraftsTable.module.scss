@@ -11,13 +11,16 @@
   grid-template-rows: 1fr min-content;
   grid-template-areas: "table-view" "pagination";
   row-gap: 1rem;
+  margin: 1rem;
+
   place-self: center;
+
+  overflow: auto auto;
 
   .Table {
     grid-area: table-view;
     border-spacing: 0;
   
-    overflow: hidden scroll;
   
     .TableHeader {
       @include font.header-3;
