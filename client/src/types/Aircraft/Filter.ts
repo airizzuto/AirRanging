@@ -9,4 +9,9 @@ export interface Filters extends AircraftsSets {
     search: string;
 }
 
+export interface AdvancedFilters extends AircraftsSets {
+    fields: AircraftFieldsTypes[];
+    search: string;
+}
+
 export type AircraftsDataSets = "all" | "saved" | "owned";
