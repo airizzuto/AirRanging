@@ -23,7 +23,6 @@ interface Props {
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }
 
-
 const PlanningSelection: React.FC<Props> = ({
   initialAircrafts,
   currentAircrafts,
@@ -85,7 +84,7 @@ const PlanningSelection: React.FC<Props> = ({
           aircraftsSaved={aircraftsSaved}
           handleAircraftSave={handleAircraftSave}
           handleAircraftUnsave={handleAircraftUnsave}
-          disabled={getUserData() === null}
+          disabled={getUserData() === null || !aircraftSelected}
         />
       </div>
     </div>
