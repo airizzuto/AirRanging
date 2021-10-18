@@ -26,22 +26,24 @@ const AircraftInfoSection: React.FC<Props> = ({aircraftSelected}) => {
         </div>
 
         <table className={Style.Main}>
-          <tr>
-            <td className={Style.Label}>Cruise Speed:</td>
-            <td>WIP</td>
-          </tr>
-          <tr>
-            <td className={Style.Label}>Altitude:</td>
-            <td>WIP</td>
-          </tr>
-          <tr>
-            <td className={Style.Label}>Endurance:</td>
-            <td>WIP</td>
-          </tr>
-          <tr>
-            <td className={Style.Label}>Max Range:</td>
-            <td>{aircraftSelected.currentMaxRange}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td className={Style.Label}>Cruise Speed:</td>
+              <td>WIP</td>
+            </tr>
+            <tr>
+              <td className={Style.Label}>Altitude:</td>
+              <td>WIP</td>
+            </tr>
+            <tr>
+              <td className={Style.Label}>Endurance:</td>
+              <td>WIP</td>
+            </tr>
+            <tr>
+              <td className={Style.Label}>Max Range:</td>
+              <td>{aircraftSelected.currentMaxRange}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
   );
