@@ -46,7 +46,7 @@ const App = (): JSX.Element =>{
   const [currentAircrafts, setCurrentAircrafts] = useState<AircraftWithSocials[]>([]);
   const [filters, setFilters] = useState<Filters>({
     set: "all",
-    field: AircraftSearchOptions.Model,
+    field: AircraftSearchOptions.Model, // TODO: convert to array to accept multiple queries?
     search: ""
   });
   const debouncedFilter = useDebounce(filters, 500);
@@ -54,14 +54,14 @@ const App = (): JSX.Element =>{
 
   // Sets initial aircrafts
   useEffect(() => {
-    console.debug("INFO: EFFECT - data refresh");
+    console.debug("EFFECT - data refresh");
 
     refreshAircrafts();
   }, []);
 
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
-    console.debug("INFO: EFFECT - user check");
+    console.debug("EFFECT - user check");
 
     isUserAuthenticated()
       .then((isAuthenticated) =>
@@ -72,7 +72,7 @@ const App = (): JSX.Element =>{
 
   // Sets user saved aircrafts
   useEffect(() => {
-    console.debug("INFO: EFFECT - user aircrafts refresh");
+    console.debug("EFFECT - user aircrafts refresh");
 
     if (user) {
       refreshSavedAircrafts();
@@ -82,11 +82,11 @@ const App = (): JSX.Element =>{
   }, [user, initialAircrafts]);
 
   useEffect(() => {
-    console.debug("INFO: EFFECT - filter: ", debouncedFilter);
+    console.debug("EFFECT - filter: ", debouncedFilter);
     
-    aircraftService.searchAircrafts(debouncedFilter) // TODO: Take from initialAircrafts
+    aircraftService.searchAircrafts(debouncedFilter)
       .then((response) => setCurrentAircrafts([...response.data]))
-      .catch(error => console.error("ERROR: filtering aicrafts - ", error));
+      .catch(error => console.error("Filtering aicrafts - ", error));
 
     return () => {
       setCurrentAircrafts(initialAircrafts);
@@ -101,7 +101,7 @@ const App = (): JSX.Element =>{
       .then((response) => setInitialAircrafts(response.data))
       .catch(error => {
         setInitialAircrafts([]);
-        console.error("ERROR: retrieving all aircrafts - ", error);
+        console.error("Retrieving all aircrafts - ", error);
       });
   };
 
@@ -111,7 +111,7 @@ const App = (): JSX.Element =>{
         .then((response) => setAircraftsSaved(response.data))
         .catch(error => {
           setAircraftsSaved([]);
-          console.error("ERROR: retrieving saved aicrafts - ", error);
+          console.error("Retrieving saved aicrafts - ", error);
         })
     : setAircraftsSaved([]);
   };
@@ -122,7 +122,7 @@ const App = (): JSX.Element =>{
         .then((response) => setAircraftsOwned(response.data))
         .catch(error => {
           setAircraftsOwned([]);
-          console.error("ERROR: retrieving owned aicrafts - ", error);
+          console.error("Retrieving owned aicrafts - ", error);
         })
     : setAircraftsOwned([]);
   };
@@ -143,14 +143,14 @@ const App = (): JSX.Element =>{
   const handleAircraftCreate = async (newAircraft: AircraftWithoutIDs) => {
     await aircraftService.createAircraft(newAircraft)
       .then((response) => setInitialAircrafts(initialAircrafts.concat(response)))
-      .catch(error => console.error("ERROR: creating aircraft - ", error));
+      .catch(error => console.error("Creating aircraft - ", error));
   };
 
   const handleAircraftEdit = async (aircraftId: string, editedAircraft: AircraftWithSocials) => {
     await aircraftService.editAircraft(aircraftId, editedAircraft)
       .then(_ => setInitialAircrafts(initialAircrafts.map(aircraft => 
         aircraft.id !== aircraftId ? aircraft : editedAircraft
-      ))).catch(error => console.error("ERROR: editing aircraft - ", error));
+      ))).catch(error => console.error("Editing aircraft - ", error));
   };
 
   const handleAircraftSave = async (aircraftId: string) => {
@@ -163,8 +163,8 @@ const App = (): JSX.Element =>{
         await aircraftService.getAircraftById(aircraftId)
           .then(response => setInitialAircrafts(
               initialAircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
-          )).catch(error => console.error(`ERROR: fetching aircraft ${aircraftId}: `, error));
-      }).catch(error => console.error("ERROR: retrieving aircraft - ", error));
+          )).catch(error => console.error(`Fetching aircraft ${aircraftId}: `, error));
+      }).catch(error => console.error("Retrieving aircraft - ", error));
   };
 
   const handleAircraftUnsave = async (aircraftId: string) => {
@@ -177,8 +177,8 @@ const App = (): JSX.Element =>{
         await aircraftService.getAircraftById(aircraftId)
           .then(response => setInitialAircrafts(
               initialAircrafts.map(aircraft => aircraft.id !== aircraftId ? aircraft : response.data)
-          )).catch(error => console.error(`ERROR: fetching aircraft ${aircraftId} - `, error));
-      }).catch(error => console.error("ERROR: retrieving aircraft - ", error));
+          )).catch(error => console.error(`Fetching aircraft ${aircraftId} - `, error));
+      }).catch(error => console.error("Retrieving aircraft - ", error));
   };
 
   const handleAircraftSelection = (selected: AircraftWithSocials | null) => {
@@ -200,7 +200,7 @@ const App = (): JSX.Element =>{
     await aircraftService.deleteAircraft(aircraftId)
       .then(async () => await refreshAircrafts())
       .catch(error =>
-        console.error(`ERROR: deleting aircraft ${aircraftId}: `, error)
+        console.error(`Deleting aircraft ${aircraftId}: `, error)
       );
   };
 
@@ -209,7 +209,7 @@ const App = (): JSX.Element =>{
       .then(async (response) => {
         await refreshAircrafts()
           .then(_ => history.push(`/aircrafts/details/${response.data.id}`));
-      }).catch(error => console.error("ERROR: cloning aircraft: ", error));
+      }).catch(error => console.error("Cloning aircraft: ", error));
   };
 
 

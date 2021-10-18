@@ -134,7 +134,7 @@ namespace App.Controllers.V1
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircraftsPaginated);
 
             _logger.LogInfo(
-                $" Returning all search paginated {aircraftsResponse.Count()} aircrafts from db."
+                $" Returning search for all '{aircraftsResponse.Count()}' aircrafts."
             );
 
             return Ok(aircraftsResponse);
@@ -196,7 +196,7 @@ namespace App.Controllers.V1
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircraftsPaginated);
 
             _logger.LogInfo(
-                $" Returning owned {aircraftsResponse.Count()} paginated aircrafts from db."
+                $" Returning search for owned '{aircraftsResponse.Count()}' aircrafts."
             );
 
             return Ok(aircraftsResponse);
@@ -257,7 +257,7 @@ namespace App.Controllers.V1
             var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircraftsPaginated);
 
             _logger.LogInfo(
-                $" Returning saved paginated {aircraftsResponse.Count()} aircrafts from db."
+                $" Returning search for saved '{aircraftsResponse.Count()}' aircrafts."
             );
 
             return Ok(aircraftsResponse);
