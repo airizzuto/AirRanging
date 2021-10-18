@@ -9,9 +9,8 @@
 
   display: grid;
   grid-template-rows: 1fr min-content;
-  row-gap: 1rem;
-  grid-column: 1fr;
   grid-template-areas: "table-view" "pagination";
+  row-gap: 1rem;
   place-self: center;
 
   .Table {
@@ -79,7 +78,7 @@
 
     .SelectButton { // TODO: fix style inheritance
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
 
       button {
         padding: 0.5rem 2rem;
