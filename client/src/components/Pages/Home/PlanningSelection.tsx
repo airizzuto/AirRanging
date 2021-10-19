@@ -2,6 +2,7 @@ import React from 'react';
 
 import { AircraftSelected, AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { Filters } from '../../../types/Aircraft/Filter';
+import { getUserData } from '../../../helpers/userHelper';
 
 import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
 import DropdownSearchbar from '../../Generics/Filters/DropdownSearchbar';
@@ -9,7 +10,6 @@ import { LinkButton } from '../../Generics/Buttons/Button';
 import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
 
 import Style from "./PlanningSelection.module.scss";
-import { getUserData } from '../../../helpers/userHelper';
 
 interface Props {
   initialAircrafts: AircraftWithSocials[];
