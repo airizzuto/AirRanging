@@ -22,7 +22,7 @@ interface Props {
 /* React select documentation https://react-select.com/home */
 
 const DropdownSearchbar: React.FC<Props> = ({
-  handleSelection, handleFilter, initialOptions, currentOptions, filters, placeholder
+  handleSelection, handleFilter, currentOptions, filters, placeholder
 }) => {
 
   const handleInputChange = (newValue: string) => {
@@ -67,7 +67,7 @@ const DropdownSearchbar: React.FC<Props> = ({
         classNamePrefix="Searchbar"
         placeholder={placeholder}
         cacheOptions
-        defaultOptions={mapAircraftToFilter(initialOptions)}
+        defaultOptions={mapAircraftToFilter(currentOptions)}
         loadOptions={loadOptions}
         onChange={(e) => handleChange(e?.value)}
         onInputChange={handleInputChange}

@@ -24,7 +24,7 @@ const ValueInput: React.FC<Props> = ({
     <div className={Style.ValueInput}>
       <label>{label}</label>
       <input
-        defaultValue={value}
+        value={value}
         onChange={handleChange}
       />
       {/* TODO: units dropdown */}
