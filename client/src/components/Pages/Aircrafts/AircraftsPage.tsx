@@ -119,6 +119,7 @@ const Aircrafts: React.FC<Props> = ({
     [user, aircraftsSaved, handleAircraftSave, handleAircraftUnsave]
   );
 
+
   return (
     <div className={Style.AircraftsView}>
 
@@ -171,6 +172,7 @@ const Aircrafts: React.FC<Props> = ({
 
       <hr />
 
+      {/* TODO: advanced filter */}
       {/* TODO: refactor to cards */}
       {
         aircrafts.length > 0

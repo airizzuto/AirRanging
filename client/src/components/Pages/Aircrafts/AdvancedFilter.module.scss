@@ -1,0 +1,36 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/mixins" as *;
+
+.Container {
+  @include text-shadow;
+  display: flex;
+  flex-direction: column;
+
+  .FilterBySet {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid color.$light1;
+  }
+
+  .FilterProperty {
+    display: flex;
+    flex-direction: column;
+    
+    .Title {
+      @include font.header-3;
+      border-bottom: 1px solid color.$light1;
+    }
+
+    .Values {
+      @include font.main;
+
+      display:flex;
+      flex-direction: column;
+    }
+
+    .Slider {
+
+    }
+  }
+}
