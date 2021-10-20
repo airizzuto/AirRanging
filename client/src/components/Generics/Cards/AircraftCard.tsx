@@ -1,10 +1,12 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import AircraftsListButtons from '../../Pages/Aircrafts/AircraftsListButtons';
-import { LinkButton } from '../Buttons/Button';
+import { Button, LinkButton } from '../Buttons/Button';
 
 import Style from "./AircraftCard.module.scss";
+import PropertyField from './PropertyField';
 
 interface Props {
   user: UserPublic | null;
@@ -16,18 +18,37 @@ interface Props {
 }
 
 const AircraftCard: React.FC<Props> = ({
-  user, aircraft, aircraftsSaved, handleAircraftSave, handleAircraftUnsave
+  user, aircraft, aircraftsSaved, handleAircraftSave, handleAircraftUnsave, handleAircraftSelection
 }) => {
+
+  const history = useHistory();
+
+  const handleSelect = () => {
+    handleAircraftSelection(aircraft);
+    history.push("/");
+  };
+
   return (
     <div className={Style.Container}>
       <div className={Style.Image}>
         NO IMAGE
+        <div className={Style.ShortDescription}>
+          <label>{aircraft.manufacturer}</label>
+          <label>{aircraft.model}</label>
+        </div>
       </div>
 
-      <div className={Style.Data}>
+      <div className={Style.Description}>
         <h1>{aircraft.icaoId} - {aircraft.variant} - {aircraft.registration}</h1>
         <div className={Style.Fields}>
-          {/* TODO: Properties */}
+          <PropertyField property={"Aircraft Type"} value={aircraft.aircraftType} />
+          <PropertyField property={"Fuel Type"} value={aircraft.fuelType} />
+          <PropertyField property={"Engine Count"} value={aircraft.engineCount} />
+          <PropertyField property={"Max Range"} value={aircraft.maxRange} />
+          <PropertyField property={"Cruise Speed"} value={aircraft.cruiseSpeed} />
+          <PropertyField property={"Service Ceiling"} value={aircraft.serviceCeiling} />
+          <PropertyField property={"MTOW"} value={aircraft.maxTakeoffWeight} />
+          <PropertyField property={"Weight Category"} value={aircraft.weightCategory} />
         </div>
       </div>
 
@@ -39,12 +60,14 @@ const AircraftCard: React.FC<Props> = ({
           handleAircraftSave={handleAircraftSave}
           handleAircraftUnsave={handleAircraftUnsave}
         />
-        <LinkButton
-          style={"primary"}
+        <LinkButton style={"primary"}
           path={`/aircrafts/details/${aircraft.id}`}
         >
           VIEW
         </LinkButton>
+        <Button style={'primary'} handleClick={() => handleSelect}>
+          SELECT
+        </Button>
       </div>
     </div>
   );

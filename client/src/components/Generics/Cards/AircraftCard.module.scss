@@ -15,13 +15,22 @@
   border-radius: 5px;
 
   .Image {
-    order: 0;
+
     place-items: center;
     text-align: center;
     max-width: 30%;
+
+    label {
+      @include font.header;
+
+      display: flex;
+      flex-direction: column;
+  
+      align-items: center;
+    }
   }
 
-  .Data {
+  .Description {
     display: flex;
     flex-direction: column;
 
@@ -32,16 +41,18 @@
     .Fields {
       .Field {
         label {
-
+          color: color.$light3;
         }
         span {
-          
+          color: color.$light1;
         }
       }
     }
   }
 
   .Options {
-
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
   }
 }

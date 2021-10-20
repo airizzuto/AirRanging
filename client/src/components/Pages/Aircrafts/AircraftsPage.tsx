@@ -171,6 +171,7 @@ const Aircrafts: React.FC<Props> = ({
 
       <hr />
 
+      {/* TODO: refactor to cards */}
       {
         aircrafts.length > 0
           ? <div className={Style.AircraftsTable}>
