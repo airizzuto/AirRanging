@@ -1,0 +1,47 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/mixins" as *;
+
+.Container {
+  @include text-shadow;
+  @include blurring;
+
+  display: flex;
+  flex-direction: row;
+
+  padding: 1rem;
+
+  background-color: color.$bg-semitransparent;
+  border-radius: 5px;
+
+  .Image {
+    order: 0;
+    place-items: center;
+    text-align: center;
+    max-width: 30%;
+  }
+
+  .Data {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+      @include header-3;
+    }
+
+    .Fields {
+      .Field {
+        label {
+
+        }
+        span {
+          
+        }
+      }
+    }
+  }
+
+  .Options {
+
+  }
+}
