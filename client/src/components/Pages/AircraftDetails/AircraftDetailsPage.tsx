@@ -12,9 +12,9 @@ import AircraftForm from "./AircraftForm";
 
 import "./AircraftDetails.scss";
 import Spinner from "../../../styles/components/_spinner.module.scss";
+import aircraftService from "../../../services/aircraftService";
 
 interface Props {
-  aircrafts: AircraftWithSocials[];
   aircraftsSaved: AircraftWithSocials[] | null;
   handleAircraftEdit: (aircraftId: string, editedAircraft: AircraftWithSocials) => Promise<void>;
   handleAircraftSelect: (selected: AircraftWithSocials | null) => void;
@@ -25,7 +25,6 @@ interface Props {
 }
 
 const AircraftDetails: React.FC<Props> = ({
-  aircrafts,
   aircraftsSaved,
   handleAircraftEdit,
   handleAircraftSelect,
@@ -43,8 +42,10 @@ const AircraftDetails: React.FC<Props> = ({
   const [isAircraftOwned, setIsAircraftOwned] = useState(false);
 
   useEffect(() => {
-    setAircraft(aircrafts.find(aircraft => aircraft.id === aircraftId));
-  }, [aircrafts, aircraftId]);
+    aircraftService.getAircraftById(aircraftId).then(response => {
+      setAircraft(response.data);
+    }).catch(error => console.error(`Getting aircraft ID: ${aircraftId} - `,error));
+  }, [aircraftId]);
   
   useEffect(() => {
     if (aircraft) {

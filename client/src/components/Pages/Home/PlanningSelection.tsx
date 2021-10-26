@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { AircraftSelected, AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { Filters } from '../../../types/Aircraft/Filter';
+import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
 import { getUserData } from '../../../helpers/userHelper';
 
 import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
@@ -10,30 +11,49 @@ import { LinkButton } from '../../Generics/Buttons/Button';
 import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
 
 import Style from "./PlanningSelection.module.scss";
+import useDebounce from '../../../hooks/useDebounce';
+import aircraftService from '../../../services/aircraftService';
 
 interface Props {
-  initialAircrafts: AircraftWithSocials[];
-  currentAircrafts: AircraftWithSocials[];
   aircraftsSaved: AircraftWithSocials[] | null;
   aircraftSelected: AircraftSelected | null;
-  filters: Filters;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
-  handleAircraftsFilters: (filter: Filters) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }
 
 const PlanningSelection: React.FC<Props> = ({
-  initialAircrafts,
-  currentAircrafts,
   aircraftsSaved,
   aircraftSelected,
-  filters,
   handleAircraftSelection,
-  handleAircraftsFilters,
   handleAircraftSave,
   handleAircraftUnsave,
 }) => {
+  const [aircrafts, setAircrafts] = useState<AircraftWithSocials[]>([]);
+  const [filters, setFilters] = useState<Filters>({
+    set: "all",
+    field: AircraftSearchOptions.Model,
+    search: ""
+  });
+  const debouncedFilter = useDebounce(filters, 500);
+
+  // FIXME: looping effect
+  useEffect(() => {
+    console.debug("EFFECT - filter: ", debouncedFilter);
+    
+    aircraftService.searchAircrafts(debouncedFilter)
+      .then((response) => setAircrafts([...response.data]))
+      .catch(error => console.error("Filtering aicrafts - ", error));
+
+    return () => {
+      setAircrafts([]);
+    };
+  },[debouncedFilter]);
+
+  const handleAircraftsFilters = (filters: Filters) => {
+    setFilters({...filters});
+  };
+
   return (
     <div className={Style.Selection}>
       <div className={Style.Toggles}>
@@ -43,7 +63,7 @@ const PlanningSelection: React.FC<Props> = ({
           set={"saved"}
           unset={"all"}
           handleFilter={handleAircraftsFilters}
-          filters={filters}
+          filters={debouncedFilter}
           disabled={getUserData() === null}
         />
 
@@ -64,8 +84,7 @@ const PlanningSelection: React.FC<Props> = ({
           handleSelection={handleAircraftSelection}
           handleFilter={handleAircraftsFilters}
           filters={filters}
-          initialOptions={initialAircrafts}
-          currentOptions={currentAircrafts}
+          options={aircrafts}
           placeholder="Search aircrafts..."
         />
       </div>

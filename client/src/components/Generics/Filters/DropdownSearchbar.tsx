@@ -13,8 +13,7 @@ import "./DropdownSearchbar.scss";
 interface Props {
   handleSelection: React.Dispatch<React.SetStateAction<any | null>>;
   handleFilter: (filter: Filters) => void;
-  initialOptions: AircraftWithSocials[];
-  currentOptions: AircraftWithSocials[];
+  options: AircraftWithSocials[];
   filters: Filters;
   placeholder?: string;
 }
@@ -22,7 +21,7 @@ interface Props {
 /* React select documentation https://react-select.com/home */
 
 const DropdownSearchbar: React.FC<Props> = ({
-  handleSelection, handleFilter, currentOptions, filters, placeholder
+  handleSelection, handleFilter, filters, placeholder, options
 }) => {
 
   const handleInputChange = (newValue: string) => {
@@ -32,18 +31,16 @@ const DropdownSearchbar: React.FC<Props> = ({
   const searchFilter = (inputValue: string) => {
     handleFilter({...filters, search: inputValue});
 
-    console.debug("DEBUG: filtering search: ", currentOptions, filters);
+    console.debug("DEBUG: filtering search: ", options, filters);
 
-    return mapAircraftToFilter(currentOptions);
+    return mapAircraftToFilter(options);
   };
 
   const loadOptions = (
     inputValue: string,
     callback: (options: {value: AircraftWithSocials; label: string;}[]) => void,
   ) => {
-    setTimeout(() => {
-      callback(searchFilter(inputValue));
-    }, 500);
+    callback(searchFilter(inputValue));
   };
 
   const handleChange = (selected: AircraftWithSocials | undefined) => {
@@ -60,6 +57,7 @@ const DropdownSearchbar: React.FC<Props> = ({
     isSearchable: true,
   };
 
+  // TODO: selected aircraft
   return (
     <>
       <AsyncSelect
@@ -67,7 +65,7 @@ const DropdownSearchbar: React.FC<Props> = ({
         classNamePrefix="Searchbar"
         placeholder={placeholder}
         cacheOptions
-        defaultOptions={mapAircraftToFilter(currentOptions)}
+        defaultOptions={mapAircraftToFilter(options)}
         loadOptions={loadOptions}
         onChange={(e) => handleChange(e?.value)}
         onInputChange={handleInputChange}

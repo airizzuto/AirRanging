@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import aircraftService from '../../../services/aircraftService';
+import useDebounce from '../../../hooks/useDebounce';
+import { getUserData } from '../../../helpers/userHelper';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import { Filters } from '../../../types/Aircraft/Filter';
@@ -13,31 +16,46 @@ import Searchbar from '../../Generics/Filters/Searchbar';
 import DropdownSelect from '../../Generics/Filters/DropdownSelect';
 
 import Style from "./Aircrafts.module.scss";
-import { getUserData } from '../../../helpers/userHelper';
 
 interface Props {
   user: UserPublic | null;
-  aircrafts: AircraftWithSocials[];
   aircraftsSaved: AircraftWithSocials[] | null;
-  aircraftsOwned: AircraftWithSocials[] | null;
-  filters: Filters;
-  handleAircraftsFilters: (filter: Filters) => void;
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
-  handleAircraftDelete: (aircraftId: string) => Promise<void>;
 }
 
 const Aircrafts: React.FC<Props> = ({
   user,
-  aircrafts,
   aircraftsSaved,
-  filters,
-  handleAircraftsFilters,
   handleAircraftSave,
   handleAircraftUnsave,
   handleAircraftSelection,
 }) => {
+  const [aircrafts, setAircrafts] = useState<AircraftWithSocials[]>([]);
+  const [filters, setFilters] = useState<Filters>({
+    set: "all",
+    field: AircraftSearchOptions.Model,
+    search: ""
+  });
+  const debouncedFilter = useDebounce(filters, 500);
+
+  // FIXME: looping effect
+  useEffect(() => {
+    console.debug("EFFECT - filter: ", debouncedFilter);
+    
+    aircraftService.searchAircrafts(debouncedFilter)
+      .then((response) => setAircrafts([...response.data]))
+      .catch(error => console.error("Filtering aicrafts - ", error));
+
+    return () => {
+      setAircrafts([]);
+    };
+  },[debouncedFilter]);
+
+  const handleAircraftsFilters = (filters: Filters) => {
+    setFilters({...filters});
+  };
 
   // TODO: mapper function
   const columns = React.useMemo(
