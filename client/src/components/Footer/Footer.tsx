@@ -17,6 +17,9 @@ const Footer = (): JSX.Element => {
         <Link to="/terms">
           Terms & Conditions
         </Link>
+        <Link to="/privacy">
+          Privacy
+        </Link>
         <Link to="/help">
           Help
         </Link>

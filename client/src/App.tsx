@@ -16,7 +16,8 @@ import AircraftDetails from "./components/Pages/AircraftDetails/AircraftDetailsP
 import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage";
 import Login from "./components/Pages/UserLogin/LoginPage";
 import UserRegistration from "./components/Pages/UserRegistration/UserRegistrationPage";
-import TermsAndConditions from "./components/Pages/TermsAndConditions/TermsAndConditionsPage";
+import TermsAndConditions from "./components/Pages/Legals/TermsAndConditionsPage";
+import PrivacyPolicy from "./components/Pages/Legals/PrivacyPolicyPage";
 import SuccessfulRegistration from "./components/Pages/EmailConfirmation/SuccessfulRegistrationPage";
 import EmailConfirmation from "./components/Pages/EmailConfirmation/EmailConfirmationPage";
 import EmailConfirmationFail from "./components/Pages/ErrorPages/EmailConfirmationFail";
@@ -263,6 +264,10 @@ const App = (): JSX.Element =>{
 
             <Route exact path="/terms">
               <TermsAndConditions />
+            </Route>
+
+            <Route exact path="/privacy">
+              <PrivacyPolicy />
             </Route>
 
             <Route path="*">
