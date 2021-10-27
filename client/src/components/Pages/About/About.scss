@@ -2,24 +2,23 @@
 @use "../../../styles/fonts" as font;
 @use "../../../styles/colors" as color;
 
-.About {
+.container {
   @include main-component;
   @include text-shadow;
   position: absolute;
   
-  padding-top: 1rem;
   overflow: hidden;
   
   z-index: 2;
-  
-  .Text {
-    display: flexbox;
-    flex-direction: column;
-    row-gap: 1rem;
-    overflow: auto;
-    padding: 0 2rem;
-    max-height: 80%;
-  }
+}
+
+.text  {
+  display: flexbox;
+  flex-direction: column;
+  row-gap: 1rem;
+  overflow: auto;
+  padding: 2rem 2rem;
+  max-height: 80%;
 }
 
 h1 {

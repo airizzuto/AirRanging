@@ -3,8 +3,8 @@ import "./About.scss";
 const About = () => {
   return (
     <div className={"container"}>
-      <h1>About Air Ranging</h1>
       <div className={"text"}>
+        <h1>About Air Ranging</h1>
         <p>Hello, my name is Agustín and welcome to my web page!</p>
         <p>
           Used to be an airplane pilot and designer for an R&D Aerospace company.
