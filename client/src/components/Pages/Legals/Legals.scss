@@ -2,7 +2,7 @@
 @use "../../../styles/fonts" as font;
 @use "../../../styles/colors" as color;
 
-.TermsAndConditions {
+.Legals {
   @include main-component;
   @include text-shadow;
   position: absolute;
@@ -13,16 +13,25 @@
   z-index: 2;
 }
 
-h1{
+.Text {
+  overflow: auto;
+  padding: 0 2rem;
+  max-height: 80%;
+}
+
+h1 {
   @include font.header-1;
 }
 
-.Text {
-  overflow: auto;
-  padding: 0 5rem;
-  max-height: 80%;
+h2 {
+  @include font.header-2;
 }
 
 p {
   @include font.main;
+}
+
+a {
+  @include hyperlink-behavior;
+  color: color.$light2;
 }
