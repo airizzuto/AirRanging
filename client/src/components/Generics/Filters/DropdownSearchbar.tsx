@@ -24,10 +24,6 @@ const DropdownSearchbar: React.FC<Props> = ({
   handleSelection, handleFilter, filters, placeholder, options
 }) => {
 
-  const handleInputChange = (newValue: string) => {
-    return newValue.replace(/\W/g, '');
-  };
-
   const searchFilter = (inputValue: string) => {
     handleFilter({...filters, search: inputValue});
 
@@ -68,7 +64,6 @@ const DropdownSearchbar: React.FC<Props> = ({
         defaultOptions={mapAircraftToFilter(options)}
         loadOptions={loadOptions}
         onChange={(e) => handleChange(e?.value)}
-        onInputChange={handleInputChange}
         {...selectProps}
       />
     </>
