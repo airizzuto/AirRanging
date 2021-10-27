@@ -33,6 +33,7 @@ import Footer from "./components/Footer/Footer";
 import Map from "./components/Map/Map";
 
 import "./App.scss";
+import About from "./components/Pages/About/About";
 
 const App = (): JSX.Element =>{
   const history = useHistory();
@@ -268,6 +269,10 @@ const App = (): JSX.Element =>{
 
             <Route exact path="/privacy">
               <PrivacyPolicy />
+            </Route>
+
+            <Route exact path="/about">
+              <About />
             </Route>
 
             <Route path="*">
