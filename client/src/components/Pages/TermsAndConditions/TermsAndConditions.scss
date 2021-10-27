@@ -5,16 +5,24 @@
 .TermsAndConditions {
   @include main-component;
   @include text-shadow;
-  position: relative;
+  position: absolute;
 
-  display: grid;
+  padding-top: 1rem;
+  overflow: hidden;
+  
   z-index: 2;
+}
 
-  h2{
-    @include font.header-1;
-  }
+h1{
+  @include font.header-1;
+}
 
-  p {
-    @include font.main;
-  }
+.Text {
+  overflow: auto;
+  padding: 0 5rem;
+  max-height: 80%;
+}
+
+p {
+  @include font.main;
 }
