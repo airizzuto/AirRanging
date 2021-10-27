@@ -2,7 +2,7 @@
 @use "../../../styles/fonts" as font;
 @use "../../../styles/colors" as color;
 
-.Legals {
+.container {
   @include main-component;
   @include text-shadow;
   position: absolute;
@@ -13,7 +13,7 @@
   z-index: 2;
 }
 
-.Text {
+.text {
   overflow: auto;
   padding: 0 2rem;
   max-height: 80%;
