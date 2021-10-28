@@ -1,0 +1,40 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/fonts" as font;
+@use "../../styles/colors" as color;
+
+.Container {
+  @include main-component;
+  @include text-shadow;
+  position: absolute;
+  width: 100vw;
+
+  padding-top: 1rem;
+  overflow: hidden;
+  
+  z-index: 2;
+  
+  .Content {
+    overflow: hidden auto;
+    padding: 0 2rem;
+    max-height: 80%;
+    width: 70vw;
+    
+    h1 {
+      @include font.header-1;
+    }
+    
+    h2 {
+      @include font.header-2;
+    }
+    
+    p {
+      @include font.main;
+    }
+    
+    a {
+      @include hyperlink-behavior;
+      color: color.$light2;
+    }
+  }
+}
+

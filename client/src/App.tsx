@@ -18,6 +18,8 @@ import Login from "./components/Pages/UserLogin/LoginPage";
 import UserRegistration from "./components/Pages/UserRegistration/UserRegistrationPage";
 import TermsAndConditions from "./components/Pages/Legals/TermsAndConditionsPage";
 import PrivacyPolicy from "./components/Pages/Legals/PrivacyPolicyPage";
+import About from "./components/Pages/About/About";
+import Contact from "./components/Pages/Contact/Contact";
 import SuccessfulRegistration from "./components/Pages/EmailConfirmation/SuccessfulRegistrationPage";
 import EmailConfirmation from "./components/Pages/EmailConfirmation/EmailConfirmationPage";
 import EmailConfirmationFail from "./components/Pages/ErrorPages/EmailConfirmationFail";
@@ -33,7 +35,6 @@ import Footer from "./components/Footer/Footer";
 import Map from "./components/Map/Map";
 
 import "./App.scss";
-import About from "./components/Pages/About/About";
 
 const App = (): JSX.Element =>{
   const history = useHistory();
@@ -273,6 +274,10 @@ const App = (): JSX.Element =>{
 
             <Route exact path="/about">
               <About />
+            </Route>
+
+            <Route exact path="/contact">
+              <Contact />
             </Route>
 
             <Route path="*">

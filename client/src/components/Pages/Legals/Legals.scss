@@ -11,27 +11,28 @@
   overflow: hidden;
   
   z-index: 2;
+  
+  .content {
+    overflow: auto;
+    padding: 0 2rem;
+    max-height: 80%;
+  }
+  
+  h1 {
+    @include font.header-1;
+  }
+  
+  h2 {
+    @include font.header-2;
+  }
+  
+  p {
+    @include font.main;
+  }
+  
+  a {
+    @include hyperlink-behavior;
+    color: color.$light2;
+  }
 }
 
-.text {
-  overflow: auto;
-  padding: 0 2rem;
-  max-height: 80%;
-}
-
-h1 {
-  @include font.header-1;
-}
-
-h2 {
-  @include font.header-2;
-}
-
-p {
-  @include font.main;
-}
-
-a {
-  @include hyperlink-behavior;
-  color: color.$light2;
-}
