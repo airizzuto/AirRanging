@@ -21,11 +21,11 @@
     grid-area: table-view;
     border-spacing: 0;
   
-  
     .TableHeader {
       @include font.header-3;
       height: 2rem;
       color: color.$light1;
+
       th {
         width: 20rem;
       }
@@ -42,7 +42,7 @@
     }
 
     tbody {
-      overflow: auto;
+      overflow: hidden scroll;
 
       tr:hover {
         cursor: pointer;
@@ -60,23 +60,32 @@
     grid-area: pagination;
 
     display: flex;
+    flex-direction: row;
     width: 100%;
-    justify-self: start;
-    align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
+    align-content: center;
+    column-gap: 1rem;
     color: color.$light1;
-    padding: 1rem;
 
-    input {
-      @include box.light;
-    }
+    .MoveControls {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      column-gap: 1rem;
+      justify-self: start;
+      align-items: center;
 
-    select {
-      @include box.light;
-    }
-
-    button {
-      @include button.controls;
+      input {
+        @include box.light;
+      }
+  
+      select {
+        @include box.light;
+      }
+  
+      button {
+        @include button.controls;
+      }
     }
 
     .SelectButton { // TODO: fix style inheritance
