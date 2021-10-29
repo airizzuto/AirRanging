@@ -7,13 +7,10 @@
 .TableView {
   @include text-shadow;
 
-  display: grid;
-  grid-template-rows: 1fr min-content;
-  grid-template-areas: "table-view" "pagination";
-  row-gap: 1rem;
-  margin: 1rem;
-
-  place-self: center;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  row-gap: 2rem;
 
   overflow: auto auto;
 

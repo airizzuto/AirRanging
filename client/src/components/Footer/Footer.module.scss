@@ -4,10 +4,12 @@
 
 .Footer {
   @include font.footer;
+  position: relative;
   display: flex;
   flex-direction: row;
   height: 100%;
-  padding: 0 2rem;
+  max-width: 100%;
+  padding: 0 2vw;
 
   justify-content: space-between;
 
