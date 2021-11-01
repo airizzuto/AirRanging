@@ -15,6 +15,9 @@
   grid-template-areas: "logo navigation user";
   column-gap: 3vw;
 
+  min-height: 6rem;
+  max-width: 100%;
+
   background-color: color.$dark1;
 
   z-index: 3;
@@ -108,7 +111,7 @@
 }
 
 @media screen and (max-width: 600px) {
-  .HeaderContainer {
+  .Container {
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 1fr;
