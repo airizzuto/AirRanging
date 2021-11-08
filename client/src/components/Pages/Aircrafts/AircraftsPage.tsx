@@ -39,8 +39,10 @@ const Aircrafts: React.FC<Props> = ({
     search: ""
   });
   const debouncedFilter = useDebounce(filters, 500);
+  
+  // TODO: pagination data from response
+  // ex: res.headers.get("X-WP-TotalPages") or res.headers.get("X-WP-Total")
 
-  // FIXME: looping effect
   useEffect(() => {
     console.debug("EFFECT - filter: ", debouncedFilter);
     
@@ -187,8 +189,6 @@ const Aircrafts: React.FC<Props> = ({
           </LinkButton>
         </div>
       </div>
-
-      <hr />
 
       {/* TODO: advanced filter */}
       {/* TODO: refactor to cards */}

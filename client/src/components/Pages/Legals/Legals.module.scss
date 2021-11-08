@@ -2,37 +2,41 @@
 @use "../../../styles/fonts" as font;
 @use "../../../styles/colors" as color;
 
-.container {
+.Container {
   @include main-component;
   @include text-shadow;
   position: absolute;
-
+  width: 100%;
   padding-top: 1rem;
   overflow: hidden;
   
-  z-index: 2;
+  z-index: 3;
   
-  .content {
+  .Content {
     overflow: auto;
-    padding: 0 2rem;
     max-height: 80%;
+    max-width: 100%;
+    padding: 0 20vw;
+
+    
+    h2 {
+      @include font.header-2;
+    }
+    
+    p {
+      @include font.main;
+      max-width: 80ch;
+    }
+    
+    a {
+      @include hyperlink-behavior;
+      color: color.$light2;
+    }
   }
   
   h1 {
     @include font.header-1;
-  }
-  
-  h2 {
-    @include font.header-2;
-  }
-  
-  p {
-    @include font.main;
-  }
-  
-  a {
-    @include hyperlink-behavior;
-    color: color.$light2;
+    padding-left: 21vw;
   }
 }
 

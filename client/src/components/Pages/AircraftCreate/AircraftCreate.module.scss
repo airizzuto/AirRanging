@@ -6,12 +6,15 @@
 @use "../../../styles/mixins" as *;
 
 .FormContainer {
+  position: relative;
   @include main-component;
   
   display: grid;
   grid-template-rows: auto min-content 8fr;
   grid-template-columns: 1fr;
   grid-template-areas: "title" "separator" "form";
+
+  z-index: 3;
 
   .FormTitle {
     @include font.header-1;
@@ -31,5 +34,11 @@
 
   .Form {
     @include form.style;
+  }
+
+  .SubmitButton {
+    button {
+      padding: 0.5rem 0;
+    }
   }
 }

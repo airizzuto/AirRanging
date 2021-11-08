@@ -1,13 +1,13 @@
-import "./Legals.scss";
+import Style from "./Legals.module.scss";
 
 // TODO BEFORE PRODUCTION: website domain replacement
 
 const TermsAndConditions = () => {
   return (
-    <div className={"container"}>
+    <div className={Style.Container}>
       <h1>Terms and Conditions for Air Ranging</h1>
 
-      <div className={"content"}>
+      <div className={Style.Content}>
         <p>Last updated: 2021-08-05</p>
         <p>
           1. <b>Introduction</b>

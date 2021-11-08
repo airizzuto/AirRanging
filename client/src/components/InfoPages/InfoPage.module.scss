@@ -6,7 +6,7 @@
   @include main-component;
   @include text-shadow;
   position: absolute;
-  width: 100vw;
+  width: 100%;
 
   padding-top: 1rem;
   overflow: hidden;
@@ -15,9 +15,9 @@
   
   .Content {
     overflow: hidden auto;
-    padding: 0 2rem;
+    padding: 0 20vw;
     max-height: 80%;
-    width: 70vw;
+    max-width: 100%;
     
     h1 {
       @include font.header-1;
@@ -29,6 +29,7 @@
     
     p {
       @include font.main;
+      width: 80ch;
     }
     
     a {
