@@ -1,7 +1,6 @@
 import React from 'react';
 import { getUserData } from '../../../helpers/userHelper';
 
-import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { Filters } from '../../../types/Aircraft/Filter';
 import { UserPublic } from '../../../types/User/User';
 
@@ -11,15 +10,8 @@ import Style from "./AdvancedFilter.module.scss";
 
 interface Props {
   user: UserPublic | null;
-  aircrafts: AircraftWithSocials[];
-  aircraftsSaved: AircraftWithSocials[] | null;
-  aircraftsOwned: AircraftWithSocials[] | null;
   filters: Filters;
   handleAircraftsFilters: (filter: Filters) => void;
-  handleAircraftSelection: (selected: AircraftWithSocials | null) => void;
-  handleAircraftSave: (aircraftId: string) => Promise<void>;
-  handleAircraftUnsave: (aircraftId: string) => Promise<void>;
-  handleAircraftDelete: (aircraftId: string) => Promise<void>;
 }
 
 {/* TODO: Filter handling */}
