@@ -8,6 +8,8 @@
 .RegistrationView {
   @include main-component;
   position: relative;
+
+  padding: 0 20vw;
   
   display: grid;
   grid-template-rows: auto min-content 8fr;
@@ -60,6 +62,7 @@
 
       button {
         @include button.decorated;
+        padding: 0.5rem 0.5rem;
         color: color.$light1;
         background-color: color.$light2;
       }

@@ -1,65 +1,58 @@
-@use "../../../styles/colors" as color;
-@use "../../../styles/fonts" as font;
-@use "../../../styles/mixins" as *;
+@use "../../../styles/colors"as color;
+@use "../../../styles/fonts"as font;
+@use "../../../styles/mixins"as *;
 
-.primary {
+@mixin button {
   @include font.button;
   @include drop-shadow;
   @include text-shadow;
   @include hyperlink-behavior;
   @include button-behavior;
+}
+
+.primary {
+  @include button;
 
   width: 100%;
 
   text-align: center;
-  padding: 0.5rem 0.5rem;
 
   border-style: none;
   border-radius: 5px;
 
   background-color: color.$light2;
 
-  &:disabled{
+  &:disabled {
     color: color.$light1-disabled;
     background-color: color.$light2-disabled;
   }
-};
+}
 
 .toggle {
-  @include font.button;
-  @include drop-shadow;
-  @include text-shadow;
-  @include hyperlink-behavior;
-  @include button-behavior;
+  @include button;
 
   width: 100%;
 
   text-align: center;
-  padding: 0.25rem 0.5rem;
 
   border: 2px solid color.$light2;
   border-radius: 5px;
 
   background-color: color.$dark1;
 
-  &:disabled{
+  &:disabled {
     color: color.$light1-disabled;
     border: none;
     background-color: color.$light2-disabled;
   }
-};
+}
 
-.toggle-checked{
-  @include font.button;
-  @include drop-shadow;
-  @include text-shadow;
-  @include hyperlink-behavior;
-  @include button-behavior;
+.toggle-checked {
+  @include button;
 
   width: 100%;
 
   text-align: center;
-  padding: 0.25rem 0.5rem;
 
   border: 2px solid color.$light1;
   border-radius: 5px;
@@ -67,16 +60,11 @@
 }
 
 .danger {
-  @include font.button;
-  @include drop-shadow;
-  @include text-shadow;
-  @include button-behavior;
-  @include hyperlink-behavior;
+  @include button;
 
   width: 100%;
 
   text-align: center;
-  padding: 0.5rem 0.5rem;
 
   border-style: none;
   border-radius: 10px;
@@ -87,15 +75,14 @@
     color: color.$light1-disabled;
     background-color: color.$danger-disabled;
   }
-};
-
+}
 
 .exit {
   @include font.button;
   @include drop-shadow;
   @include text-shadow;
   @include button-behavior;
-  
+
   color: color.$light1;
   background-color: color.$light2;
 
@@ -109,7 +96,7 @@
   &:disabled {
     color: color.$light1-disabled;
   }
-};
+}
 
 .undecorated {
   @include font.button;

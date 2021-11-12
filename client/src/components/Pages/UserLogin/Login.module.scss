@@ -24,6 +24,7 @@
     height: fit-content;
     min-height: 30rem;
     width: max-content;
+    min-width: 20vw;
     
     color: color.$light1;
     background-color: color.$dark1;
@@ -86,8 +87,8 @@
             @include box.light;
             grid-area: input;
           
-            height: 0.8rem;
-            width: 80%;
+            height: 1rem;
+            width: 90%;
             place-self: center;
           }
         }
@@ -150,6 +151,10 @@
         .LoginButton {
           width: 100%;
           place-self: center;
+
+          button {
+            padding: 0.5rem 0.5rem;
+          }
         }
       }
     }
