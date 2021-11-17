@@ -48,7 +48,6 @@ const AircraftCard: React.FC<Props> = ({
           <PropertyField property={"Cruise Speed"} value={aircraft.cruiseSpeed} />
           <PropertyField property={"Service Ceiling"} value={aircraft.serviceCeiling} />
           <PropertyField property={"MTOW"} value={aircraft.maxTakeoffWeight} />
-          <PropertyField property={"Weight Category"} value={aircraft.weightCategory} />
         </div>
       </div>
 

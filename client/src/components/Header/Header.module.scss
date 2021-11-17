@@ -6,6 +6,7 @@
 @import "../Generics/Buttons/ButtonStyles.scss";
 
 .Container {
+  position: absolute;
   @include text-shadow;
   padding: 0 2vw;
 
@@ -20,7 +21,7 @@
 
   background-color: color.$dark1;
 
-  z-index: 3;
+  z-index: 4;
 
   .HeaderLogo {
     grid-area: logo;

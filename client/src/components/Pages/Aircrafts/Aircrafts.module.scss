@@ -28,8 +28,8 @@
     display: grid;
     grid-auto-columns: 1fr;
     grid-template-rows: 1fr;
-    grid-template-areas: "title search-bar dropdown options create";
-    column-gap: 1rem;
+    grid-template-areas: "title search-bar dropdown create";
+    column-gap: 0.5rem;
     width: 100%;
     border-bottom: 2px solid color.$light1;
 
@@ -52,13 +52,14 @@
       flex-direction: row;
       column-gap: 1rem;
       align-self: center;
+      width: 100%;
     }
 
     .CreateNew {
       grid-area: create;
       place-self: center;
-      min-width: 100%;
-
+      min-width: 11rem;
+      
       a {
         padding: 0.5rem 0.5rem;
       }
