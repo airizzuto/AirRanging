@@ -38,11 +38,13 @@ const Home: React.FC<Props> = ({
         <div className={Style.ModalTabs}>
           <TabButton
             handleTabClick={() => setDisplayPlanningModal(!displayPlanningModal)}
+            label={"PLANNING"}
           >
             <FontAwesomeIcon icon={faMap} />
           </TabButton>
           <TabButton
             handleTabClick={() => setDisplayInfoOverlay(!displayInfoOverlay)}
+            label={"INFO"}
           >
             <FontAwesomeIcon icon={faInfoCircle} />
           </TabButton>
