@@ -54,15 +54,17 @@ const PlanningInputs: React.FC<Props> = ({
         value={aircraftSelected ? aircraftSelected.currentMaxRange : 0}
       />
 
-      <ValueInput
+      {/* TODO: cruise speed logic for pnr */}
+      {/* <ValueInput
         label={"Cruise Speed:"}
         value={0}
-      />
+      /> */}
 
-      <ValueInput
+      {/* TODO: cruise altitude */}
+      {/* <ValueInput
         label={"Cruise Altitude:"}
         value={0}
-      />
+      /> */}
     </div>
   );
 };
