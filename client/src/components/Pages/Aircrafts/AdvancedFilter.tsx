@@ -1,7 +1,7 @@
 import React from 'react';
 import { getUserData } from '../../../helpers/userHelper';
 
-import { Filters } from '../../../types/Aircraft/Filter';
+import { FilterSearch } from '../../../types/Aircraft/Filter';
 import { UserPublic } from '../../../types/User/User';
 
 import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
@@ -10,12 +10,18 @@ import Style from "./AdvancedFilter.module.scss";
 
 interface Props {
   user: UserPublic | null;
-  filters: Filters;
-  handleAircraftsFilters: (filter: Filters) => void;
+  filters: FilterSearch;
+  handleAircraftsFilters: (filter: FilterSearch) => void;
 }
 
-{/* TODO: Filter handling */}
-{/* TODO: multi term query */}
+// TODO: Filter handling
+// TODO: multi term query
+// TODO: convert to query helper
+
+// ref: https://www.npmjs.com/package/query-string
+
+// queryString stringify
+
 const AdvancedFilter: React.FC<Props> = ({
   filters,
   handleAircraftsFilters,

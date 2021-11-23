@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { AircraftSelected, AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
-import { Filters } from '../../../types/Aircraft/Filter';
+import { FilterSearch } from '../../../types/Aircraft/Filter';
 import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
 import { getUserData } from '../../../helpers/userHelper';
 
@@ -30,9 +30,9 @@ const PlanningSelection: React.FC<Props> = ({
   handleAircraftUnsave,
 }) => {
   const [aircrafts, setAircrafts] = useState<AircraftWithSocials[]>([]);
-  const [filters, setFilters] = useState<Filters>({
+  const [filters, setFilters] = useState<FilterSearch>({
     set: "all",
-    field: AircraftSearchOptions.Model,
+    searchField: AircraftSearchOptions.Model,
     search: ""
   });
   const debouncedFilter = useDebounce(filters, 500);
@@ -50,7 +50,7 @@ const PlanningSelection: React.FC<Props> = ({
     };
   },[debouncedFilter]);
 
-  const handleAircraftsFilters = (filters: Filters) => {
+  const handleAircraftsFilters = (filters: FilterSearch) => {
     setFilters({...filters});
   };
 

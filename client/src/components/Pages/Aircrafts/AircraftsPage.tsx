@@ -4,7 +4,7 @@ import aircraftService from '../../../services/aircraftService';
 import useDebounce from '../../../hooks/useDebounce';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
-import { Filters } from '../../../types/Aircraft/Filter';
+import { FilterSearch } from '../../../types/Aircraft/Filter';
 import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
 
 import {LinkButton} from '../../Generics/Buttons/Button';
@@ -31,16 +31,17 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftSelection,
 }) => {
   const [aircrafts, setAircrafts] = useState<AircraftWithSocials[]>([]);
-  const [filters, setFilters] = useState<Filters>({
+  const [filters, setFilters] = useState<FilterSearch>({
     set: "all",
-    field: AircraftSearchOptions.Model,
+    searchField: AircraftSearchOptions.Model,
     search: ""
   });
+  // const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilters>([]);
+
   const debouncedFilter = useDebounce(filters, 500);
-  
+
   // TODO: pagination data from response
   // ex: res.headers.get("X-WP-TotalPages") or res.headers.get("X-WP-Total")
-
   useEffect(() => {
     console.debug("EFFECT - filter: ", debouncedFilter);
     
@@ -53,7 +54,7 @@ const Aircrafts: React.FC<Props> = ({
     };
   },[debouncedFilter]);
 
-  const handleAircraftsFilters = (filters: Filters) => {
+  const handleAircraftsFilters = (filters: FilterSearch) => {
     setFilters({...filters});
   };
 

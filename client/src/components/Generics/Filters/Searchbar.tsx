@@ -1,11 +1,11 @@
 import React from 'react';
-import { Filters } from '../../../types/Aircraft/Filter';
+import { FilterSearch } from '../../../types/Aircraft/Filter';
 
 import Style from "./Searchbar.module.scss";
 
 interface Props {
-  filters: Filters;
-  handleFilter: (filter: Filters) => void;
+  filters: FilterSearch;
+  handleFilter: (filter: FilterSearch) => void;
   placeholder: string;
 }
 

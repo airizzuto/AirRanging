@@ -1,7 +1,7 @@
 
 import { AircraftWithSocials } from "../types/Aircraft/Aircraft";
 import { AircraftSearchOptions } from "../types/Aircraft/AircraftEnums";
-import { Filters, AircraftsSets } from "../types/Aircraft/Filter";
+import { FilterSearch, AircraftsSets } from "../types/Aircraft/Filter";
 
 export const filterSets = async (
   data: AircraftWithSocials[],
@@ -20,10 +20,10 @@ export const filterSets = async (
  */
 export const filterSearch = async (
   data: AircraftWithSocials[],
-  filter: Filters
+  filter: FilterSearch
 ): Promise<AircraftWithSocials[]> => {
   return data.filter((aircraft) =>
-    aircraft[filter.field as keyof AircraftWithSocials] === filter.search
+    aircraft[filter.searchField as keyof AircraftWithSocials] === filter.search
   );
 };
 
@@ -31,10 +31,10 @@ export const filterSearch = async (
  * Reset filter to default state.
  * @returns filter with default state.
  */
-export const resetFilter = (): Filters => {
+export const resetFilter = (): FilterSearch => {
   return {
     set: "all",
-    field: AircraftSearchOptions.Model,
+    searchField: AircraftSearchOptions.Model,
     search: "",
   };
 };

@@ -3,15 +3,15 @@ import AsyncSelect from 'react-select/async';
 
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
-import { Filters } from '../../../types/Aircraft/Filter';
+import { FilterSearch } from '../../../types/Aircraft/Filter';
 
 import "./Dropdown.scss";
 
 interface Props {
   placeholder: string;
-  filters: Filters;
+  filters: FilterSearch;
   enumerator: typeof AircraftSearchOptions;
-  handleFilter: (filter: Filters) => void;
+  handleFilter: (filter: FilterSearch) => void;
 }
 
 const DropdownSelect: React.FC<Props> = ({placeholder, filters, enumerator, handleFilter}) => {
@@ -19,7 +19,7 @@ const DropdownSelect: React.FC<Props> = ({placeholder, filters, enumerator, hand
   const handleChange = (value: string | undefined) => {
     handleFilter({
       ...filters,
-      field: AircraftSearchOptions[value as keyof typeof AircraftSearchOptions] as keyof AircraftWithSocials
+      searchField: AircraftSearchOptions[value as keyof typeof AircraftSearchOptions] as keyof AircraftWithSocials
     });
   };
 

@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
 import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs } from "../types/Aircraft/Aircraft";
-import { Filters } from "../types/Aircraft/Filter";
+import { FilterSearch } from "../types/Aircraft/Filter";
 
 const getAllAircrafts = async () => {
   const response = await axios.get(
@@ -46,14 +46,14 @@ const getAircraftsSavedByUser = async () => {
   return response;
 };
 
-const searchAircrafts = async (filter: Filters) => {
+const searchAircrafts = async (filter: FilterSearch) => {
   const config = {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };
 
   // TODO: multi-query
   const response = await axios.get(
-    BASE_URL + `/api/aircrafts/${filter.set}?${filter.field}=${filter.search}`,
+    BASE_URL + `/api/aircrafts/${filter.set}?${filter.searchField}=${filter.search}`,
     config
   );
 

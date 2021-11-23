@@ -6,15 +6,15 @@ import AsyncSelect from 'react-select/async';
 import { mapAircraftToFilter } from '../../../helpers/aircraftHelper';
 
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
-import { Filters } from '../../../types/Aircraft/Filter';
+import { FilterSearch } from '../../../types/Aircraft/Filter';
 
 import "./DropdownSearchbar.scss";
 
 interface Props {
   handleSelection: React.Dispatch<React.SetStateAction<any | null>>;
-  handleFilter: (filter: Filters) => void;
+  handleFilter: (filter: FilterSearch) => void;
   options: AircraftWithSocials[];
-  filters: Filters;
+  filters: FilterSearch;
   placeholder?: string;
 }
 
