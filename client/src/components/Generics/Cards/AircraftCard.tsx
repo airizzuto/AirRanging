@@ -18,9 +18,13 @@ interface Props {
 }
 
 const AircraftCard: React.FC<Props> = ({
-  user, aircraft, aircraftsSaved, handleAircraftSave, handleAircraftUnsave, handleAircraftSelection
+  user,
+  aircraft,
+  aircraftsSaved,
+  handleAircraftSave,
+  handleAircraftUnsave,
+  handleAircraftSelection
 }) => {
-
   const history = useHistory();
 
   const handleSelect = () => {

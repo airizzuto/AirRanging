@@ -1,4 +1,3 @@
-import { Pagination } from "../Pagination";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "./AircraftEnums";
 
 export interface Aircraft {
@@ -32,12 +31,6 @@ export interface AircraftWithSocials extends Aircraft{
 export interface AircraftSelected extends AircraftWithSocials {
   loadedFuel: number;
   currentMaxRange: number;
-}
-
-// TODO: Implement paginated model
-export interface AircraftsPaginated {
-  aircrafts: AircraftWithSocials[];
-  metadata: Pagination;
 }
 
 // Define special omit for unions
