@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
+import { buildStringAircraftTitle } from '../../../utils/stringBuilder';
 import AircraftsListButtons from '../../Pages/Aircrafts/AircraftsListButtons';
 import { Button, LinkButton } from '../Buttons/Button';
 
@@ -43,7 +44,12 @@ const AircraftCard: React.FC<Props> = ({
       </div>
 
       <div className={Style.Description}>
-        <h1>{aircraft.icaoId} - {aircraft.variant} - {aircraft.registration}</h1>
+        {/* TODO: title function */}
+        <h1>
+          {buildStringAircraftTitle([
+              aircraft.icaoId, aircraft?.variant, aircraft?.registration
+          ])}
+        </h1>
         <div className={Style.Fields}>
           <PropertyField property={"Aircraft Type"} value={aircraft.aircraftType} />
           <PropertyField property={"Fuel Type"} value={aircraft.fuelType} />

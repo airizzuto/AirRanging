@@ -3,6 +3,7 @@ import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
 import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs } from "../types/Aircraft/Aircraft";
 import { FilterSearch } from "../types/Aircraft/Filter";
+import { buildStringEndpoint } from "../utils/stringBuilder";
 
 const getAllAircrafts = async () => {
   const response = await axios.get(
@@ -25,8 +26,15 @@ const getAircraftsOwnedByUser = async () => {
     headers: { Authorization: `Bearer ${getStoredToken()}` },
   };
 
+  const urlOptions = {
+    baseUrl: BASE_URL!,
+    slug: `/api/aircrafts/owned`,
+  };
+
+  const url = buildStringEndpoint(urlOptions);
+
   const response = await axios.get(
-    BASE_URL + "/api/aircrafts/owned",
+    url,
     config
   );
 
@@ -37,9 +45,16 @@ const getAircraftsSavedByUser = async () => {
   const config = {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };
-  
+
+  const urlOptions = {
+    baseUrl: BASE_URL!,
+    slug: `/api/aircrafts/saved`,
+  };
+
+  const url = buildStringEndpoint(urlOptions);
+
   const response = await axios.get(
-    BASE_URL + `/api/aircrafts/saved`,
+    url,
     config
   );
 
@@ -51,9 +66,17 @@ const searchAircrafts = async (filter: FilterSearch) => {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };
 
+  const urlOptions = {
+    baseUrl: BASE_URL!,
+    slug: `/api/aircrafts/`,
+    filters: `${filter.set}?${filter.searchField}=${filter.search}`
+  };
+
+  const url = buildStringEndpoint(urlOptions);
+
   // TODO: multi-query
   const response = await axios.get(
-    BASE_URL + `/api/aircrafts/${filter.set}?${filter.searchField}=${filter.search}`,
+    url,
     config
   );
 
