@@ -8,17 +8,11 @@
   @include main-component;
   position: relative;
   
-  display: grid;
-  grid-template-rows: 1fr auto 1fr;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    "sub-header"
-    "main-content"
-    "pagination";
+  display: flex;
+  flex-direction: column;
 
   max-width: 100%;
   padding: 0 15vw;
-  justify-content: center;
   row-gap: 1rem;
   padding-top: 1rem;
   z-index: 3;
@@ -26,11 +20,12 @@
   .SubHeader {
     grid-area: sub-header;
 
-    display: grid;
-    grid-auto-columns: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "title search-bar dropdown create";
-    column-gap: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    column-gap: 1rem;
+    height: min-content;
     width: 100%;
     border-bottom: 2px solid color.$light1;
 
@@ -42,22 +37,18 @@
     }
 
     .Searchbar {
-      grid-area: search-bar;
       align-self: center;
       border-radius: 5px;
+      min-width: 15rem;
     }
 
-    .FilterOptions {
-      grid-area: options;
-      display: flex;
-      flex-direction: row;
+    .Dropdown {
       column-gap: 1rem;
       align-self: center;
-      width: 100%;
+      min-width: 10rem;
     }
 
     .CreateNew {
-      grid-area: create;
       place-self: center;
       min-width: 11rem;
       

@@ -56,7 +56,9 @@ const Aircrafts: React.FC<Props> = ({
   useEffect(() => {
     console.debug("EFFECT - filter: ", debouncedFilter);
     
-    aircraftService.searchAircrafts(debouncedFilter)
+    aircraftService.searchAircraftsPaged(
+        debouncedFilter,
+        { currentPage: pagination.currentPage, pageSize: pagination.pageSize })
       .then((response) => {
         const paginationData = response.headers; // FIXME: header data
         console.debug("Pagination data: ", paginationData);
@@ -67,7 +69,7 @@ const Aircrafts: React.FC<Props> = ({
     return () => {
       setAircrafts([]);
     };
-  },[debouncedFilter]);
+  },[debouncedFilter, pagination]);
 
   const handleAircraftsFilters = (filters: FilterSearch) => {
     setFilters({...filters});
@@ -90,13 +92,15 @@ const Aircrafts: React.FC<Props> = ({
             placeholder={"Search aircrafts"}
           />
         </div>
-
-        <DropdownSelect 
-          placeholder={"Search By"} 
-          filters={filters}
-          handleFilter={handleAircraftsFilters}
-          enumerator={AircraftSearchOptions}
-        />
+        
+        <div className={Style.Dropdown}>
+          <DropdownSelect 
+            placeholder={"Search By"} 
+            filters={filters}
+            handleFilter={handleAircraftsFilters}
+            enumerator={AircraftSearchOptions}
+          />
+        </div>
 
         <div className={Style.CreateNew}>
           <LinkButton path="/aircrafts/create" style={"primary"}>
