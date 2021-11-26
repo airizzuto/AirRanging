@@ -46,9 +46,15 @@ const AircraftCard: React.FC<Props> = ({
       <div className={Style.Description}>
         {/* TODO: title function */}
         <h1>
-          {buildStringAircraftTitle([
-              aircraft.icaoId, aircraft?.variant, aircraft?.registration
-          ])}
+          {buildStringAircraftTitle(
+            [
+              aircraft.icaoId,
+              aircraft?.variant,
+              aircraft?.registration,
+            ],
+            " - ",
+            /(\s-\s)+$/,
+          )}
         </h1>
         <div className={Style.Fields}>
           <PropertyField property={"Aircraft Type"} value={aircraft.aircraftType} />
