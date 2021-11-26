@@ -31,10 +31,10 @@ const PaginationControls: React.FC<Props> = ({handlePagination, pagination}) => 
   return (
     <div className={"pagination"}>
       {/* TODO: controls */}
-      <Button style={'primary'} disabled={pagination.hasPrevious} handleClick={previousPage}>
+      <Button style={'primary'} disabled={!pagination.hasPrevious} handleClick={previousPage}>
         {"<"}
       </Button>
-      <Button style={'primary'} disabled={pagination.hasNext} handleClick={nextPage}>
+      <Button style={'primary'} disabled={!pagination.hasNext} handleClick={nextPage}>
         {">"}
       </Button>
     </div>
