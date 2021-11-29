@@ -14,7 +14,7 @@ interface Props {
   handleFilter: (filter: FilterSearch) => void;
 }
 
-const DropdownSelect: React.FC<Props> = ({placeholder, filters, enumerator, handleFilter}) => {
+const DropdownAircraftOptions: React.FC<Props> = ({placeholder, filters, enumerator, handleFilter}) => {
 
   const handleChange = (value: string | undefined) => {
     handleFilter({
@@ -47,4 +47,4 @@ const DropdownSelect: React.FC<Props> = ({placeholder, filters, enumerator, hand
   );
 };
 
-export default DropdownSelect;
+export default DropdownAircraftOptions;
