@@ -2,6 +2,7 @@ import React from 'react';
 
 import { PaginationInfo } from '../../../types/Pagination';
 import { Button } from '../Buttons/Button';
+import Dropdown from '../Filters/Dropdown';
 
 import "./Pagination.scss";
 
@@ -28,6 +29,10 @@ const PaginationControls: React.FC<Props> = ({handlePagination, pagination}) => 
     handlePagination({ ...pagination, currentPage: page });
   };
 
+  const selectPage = (page: number) => {
+    handlePagination({ ...pagination, currentPage: page }); 
+  };
+
   return (
     <div className={"pagination"}>
       {/* TODO: controls */}
@@ -37,6 +42,12 @@ const PaginationControls: React.FC<Props> = ({handlePagination, pagination}) => 
       <Button style={'primary'} disabled={!pagination.hasNext} handleClick={nextPage}>
         {">"}
       </Button>
+      <Dropdown name={"currentPage"}
+        options={Array.from(Array(pagination.currentPage).keys())}
+        defaultValue={pagination.currentPage}
+        handleSelect={selectPage}
+        isDisabled={pagination.totalPages == 1}
+      />
     </div>
   );
 };
