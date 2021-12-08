@@ -6,6 +6,15 @@ interface Endpoint {
   paging?: string;
 }
 
+/**
+ * Builds the endpoint slug with pagination and filters if encountered
+ * @param {Endpoint} endpoint
+ *   @baseUrl base API URL
+ *   @slug API action if available
+ *   @filters filter properties if available
+ *   @paging pagination properties if available
+ * @returns Endpoint string
+ */
 export const buildStringEndpoint = ({
   baseUrl, slug, filters, paging
 }: Endpoint): string => {
