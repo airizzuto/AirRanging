@@ -1,4 +1,3 @@
-import { Libraries } from "@react-google-maps/api/dist/utils/make-load-script-url";
 import mapStyles from "./mapStyles";
 
 export const containerStyle = {
@@ -19,4 +18,4 @@ export const DEFAULT_MAP_CENTER = {
   washington: { lat: 47.751076, lng: -120.740135 }
 };
 
-export const LIBRARIES: Libraries | undefined = ["places", "drawing"];
+export const LIBRARIES: any | undefined = ["places", "drawing"];

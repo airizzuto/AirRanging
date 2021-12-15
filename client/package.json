@@ -9,7 +9,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@googlemaps/js-api-loader": "^1.12.1",
-    "@react-google-maps/api": "^2.2.0",
+    "@react-google-maps/api": "^2.7.0",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -21,7 +21,6 @@
     "formik": "^2.2.9",
     "joi": "^17.4.1",
     "jsonwebtoken": "^8.5.1",
-    "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.3",
@@ -41,7 +40,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .ts",
-    "server": "dotnet run --project ../Server/App"
+    "server": "dotnet run --project ../Server/App",
+    "serve": "serve -s build"
   },
   "eslintConfig": {
     "extends": [
