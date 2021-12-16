@@ -3,9 +3,9 @@ import { UserPublic } from "../../types/User/User";
 
 import { Button, LinkButton } from "../Generics/Buttons/Button";
 import Menu from "../Menu/Menu";
+import Logo from "./LogoVector.svg";
 
 import Style from "./Header.module.scss";
-import Logo from "./LogoVector.svg";
 
 interface Props {
   handleLogout: () => void;
