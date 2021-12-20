@@ -6,12 +6,14 @@ namespace App.Extensions.Configurations
     {
         public static void ConfigureCors(this IServiceCollection services)
         {
+            // TODO: check if needed to restrict
             services.AddCors(options => 
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader());
+                        .AllowAnyHeader()
+                        .WithExposedHeaders("X-Pagination"));
             });
         }
     }
