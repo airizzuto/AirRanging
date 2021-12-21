@@ -10,7 +10,7 @@ import { PaginationInfo } from '../../../types/Pagination';
 
 import {LinkButton} from '../../Generics/Buttons/Button';
 import Searchbar from '../../Generics/Filters/Searchbar';
-import DropdownSelect from '../../Generics/Filters/DropdownSelect';
+import DropdownAircraftOptions from '../../Generics/Filters/DropdownAircraftOptions';
 import AircraftCard from '../../Generics/Cards/AircraftCard';
 import PaginationControls from '../../Generics/Pagination/PaginationControls';
 import AdvancedFilter from './AdvancedFilter';
@@ -32,14 +32,14 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftUnsave,
   handleAircraftSelection,
 }) => {
-  const [aircrafts, setAircrafts] = useState<AircraftWithSocials[]>([]);
+  const [aircrafts, setAircrafts] = useState<AircraftWithSocials[] | undefined>([]);
   const [filters, setFilters] = useState<FilterSearch>({
     set: "all",
     searchField: AircraftSearchOptions.Model,
     search: ""
   });
   const [pagination, setPagination] = useState<PaginationInfo>({
-    pageSize: 10,
+    pageSize: 5,
     currentPage: 1,
     totalCount: 0,
     totalPages: 1,
@@ -51,25 +51,23 @@ const Aircrafts: React.FC<Props> = ({
 
   // TODO: const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilters>([]);
 
-  // TODO: pagination data from response
-  // ex: res.headers.get("X-WP-TotalPages") or res.headers.get("X-WP-Total")
   useEffect(() => {
     console.debug("EFFECT - filter: ", debouncedFilter);
-    
+
     aircraftService.searchAircraftsPaged(
         debouncedFilter,
-        { currentPage: pagination.currentPage, pageSize: pagination.pageSize })
-      .then((response) => {
-        const paginationData = response.headers; // FIXME: header data
-        console.debug("Pagination data: ", paginationData);
-        setPagination({ ...paginationData });
-        setAircrafts([...response.data]);
-      }).catch(error => console.error("Filtering aicrafts - ", error));
+        { currentPage: pagination.currentPage, pageSize: pagination.pageSize }
+    ).then((result) => {
+      if (result) {
+        setPagination(result.pagination);
+        setAircrafts(result.data);
+      }
+    });
 
     return () => {
       setAircrafts([]);
     };
-  },[debouncedFilter, pagination]);
+  },[debouncedFilter]); // FIXME
 
   const handleAircraftsFilters = (filters: FilterSearch) => {
     setFilters({...filters});
@@ -94,7 +92,7 @@ const Aircrafts: React.FC<Props> = ({
         </div>
         
         <div className={Style.Dropdown}>
-          <DropdownSelect 
+          <DropdownAircraftOptions 
             placeholder={"Search By"} 
             filters={filters}
             handleFilter={handleAircraftsFilters}
@@ -119,10 +117,13 @@ const Aircrafts: React.FC<Props> = ({
           />
         </div>
         {
-          aircrafts.length > 0
-            ? <div className={Style.Cards}>
-                {aircrafts.map((aircraft) => {
-                  return <AircraftCard
+          !aircrafts || aircrafts.length === 0
+          ? <div className={Style.AircraftsLoading}>
+              <p>Loading aircrafts...</p> {/* TODO: spinner */}
+            </div>
+          : <div className={Style.Cards}>
+              {aircrafts.map((aircraft) => {
+                return <AircraftCard
                     key={aircraft.id}
                     user={user}
                     aircraft={aircraft}
@@ -130,12 +131,9 @@ const Aircrafts: React.FC<Props> = ({
                     handleAircraftSelection={handleAircraftSelection}
                     handleAircraftSave={handleAircraftSave}
                     handleAircraftUnsave={handleAircraftUnsave} 
-                  />;
-                })}
-              </div>
-            : <div className={Style.AircraftsLoading}>
-                <p>Loading aircrafts...</p> {/* TODO: spinner */}
-              </div>
+                />;
+              })}
+            </div>
         }
       </div>
 

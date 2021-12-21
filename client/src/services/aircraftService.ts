@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
-import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs } from "../types/Aircraft/Aircraft";
+import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs, AircraftSearchResult } from "../types/Aircraft/Aircraft";
 import { FilterSearch } from "../types/Aircraft/Filter";
+import {  PaginationOptions } from "../types/Pagination";
 import { buildStringEndpoint } from "../utils/stringBuilder";
 
 const getAllAircrafts = async () => {
@@ -66,21 +68,54 @@ const searchAircrafts = async (filter: FilterSearch) => {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };
 
+  // TODO: pagination
+  // TODO: multi-query
+
   const urlOptions = {
     baseUrl: BASE_URL!,
     slug: `/api/aircrafts/`,
-    filters: `${filter.set}?${filter.searchField}=${filter.search}`
+    filters: `${filter.set}?${filter.searchField}=${filter.search}`,
   };
 
   const url = buildStringEndpoint(urlOptions);
 
-  // TODO: multi-query
   const response = await axios.get(
     url,
     config
   );
 
   return response;
+};
+
+const searchAircraftsPaged = async (filter: FilterSearch, paging: PaginationOptions): Promise<AircraftSearchResult | void> => {
+  const options = {
+    headers: { Authorization: `Bearer ${getStoredToken()}` }
+  };
+
+  // TODO: multi-query
+
+  const urlOptions = {
+    baseUrl: BASE_URL!,
+    slug: `/api/aircrafts/`,
+    filters: `${filter.set}?${filter.searchField}=${filter.search}`,
+    paging: `&pageNumber=${paging.currentPage}&pageSize=${paging.pageSize}`
+  };
+
+  const url = buildStringEndpoint(urlOptions);
+
+  return await axios.get(url, options)
+    .then(response => {
+      const pagination = JSON.parse(response.headers["x-pagination"]);
+    
+      const result: AircraftSearchResult = {
+        data: response.data,
+        pagination: pagination
+      };
+    
+      return result;
+    }).catch(error => {
+      console.error("ERROR GETTING AIRCRAFTS", error);
+    });
 };
 
 const createAircraft = async (newAircraft: AircraftWithoutIDs) => {
@@ -190,6 +225,7 @@ export default {
   getAircraftsOwnedByUser,
   getAircraftsSavedByUser,
   searchAircrafts,
+  searchAircraftsPaged,
   createAircraft,
   saveAircraft,
   unsaveAircraft,

@@ -1,3 +1,4 @@
+import { PaginationInfo } from "../Pagination";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "./AircraftEnums";
 
 export interface Aircraft {
@@ -41,3 +42,8 @@ export type AircraftWithoutIDs = UnionOmit<Aircraft, 'id' | "createdAtDate">;
 export type AircraftFieldsTypes = keyof AircraftWithSocials;
 
 export type CloneAircraft = UnionOmit<AircraftWithSocials, "id" | "savesCount" | "authorUsername">;
+
+export type AircraftSearchResult = {
+  data: AircraftWithSocials[],
+  pagination: PaginationInfo,
+};
