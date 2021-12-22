@@ -42,7 +42,7 @@ const PlanningSelection: React.FC<Props> = ({
     console.debug("EFFECT - filter: ", debouncedFilter);
     
     aircraftService.searchAircrafts(debouncedFilter)
-      .then((response) => setAircrafts([...response.data]))
+      .then((response) => setAircrafts(response.data))
       .catch(error => console.error("Filtering aicrafts - ", error));
 
     return () => {

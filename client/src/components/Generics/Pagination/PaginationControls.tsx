@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PaginationInfo } from '../../../types/Pagination';
+import { PaginationInfo, PaginationOptions } from '../../../types/Pagination';
 import { Button } from '../Buttons/Button';
 import Dropdown from '../Filters/Dropdown';
 
@@ -14,39 +14,40 @@ import "./Pagination.scss";
 */
 
 interface Props {
-  handlePagination: (pagination: PaginationInfo) => void;
-  pagination: PaginationInfo;
+  handlePagination: (pagination: PaginationOptions) => void;
+  paginationOptions: PaginationOptions;
+  paginationInfo: PaginationInfo;
 }
 
-const PaginationControls: React.FC<Props> = ({handlePagination, pagination}) => {
+const PaginationControls: React.FC<Props> = ({handlePagination, paginationOptions, paginationInfo}) => {
   const nextPage = () => {
-    const page = pagination.currentPage += 1;
-    handlePagination({ ...pagination, currentPage: page });
+    const page = paginationOptions.currentPage += 1;
+    handlePagination({ ...paginationOptions, currentPage: page });
   };
 
   const previousPage = () => {
-    const page = pagination.currentPage -= 1;
-    handlePagination({ ...pagination, currentPage: page });
+    const page = paginationOptions.currentPage -= 1;
+    handlePagination({ ...paginationOptions, currentPage: page });
   };
 
   const selectPage = (page: number) => {
-    handlePagination({ ...pagination, currentPage: page }); 
+    handlePagination({ ...paginationOptions, currentPage: page }); 
   };
 
   return (
     <div className={"pagination"}>
       {/* TODO: controls */}
-      <Button style={'primary'} disabled={!pagination.hasPrevious} handleClick={previousPage}>
+      <Button style={'primary'} disabled={!paginationInfo.hasPrevious} handleClick={previousPage}>
         {"<"}
       </Button>
-      <Button style={'primary'} disabled={!pagination.hasNext} handleClick={nextPage}>
+      <Button style={'primary'} disabled={!paginationInfo.hasNext} handleClick={nextPage}>
         {">"}
       </Button>
       <Dropdown name={"currentPage"}
-        options={Array.from(Array(pagination.currentPage).keys())}
-        defaultValue={pagination.currentPage}
+        options={Array.from(Array(paginationOptions.currentPage).keys())}
+        defaultValue={paginationOptions.currentPage}
         handleSelect={selectPage}
-        isDisabled={pagination.totalPages == 1}
+        isDisabled={paginationInfo.totalPages == 1}
       />
     </div>
   );

@@ -4,9 +4,11 @@ export interface PaginationOptions {
   currentPage: number;
 }
 
-export interface PaginationInfo extends PaginationOptions {
+export interface PaginationInfo {
   totalCount: number;
   totalPages: number;
   hasNext: boolean;
   hasPrevious: boolean;
 }
+
+export interface Pagination extends PaginationOptions, PaginationInfo { }

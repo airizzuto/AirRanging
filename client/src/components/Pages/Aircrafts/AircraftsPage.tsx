@@ -6,7 +6,7 @@ import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 import { FilterSearch } from '../../../types/Aircraft/Filter';
 import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
-import { PaginationInfo } from '../../../types/Pagination';
+import { PaginationInfo, PaginationOptions } from '../../../types/Pagination';
 
 import {LinkButton} from '../../Generics/Buttons/Button';
 import Searchbar from '../../Generics/Filters/Searchbar';
@@ -38,9 +38,11 @@ const Aircrafts: React.FC<Props> = ({
     searchField: AircraftSearchOptions.Model,
     search: ""
   });
-  const [pagination, setPagination] = useState<PaginationInfo>({
+  const [paginationOptions, setPaginationOptions] = useState<PaginationOptions>({
     pageSize: 5,
     currentPage: 1,
+  });
+  const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>({
     totalCount: 0,
     totalPages: 1,
     hasNext: false,
@@ -56,10 +58,10 @@ const Aircrafts: React.FC<Props> = ({
 
     aircraftService.searchAircraftsPaged(
         debouncedFilter,
-        { currentPage: pagination.currentPage, pageSize: pagination.pageSize }
+        paginationOptions,
     ).then((result) => {
       if (result) {
-        setPagination(result.pagination);
+        setPaginationInfo(result.pagination);
         setAircrafts(result.data);
       }
     });
@@ -67,14 +69,14 @@ const Aircrafts: React.FC<Props> = ({
     return () => {
       setAircrafts([]);
     };
-  },[debouncedFilter]); // FIXME
+  },[debouncedFilter, paginationOptions]);
 
   const handleAircraftsFilters = (filters: FilterSearch) => {
     setFilters({...filters});
   };
 
-  const handlePagination = (pagination: PaginationInfo) => {
-    setPagination({...pagination});
+  const handlePagination = (pagination: PaginationOptions) => {
+    setPaginationOptions(pagination);
   };
 
   return (
@@ -138,7 +140,11 @@ const Aircrafts: React.FC<Props> = ({
       </div>
 
       <div className={Style.Pagination}>
-        <PaginationControls pagination={pagination} handlePagination={handlePagination}/>
+        <PaginationControls 
+          paginationInfo={paginationInfo}
+          paginationOptions={paginationOptions}
+          handlePagination={handlePagination}
+        />
       </div>
     </div>
   );

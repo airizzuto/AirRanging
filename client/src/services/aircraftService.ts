@@ -94,6 +94,8 @@ const searchAircraftsPaged = async (filter: FilterSearch, paging: PaginationOpti
 
   // TODO: multi-query
 
+  console.debug("DEBUG PAGING: ", paging);
+
   const urlOptions = {
     baseUrl: BASE_URL!,
     slug: `/api/aircrafts/`,
