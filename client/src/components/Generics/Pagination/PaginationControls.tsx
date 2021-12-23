@@ -67,21 +67,18 @@ const PaginationControls: React.FC<Props> = ({handlePagination, paginationOption
         </Button>
       </div>
 
-      {/*
-        TODO: to first page
-        TODO: to last page
-      */}
-      
       <Dropdown name={"currentPage"}
         options={Array.from(Array(paginationOptions.currentPage).keys())}
         defaultValue={paginationOptions.currentPage}
         handleSelect={selectPage}
+        placeholder='Select Page'
         isDisabled={paginationInfo.totalPages <= 1}
       />
 
       <Dropdown name={"pageSize"}
         options={PAGE_SIZE}
         defaultValue={paginationOptions.pageSize}
+        placeholder='Limit Aircrafts' // TODO: better placeholder
         handleSelect={selectSize}
       />
     </div>

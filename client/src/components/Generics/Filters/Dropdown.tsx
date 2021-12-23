@@ -7,19 +7,21 @@ interface Props {
   name?: string;
   options: any;
   defaultValue?: any;
+  placeholder?: string;
   handleSelect: (option: any) => void;
   isDisabled?: boolean;
 }
 
 const Dropdown: React.FC<Props> = ({
-  name, options, defaultValue, isDisabled, handleSelect
+  name, options, defaultValue, placeholder, isDisabled, handleSelect
 }) => {
   return (
     <>
       <Select
-        name={name} 
+        name={name}
         options={options} 
         defaultValue={defaultValue}
+        placeholder={placeholder}
         onChange={(e) => handleSelect(e.value)}
         className={"Dropdown-container"}
         classNamePrefix={"Dropdown"}
