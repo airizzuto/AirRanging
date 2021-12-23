@@ -32,7 +32,6 @@
   .Map {
     position: absolute;
     grid-area: main;
-    top: 0;
     width: 100%;
     height: 100%;
     z-index: 1;
@@ -46,6 +45,7 @@
   }
 
   .Footer {
+    position: relative;
     grid-area: footer;
 
     z-index: 3;
