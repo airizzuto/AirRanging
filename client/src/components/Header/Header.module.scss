@@ -13,6 +13,7 @@
   grid-template-columns: 1fr 5fr 1fr;
   grid-template-areas: "logo navigation user";
   column-gap: 3vw;
+  padding: 0 3vw;
 
   min-height: 6rem;
   max-width: 100%;
@@ -26,7 +27,7 @@
 
     max-height: 2rem;
 
-    place-self: center;
+    align-self: center;
   }
 
   .HeaderNav {
@@ -127,7 +128,7 @@
     .Menu {
       display: grid;
       grid-area: menu;
-      visibility: visible;
+      visibility: hidden;
     }
   }
 }
