@@ -2,9 +2,9 @@
 @use "./styles/mixins" as *;
 
 .App {
-  position: relative;
-  height: 100vh;
-  max-width: 100%;
+  position: fixed;
+  height: 100%;
+  width: 100%;
 
   background-image: url("./MiamiCropped4k.png");
   background-color: color.$light1;
@@ -20,17 +20,16 @@
     "footer";
 
   overflow: auto;
-
   z-index: 1;
 
   .Header {
-    grid-area: header-nav;
     position: relative;
+    grid-area: header-nav;
     z-index: 3;
   }
 
   .Map {
-    position: absolute;
+    position: relative;
     grid-area: main;
     width: 100%;
     height: 100%;
@@ -40,14 +39,13 @@
   .Main {
     position: relative;
     grid-area: main;
-    max-width: 100%;
+    width: 100%;
     z-index: auto;
   }
 
   .Footer {
     position: relative;
     grid-area: footer;
-
     z-index: 3;
   }
 }
