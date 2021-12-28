@@ -1,6 +1,6 @@
 import React from 'react';
 import { GoogleMap, useLoadScript } from '@react-google-maps/api';
-import { containerStyle, DEFAULT_MAP_CENTER, DEFAULT_MAP_OPTIONS, LIBRARIES } from '../../settings/google-maps/mapSettings';
+import { containerStyle, DEFAULT_MAP_CENTER, DEFAULT_MAP_OPTIONS } from '../../settings/google-maps/mapSettings';
 
 import { Coordinates } from '../../types/Map/MapTypes';
 import { AircraftSelected } from '../../types/Aircraft/Aircraft';
@@ -25,7 +25,7 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
     id: "google-map-script",
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY!,
-    libraries: LIBRARIES,
+    libraries: ["places", "drawing"],
   });
 
   // Save map in ref if we want to access the map from outside the component

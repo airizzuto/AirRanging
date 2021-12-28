@@ -18,4 +18,3 @@ export const DEFAULT_MAP_CENTER = {
   washington: { lat: 47.751076, lng: -120.740135 }
 };
 
-export const LIBRARIES: any | undefined = ["places", "drawing"];
