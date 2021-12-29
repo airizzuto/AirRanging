@@ -87,12 +87,11 @@ const searchAircrafts = async (filter: FilterSearch) => {
   return response;
 };
 
-const searchAircraftsPaged = async (filter: FilterSearch, paging: PaginationOptions): Promise<AircraftSearchResult | void> => {
+// TODO: multi-query
+const searchAircraftsPaged = async (filter: FilterSearch, paging: PaginationOptions): Promise<any | void> => {
   const options = {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };
-
-  // TODO: multi-query
 
   console.debug("DEBUG PAGING: ", paging);
 
@@ -100,23 +99,22 @@ const searchAircraftsPaged = async (filter: FilterSearch, paging: PaginationOpti
     baseUrl: BASE_URL!,
     slug: `/api/aircrafts/`,
     filters: `${filter.set}?${filter.searchField}=${filter.search}`,
-    paging: `&pageNumber=${paging.currentPage}&pageSize=${paging.pageSize}`
+    paging: `&pageNumber=${paging.CurrentPage}&pageSize=${paging.PageSize}`
   };
 
   const url = buildStringEndpoint(urlOptions);
 
   return await axios.get(url, options)
     .then(response => {
-      const pagination = JSON.parse(response.headers["x-pagination"]);
-    
       const result: AircraftSearchResult = {
         data: response.data,
-        pagination: pagination
+        pagination: JSON.parse(response.headers["x-pagination"])
       };
     
       return result;
     }).catch(error => {
       console.error("ERROR GETTING AIRCRAFTS", error);
+      return;
     });
 };
 

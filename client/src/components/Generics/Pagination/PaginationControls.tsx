@@ -22,22 +22,22 @@ const PAGE_SIZE = [5, 10, 15, 20];
 
 const PaginationControls: React.FC<Props> = ({handlePagination, paginationOptions, paginationInfo}) => {
   const nextPage = () => {
-    const page = paginationOptions.currentPage += 1;
-    handlePagination({ ...paginationOptions, currentPage: page });
+    const page = paginationOptions.CurrentPage += 1;
+    handlePagination({ ...paginationOptions, CurrentPage: page });
   };
 
   const lastPage = () => {
-    const page = paginationInfo.totalPages;
-    handlePagination({...paginationOptions, currentPage: page});
+    const page = paginationInfo.TotalPages;
+    handlePagination({...paginationOptions, CurrentPage: page});
   };
 
   const previousPage = () => {
-    const page = paginationOptions.currentPage -= 1;
-    handlePagination({ ...paginationOptions, currentPage: page });
+    const page = paginationOptions.CurrentPage -= 1;
+    handlePagination({ ...paginationOptions, CurrentPage: page });
   };
 
   const firstPage = () => {
-    handlePagination({ ...paginationOptions, currentPage: 1 });
+    handlePagination({ ...paginationOptions, CurrentPage: 1 });
   };
 
   // const selectPage = (page: number) => {
@@ -45,23 +45,23 @@ const PaginationControls: React.FC<Props> = ({handlePagination, paginationOption
   // };
 
   const selectSize = (size: number) => {
-    handlePagination({ ...paginationOptions, pageSize: size }); 
+    handlePagination({ ...paginationOptions, PageSize: size }); 
   };
 
   return (
     <div className={"pagination"}>
       {/* TODO: controls */}
       <div className={"control_buttons"}>
-        <Button style={'primary'} disabled={!paginationInfo.hasPrevious} handleClick={firstPage}>
+        <Button style={'primary'} disabled={!paginationInfo.HasPrevious} handleClick={firstPage}>
           {"<<"}
         </Button>
-        <Button style={'primary'} disabled={!paginationInfo.hasPrevious} handleClick={previousPage}>
+        <Button style={'primary'} disabled={!paginationInfo.HasPrevious} handleClick={previousPage}>
           {"<"}
         </Button>
-        <Button style={'primary'} disabled={!paginationInfo.hasNext} handleClick={nextPage}>
+        <Button style={'primary'} disabled={!paginationInfo.HasNext} handleClick={nextPage}>
           {">"}
         </Button>
-        <Button style={'primary'} disabled={!paginationInfo.hasNext} handleClick={lastPage}>
+        <Button style={'primary'} disabled={!paginationInfo.HasNext} handleClick={lastPage}>
           {">>"}
         </Button>
       </div>
@@ -75,16 +75,16 @@ const PaginationControls: React.FC<Props> = ({handlePagination, paginationOption
       <select 
         name="pageSizeList"
         id="pageSizeList"
+        defaultValue={paginationOptions.PageSize}
         onChange={(e) => selectSize(Number.parseInt(e.target.value))}
-        defaultValue={paginationOptions.pageSize}
         placeholder='Limit'
         >
         {PAGE_SIZE.map(size => {
-          return <option value={size}>{size}</option>;
+          return <option key={`pageSize-${size}`} value={size}>{size}</option>;
         })}
       </select>
 
-      <p>Page: <span>{paginationOptions.currentPage}/{paginationInfo.totalPages}</span></p>
+      <p>Page: {paginationOptions.CurrentPage}/{paginationInfo.TotalPages}</p>
     </div>
   );
 };

@@ -39,14 +39,14 @@ const Aircrafts: React.FC<Props> = ({
     search: ""
   });
   const [paginationOptions, setPaginationOptions] = useState<PaginationOptions>({
-    pageSize: 5,
-    currentPage: 1,
+    PageSize: 5,
+    CurrentPage: 1,
   });
   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo>({
-    totalCount: 0,
-    totalPages: 1,
-    hasNext: false,
-    hasPrevious: false,
+    TotalCount: 0,
+    TotalPages: 1,
+    HasNext: false,
+    HasPrevious: false,
   });
 
   const debouncedFilter = useDebounce(filters, 500);
@@ -55,16 +55,15 @@ const Aircrafts: React.FC<Props> = ({
 
   useEffect(() => {
     console.debug("EFFECT - filter: ", debouncedFilter);
-
-    aircraftService.searchAircraftsPaged(
-        debouncedFilter,
-        paginationOptions,
-    ).then((result) => {
+    async function getAircrafts() {
+      const result = await aircraftService
+        .searchAircraftsPaged(debouncedFilter, paginationOptions);
       if (result) {
         setPaginationInfo(result.pagination);
         setAircrafts(result.data);
       }
-    });
+    }
+    getAircrafts();
 
     return () => {
       setAircrafts([]);

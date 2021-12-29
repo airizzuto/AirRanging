@@ -1,14 +1,14 @@
 
 export interface PaginationOptions {
-  pageSize: number;
-  currentPage: number;
+  PageSize: number;
+  CurrentPage: number;
 }
 
 export interface PaginationInfo {
-  totalCount: number;
-  totalPages: number;
-  hasNext: boolean;
-  hasPrevious: boolean;
+  TotalCount: number;
+  TotalPages: number;
+  HasNext: boolean;
+  HasPrevious: boolean;
 }
 
 export interface Pagination extends PaginationOptions, PaginationInfo { }
