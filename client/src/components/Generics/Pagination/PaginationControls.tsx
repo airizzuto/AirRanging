@@ -2,7 +2,6 @@ import React from 'react';
 
 import { PaginationInfo, PaginationOptions } from '../../../types/Pagination';
 import { Button } from '../Buttons/Button';
-import Dropdown from '../Filters/Dropdown';
 
 import "./Pagination.scss";
 
@@ -41,9 +40,9 @@ const PaginationControls: React.FC<Props> = ({handlePagination, paginationOption
     handlePagination({ ...paginationOptions, currentPage: 1 });
   };
 
-  const selectPage = (page: number) => {
-    handlePagination({ ...paginationOptions, currentPage: page }); 
-  };
+  // const selectPage = (page: number) => {
+  //   handlePagination({ ...paginationOptions, currentPage: page }); 
+  // };
 
   const selectSize = (size: number) => {
     handlePagination({ ...paginationOptions, pageSize: size }); 
@@ -67,20 +66,25 @@ const PaginationControls: React.FC<Props> = ({handlePagination, paginationOption
         </Button>
       </div>
 
-      <Dropdown name={"currentPage"}
-        options={Array.from(Array(paginationOptions.currentPage).keys())}
-        defaultValue={paginationOptions.currentPage}
-        handleSelect={selectPage}
-        placeholder='Select Page'
-        isDisabled={paginationInfo.totalPages <= 1}
-      />
-
-      <Dropdown name={"pageSize"}
+      {/* <Dropdown name={"pageSize"}
         options={PAGE_SIZE}
         defaultValue={paginationOptions.pageSize}
-        placeholder='Limit Aircrafts' // TODO: better placeholder
-        handleSelect={selectSize}
-      />
+        placeholder='Limit'
+        handleSelect={() => selectSize}
+      /> */}
+      <select 
+        name="pageSizeList"
+        id="pageSizeList"
+        onChange={(e) => selectSize(Number.parseInt(e.target.value))}
+        defaultValue={paginationOptions.pageSize}
+        placeholder='Limit'
+        >
+        {PAGE_SIZE.map(size => {
+          return <option value={size}>{size}</option>;
+        })}
+      </select>
+
+      <p>Page: <span>{paginationOptions.currentPage}/{paginationInfo.totalPages}</span></p>
     </div>
   );
 };
