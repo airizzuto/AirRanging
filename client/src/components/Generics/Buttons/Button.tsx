@@ -54,7 +54,6 @@ interface LinkProps {
  * @returns button component.
  */
 export const LinkButton: React.FC<LinkProps> = ({path, children, style, handleClick, disabled}) => {
-
   return (
     !disabled
     ? <Link to={path} className={style} onClick={handleClick}>

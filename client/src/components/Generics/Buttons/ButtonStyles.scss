@@ -8,14 +8,21 @@
   @include text-shadow;
   @include hyperlink-behavior;
   @include button-behavior;
+  display: flex;
+  flex-wrap: nowrap;
+  text-align: center;
+
+  a {
+    place-self: center
+  }
 }
 
 .primary {
   @include button;
+  justify-content: center;
 
-  width: 100%;
-
-  text-align: center;
+  height: 100%;
+  max-width: 100%;
 
   border-style: none;
   border-radius: 5px;
@@ -32,8 +39,6 @@
   @include button;
 
   width: 100%;
-
-  text-align: center;
 
   border: 2px solid color.$light2;
   border-radius: 5px;
@@ -52,8 +57,6 @@
 
   width: 100%;
 
-  text-align: center;
-
   border: 2px solid color.$light1;
   border-radius: 5px;
   background-color: color.$light2;
@@ -63,8 +66,6 @@
   @include button;
 
   width: 100%;
-
-  text-align: center;
 
   border-style: none;
   border-radius: 10px;
