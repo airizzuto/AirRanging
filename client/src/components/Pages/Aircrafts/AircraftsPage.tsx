@@ -52,22 +52,21 @@ const Aircrafts: React.FC<Props> = ({
   const debouncedFilter = useDebounce(filters, 500);
 
   // TODO: const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilters>([]);
-
+  {/* FIXME: possible async issue on effect */}
   useEffect(() => {
     console.debug("EFFECT - filter: ", debouncedFilter);
     async function getAircrafts() {
-      const result = await aircraftService
-        .searchAircraftsPaged(debouncedFilter, paginationOptions);
-      if (result) {
-        setPaginationInfo(result.pagination);
-        setAircrafts(result.data);
-      }
+      await aircraftService
+        .searchAircraftsPaged(debouncedFilter, paginationOptions)
+        .then(response => {
+          if (response) {
+            setPaginationInfo(response.pagination);
+            setAircrafts(response.data);
+          }
+        });
     }
+  
     getAircrafts();
-
-    return () => {
-      setAircrafts([]);
-    };
   },[debouncedFilter, paginationOptions]);
 
   const handleAircraftsFilters = (filters: FilterSearch) => {
