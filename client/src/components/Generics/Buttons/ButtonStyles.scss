@@ -10,15 +10,14 @@
   @include button-behavior;
   display: flex;
   flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
 .primary {
   @include button;
-  align-items: center;
-  justify-content: center;
-
-  height: 100%;
-  width: 100%;
 
   border-style: none;
   border-radius: 5px;
@@ -33,8 +32,6 @@
 
 .toggle {
   @include button;
-
-  width: 100%;
 
   border: 2px solid color.$light2;
   border-radius: 5px;
@@ -51,8 +48,6 @@
 .toggle-checked {
   @include button;
 
-  width: 100%;
-
   border: 2px solid color.$light1;
   border-radius: 5px;
   background-color: color.$light2;
@@ -60,8 +55,6 @@
 
 .danger {
   @include button;
-
-  width: 100%;
 
   border-style: none;
   border-radius: 10px;
