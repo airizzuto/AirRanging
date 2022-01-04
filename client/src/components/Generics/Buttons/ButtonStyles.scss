@@ -10,19 +10,15 @@
   @include button-behavior;
   display: flex;
   flex-wrap: nowrap;
-  text-align: center;
-
-  a {
-    place-self: center
-  }
 }
 
 .primary {
   @include button;
+  align-items: center;
   justify-content: center;
 
   height: 100%;
-  max-width: 100%;
+  width: 100%;
 
   border-style: none;
   border-radius: 5px;
