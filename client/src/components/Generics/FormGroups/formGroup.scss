@@ -3,12 +3,12 @@
 @use "../../../styles/components/boxes" as box;
 @use "../../../styles/mixins" as *;
 
+// TODO: make flex
 .FormGroup {
   display: grid;
-  grid-template-columns: 1fr 3fr 2fr;
+  grid-template-columns: 3fr 3fr 2fr;
   grid-template-rows: 1fr;
   grid-template-areas: "field-label field-input validation";
-  column-gap: 2rem;
 
   label {
     @include font.main;
@@ -19,6 +19,7 @@
     justify-self: start;
     align-self: center;
     height: max-content;
+    min-width: max-content;
   }
 
   span {
@@ -33,7 +34,7 @@
     grid-area: field-input;
 
     height: 1rem;
-    width: 30rem;
+    width: 30vw;
     align-self: center;
     justify-self: center;
   }
@@ -47,7 +48,7 @@
     grid-area: field-input;
 
     height: 2.5rem;
-    width: 32.5rem;
+    width: 33vw;
     align-self: center;
     justify-self: center;
   }
