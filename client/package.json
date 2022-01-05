@@ -40,7 +40,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .ts",
-    "server": "dotnet run --project ../Server/App",
+    "api": "dotnet run --project ../Server/App",
     "serve": "serve -s build"
   },
   "eslintConfig": {
