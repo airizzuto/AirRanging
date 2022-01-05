@@ -1,25 +1,18 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Net;
-using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
-using FluentAssertions;
-using Entities.Models.Enums;
 using Entities.Models.Aircrafts;
-using Entities.DTOs.V1.Aircrafts;
 using App.Controllers.V1;
 using Tests.Helpers;
-using Contracts.Aircrafts;
-using Entities.Models.Pagination;
 using AutoMapper;
 using App.Mapping;
+using System.Collections.Generic;
+using Entities.DTOs.V1.Aircrafts;
 
 namespace Tests.Controller
 {
-    public class AircraftsControllerTests : IntegrationTest
+  public class AircraftsControllerTests : IntegrationTest
     {
         private readonly MockAPI _mock = new();
         private readonly MockAircraftsData _mockData = new();
@@ -27,7 +20,7 @@ namespace Tests.Controller
         private readonly AircraftParameters aircraftParameters = new();
         private readonly AircraftsProfile _profile = new();
         private readonly MapperConfiguration mapperConfig;
-        private IMapper mapper;
+        private readonly IMapper mapper;
 
         public AircraftsControllerTests()
         {
@@ -46,7 +39,7 @@ namespace Tests.Controller
         {
             // Arrange
             _mock.repo.Setup(repo =>
-                repo.Aircraft.GetAllAircraftsPaginatedAsync(aircraftParameters)
+                repo.Aircraft.GetAllAircraftsAsync()
             ).ReturnsAsync(
                 await _mockData.RetrieveAircraftsQuantityAsync(0, aircraftParameters)
             );
@@ -54,10 +47,10 @@ namespace Tests.Controller
             var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
 
             // Act
-            var result = controller.GetAllAircrafts(aircraftParameters);
+            var result = controller.GetAllAircrafts();
 
             // Assert
-            Assert.IsType<OkObjectResult>(result.Result);
+            Assert.IsType<ActionResult<IEnumerable<AircraftReadDTO>>>(result.Result);
         }
 
         [Fact]
@@ -65,7 +58,7 @@ namespace Tests.Controller
         {
             // Arrange
             _mock.repo.Setup(repo =>
-                repo.Aircraft.GetAllAircraftsPaginatedAsync(aircraftParameters)
+                repo.Aircraft.GetAllAircraftsAsync()
             ).ReturnsAsync(
                 await _mockData.RetrieveAircraftsQuantityAsync(1, aircraftParameters)
             );
@@ -73,10 +66,10 @@ namespace Tests.Controller
             var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
 
             // Act
-            var result = controller.GetAllAircrafts(aircraftParameters);
+            var result = controller.GetAllAircrafts();
 
             // Assert
-            Assert.IsType<OkObjectResult>(result.Result);
+            Assert.IsType<ActionResult<IEnumerable<AircraftReadDTO>>>(result.Result);
         }
 
 
