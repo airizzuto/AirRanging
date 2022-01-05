@@ -1,4 +1,7 @@
-# AirRanging 0.1.0
+# AirRanging
+
+- Client v0.1.0
+- API v0.1.0
 
 Web application for flight fuel planning, with aircraft management and user account.
 
