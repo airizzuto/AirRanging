@@ -9,6 +9,8 @@ using App.Controllers.V1;
 using Entities.Models.Aircrafts;
 using Entities.DTOs.V1.Aircrafts;
 using Tests.Helpers;
+using System;
+using Entities.Models.Enums;
 
 namespace Tests.Controller
 {
@@ -34,14 +36,17 @@ namespace Tests.Controller
         // TODO: Additional testing
 
         // GET
-        [Fact]
-        public async Task GetAllAircrafts_ReturnsCode200Ok_WhenDbIsEmpty()
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(2)]
+        public async Task GetAllAircrafts_ReturnsCode200Ok(int aircraftNumber)
         {
             // Arrange
             _mock.repo.Setup(repo =>
                 repo.Aircraft.GetAllAircraftsAsync()
             ).ReturnsAsync(
-                await _mockData.RetrieveAircraftsQuantityAsync(0, aircraftParameters)
+                await _mockData.RetrieveAircraftsQuantityAsync(aircraftNumber, aircraftParameters)
             );
 
             var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
@@ -54,43 +59,78 @@ namespace Tests.Controller
         }
 
         [Fact]
-        public async Task GetAllAircrafts_ReturnsCode200Ok_WhenDbHasOneResource()
+        public async Task GetAircraftId_ReturnsCode200Ok_WhenAircraftFound()
         {
             // Arrange
+            Guid id = Guid.NewGuid();
+            Aircraft mockAircraft = new()
+            {
+                Id = id,
+                IcaoId = "C152",
+                Manufacturer = "Cessna",
+                Model = "152",
+                AircraftType = EAircraftType.SingleEngineLand,
+                EngineType = EEngineType.Piston,
+                WeightCategory = EWeightCategory.Small,
+                IcaoWakeCategory = EIcaoWakeCategory.Light,
+                FuelType = EFuelType.AvGas,
+                MaxTakeoffWeight = 1670,
+                CruiseSpeed = 107,
+                FuelCapacity = 26,
+                MaxRange = 415,
+                ServiceCeiling = 14700
+            };
+
             _mock.repo.Setup(repo =>
-                repo.Aircraft.GetAllAircraftsAsync()
-            ).ReturnsAsync(
-                await _mockData.RetrieveAircraftsQuantityAsync(1, aircraftParameters)
-            );
+                repo.Aircraft.GetAircraftByIdAsync(id.ToString())
+            ).ReturnsAsync(mockAircraft);
 
             var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
 
             // Act
-            var result = await controller.GetAllAircrafts();
+            var result = await controller.GetAircraftById(id.ToString());
 
             // Assert
-            Assert.IsType<OkObjectResult>(result.Result);
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]
-        public async Task GetAllAircrafts_ReturnsCode200Ok_WhenDbHasManyResources()
+        public async Task GetAircraftId_ReturnsCode404NotFound_WhenAircraftIdNotFound()
         {
             // Arrange
+            Guid id = Guid.NewGuid();
+
             _mock.repo.Setup(repo =>
-                repo.Aircraft.GetAllAircraftsAsync()
-            ).ReturnsAsync(
-                await _mockData.RetrieveAircraftsQuantityAsync(1, aircraftParameters)
+                repo.Aircraft.GetAircraftByIdAsync(id.ToString())
             );
 
             var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
 
             // Act
-            var result = await controller.GetAllAircrafts();
+            var result = await controller.GetAircraftById(id.ToString());
 
             // Assert
-            Assert.IsType<OkObjectResult>(result.Result);
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
+        [Fact]
+        public async Task GetAircraftId_ReturnsCode404NotFound_WhenIdHasIncorrectFormat()
+        {
+            // Arrange
+            string id = "123";
+
+            _mock.repo.Setup(repo =>
+                repo.Aircraft.GetAircraftByIdAsync(id.ToString())
+            );
+
+            var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
+
+            // Act
+            var result = await controller.GetAircraftById(id.ToString());
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result);
+        }
 
         // DEPRECATED
         
