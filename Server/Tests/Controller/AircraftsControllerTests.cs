@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
-using Entities.Models.Aircrafts;
-using App.Controllers.V1;
-using Tests.Helpers;
 using AutoMapper;
 using App.Mapping;
-using System.Collections.Generic;
+using App.Controllers.V1;
+using Entities.Models.Aircrafts;
 using Entities.DTOs.V1.Aircrafts;
+using Tests.Helpers;
 
 namespace Tests.Controller
 {
@@ -47,10 +47,10 @@ namespace Tests.Controller
             var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
 
             // Act
-            var result = controller.GetAllAircrafts();
+            var result = await controller.GetAllAircrafts();
 
             // Assert
-            Assert.IsType<ActionResult<IEnumerable<AircraftReadDTO>>>(result.Result);
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
@@ -66,10 +66,29 @@ namespace Tests.Controller
             var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
 
             // Act
-            var result = controller.GetAllAircrafts();
+            var result = await controller.GetAllAircrafts();
 
             // Assert
-            Assert.IsType<ActionResult<IEnumerable<AircraftReadDTO>>>(result.Result);
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetAllAircrafts_ReturnsCode200Ok_WhenDbHasManyResources()
+        {
+            // Arrange
+            _mock.repo.Setup(repo =>
+                repo.Aircraft.GetAllAircraftsAsync()
+            ).ReturnsAsync(
+                await _mockData.RetrieveAircraftsQuantityAsync(1, aircraftParameters)
+            );
+
+            var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
+
+            // Act
+            var result = await controller.GetAllAircrafts();
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result.Result);
         }
 
 
