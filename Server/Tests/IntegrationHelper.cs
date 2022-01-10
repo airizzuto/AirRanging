@@ -13,10 +13,10 @@ using App;
 
 namespace Tests
 {
-    public class IntegrationTest
+    public class IntegrationHelper
     {
         protected readonly HttpClient TestClient;
-        public IntegrationTest()
+        public IntegrationHelper()
         {
             var appFactory = new WebApplicationFactory<Startup>()
                 .WithWebHostBuilder(builder => 
