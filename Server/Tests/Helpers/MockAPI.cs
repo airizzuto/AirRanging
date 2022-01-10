@@ -1,14 +1,11 @@
 using System;
-using AutoMapper;
 using Moq;
-using App.Mapping;
 using Contracts;
 using Logger;
-using Entities.Models.Aircrafts;
 
 namespace Tests.Helpers
 {
-    public class MockAPI : IDisposable
+  public class MockAPI : IDisposable
     {
         public Mock<IRepositoryWrapper> repo;
         public Mock<ITokenService> tokenService;
