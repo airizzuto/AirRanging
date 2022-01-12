@@ -10,6 +10,8 @@ using Tests.Helpers;
 using System;
 using Entities.Models.Enums;
 using Entities.DTOs.V1.Aircrafts;
+using Entities.Models.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace Tests.Controller
 {
@@ -139,18 +141,12 @@ namespace Tests.Controller
         }
 
         [Fact]
-        public async Task Create_WithValidModel_CreatesAircraftOnce()
+        public async void Create_WithValidModel_CreatesAircraftOnce()
         {
-            // TODO HttpContext
+            // TODO: mock HttpContext call?
+            throw new NotImplementedException();
 
             // Arrange
-            Aircraft? aircraft = null;
-
-            _mock.repo
-                .Setup(repo => repo.Aircraft.CreateAircraftAsync(
-                    It.IsAny<Aircraft>(), It.IsAny<string>()
-                )).Callback<Aircraft>(x => aircraft = x);
-
             AircraftCreateDTO mockAircraft = new()
             {
                 IcaoId = "C152",
@@ -168,15 +164,18 @@ namespace Tests.Controller
                 ServiceCeiling = 14700
             };
 
+            var model = mapper.Map<AircraftCreateDTO, Aircraft>(mockAircraft);
+            _mock.repo.Setup(repo => repo.Aircraft.CreateAircraftAsync(
+                It.IsAny<Aircraft>(), It.IsAny<string>()
+            )).ReturnsAsync(model);
+
             var controller = new AircraftsController(_mock.logger.Object, _mock.repo.Object, mapper);
 
             // Act
-            await controller.CreateAircraft(mockAircraft);
-            _mock.repo.Verify(x => x.Aircraft.Create(It.IsAny<Aircraft>()));
+            var result = await controller.CreateAircraft(mockAircraft);
 
             // Assert
-            Assert.Equal(aircraft.Model, mockAircraft.Model);
-            Assert.Equal(aircraft.Manufacturer, mockAircraft.Manufacturer);
+            Assert.IsType<CreatedAtActionResult>(result);
         }
     }
 }
