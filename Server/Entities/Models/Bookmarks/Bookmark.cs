@@ -6,6 +6,7 @@ namespace Entities.Models.Bookmarks
 {
     public class Bookmark
     {
+        // TODO: make generic to also accept landmark models
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
         public Guid AircraftId { get; set; }
