@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Entities.Models.Aircrafts;
 using Entities.Models.Bookmarks;
+using Entities.Models.Landmarks;
 using Microsoft.AspNetCore.Identity;
 
 namespace Entities.Models.Identity
@@ -17,6 +18,7 @@ namespace Entities.Models.Identity
 
         // Navigation Properties
         public ICollection<Aircraft> AircraftsOwned { get; set; }
+        public ICollection<Landmark> LandmarksOwned { get; set; }
         public ICollection<Bookmark> Bookmarks { get; set; }
     }
 }
