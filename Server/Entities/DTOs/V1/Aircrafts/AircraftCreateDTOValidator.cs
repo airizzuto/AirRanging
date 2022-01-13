@@ -50,7 +50,7 @@ namespace Entities.DTOs.V1.Aircrafts
             RuleFor(x => x.FuelType)
                 .Equal(EFuelType.Electric).When(x => x.EngineType == EEngineType.Electric);
 
-            RuleFor(x => x.MaxTakeoffWeight)
+            RuleFor(x => x.MTOW)
                 .GreaterThan((uint)0)
                 .LessThan(uint.MaxValue);
             

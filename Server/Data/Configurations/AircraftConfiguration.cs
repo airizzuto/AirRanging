@@ -31,28 +31,28 @@ namespace Data.Configurations
 
             builder.Property(a => a.AircraftType)
                 .IsRequired()
-                .HasConversion<string>(); // TODO: Test if redundant with JsonStringEnumConverter
+                .HasConversion<string>();   // FIXME: possible error when sending model enum parameters from FE when property has space in string description
 
             builder.Property(a => a.EngineType)
                 .IsRequired()
-                .HasConversion<string>();
+                .HasConversion<string>();   // FIXME: possible error when sending model enum parameters from FE when property has space in string description
             
             builder.Property(a => a.EngineCount)
                 .IsRequired();
 
             builder.Property(a => a.WeightCategory)
                 .IsRequired()
-                .HasConversion<string>();
+                .HasConversion<string>();   // FIXME: possible error when sending model enum parameters from FE when property has space in string description
 
             builder.Property(a => a.IcaoWakeCategory)
                 .IsRequired()
-                .HasConversion<string>();
+                .HasConversion<string>();   // FIXME: possible error when sending model enum parameters from FE when property has space in string description
 
             builder.Property(a => a.FuelType)
                 .IsRequired()
-                .HasConversion<string>();
+                .HasConversion<string>();   // FIXME: possible error when sending model enum parameters from FE when property has space in string description
 
-            builder.Property(a => a.MaxTakeoffWeight);
+            builder.Property(a => a.MTOW);
 
             builder.Property(a => a.MinRunwayLength);
 

@@ -57,7 +57,7 @@ namespace Entities.DTOs.V1.Aircrafts
                 .GreaterThanOrEqualTo(0)
                 .LessThan(decimal.MaxValue);
 
-            RuleFor(x => x.MaxTakeoffWeight)
+            RuleFor(x => x.MTOW)
                 .GreaterThan((uint)0)
                 .LessThan(uint.MaxValue);
             
