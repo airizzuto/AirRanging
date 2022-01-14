@@ -12,8 +12,7 @@ namespace Data
     {
         public DbSet<Aircraft> Aircrafts { get; set; }
         public DbSet<Bookmark> Bookmarks { get; set; }
-
-        DbSet<Landmark> Landmarks { get; set; }
+        public DbSet<Landmark> Landmarks { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 

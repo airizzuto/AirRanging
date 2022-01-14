@@ -1,9 +1,11 @@
 using System.Threading.Tasks;
 using Contracts;
 using Contracts.Aircrafts;
+using Contracts.Landmarks;
 using Data;
 using Entities.Helpers;
 using Entities.Models.Aircrafts;
+using Entities.Models.Landmarks;
 
 namespace Repository
 {
@@ -12,11 +14,15 @@ namespace Repository
         private readonly ApplicationDbContext _context;
 
         private IAircraftRepository _aircraft;
-        private IApplicationUserRepository _applicationUser;
-        private IBookmarkRepository _bookmark;
         private readonly ISortHelper<Aircraft> _aircraftsSortHelper;
         private readonly IAircraftsFilterHelper _aircraftsFilterHelper;
         private readonly IAircraftsPaginationHelper _aircraftsPaginationHelper;
+        private ILandmarkRepository _landmark;
+        private readonly ISortHelper<Landmark> _landmarksSortHelper;
+        private readonly ILandmarksFilterHelper _landmarksFilterHelper;
+        private readonly ILandmarksPaginationHelper _landmarksPaginationHelper;
+        private IApplicationUserRepository _applicationUser;
+        private IBookmarkRepository _bookmark;
 
         public RepositoryWrapper(
             ApplicationDbContext context,
@@ -45,6 +51,23 @@ namespace Repository
 
                 return _aircraft;
             }
+        }
+
+        public ILandmarkRepository Landmark { 
+            get
+            {
+                if (_landmark == null)
+                {
+                    _landmark = new LandmarkRepository(
+                        _context,
+                        _landmarkSortHelper,
+                        _landmarkFilterHelper,
+                        _landmarkPaginationHelper
+                    );
+                }
+
+                return _landmark;
+            } 
         }
 
         public IApplicationUserRepository ApplicationUser {
