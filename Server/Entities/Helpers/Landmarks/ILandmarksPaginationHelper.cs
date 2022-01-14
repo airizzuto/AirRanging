@@ -4,7 +4,7 @@ using Entities.Models.Pagination;
 
 namespace Entities.Helpers.Landmarks
 {
-    public interface ILandmarksPagination
+    public interface ILandmarksPaginationHelper
     {
         PagedList<Landmark> ApplyPagination(IEnumerable<Landmark> landmarks, LandmarkParameters parameters);
     }

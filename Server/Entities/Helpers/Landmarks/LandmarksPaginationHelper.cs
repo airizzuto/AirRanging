@@ -1,6 +1,6 @@
 namespace Entities.Helpers.Landmarks
 {
-    public class LandmarksPagination
+    public class LandmarksPaginationHelper
     {
         // TODO:
     }

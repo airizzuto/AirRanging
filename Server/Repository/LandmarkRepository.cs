@@ -2,6 +2,7 @@ using Data;
 using Contracts.Landmarks;
 using Entities.Models.Landmarks;
 using Entities.Helpers;
+using Entities.Helpers.Landmarks;
 using System.Collections.Generic;
 
 namespace Repository
@@ -9,19 +10,19 @@ namespace Repository
     public class LandmarkRepository : BaseRepository<Landmark>, ILandmarkRepository
     {
         private readonly ISortHelper<Landmark> _sortHelper;
-        // TODO: private readonly ILandmarksFilterHelper _filterHelper;
-        // TODO: private readonly ILandmarksPaginationHelper _paginationHelper;
+        private readonly ILandmarksFilterHelper _filterHelper;
+        private readonly ILandmarksPaginationHelper _paginationHelper;
 
         public LandmarkRepository(
             ApplicationDbContext context,
-            ISortHelper<Landmark> sortHelper
-            // ILandmarksFilterHelper filterHelper,
-            // ILandmarkPaginationHelper paginationHelper
+            ISortHelper<Landmark> sortHelper,
+            ILandmarksFilterHelper filterHelper,
+            ILandmarksPaginationHelper paginationHelper
         ) : base(context)
         {
             _sortHelper = sortHelper;
-            // _filterHelper = filterHelper;
-            // _paginationHelper = paginationHelper;
+            _filterHelper = filterHelper;
+            _paginationHelper = paginationHelper;
         }
 
         /*
