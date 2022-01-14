@@ -7,6 +7,7 @@ using Data;
 using Entities.Models.Aircrafts;
 using Entities.Models.Pagination;
 using Entities.Helpers;
+using Entities.Helpers.Aircrafts;
 using Contracts.Aircrafts;
 
 namespace Repository

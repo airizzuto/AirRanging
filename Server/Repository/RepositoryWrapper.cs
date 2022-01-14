@@ -4,6 +4,8 @@ using Contracts.Aircrafts;
 using Contracts.Landmarks;
 using Data;
 using Entities.Helpers;
+using Entities.Helpers.Aircrafts;
+using Entities.Helpers.Landmarks;
 using Entities.Models.Aircrafts;
 using Entities.Models.Landmarks;
 
@@ -28,12 +30,18 @@ namespace Repository
             ApplicationDbContext context,
             ISortHelper<Aircraft> aircraftsSortHelper,
             IAircraftsFilterHelper aircraftsFilterHelper,
-            IAircraftsPaginationHelper aircraftsPaginationHelper
+            IAircraftsPaginationHelper aircraftsPaginationHelper,
+            ISortHelper<Landmark> landmarksSortHelper,
+            ILandmarksFilterHelper landmarksFilterHelper,
+            ILandmarksPaginationHelper landmarksPaginationHelper
         ) {
             _context = context;
             _aircraftsSortHelper = aircraftsSortHelper;
             _aircraftsFilterHelper = aircraftsFilterHelper;
             _aircraftsPaginationHelper = aircraftsPaginationHelper;
+            _landmarksSortHelper = landmarksSortHelper;
+            _landmarksFilterHelper = landmarksFilterHelper;
+            _landmarksPaginationHelper = landmarksPaginationHelper;
         }
 
         public IAircraftRepository Aircraft {
@@ -60,9 +68,9 @@ namespace Repository
                 {
                     _landmark = new LandmarkRepository(
                         _context,
-                        _landmarkSortHelper,
-                        _landmarkFilterHelper,
-                        _landmarkPaginationHelper
+                        _landmarksSortHelper,
+                        _landmarksFilterHelper,
+                        _landmarksPaginationHelper
                     );
                 }
 
