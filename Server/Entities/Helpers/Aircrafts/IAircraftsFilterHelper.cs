@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Entities.Models.Aircrafts;
 
-namespace Entities.Helpers
+namespace Entities.Helpers.Aircrafts
 {
     public interface IAircraftsFilterHelper
     {
