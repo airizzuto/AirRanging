@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Configurations
 {
-  public class LandmarkConfiguration : IEntityTypeConfiguration<Landmark>
-  {
-        // TODO
+    public class LandmarkConfiguration : IEntityTypeConfiguration<Landmark>
+    {
         public void Configure(EntityTypeBuilder<Landmark> builder)
         {
             builder.ToTable("Landmarks");
@@ -16,13 +15,25 @@ namespace Data.Configurations
             builder.Property(l => l.Id)
                 .ValueGeneratedOnAdd();
 
-            // TODO: additional config
+            builder.Property(l => l.Name)
+                .IsRequired()
+                .HasMaxLength(250);
 
-            builder.Property(l => l.SavesCount)
-                .HasDefaultValue(1);
+            builder.Property(l => l.Description);
+
+            builder.Property(l => l.Latitude)
+                .IsRequired();
+
+            builder.Property(l => l.Longitude)
+                .IsRequired();
+
+            builder.Property(l => l.Altitude);
 
             builder.Property(l => l.CreatedDate)
                 .ValueGeneratedOnAdd();
+
+            builder.Property(l => l.SavesCount)
+                .HasDefaultValue(1);
 
             builder.HasOne(l => l.User)
                 .WithMany(u => u.LandmarksOwned)
