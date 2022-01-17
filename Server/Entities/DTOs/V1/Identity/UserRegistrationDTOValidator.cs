@@ -15,16 +15,16 @@ namespace Entities.DTOs.V1.Identity
 
             RuleFor(x => x.UserName).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Username is required")
-                .MinimumLength(4).WithMessage("Username must contain between 4 and 16 characters")
-                .MaximumLength(16).WithMessage("Username must contain between 4 and 16 characters")
-                .Matches(@"^[a-zA-Z0-9_-]{4,16}$").WithMessage("Username must only contain alphanumeric characters.");
+                .MinimumLength(4).WithMessage("Username must contain between 4 and 30 characters")
+                .MaximumLength(30).WithMessage("Username must contain between 4 and 30 characters")
+                .Matches(@"^[a-zA-Z0-9_-]{4,30}$").WithMessage("Username must only contain alphanumeric characters.");
             
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Password is required")
-                .MinimumLength(8).WithMessage("Password must contain between 8 and 20 characters")
-                .MaximumLength(20).WithMessage("Password must contain between 8 and 20 characters")
+                .MinimumLength(8).WithMessage("Password must contain at least 8 characters")
+                .MaximumLength(250).WithMessage("Password must contain less than 250 characters")
                 .Matches(
-                    @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
+                    @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,250}$"
                 ).WithMessage("Password must contain at least one digit, one uppercase letter and one lowercase letter");
         }
     }

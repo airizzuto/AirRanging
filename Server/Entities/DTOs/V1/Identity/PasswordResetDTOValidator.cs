@@ -14,10 +14,10 @@ namespace Entities.DTOs.V1.Identity
 
             RuleFor(x => x.Password).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Password is required")
-                .MinimumLength(8).WithMessage("Password must contain between 8 and 20 characters")
-                .MaximumLength(20).WithMessage("Password must contain between 8 and 20 characters")
+                .MinimumLength(8).WithMessage("Password must contain at least 8 characters")
+                .MaximumLength(250).WithMessage("Password must contain less than 250 characters")
                 .Matches(
-                    @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,20}$"
+                    @"^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,250}$"
                 ).WithMessage("Password must contain at least one digit, one uppercase letter and one lowercase letter");
         }
     }

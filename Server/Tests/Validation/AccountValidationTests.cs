@@ -133,7 +133,7 @@ namespace Tests.Validation
         [InlineData("abcdefgh")]
         [InlineData("ABCde*fgh")]
         [InlineData("ABCde -fgh123")]
-        [InlineData("ABCDefghijk-123456789")]
+        [InlineData("Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk12345678Abcdefghijk123456789Abcdefghijk1234567899")]
         public async Task UserRegistration_InvalidPassword_ValidationShouldFail(string password)
         {
             // Arrange
@@ -152,6 +152,7 @@ namespace Tests.Validation
         [InlineData("P4ssw0rD")]
         [InlineData("P4ss+w0rD")]
         [InlineData("Abcdefghijk123456789")]
+        [InlineData("Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789Abcdefghijk123456789")]
         public async Task UserRegistration_ValidPassword_ValidationShouldPass(string password)
         {
             // Arrange
