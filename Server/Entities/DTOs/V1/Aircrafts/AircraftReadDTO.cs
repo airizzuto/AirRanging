@@ -5,6 +5,7 @@ namespace Entities.DTOs.V1.Aircrafts
     public class AircraftReadDTO
     {
         public Guid Id { get; set; }
+
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }

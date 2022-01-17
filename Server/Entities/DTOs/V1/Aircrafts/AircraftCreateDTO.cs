@@ -5,7 +5,7 @@ namespace Entities.DTOs.V1.Aircrafts
 {
     public class AircraftCreateDTO
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }  // TODO: remove?
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
