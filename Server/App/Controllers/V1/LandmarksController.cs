@@ -1,3 +1,6 @@
+using AutoMapper;
+using Contracts;
+using Logger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +30,18 @@ namespace App.Controllers.V1
     [ApiVersion("1.0")]
     public class LandmarksController
     {
-            // TODO: landmark controller
-            // TODO: refactor endpoint to api/{userid}/landmark/[action]?
+        private readonly ILoggerManager _logger;
+        private readonly IRepositoryWrapper _repository;
+        private readonly IMapper _mapper;
+
+    public LandmarksController(ILoggerManager logger, IRepositoryWrapper repository, IMapper mapper)
+    {
+      _logger = logger;
+      _repository = repository;
+      _mapper = mapper;
     }
+    
+    // TODO: landmark controller
+    // TODO: refactor endpoint to api/{userid}/landmark/[action]?
+  }
 }
