@@ -12,15 +12,15 @@ namespace Entities.DTOs.V1.Aircrafts
 
             RuleFor(x => x.Manufacturer)
                 .NotEmpty().WithMessage("Manufacturer must be provided")
-                .MaximumLength(255);
+                .MaximumLength(250);
             
             RuleFor(x => x.Model)
                 .NotEmpty().WithMessage("Model name must be provided")
-                .MaximumLength(255);
+                .MaximumLength(250);
 
             RuleFor(x => x.Variant)
                 .NotEmpty().WithMessage("Model name must be provided")
-                .MaximumLength(255)
+                .MaximumLength(250)
                 .Matches(@"^[a-zA-Z1-9]+[-\w]*[a-zA-Z1-9]$").WithMessage("Only alphanumeric characters allowed.");
             
             RuleFor(x => x.AircraftType)

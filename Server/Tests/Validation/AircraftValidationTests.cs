@@ -87,7 +87,7 @@ namespace Tests.Validation
         {
             // Arrange
             var model = new AircraftCreateDTO {
-                Manufacturer = Enumerable.Repeat("a", 256).ToString()
+                Manufacturer = Enumerable.Repeat("a", 251).ToString()
             };
 
             // Act
