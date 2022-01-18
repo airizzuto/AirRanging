@@ -10,8 +10,6 @@ using Tests.Helpers;
 using System;
 using Entities.Models.Enums;
 using Entities.DTOs.V1.Aircrafts;
-using Entities.Models.Identity;
-using Microsoft.AspNetCore.Http;
 
 namespace Tests.Controller
 {
@@ -82,7 +80,7 @@ namespace Tests.Controller
                 WeightCategory = EWeightCategory.Small,
                 IcaoWakeCategory = EIcaoWakeCategory.Light,
                 FuelType = EFuelType.AvGas,
-                MaxTakeoffWeight = 1670,
+                MTOW = 1670,
                 CruiseSpeed = 107,
                 FuelCapacity = 26,
                 MaxRange = 415,
@@ -144,8 +142,6 @@ namespace Tests.Controller
         public async void Create_WithValidModel_CreatesAircraftOnce()
         {
             // TODO: mock HttpContext call?
-            throw new NotImplementedException();
-
             // Arrange
             AircraftCreateDTO mockAircraft = new()
             {
@@ -157,14 +153,14 @@ namespace Tests.Controller
                 WeightCategory = EWeightCategory.Small,
                 IcaoWakeCategory = EIcaoWakeCategory.Light,
                 FuelType = EFuelType.AvGas,
-                MaxTakeoffWeight = 1670,
+                MTOW = 1670,
                 CruiseSpeed = 107,
                 FuelCapacity = 26,
                 MaxRange = 415,
                 ServiceCeiling = 14700
             };
-
             var model = mapper.Map<AircraftCreateDTO, Aircraft>(mockAircraft);
+
             _mock.repo.Setup(repo => repo.Aircraft.CreateAircraftAsync(
                 It.IsAny<Aircraft>(), It.IsAny<string>()
             )).ReturnsAsync(model);
