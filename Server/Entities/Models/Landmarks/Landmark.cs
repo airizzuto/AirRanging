@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Entities.Models.Enums;
+using Entities.Models.Enums.Landmarks;
 using Entities.Models.Identity;
 
 namespace Entities.Models.Landmarks

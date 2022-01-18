@@ -1,4 +1,4 @@
-using Entities.Models.Enums;
+using Entities.Models.Enums.Landmarks;
 using Entities.Models.Pagination;
 
 namespace Entities.Models.Landmarks

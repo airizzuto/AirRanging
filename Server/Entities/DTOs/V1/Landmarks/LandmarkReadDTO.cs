@@ -1,5 +1,5 @@
 using System;
-using Entities.Models.Enums;
+using Entities.Models.Enums.Landmarks;
 
 namespace Entities.DTOs.V1.Landmarks
 {
