@@ -13,7 +13,7 @@ namespace Contracts
         void RemoveBookmarkAsync(Bookmark<T> bookmark);
 
         Task<IEnumerable<Bookmark<T>>> GetAllResourceTypeBookmarksAsync();
-        Task<IEnumerable<T>> GetUserResourceTypeBookmarkedAsync(string userId);
-        Task<Bookmark<T>> GetUserResourceTypeBookmarkIdAsync(string userId, string resourceId);
+        Task<IEnumerable<T>> GetUserResourcesBookmarkedAsync(string userId);
+        Task<Bookmark<T>> GetUserResourceBookmarkIdAsync(string userId, string resourceId);
     }
 }

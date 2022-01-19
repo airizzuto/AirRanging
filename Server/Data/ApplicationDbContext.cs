@@ -25,8 +25,8 @@ namespace Data
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new AircraftConfiguration());
             builder.ApplyConfiguration(new LandmarkConfiguration());
-            builder.ApplyConfiguration(new BookmarkConfiguration<Aircraft>());
-            builder.ApplyConfiguration(new BookmarkConfiguration<Landmark>());
+            builder.ApplyConfiguration(new AircraftBookmarkConfiguration());
+            builder.ApplyConfiguration(new LandmarkBookmarkConfiguration());
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Repository
         /// </summary>
         /// <param name="userId"></param>
         /// <returns>Resources</returns>
-        public async Task<IEnumerable<T>> GetUserResourceTypeBookmarkedAsync(string userId)
+        public async Task<IEnumerable<T>> GetUserResourcesBookmarkedAsync(string userId)
         {
             return await FindByCondition(b => b.UserId == userId)
                 .Select(b => b.Resource)
@@ -88,7 +88,7 @@ namespace Repository
         /// <param name="userId"></param>
         /// <param name="resourceId"></param>
         /// <returns>Bookmark</returns>
-        public async Task<Bookmark<T>> GetUserResourceTypeBookmarkIdAsync(string userId, string resourceId)
+        public async Task<Bookmark<T>> GetUserResourceBookmarkIdAsync(string userId, string resourceId)
         {
             return await FindByCondition(b =>
                 b.UserId == userId && b.ResourceId == Guid.Parse(resourceId)
