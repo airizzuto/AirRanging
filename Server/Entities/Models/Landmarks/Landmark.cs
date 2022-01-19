@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Entities.Models.Bookmarks;
 using Entities.Models.Enums.Landmarks;
 using Entities.Models.Identity;
 
@@ -32,7 +33,6 @@ namespace Entities.Models.Landmarks
         // Navigation properties
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
-
-        public ICollection<Landmark> Landmarks { get; set; }
+        public ICollection<Bookmark<Landmark>> LandmarkBookmarks { get; set; }
     }
 }

@@ -11,8 +11,9 @@ namespace Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Aircraft> Aircrafts { get; set; }
-        public DbSet<Bookmark> Bookmarks { get; set; }
         public DbSet<Landmark> Landmarks { get; set; }
+        public DbSet<Bookmark<Aircraft>> AircraftBookmarks { get; set; }
+        public DbSet<Bookmark<Landmark>> LandmarkBookmarks { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
@@ -23,8 +24,9 @@ namespace Data
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new AircraftConfiguration());
-            builder.ApplyConfiguration(new BookmarkConfiguration());
             builder.ApplyConfiguration(new LandmarkConfiguration());
+            builder.ApplyConfiguration(new BookmarkConfiguration<Aircraft>());
+            builder.ApplyConfiguration(new BookmarkConfiguration<Landmark>());
         }
     }
 }

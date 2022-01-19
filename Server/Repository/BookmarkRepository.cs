@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Data;
-using Entities.Models.Aircrafts;
 using Contracts;
 using System;
 using System.Linq;
@@ -10,22 +9,22 @@ using Entities.Models.Bookmarks;
 
 namespace Repository
 {
-    public class BookmarkRepository 
-        : BaseRepository<Bookmark>, IBookmarkRepository
+    public class BookmarkRepository<T> 
+        : BaseRepository<Bookmark<T>>, IBookmarkRepository<T>
     {
         public BookmarkRepository(ApplicationDbContext context) : base(context)
         { }
 
         /// <summary>
-        /// Creates a new <typeparamref name="Bookmark">Bookmark</typeparamref> used to save Aircraft reference to ApplicationUser.
+        /// Creates a new <typeparamref name="Bookmark">Bookmark</typeparamref> used to save Resource reference to ApplicationUser.
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="aircraftId"></param>
-        public async Task<Bookmark> CreateBookmarkAsync(string userId, string aircraftId)
+        /// <param name="resourceId"></param>
+        public async Task<Bookmark<T>> CreateBookmarkAsync(string userId, string resourceId)
         {
-            var bookmark = new Bookmark
+            var bookmark = new Bookmark<T>
             {
-                AircraftId = Guid.Parse(aircraftId),
+                ResourceId = Guid.Parse(resourceId),
                 UserId = userId
             };
 
@@ -35,15 +34,15 @@ namespace Repository
         }
 
         /// <summary>
-        /// Creates a new <typeparamref name="Bookmark">Bookmark</typeparamref> used to save Aircraft reference to ApplicationUser.
+        /// Creates a new <typeparamref name="Bookmark">Bookmark</typeparamref> used to save Resource reference to ApplicationUser.
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="aircraftId"></param>
-        public async Task<Bookmark> CreateBookmarkAsync(string userId, Guid aircraftId)
+        /// <param name="resourceId"></param>
+        public async Task<Bookmark<T>> CreateBookmarkAsync(string userId, Guid resourceId)
         {
-            var bookmark = new Bookmark
+            var bookmark = new Bookmark<T>
             {
-                AircraftId = aircraftId,
+                ResourceId = resourceId,
                 UserId = userId
             };
 
@@ -53,11 +52,11 @@ namespace Repository
         }
 
         /// <summary>
-        /// Removes Bookmark used to save Aircraft to User.
+        /// Removes Bookmark used to save Resource to User.
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="aircraftId"></param>
-        public void RemoveBookmarkAsync(Bookmark bookmark)
+        /// <param name="resourceId"></param>
+        public void RemoveBookmarkAsync(Bookmark<T> bookmark)
         {
             DbContext.Remove(bookmark);
         }
@@ -66,42 +65,34 @@ namespace Repository
         /// Retrieves all Bookmarks in repository.
         /// </summary>
         /// <returns>Bookmarks</returns>
-        public async Task<IEnumerable<Bookmark>> GetAllBookmarksAsync()
+        public async Task<IEnumerable<Bookmark<T>>> GetAllResourceTypeBookmarksAsync()
         {
             return await FindAll().ToListAsync();
         }
 
         /// <summary>
-        /// Retrieves all aircrafts bookmarked by user.
+        /// Retrieves all resources bookmarked by user.
         /// </summary>
         /// <param name="userId"></param>
-        /// <returns>Aircrafts</returns>
-        public async Task<IEnumerable<Aircraft>> GetAircraftsBookmarkedAsync(string userId)
+        /// <returns>Resources</returns>
+        public async Task<IEnumerable<T>> GetUserResourceTypeBookmarkedAsync(string userId)
         {
             return await FindByCondition(b => b.UserId == userId)
-                .Select(b => b.Aircraft)
+                .Select(b => b.Resource)
                 .ToListAsync();
         }
 
         /// <summary>
-        /// Retrieves bookmark referencing User and Aircraft.
+        /// Retrieves bookmark referencing User and Resource.
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="aircraftId"></param>
+        /// <param name="resourceId"></param>
         /// <returns>Bookmark</returns>
-        public async Task<Bookmark> GetBookmarkIdAsync(string userId, string aircraftId)
+        public async Task<Bookmark<T>> GetUserResourceTypeBookmarkIdAsync(string userId, string resourceId)
         {
-            var bookmark = await FindByCondition(b =>
-                b.UserId == userId && b.AircraftId == Guid.Parse(aircraftId)
+            return await FindByCondition(b =>
+                b.UserId == userId && b.ResourceId == Guid.Parse(resourceId)
             ).FirstOrDefaultAsync();
-
-            if (bookmark == null) {
-                return null;
-            }
-
-            bookmark.Aircraft = await DbContext.Aircrafts.FindAsync(bookmark.AircraftId);
-
-            return bookmark;
         }
     }
 }

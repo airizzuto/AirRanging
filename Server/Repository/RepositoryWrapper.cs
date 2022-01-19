@@ -24,7 +24,8 @@ namespace Repository
         private readonly ILandmarksFilterHelper _landmarksFilterHelper;
         private readonly ILandmarksPaginationHelper _landmarksPaginationHelper;
         private IApplicationUserRepository _applicationUser;
-        private IBookmarkRepository _bookmark;
+        private IBookmarkRepository<Aircraft> _aircraftBookmark;
+        private IBookmarkRepository<Landmark> _landmarkBookmark;
 
         public RepositoryWrapper(
             ApplicationDbContext context,
@@ -90,15 +91,27 @@ namespace Repository
             }
         }
 
-        public IBookmarkRepository Bookmark {
+        public IBookmarkRepository<Aircraft> AircraftBookmark {
             get
             {
-                if (_bookmark == null)
+                if (_aircraftBookmark == null)
                 {
-                    _bookmark = new BookmarkRepository(_context);
+                    _aircraftBookmark = new BookmarkRepository<Aircraft>(_context);
                 }
 
-                return _bookmark;
+                return _aircraftBookmark;
+            }
+        }
+
+        public IBookmarkRepository<Landmark> LandmarkBookmark {
+            get
+            {
+                if (_landmarkBookmark == null)
+                {
+                    _landmarkBookmark = new BookmarkRepository<Landmark>(_context);
+                }
+
+                return _landmarkBookmark;
             }
         }
 

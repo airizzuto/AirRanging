@@ -75,6 +75,6 @@ namespace Entities.Models.Aircrafts
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
-        public ICollection<Bookmark> Bookmarks { get; set; }
+        public ICollection<Bookmark<Aircraft>> AircraftBookmarks { get; set; }
     }
 }

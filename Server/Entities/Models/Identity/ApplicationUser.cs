@@ -19,6 +19,7 @@ namespace Entities.Models.Identity
         // Navigation Properties
         public ICollection<Aircraft> AircraftsOwned { get; set; }
         public ICollection<Landmark> LandmarksOwned { get; set; }
-        public ICollection<Bookmark> Bookmarks { get; set; }
+        public ICollection<Bookmark<Aircraft>> AircraftsBookmarks { get; set; }
+        public ICollection<Bookmark<Landmark>> LandmarksBookmarks { get; set; }
     }
 }
