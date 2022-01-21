@@ -124,7 +124,7 @@ const createAircraft = async (newAircraft: AircraftWithoutIDs) => {
       };
 
       const response = await axios.post(
-        BASE_URL + "/api/aircrafts/create",
+        BASE_URL + "/api/aircrafts/",
         newAircraft,
         config
       );

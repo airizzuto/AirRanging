@@ -285,7 +285,7 @@ namespace App.Controllers.V1
             return Ok(resource);
         }
 
-        // POST api/aircrafts/create
+        // POST api/aircrafts
         /// <summary>
         /// Creates an aircraft in the database
         /// </summary>
@@ -295,7 +295,6 @@ namespace App.Controllers.V1
         [HttpPost]
         public async Task<IActionResult> CreateAircraft(AircraftCreateDTO aircraftCreateDto)
         {
-            // TODO: refactor endpoints to api/{userId}/aircraft https://www.endpointdev.com/blog/2021/07/dotnet-5-web-api/
             var userId = HttpContext.GetUserId();
             if (userId == null)
             {
