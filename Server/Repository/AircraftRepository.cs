@@ -1,13 +1,14 @@
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Data;
 using Entities.Models.Aircrafts;
 using Entities.Models.Pagination;
 using Entities.Helpers;
+using Entities.Helpers.Aircrafts;
 using Contracts.Aircrafts;
-using System.Collections.Generic;
 
 namespace Repository
 {
@@ -27,6 +28,8 @@ namespace Repository
             _filterHelper = filterHelper;
             _paginationHelper = paginationHelper;
         }
+
+        // TODO: DRY Aircraft and Landmarks repo
 
         /// <summary>
         /// Retrieves all aircrafts in context.

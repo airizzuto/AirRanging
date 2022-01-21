@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entities.Models.Aircrafts;
 using Entities.Models.Enums;
 
-namespace Entities.Helpers
+namespace Entities.Helpers.Aircrafts
 {
   public class AircraftsFilterHelper : IAircraftsFilterHelper
     {

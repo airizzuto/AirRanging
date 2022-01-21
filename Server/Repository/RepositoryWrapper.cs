@@ -1,9 +1,13 @@
 using System.Threading.Tasks;
 using Contracts;
 using Contracts.Aircrafts;
+using Contracts.Landmarks;
 using Data;
 using Entities.Helpers;
+using Entities.Helpers.Aircrafts;
+using Entities.Helpers.Landmarks;
 using Entities.Models.Aircrafts;
+using Entities.Models.Landmarks;
 
 namespace Repository
 {
@@ -12,22 +16,33 @@ namespace Repository
         private readonly ApplicationDbContext _context;
 
         private IAircraftRepository _aircraft;
-        private IApplicationUserRepository _applicationUser;
-        private IBookmarkRepository _bookmark;
         private readonly ISortHelper<Aircraft> _aircraftsSortHelper;
         private readonly IAircraftsFilterHelper _aircraftsFilterHelper;
         private readonly IAircraftsPaginationHelper _aircraftsPaginationHelper;
+        private ILandmarkRepository _landmark;
+        private readonly ISortHelper<Landmark> _landmarksSortHelper;
+        private readonly ILandmarksFilterHelper _landmarksFilterHelper;
+        private readonly ILandmarksPaginationHelper _landmarksPaginationHelper;
+        private IApplicationUserRepository _applicationUser;
+        private IBookmarkRepository<Aircraft> _aircraftBookmark;
+        private IBookmarkRepository<Landmark> _landmarkBookmark;
 
         public RepositoryWrapper(
             ApplicationDbContext context,
             ISortHelper<Aircraft> aircraftsSortHelper,
             IAircraftsFilterHelper aircraftsFilterHelper,
-            IAircraftsPaginationHelper aircraftsPaginationHelper
+            IAircraftsPaginationHelper aircraftsPaginationHelper,
+            ISortHelper<Landmark> landmarksSortHelper,
+            ILandmarksFilterHelper landmarksFilterHelper,
+            ILandmarksPaginationHelper landmarksPaginationHelper
         ) {
             _context = context;
             _aircraftsSortHelper = aircraftsSortHelper;
             _aircraftsFilterHelper = aircraftsFilterHelper;
             _aircraftsPaginationHelper = aircraftsPaginationHelper;
+            _landmarksSortHelper = landmarksSortHelper;
+            _landmarksFilterHelper = landmarksFilterHelper;
+            _landmarksPaginationHelper = landmarksPaginationHelper;
         }
 
         public IAircraftRepository Aircraft {
@@ -47,6 +62,23 @@ namespace Repository
             }
         }
 
+        public ILandmarkRepository Landmark { 
+            get
+            {
+                if (_landmark == null)
+                {
+                    _landmark = new LandmarkRepository(
+                        _context,
+                        _landmarksSortHelper,
+                        _landmarksFilterHelper,
+                        _landmarksPaginationHelper
+                    );
+                }
+
+                return _landmark;
+            } 
+        }
+
         public IApplicationUserRepository ApplicationUser {
             get
             {
@@ -59,19 +91,29 @@ namespace Repository
             }
         }
 
-        public IBookmarkRepository Bookmark {
+        public IBookmarkRepository<Aircraft> AircraftBookmark {
             get
             {
-                if (_bookmark == null)
+                if (_aircraftBookmark == null)
                 {
-                    _bookmark = new BookmarkRepository(_context);
+                    _aircraftBookmark = new BookmarkRepository<Aircraft>(_context);
                 }
 
-                return _bookmark;
+                return _aircraftBookmark;
             }
         }
 
+        public IBookmarkRepository<Landmark> LandmarkBookmark {
+            get
+            {
+                if (_landmarkBookmark == null)
+                {
+                    _landmarkBookmark = new BookmarkRepository<Landmark>(_context);
+                }
 
+                return _landmarkBookmark;
+            }
+        }
 
         public async Task SaveAsync()
         {

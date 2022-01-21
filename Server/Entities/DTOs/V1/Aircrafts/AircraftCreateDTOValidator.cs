@@ -13,17 +13,17 @@ namespace Entities.DTOs.V1.Aircrafts
 
             RuleFor(x => x.Manufacturer).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Manufacturer must be provided")
-                .MaximumLength(255)
+                .MaximumLength(250)
                 .Matches(@"^[a-zA-Z1-9]+[-\s\w]*[a-zA-Z1-9]$").WithMessage("Only alphanumeric and spaces allowed.");
             
             RuleFor(x => x.Model).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("Model name must be provided")
-                .MaximumLength(255)
+                .MaximumLength(250)
                 .Matches(@"^[a-zA-Z1-9]+[-\w]*[a-zA-Z1-9]$").WithMessage("Only alphanumeric characters allowed.");
 
             RuleFor(x => x.Variant)
                 .NotEmpty().WithMessage("Model name must be provided")
-                .MaximumLength(255)
+                .MaximumLength(250)
                 .Matches(@"^[a-zA-Z1-9]+[-\w]*[a-zA-Z1-9]$").WithMessage("Only alphanumeric characters allowed.");
 
             RuleFor(x => x.AircraftType)  
@@ -50,7 +50,7 @@ namespace Entities.DTOs.V1.Aircrafts
             RuleFor(x => x.FuelType)
                 .Equal(EFuelType.Electric).When(x => x.EngineType == EEngineType.Electric);
 
-            RuleFor(x => x.MaxTakeoffWeight)
+            RuleFor(x => x.MTOW)
                 .GreaterThan((uint)0)
                 .LessThan(uint.MaxValue);
             

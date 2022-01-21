@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +6,7 @@ using AutoMapper;
 using App.Extensions;
 using Contracts;
 using Logger;
-using Entities.Models.Pagination;
 using Entities.DTOs.V1.Aircrafts;
-using System;
 
 namespace App.Controllers.V1
 {
@@ -25,13 +21,13 @@ namespace App.Controllers.V1
     [Route("/api/bookmarks")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiVersion("1.0")]
-    public class BookmarksController : ControllerBase
+    public class AircraftBookmarksController : ControllerBase
     {
         private readonly ILoggerManager _logger;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
 
-        public BookmarksController(
+        public AircraftBookmarksController(
             ILoggerManager logger,
             IRepositoryWrapper repository,
             IMapper mapper)
@@ -59,7 +55,8 @@ namespace App.Controllers.V1
                 return Unauthorized();
             }
 
-            var aircrafts = await _repository.Bookmark.GetBookmarkIdAsync(userId, aircraftId);
+            var aircrafts = await _repository.AircraftBookmark
+                .GetUserResourceBookmarkIdAsync(userId, aircraftId);
             if (aircrafts == null)
             {
                 _logger.LogError($"Aircraft id {aircraftId} not found in user bookmark.");
@@ -90,7 +87,7 @@ namespace App.Controllers.V1
         //         return Unauthorized("User not logged in.");
         //     }
 
-        //     var aircrafts = await _repository.Bookmark.GetAircraftsBookmarkedAsync(userId);
+        //     var aircrafts = await _repository.AircraftBookmark.GetAircraftsBookmarkedAsync(userId);
 
         //     var aircraftsResponse = _mapper.Map<IEnumerable<AircraftReadDTO>>(aircrafts);
 
@@ -119,28 +116,28 @@ namespace App.Controllers.V1
             }
 
             var existingAircraft = await _repository.Aircraft
-                .GetAircraftByIdAsync(request.aircraftId);
+                .GetAircraftByIdAsync(request.AircraftId);
             if (existingAircraft == null)
             {
-                _logger.LogError($" Aircraft {request.aircraftId}, not found.");
+                _logger.LogError($" Aircraft {request.AircraftId}, not found.");
                 return NotFound("Aircraft not found.");
             }
 
-            var isAircraftAlreadySaved = await _repository.Bookmark
-                .GetBookmarkIdAsync(userId, request.aircraftId);
+            var isAircraftAlreadySaved = await _repository.AircraftBookmark
+                .GetUserResourceBookmarkIdAsync(userId, request.AircraftId);
             if (isAircraftAlreadySaved != null)
             {
-                _logger.LogError($" Aircraft {request.aircraftId} already saved to user {userId}.");
+                _logger.LogError($" Aircraft {request.AircraftId} already saved to user {userId}.");
                 return BadRequest(" Aircraft already saved");
             }
 
-            var bookmarkCreated = await _repository.Bookmark.CreateBookmarkAsync(userId, request.aircraftId);
+            var bookmarkCreated = await _repository.AircraftBookmark.CreateBookmarkAsync(userId, request.AircraftId);
             _repository.Aircraft.CountAircraftSaved(existingAircraft);
 
             await _repository.SaveAsync();
 
 
-            _logger.LogInfo($"User {bookmarkCreated.UserId} saved aircraft {bookmarkCreated.AircraftId}.");
+            _logger.LogInfo($"User {bookmarkCreated.UserId} saved aircraft {bookmarkCreated.ResourceId}.");
 
             return Ok(); // TODO: return bookmark?
         }
@@ -163,15 +160,15 @@ namespace App.Controllers.V1
                 return Unauthorized("User not logged in.");
             }
 
-            var existingBookmark = await _repository.Bookmark.GetBookmarkIdAsync(userId, aircraftId);
+            var existingBookmark = await _repository.AircraftBookmark.GetUserResourceBookmarkIdAsync(userId, aircraftId);
             if (existingBookmark == null)
             {
                 _logger.LogError($"Aircraft id {aircraftId}, not found or not saved by user {userId}.");
                 return NotFound("Aircraft id not saved.");
             }
 
-            _repository.Aircraft.CountAircraftUnsaved(existingBookmark.Aircraft);
-            _repository.Bookmark.RemoveBookmarkAsync(existingBookmark);
+            _repository.Aircraft.CountAircraftUnsaved(existingBookmark.Resource);
+            _repository.AircraftBookmark.RemoveBookmarkAsync(existingBookmark);
 
             await _repository.SaveAsync();
 

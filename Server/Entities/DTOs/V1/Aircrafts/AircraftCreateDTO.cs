@@ -5,7 +5,7 @@ namespace Entities.DTOs.V1.Aircrafts
 {
     public class AircraftCreateDTO
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; }  // TODO: remove?
         public string IcaoId { get; set; }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
@@ -17,7 +17,7 @@ namespace Entities.DTOs.V1.Aircrafts
         public EWeightCategory WeightCategory { get; set; }
         public EIcaoWakeCategory IcaoWakeCategory { get; set; }
         public EFuelType FuelType { get; set; }
-        public uint MaxTakeoffWeight { get; set; }
+        public uint MTOW { get; set; }
         public uint MinRunwayLength { get; set; }
         public int CruiseSpeed { get; set; }
         public decimal FuelCapacity { get; set; }

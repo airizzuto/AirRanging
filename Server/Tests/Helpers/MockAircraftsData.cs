@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Entities.Models.Aircrafts;
 using Entities.Models.Enums;
 using Entities.Models.Pagination;
-using Microsoft.EntityFrameworkCore;
 
 namespace Tests.Helpers
 {
@@ -27,7 +26,7 @@ namespace Tests.Helpers
                     WeightCategory = EWeightCategory.Small,
                     IcaoWakeCategory = EIcaoWakeCategory.Light,
                     FuelType = EFuelType.AvGas,
-                    MaxTakeoffWeight = 1670,
+                    MTOW = 1670,
                     CruiseSpeed = 107,
                     FuelCapacity = 26,
                     MaxRange = 415,
@@ -45,7 +44,7 @@ namespace Tests.Helpers
                     WeightCategory = EWeightCategory.Large,
                     IcaoWakeCategory = EIcaoWakeCategory.Medium,
                     FuelType = EFuelType.JetA,
-                    MaxTakeoffWeight = 144500,
+                    MTOW = 144500,
                     CruiseSpeed = 453,
                     FuelCapacity = 6875,
                     MaxRange = 2935,
@@ -63,7 +62,7 @@ namespace Tests.Helpers
                     WeightCategory = EWeightCategory.Heavy,
                     IcaoWakeCategory = EIcaoWakeCategory.Heavy,
                     FuelType = EFuelType.JetA,
-                    MaxTakeoffWeight = 560000,
+                    MTOW = 560000,
                     CruiseSpeed = 488,
                     FuelCapacity = 223673,
                     MaxRange = 6430,
@@ -82,7 +81,7 @@ namespace Tests.Helpers
                     WeightCategory = EWeightCategory.Small,
                     IcaoWakeCategory = EIcaoWakeCategory.Light,
                     FuelType = EFuelType.Unknown,
-                    MaxTakeoffWeight = 17500,
+                    MTOW = 17500,
                     CruiseSpeed = 304,
                     FuelCapacity = 370,
                     MaxRange = 391,

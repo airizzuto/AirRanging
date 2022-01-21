@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Entities.Models.Aircrafts;
 using Entities.Models.Pagination;
 
-namespace Entities.Helpers
+namespace Entities.Helpers.Aircrafts
 {
     public class AircraftsPaginationHelper : IAircraftsPaginationHelper
     {

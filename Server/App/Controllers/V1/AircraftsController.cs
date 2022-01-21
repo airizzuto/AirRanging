@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -221,7 +220,7 @@ namespace App.Controllers.V1
                 return Unauthorized("User not logged in.");
             }
 
-            var aircrafts = await _repository.Bookmark.GetAircraftsBookmarkedAsync(userId);
+            var aircrafts = await _repository.AircraftBookmark.GetUserResourcesBookmarkedAsync(userId);
 
             var aircraftsFiltered = _repository.Aircraft.FilterAircrafts(aircrafts, parameters);
 
@@ -286,7 +285,7 @@ namespace App.Controllers.V1
             return Ok(resource);
         }
 
-        // POST api/aircrafts/create
+        // POST api/aircrafts
         /// <summary>
         /// Creates an aircraft in the database
         /// </summary>

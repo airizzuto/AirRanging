@@ -223,7 +223,6 @@ namespace App.Controllers.V1
             return Redirect(Path.Client.Full + "/confirmed");
         }
 
-        // TODO: test
         [HttpPost("forgot")]
         public async Task<IActionResult> ForgotPassword(PasswordResetForgotDTO forgotPasswordDto)
         {
@@ -286,7 +285,6 @@ namespace App.Controllers.V1
             // Replace and trim corrects the url encoding and decoding changes
             var token = passwordReset.Token.Replace(" ", "+").Trim('"');
 
-            // FIXME: bug with token validation
             var passwordResetResult = await _userManager.ResetPasswordAsync(
                 user, token, passwordReset.Password);
             if (!passwordResetResult.Succeeded)
