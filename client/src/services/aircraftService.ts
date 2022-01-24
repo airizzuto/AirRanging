@@ -144,7 +144,7 @@ const saveAircraft = async (aircraftId: string) => {
       };
       
       const response = await axios.post(
-        BASE_URL + "/api/bookmarks",
+        BASE_URL + "/api/aircrafts/bookmarks",
         {aircraftId: aircraftId},
         config
       );
@@ -164,7 +164,7 @@ const unsaveAircraft = async (aircraftId: string) => {
       };
     
       const response = await axios.delete(
-        BASE_URL + `/api/bookmarks/${aircraftId}`,
+        BASE_URL + `/api/aircrafts/bookmarks/${aircraftId}`,
         config
       );
     

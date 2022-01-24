@@ -12,13 +12,13 @@ namespace App.Controllers.V1
 {
     /// <summary>
     /// Bookmark model controller endpoints:
-    /// <para> GetUserBookmarks             - GET    -  api/bookmarks        </para>
-    /// <para> GetUserBookmarkedLandmarkId  - GET    -  api/bookmarks/5      </para>
-    /// <para> SaveLandmarkId               - POST   -  api/bookmarks/5      </para>
-    /// <para> UnsaveLandmarkId             - DELETE -  api/bookmarks/5      </para>
+    /// <para> GetUserBookmarks             - GET    -  api/landmarks/bookmarks        </para>
+    /// <para> GetUserBookmarkedLandmarkId  - GET    -  api/landmarks/bookmarks/5      </para>
+    /// <para> SaveLandmarkId               - POST   -  api/landmarks/bookmarks/5      </para>
+    /// <para> UnsaveLandmarkId             - DELETE -  api/landmarks/bookmarks/5      </para>
     /// </summary>
     [ApiController]
-    [Route("/api/bookmarks")]
+    [Route("/api/landmarks/bookmarks")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiVersion("1.0")]
     public class LandmarkBookmarksController : ControllerBase
