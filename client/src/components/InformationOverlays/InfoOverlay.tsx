@@ -1,11 +1,12 @@
 
 import { AircraftSelected } from "../../types/Aircraft/Aircraft";
+import { displayComponent } from "../../utils/displayComponent";
+
 import AircraftInfoSection from "./AircraftInfoSection";
 import MapInfoSection from "./MapInfoSection";
 import GeneralInfoSection from "./GeneralInfoSection";
 
 import Style from "./InfoOverlay.module.scss";
-import { displayComponent } from "../../utils/displayComponent";
 
 /* TODO: Information overlay
   1. TODO: Aircraft selected or none

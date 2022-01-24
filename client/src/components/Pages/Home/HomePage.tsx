@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +10,7 @@ import AircraftModal from "./AircraftsModal/AircraftModal";
 import InfoOverlay from "../../InformationOverlays/InfoOverlay";
 
 import Style from "./Home.module.scss";
+import useToggle from "../../../hooks/useToggle";
 
 interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;
@@ -28,8 +29,8 @@ const Home: React.FC<Props> = ({
   handleAircraftUnsave,
   handleAircraftState
 }) => {
-  const [displayInfoOverlay, setDisplayInfoOverlay] = useState(true);
-  const [displayPlanningModal, setDisplayPlanningModal] = useState(true);
+  const [displayInfoOverlay, setDisplayInfoOverlay] = useToggle(true);
+  const [displayPlanningModal, setDisplayPlanningModal] = useToggle(true);
 
   return (
     <div className={Style.Home}>
@@ -37,12 +38,12 @@ const Home: React.FC<Props> = ({
         {/* Properties Modals Activation Tabs */}
         <div className={Style.ModalTabs}>
           <TabButton
-            handleTabClick={() => setDisplayPlanningModal(!displayPlanningModal)}
+            handleTabClick={setDisplayPlanningModal}
           >
             <span>AIRCRAFT</span><FontAwesomeIcon icon={faPaperPlane} />
           </TabButton>
           <TabButton
-            handleTabClick={() => setDisplayInfoOverlay(!displayInfoOverlay)}
+            handleTabClick={setDisplayInfoOverlay}
           >
             <span>INFO</span><FontAwesomeIcon icon={faInfoCircle} />
           </TabButton>
@@ -51,8 +52,8 @@ const Home: React.FC<Props> = ({
         {/* Map View Properties Modals */}
         <AircraftModal
           show={displayPlanningModal}
-          handleModalClose={() => setDisplayPlanningModal(false)}
-          handleAccept={() => setDisplayPlanningModal(false)} // TODO: same as close or other function
+          handleModalClose={setDisplayPlanningModal}
+          handleAccept={setDisplayPlanningModal} // TODO: same as close or other function
           aircraftsSaved={aircraftsSaved}
           aircraftSelected={selectedAircraft}
           handleAircraftState={handleAircraftState}

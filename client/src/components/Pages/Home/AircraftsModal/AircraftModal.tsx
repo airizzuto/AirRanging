@@ -38,7 +38,7 @@ const AircraftModal: React.FC<Props> = ({
     <DraggableModalWrapper isActive={show}>
       <div className={Style.Container}>
         <ModalHeader
-          headerTitle={"Select Aircraft"}
+          headerTitle={"AIRCRAFT"}
           handleClose={handleModalClose}
         />
 
