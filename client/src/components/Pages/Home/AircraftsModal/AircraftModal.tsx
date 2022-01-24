@@ -1,14 +1,15 @@
 import React from "react";
 
-import { AircraftSelected, AircraftWithSocials } from "../../../types/Aircraft/Aircraft";
+import { AircraftSelected, AircraftWithSocials } from "../../../../types/Aircraft/Aircraft";
 
-import { Button } from "../../Generics/Buttons/Button";
-import ModalHeader from "../../Generics/Modals/ModalHeader";
-import DraggableModalWrapper from "../../Generics/Modals/DraggableModalWrapper";
+import { Button } from "../../../Generics/Buttons/Button";
+import ModalHeader from "../../../Generics/Modals/ModalHeader";
+import DraggableModalWrapper from "../../../Generics/Modals/DraggableModalWrapper";
 
-import Style from "./Planning.module.scss";
-import PlanningSelection from "./PlanningSelection";
-import PlanningInputs from "./PlanningInputs";
+import AircraftModalSelection from "./AircraftModalSelection";
+import AircraftModalInputs from "./AircraftModalInputs";
+
+import Style from "../Modal.module.scss";
 
 interface Props {
   handleAircraftState: React.Dispatch<React.SetStateAction<AircraftSelected | null>>;
@@ -22,7 +23,7 @@ interface Props {
   handleAccept: () => void;
 }
 
-const PlanningModal: React.FC<Props> = ({
+const AircraftModal: React.FC<Props> = ({
   aircraftSelected,
   aircraftsSaved,
   show,
@@ -37,11 +38,11 @@ const PlanningModal: React.FC<Props> = ({
     <DraggableModalWrapper isActive={show}>
       <div className={Style.Container}>
         <ModalHeader
-          headerTitle={"Planning"}
+          headerTitle={"Select Aircraft"}
           handleClose={handleModalClose}
         />
 
-        <PlanningSelection
+        <AircraftModalSelection
           aircraftsSaved={aircraftsSaved}
           aircraftSelected={aircraftSelected}
           handleAircraftSelection={handleAircraftSelection}
@@ -49,7 +50,7 @@ const PlanningModal: React.FC<Props> = ({
           handleAircraftUnsave={handleAircraftUnsave}
         />
 
-        <PlanningInputs
+        <AircraftModalInputs
           aircraftSelected={aircraftSelected}
           handleAircraftState={handleAircraftState}
         />
@@ -64,4 +65,4 @@ const PlanningModal: React.FC<Props> = ({
   );
 };
 
-export default PlanningModal;
+export default AircraftModal;

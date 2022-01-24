@@ -1,6 +1,10 @@
-# AirRanging Web Client v0.1.0
+# AirRanging Web Client v0.1.1
 
 Web frontend made for AirRanging app with React, Typescript and Sass.
+
+## Changes
+
+- Main page modal structure refactor
 
 ## Scripts
 

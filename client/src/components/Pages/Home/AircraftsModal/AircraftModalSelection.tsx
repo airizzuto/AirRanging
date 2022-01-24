@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import useDebounce from '../../../../hooks/useDebounce';
 
-import { AircraftSelected, AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
-import { FilterSearch } from '../../../types/Aircraft/Filter';
-import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
-import { getUserData } from '../../../helpers/userHelper';
+import aircraftService from '../../../../services/aircraftService';
+import { getUserData } from '../../../../helpers/userHelper';
+import { AircraftSelected, AircraftWithSocials } from '../../../../types/Aircraft/Aircraft';
+import { FilterSearch } from '../../../../types/Aircraft/Filter';
+import { AircraftSearchOptions } from '../../../../types/Aircraft/AircraftEnums';
 
-import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
-import DropdownSearchbar from '../../Generics/Filters/DropdownSearchbar';
-import { LinkButton } from '../../Generics/Buttons/Button';
-import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
+import SaveActionsButton from '../../../AircraftActions/SaveActionsButton';
+import DropdownSearchbar from '../../../Generics/Filters/DropdownSearchbar';
+import { LinkButton } from '../../../Generics/Buttons/Button';
+import ToggleDataSet from '../../../Generics/Filters/ToggleDataSet';
 
-import Style from "./PlanningSelection.module.scss";
-import useDebounce from '../../../hooks/useDebounce';
-import aircraftService from '../../../services/aircraftService';
+import Style from "./AircraftModalSelection.module.scss";
 
 interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;
@@ -22,7 +22,7 @@ interface Props {
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }
 
-const PlanningSelection: React.FC<Props> = ({
+const AircraftModalSelection: React.FC<Props> = ({
   aircraftsSaved,
   aircraftSelected,
   handleAircraftSelection,
@@ -37,7 +37,6 @@ const PlanningSelection: React.FC<Props> = ({
   });
   const debouncedFilter = useDebounce(filters, 500);
 
-  // FIXME: looping effect
   useEffect(() => {
     console.debug("EFFECT - filter: ", debouncedFilter);
     
@@ -110,4 +109,4 @@ const PlanningSelection: React.FC<Props> = ({
   );
 };
 
-export default PlanningSelection;
+export default AircraftModalSelection;

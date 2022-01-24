@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { faMap } from "@fortawesome/free-regular-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { AircraftWithSocials, AircraftSelected } from "../../../types/Aircraft/Aircraft";
 
 import TabButton from "../../Generics/Buttons/ModalTab";
-import PlanningModal from "./PlanningModal";
+import AircraftModal from "./AircraftsModal/AircraftModal";
 import InfoOverlay from "../../InformationOverlays/InfoOverlay";
 
 import Style from "./Home.module.scss";
@@ -39,7 +39,7 @@ const Home: React.FC<Props> = ({
           <TabButton
             handleTabClick={() => setDisplayPlanningModal(!displayPlanningModal)}
           >
-            <span>PLANNING</span><FontAwesomeIcon icon={faMap} />
+            <span>AIRCRAFT</span><FontAwesomeIcon icon={faPaperPlane} />
           </TabButton>
           <TabButton
             handleTabClick={() => setDisplayInfoOverlay(!displayInfoOverlay)}
@@ -49,7 +49,7 @@ const Home: React.FC<Props> = ({
         </div>
 
         {/* Map View Properties Modals */}
-        <PlanningModal
+        <AircraftModal
           show={displayPlanningModal}
           handleModalClose={() => setDisplayPlanningModal(false)}
           handleAccept={() => setDisplayPlanningModal(false)} // TODO: same as close or other function

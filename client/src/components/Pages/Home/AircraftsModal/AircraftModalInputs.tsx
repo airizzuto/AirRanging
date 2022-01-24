@@ -1,20 +1,20 @@
 import React from 'react';
 
-import { calculateRange } from '../../../helpers/fuelCalculation';
+import { calculateRange } from '../../../../helpers/fuelCalculation';
 
-import { AircraftSelected } from '../../../types/Aircraft/Aircraft';
+import { AircraftSelected } from '../../../../types/Aircraft/Aircraft';
 
-import SliderInput from '../../Generics/InputGroups/SliderInput';
-import ValueInput from '../../Generics/InputGroups/ValueInput';
+import SliderInput from '../../../Generics/InputGroups/SliderInput';
+import ValueInput from '../../../Generics/InputGroups/ValueInput';
 
-import Style from "./PlanningInputs.module.scss";
+import Style from "./AircraftModalInputs.module.scss";
 
 interface Props {
   aircraftSelected: AircraftSelected | null;
   handleAircraftState: React.Dispatch<React.SetStateAction<AircraftSelected | null>>;
 }
 
-const PlanningInputs: React.FC<Props> = ({
+const AircraftModalInputs: React.FC<Props> = ({
   aircraftSelected,
   handleAircraftState,
 }) => {
@@ -69,4 +69,4 @@ const PlanningInputs: React.FC<Props> = ({
   );
 };
 
-export default PlanningInputs;
+export default AircraftModalInputs;
