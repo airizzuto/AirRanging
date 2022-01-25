@@ -2,7 +2,7 @@
 @use "../../../styles/fonts" as font;
 @use "../../../styles/mixins" as *;
 
-.Tab {
+.ModalTab {
   @include blurring;
   @include font.info;
   @include text-shadow;
@@ -29,7 +29,7 @@
   }
 }
 
-.Tab:hover {
+.ModalTab:hover {
   color: color.$accent1;
   cursor: pointer;
   transition: color 0.4s;

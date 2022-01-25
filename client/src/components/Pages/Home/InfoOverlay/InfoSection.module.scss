@@ -1,6 +1,6 @@
-@use "../../styles/mixins" as *;
-@use "../../styles/fonts" as font;
-@use "../../styles/colors" as color;
+@use "../../../../styles/mixins" as *;
+@use "../../../../styles/fonts" as font;
+@use "../../../../styles/colors" as color;
 
 .Section {
   @include blurring;
@@ -12,7 +12,7 @@
   color: color.$light1;
 
   .Header {
-    height: 20%;
+    height: 100%;
     background-color: rgba($color: color.$dark1, $alpha: 0.75);
     
     display: flex;
@@ -24,7 +24,7 @@
     margin: 0;
   
     h1 {
-      @include font.header-2;
+      @include font.header-3;
     }
   
     h2 {
@@ -33,10 +33,11 @@
   }
   
   .Main {
-    height: 80%;
+    height: 100%;
     background-color: color.$bg-semitransparent;
     align-items: center;
     padding: 1rem;
+
     tr {
       .Label {
         color: color.$light2;

@@ -1,0 +1,28 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/mixins" as *;
+
+.MenuTab {
+  @include blurring;
+  @include font.info;
+  @include text-shadow;
+  @include box-shadow;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  color: color.$light1;
+  background-color: color.$bg-semitransparent;
+
+  border-style: none;
+}
+
+.MenuTab:hover {
+  color: color.$accent1;
+  cursor: pointer;
+  transition: color 0.4s;
+}
