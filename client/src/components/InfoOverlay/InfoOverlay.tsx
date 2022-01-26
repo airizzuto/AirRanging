@@ -66,7 +66,10 @@ const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
         >
           <PointsInfoSection />
         </InfoSection>
-        <InfoSection selected={tabSelected} route={"route"}>
+        <InfoSection 
+          selected={tabSelected} 
+          route={"route"}
+        >
           <RouteInfoSection />
         </InfoSection>
       </div>

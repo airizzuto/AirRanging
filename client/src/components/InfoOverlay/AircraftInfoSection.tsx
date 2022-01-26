@@ -21,8 +21,9 @@ const AircraftInfoSection: React.FC<Props> = ({aircraftSelected}) => {
       </>
     : <>
         <div className={Style.Header}>
-          <h1>{aircraftSelected.manufacturer}</h1>
-          <h2>{aircraftSelected.model} {aircraftSelected.variant}</h2>
+          <h1>
+            {aircraftSelected.manufacturer}: {aircraftSelected.model} {aircraftSelected.variant}
+          </h1>
         </div>
 
         <table className={Style.Main}>
