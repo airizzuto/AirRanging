@@ -1,16 +1,17 @@
 import React from "react";
+
+import useToggle from "../../../hooks/useToggle";
+import { AircraftWithSocials, AircraftSelected } from "../../../types/Aircraft/Aircraft";
+
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { AircraftWithSocials, AircraftSelected } from "../../../types/Aircraft/Aircraft";
-
-import TabButton from "../../Generics/Buttons/ModalTab";
-import AircraftModal from "./AircraftsModal/AircraftModal";
-import InfoOverlay from "../../InformationOverlays/InfoOverlay";
+import Tab from "../../Generics/Buttons/Tab";
+import AircraftModal from "../../../components/AircraftsModal/AircraftModal";
+import InfoOverlay from "../../../components/InfoOverlay/InfoOverlay";
 
 import Style from "./Home.module.scss";
-import useToggle from "../../../hooks/useToggle";
 
 interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;
@@ -37,23 +38,25 @@ const Home: React.FC<Props> = ({
       <div className={Style.Main}>
         {/* Properties Modals Activation Tabs */}
         <div className={Style.ModalTabs}>
-          <TabButton
+          <Tab
             handleTabClick={setDisplayPlanningModal}
+            style={"ModalTab"}
           >
             <span>AIRCRAFT</span><FontAwesomeIcon icon={faPaperPlane} />
-          </TabButton>
-          <TabButton
+          </Tab>
+          <Tab
             handleTabClick={setDisplayInfoOverlay}
+            style={"ModalTab"}
           >
             <span>INFO</span><FontAwesomeIcon icon={faInfoCircle} />
-          </TabButton>
+          </Tab>
         </div>
 
         {/* Map View Properties Modals */}
         <AircraftModal
           show={displayPlanningModal}
           handleModalClose={setDisplayPlanningModal}
-          handleAccept={setDisplayPlanningModal} // TODO: same as close or other function
+          handleAccept={setDisplayPlanningModal}
           aircraftsSaved={aircraftsSaved}
           aircraftSelected={selectedAircraft}
           handleAircraftState={handleAircraftState}

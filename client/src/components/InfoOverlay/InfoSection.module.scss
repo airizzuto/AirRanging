@@ -4,45 +4,36 @@
 
 .Section {
   @include blurring;
-
   display: flex;
   flex-direction: column;
-  flex: 1 1 0;
-
   color: color.$light1;
 
   .Header {
-    height: 20%;
     background-color: rgba($color: color.$dark1, $alpha: 0.75);
-    
+    max-height: 3rem;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    column-gap: 1rem;
-    padding: 0;
-    margin: 0;
-  
+
     h1 {
-      @include font.header-2;
-    }
-  
-    h2 {
       @include font.header-3;
     }
   }
   
   .Main {
-    height: 80%;
     background-color: color.$bg-semitransparent;
-    align-items: center;
-    padding: 1rem;
+    align-content: center;
+    min-height: 20vh;
+    height: 100%;
+    width: 100%;
+  
     tr {
       .Label {
         color: color.$light2;
       }
     }
-
+    
     span {
       place-self: center;
     }

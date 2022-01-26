@@ -1,5 +1,5 @@
-@use "../../../../styles/colors" as color;
-@use "../../../../styles/mixins" as *;
+@use "../../styles/colors" as color;
+@use "../../styles/mixins" as *;
 
 .Selection {
   display: grid;
@@ -9,7 +9,7 @@
     "searchbar"
     "aircraft-buttons";
   row-gap: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem 0;
   border-bottom: 2px solid color.$light1;
   box-shadow: 0 2px 0 black;
   
