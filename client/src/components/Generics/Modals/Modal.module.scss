@@ -1,19 +1,24 @@
 @use "../../../styles/colors" as color;
 @use "../../../styles/fonts" as font;
 @use "../../../styles/components/separators" as separator;
+@use "../../../styles/components/boxes" as box;
 @use "../../../styles/mixins" as *;
 
 .Container {
   @include blurring;
   box-shadow: 1px 2px 1px hsla(0, 0%, 0%, 0.75);
-
   position: relative;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  padding: 1rem;
   width: fit-content;
   height: fit-content;
-
-  color: color.$light1;
-
+  
   border-radius: 5px;
+  color: color.$light1;
+  background-color: color.$bg-semitransparent;
 
   z-index: 4;
 }

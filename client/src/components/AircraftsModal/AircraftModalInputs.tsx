@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { calculateRange } from '../../../../helpers/fuelCalculation';
+import { calculateRange } from '../../helpers/fuelCalculation';
 
-import { AircraftSelected } from '../../../../types/Aircraft/Aircraft';
+import { AircraftSelected } from '../../types/Aircraft/Aircraft';
 
-import SliderInput from '../../../Generics/InputGroups/SliderInput';
-import ValueInput from '../../../Generics/InputGroups/ValueInput';
+import SliderInput from '../Generics/InputGroups/SliderInput';
+import ValueInput from '../Generics/InputGroups/ValueInput';
 
 import Style from "./AircraftModalInputs.module.scss";
 

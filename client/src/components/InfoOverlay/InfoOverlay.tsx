@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { AircraftSelected } from "../../../../types/Aircraft/Aircraft";
-import { displayComponent } from "../../../../utils/displayComponent";
+import { AircraftSelected } from "../../types/Aircraft/Aircraft";
+import { displayComponent } from "../../utils/displayComponent";
 
-import Tab from "../../../Generics/Buttons/Tab";
+import Tab from "../Generics/Buttons/Tab";
 import InfoSection from "./InfoSection";
 import AircraftInfoSection from "./AircraftInfoSection";
 import PointsInfoSection from "./PointsInfoSection";

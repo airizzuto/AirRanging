@@ -1,0 +1,13 @@
+
+.Accept {
+  display: flex;
+  flex-direction: row;
+  grid-area: accept;
+  justify-content: right;
+  padding-top: 1rem;
+
+  button {
+    max-width: 40%;
+    padding: 0.5rem 0.5rem;
+  }
+}

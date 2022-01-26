@@ -8,8 +8,8 @@ import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Tab from "../../Generics/Buttons/Tab";
-import AircraftModal from "./AircraftsModal/AircraftModal";
-import InfoOverlay from "./InfoOverlay/InfoOverlay";
+import AircraftModal from "../../../components/AircraftsModal/AircraftModal";
+import InfoOverlay from "../../../components/InfoOverlay/InfoOverlay";
 
 import Style from "./Home.module.scss";
 

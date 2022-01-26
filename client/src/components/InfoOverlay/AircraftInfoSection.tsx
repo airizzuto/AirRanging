@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AircraftSelected } from '../../../../types/Aircraft/Aircraft';
+import { AircraftSelected } from '../../types/Aircraft/Aircraft';
 
 import Style from "./InfoSection.module.scss";
 

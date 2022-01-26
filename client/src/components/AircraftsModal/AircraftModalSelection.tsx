@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import useDebounce from '../../../../hooks/useDebounce';
+import useDebounce from '../../hooks/useDebounce';
 
-import aircraftService from '../../../../services/aircraftService';
-import { getUserData } from '../../../../helpers/userHelper';
-import { AircraftSelected, AircraftWithSocials } from '../../../../types/Aircraft/Aircraft';
-import { FilterSearch } from '../../../../types/Aircraft/Filter';
-import { AircraftSearchOptions } from '../../../../types/Aircraft/AircraftEnums';
+import aircraftService from '../../services/aircraftService';
+import { getUserData } from '../../helpers/userHelper';
+import { AircraftSelected, AircraftWithSocials } from '../../types/Aircraft/Aircraft';
+import { FilterSearch } from '../../types/Aircraft/Filter';
+import { AircraftSearchOptions } from '../../types/Aircraft/AircraftEnums';
 
-import SaveActionsButton from '../../../AircraftActions/SaveActionsButton';
-import DropdownSearchbar from '../../../Generics/Filters/DropdownSearchbar';
-import { LinkButton } from '../../../Generics/Buttons/Button';
-import ToggleDataSet from '../../../Generics/Filters/ToggleDataSet';
+import SaveActionsButton from '../AircraftActions/SaveActionsButton';
+import DropdownSearchbar from '../Generics/Filters/DropdownSearchbar';
+import { LinkButton } from '../Generics/Buttons/Button';
+import ToggleDataSet from '../Generics/Filters/ToggleDataSet';
 
 import Style from "./AircraftModalSelection.module.scss";
 
