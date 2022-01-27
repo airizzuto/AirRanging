@@ -12,6 +12,7 @@ import AircraftModal from "../../../components/AircraftsModal/AircraftModal";
 import InfoOverlay from "../../../components/InfoOverlay/InfoOverlay";
 
 import Style from "./Home.module.scss";
+import PlanningModal from "../../PlanningModal/PlanningModal";
 
 interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;
@@ -31,7 +32,8 @@ const Home: React.FC<Props> = ({
   handleAircraftState
 }) => {
   const [displayInfoOverlay, setDisplayInfoOverlay] = useToggle(true);
-  const [displayPlanningModal, setDisplayPlanningModal] = useToggle(true);
+  const [displayAircraftModal, setDisplayAircraftModal] = useToggle(true);
+  const [displayPlanningModal, setDisplayPlanningModal] = useToggle(false);
 
   return (
     <div className={Style.Home}>
@@ -39,7 +41,7 @@ const Home: React.FC<Props> = ({
         {/* Properties Modals Activation Tabs */}
         <div className={Style.ModalTabs}>
           <Tab
-            handleTabClick={setDisplayPlanningModal}
+            handleTabClick={setDisplayAircraftModal}
             style={"ModalTab"}
           >
             <span>AIRCRAFT</span><FontAwesomeIcon icon={faPaperPlane} />
@@ -54,15 +56,21 @@ const Home: React.FC<Props> = ({
 
         {/* Map View Properties Modals */}
         <AircraftModal
-          show={displayPlanningModal}
-          handleModalClose={setDisplayPlanningModal}
-          handleAccept={setDisplayPlanningModal}
+          show={displayAircraftModal}
+          handleModalClose={setDisplayAircraftModal}
+          handleAccept={setDisplayAircraftModal}
           aircraftsSaved={aircraftsSaved}
           aircraftSelected={selectedAircraft}
           handleAircraftState={handleAircraftState}
           handleAircraftSelection={handleAircraftSelection}
           handleAircraftSave={handleAircraftSave}
           handleAircraftUnsave={handleAircraftUnsave}
+        />
+
+        <PlanningModal 
+          show={displayPlanningModal}
+          handleModalClose={setDisplayPlanningModal}
+          handleAccept={setDisplayPlanningModal}
         />
       </div>
       
