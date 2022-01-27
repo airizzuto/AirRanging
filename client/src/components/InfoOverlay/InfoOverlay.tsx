@@ -11,15 +11,6 @@ import RouteInfoSection from "./RouteInfoSection";
 import Style from "./InfoOverlay.module.scss";
 
 /* TODO: Information overlay
-  1. TODO: Aircraft selected or none
-    A. Header:
-      - Display Aircraft Selected *MANUFACTURER* - *Model*
-      - Display NO AIRCRAFT SELECTED
-    B. Main:
-      - Aircraft state properties
-      - NOT AVAILABLE
-
-  2. TODO: Aircraft selected info (fuel, weight, speed, range)
 
   3. TODO: Map points info. WIP
     - Coordinates
@@ -53,6 +44,7 @@ const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
         <Tab handleTabClick={() => setTabSelected("points")} style="MenuTab">POINTS</Tab>
         <Tab handleTabClick={() => setTabSelected("route")} style="MenuTab">ROUTE</Tab>
       </div>
+
       <div className={Style.Sections}>
         <InfoSection
           selected={tabSelected}
@@ -60,12 +52,14 @@ const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
         >
           <AircraftInfoSection aircraftSelected={aircraftSelected} />
         </InfoSection>
+
         <InfoSection
           selected={tabSelected}
           route={"points"}
         >
           <PointsInfoSection />
         </InfoSection>
+
         <InfoSection 
           selected={tabSelected} 
           route={"route"}

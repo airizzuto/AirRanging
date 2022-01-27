@@ -2,12 +2,12 @@ import React from "react";
 
 import { AircraftSelected, AircraftWithSocials } from "../../types/Aircraft/Aircraft";
 
-import ModalHeader from "../Generics/Modals/ModalHeader";
 import DraggableModalWrapper from "../Generics/Modals/DraggableModalWrapper";
+import ModalHeader from "../Generics/Modals/ModalHeader";
+import ModalFooter from "../Generics/Modals/ModalFooter";
 
 import AircraftModalSelection from "./AircraftModalSelection";
 import AircraftModalInputs from "./AircraftModalInputs";
-import ModalFooter from "../Generics/Modals/ModalFooter";
 
 interface Props {
   handleAircraftState: React.Dispatch<React.SetStateAction<AircraftSelected | null>>;
