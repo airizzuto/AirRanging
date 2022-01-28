@@ -49,9 +49,28 @@ const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
   return (
     <div className={Style.Container} style={displayComponent(show)}>
       <div className={Style.Tabs}>
-        <Tab handleTabClick={() => setTabSelected("aircraft")} style="MenuTab">AIRCRAFT</Tab>
-        <Tab handleTabClick={() => setTabSelected("points")} style="MenuTab">POINTS</Tab>
-        <Tab handleTabClick={() => setTabSelected("route")} style="MenuTab">ROUTE</Tab>
+        <Tab
+          handleTabClick={() => setTabSelected("aircraft")} 
+          style="MenuTab" 
+          isActive={tabSelected === "aircraft"}
+        >
+          AIRCRAFT
+        </Tab>
+    
+        <Tab
+          handleTabClick={() => setTabSelected("points")} 
+          style="MenuTab"
+          isActive={tabSelected === "points"}
+        >
+          POINTS
+        </Tab>
+        <Tab 
+          handleTabClick={() => setTabSelected("route")}
+          style="MenuTab"
+          isActive={tabSelected === "route"}
+        >
+          ROUTE
+        </Tab>
       </div>
       <div className={Style.Sections}>
         <InfoSection

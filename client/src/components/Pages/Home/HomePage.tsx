@@ -4,6 +4,7 @@ import useToggle from "../../../hooks/useToggle";
 import { AircraftWithSocials, AircraftSelected } from "../../../types/Aircraft/Aircraft";
 
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
+import { faMap } from "@fortawesome/free-regular-svg-icons";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -32,29 +33,40 @@ const Home: React.FC<Props> = ({
   handleAircraftState
 }) => {
   const [displayInfoOverlay, setDisplayInfoOverlay] = useToggle(true);
+
+  // TODO One modal at a time
   const [displayAircraftModal, setDisplayAircraftModal] = useToggle(true);
   const [displayPlanningModal, setDisplayPlanningModal] = useToggle(false);
 
   return (
     <div className={Style.Home}>
       <div className={Style.Main}>
-        {/* Properties Modals Activation Tabs */}
+        {/* Modals Activation Tabs */}
         <div className={Style.ModalTabs}>
           <Tab
             handleTabClick={setDisplayAircraftModal}
             style={"ModalTab"}
+            isActive={displayAircraftModal}
           >
             <span>AIRCRAFT</span><FontAwesomeIcon icon={faPaperPlane} />
           </Tab>
           <Tab
+            handleTabClick={setDisplayPlanningModal}
+            style={"ModalTab"}
+            isActive={displayPlanningModal}
+          >
+            <span>PLANNING</span><FontAwesomeIcon icon={faMap} />
+          </Tab>
+          <Tab
             handleTabClick={setDisplayInfoOverlay}
             style={"ModalTab"}
+            isActive={displayInfoOverlay}
           >
             <span>INFO</span><FontAwesomeIcon icon={faInfoCircle} />
           </Tab>
         </div>
 
-        {/* Map View Properties Modals */}
+        {/* Modals */}
         <AircraftModal
           show={displayAircraftModal}
           handleModalClose={setDisplayAircraftModal}
