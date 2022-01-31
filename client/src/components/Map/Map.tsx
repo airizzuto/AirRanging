@@ -7,18 +7,20 @@ import { AircraftSelected } from '../../types/Aircraft/Aircraft';
 
 import Spinner from "../../styles/components/_spinner.module.scss";
 import DrawAircraftRadius from './DrawAircraftRadius';
+import DrawRoute from './DrawRoute';
 
-// TODO: https://tomchentw.github.io/react-google-maps/#installation
-// TODO REMOVE: reference video https://www.youtube.com/watch?v=WZcxJGmLbSo&t=0s
+// docs: https://tomchentw.github.io/react-google-maps/#installation
+// reference video: https://www.youtube.com/watch?v=WZcxJGmLbSo&t=0s
 
 interface Props {
   selectedAircraft: AircraftSelected | null;
+  mapPoints: Coordinates[];
+  selectMapPoint: (point: Coordinates) => void;
+  // deselectMapPoint: (point: Coordinates) => void;
 }
 
-const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
-  const [point, setPoint] = React.useState<Coordinates | null>(null);
+const Map: React.FC<Props> = ({ selectedAircraft, mapPoints, selectMapPoint }): React.ReactElement => {
   // TODO: replace point with an array for route calculation
-  // const [points, setPoints] = React.useState<Coordinates[]>();
   // const [selectedPoint, setSelectedPoint] = React.useState();
 
   const { isLoaded, loadError } = useLoadScript({
@@ -40,13 +42,14 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
   };
 
   const onMapClick = React.useCallback((event: google.maps.MapMouseEvent) => {
+    // TODO: remove point if already selected
     event.latLng
-    ? setPoint({ 
+    ? selectMapPoint({ 
         latitude: event.latLng.lat(),
         longitude: event.latLng.lng()
       })
-    : setPoint(null);
-  }, []);
+    : null;
+  }, [selectMapPoint]);
 
   if (loadError) {
     return (
@@ -72,10 +75,12 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
         onClick={onMapClick}
       >
         {
-          (point && selectedAircraft)
-            ? <DrawAircraftRadius position={point} aircraftSelected={selectedAircraft}/>
+          // TODO: draw route
+          (mapPoints && mapPoints[0] && selectedAircraft)
+            ? <DrawAircraftRadius position={mapPoints[0]} aircraftSelected={selectedAircraft}/>
             : null
         }
+        <DrawRoute points={mapPoints}/>
       </GoogleMap>
   );
 };

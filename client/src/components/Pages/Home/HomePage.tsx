@@ -33,14 +33,13 @@ const Home: React.FC<Props> = ({
   handleAircraftState
 }) => {
   const [displayInfoOverlay, setDisplayInfoOverlay] = useToggle(true);
-
-  // TODO One modal at a time
   const [displayAircraftModal, setDisplayAircraftModal] = useToggle(true);
   const [displayPlanningModal, setDisplayPlanningModal] = useToggle(false);
 
   return (
     <div className={Style.Home}>
       <div className={Style.Main}>
+
         {/* Modals Activation Tabs */}
         <div className={Style.ModalTabs}>
           <Tab
@@ -83,6 +82,7 @@ const Home: React.FC<Props> = ({
           show={displayPlanningModal}
           handleModalClose={setDisplayPlanningModal}
           handleAccept={setDisplayPlanningModal}
+          // pass map points state
         />
       </div>
       

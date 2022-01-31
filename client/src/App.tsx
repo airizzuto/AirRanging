@@ -9,6 +9,7 @@ import { getUserData } from "./helpers/userHelper";
 
 import { UserPublic } from "./types/User/User";
 import { AircraftWithSocials, AircraftSelected, CloneAircraft, AircraftWithoutIDs } from "./types/Aircraft/Aircraft";
+import { Coordinates } from "./types/Map/MapTypes";
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
@@ -43,6 +44,7 @@ const App = (): JSX.Element =>{
   const [initialAircrafts, setInitialAircrafts] = useState<AircraftWithSocials[]>([]);
   const [aircraftsSaved, setAircraftsSaved] = useState<AircraftWithSocials[]>([]);
   const [aircraftSelected, setAircraftSelected] = useState<AircraftSelected | null>(null);
+  const [mapPoints, setMapPoints] = useState<Coordinates[]>([]);
 
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
@@ -66,7 +68,6 @@ const App = (): JSX.Element =>{
   }, [user, initialAircrafts]);
 
   /* Aircrafts state handlers */
-
   const refreshAircrafts = async () => {
     await aircraftService.getAllAircrafts()
       .then((response) => setInitialAircrafts(response.data))
@@ -159,9 +160,20 @@ const App = (): JSX.Element =>{
       }).catch(error => console.error("Cloning aircraft: ", error));
   };
 
+  /* Map state handlers */
+  const handleSelectMapPoint = (point: Coordinates) => {
+    if (mapPoints.includes(point)) {
+      return handleDeselectMapPoint(point);
+    }
+
+    setMapPoints(mapPoints.concat(point));
+  };
+
+  const handleDeselectMapPoint = (point: Coordinates) => {
+    setMapPoints(mapPoints.filter(p => p !== point));
+  };
 
   /* User state handlers */
-
   const handleLogout = () => {
     userService.logout();
     setUser(null);
@@ -177,7 +189,12 @@ const App = (): JSX.Element =>{
       </div>
 
       <div className="Map">
-        <Map selectedAircraft={aircraftSelected}/>
+        <Map 
+          selectedAircraft={aircraftSelected}
+          mapPoints={mapPoints}
+          selectMapPoint={handleSelectMapPoint}
+          // deselectMapPoint={handleDeselectMapPoint}
+        />
       </div>
 
       <div className="Main">
