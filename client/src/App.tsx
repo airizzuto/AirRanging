@@ -193,7 +193,7 @@ const App = (): JSX.Element =>{
           selectedAircraft={aircraftSelected}
           mapPoints={mapPoints}
           selectMapPoint={handleSelectMapPoint}
-          // deselectMapPoint={handleDeselectMapPoint}
+          deselectMapPoint={handleDeselectMapPoint}
         />
       </div>
 

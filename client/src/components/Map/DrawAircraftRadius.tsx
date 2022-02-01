@@ -23,6 +23,7 @@ const DrawAircraftRadius: React.FC<Props> = ({position, aircraftSelected}) => {
           strokeColor: "#26bbd9",
           zIndex: 1,
         }}
+        draggable={true}
       />
       <Marker
         key={`marker-${position.latitude},${position.longitude}`}

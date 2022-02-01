@@ -16,13 +16,12 @@ interface Props {
   selectedAircraft: AircraftSelected | null;
   mapPoints: Coordinates[];
   selectMapPoint: (point: Coordinates) => void;
-  // deselectMapPoint: (point: Coordinates) => void;
+  deselectMapPoint: (point: Coordinates) => void;
 }
 
-const Map: React.FC<Props> = ({ selectedAircraft, mapPoints, selectMapPoint }): React.ReactElement => {
-  // TODO: replace point with an array for route calculation
-  // const [selectedPoint, setSelectedPoint] = React.useState();
-
+const Map: React.FC<Props> = ({ 
+  selectedAircraft, mapPoints, selectMapPoint, deselectMapPoint 
+}): React.ReactElement => {
   const { isLoaded, loadError } = useLoadScript({
     id: "google-map-script",
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -80,7 +79,10 @@ const Map: React.FC<Props> = ({ selectedAircraft, mapPoints, selectMapPoint }): 
             ? <DrawAircraftRadius position={mapPoints[0]} aircraftSelected={selectedAircraft}/>
             : null
         }
-        <DrawRoute points={mapPoints}/>
+        <DrawRoute 
+          points={mapPoints}
+          deselectPoint={deselectMapPoint}
+        />
       </GoogleMap>
   );
 };

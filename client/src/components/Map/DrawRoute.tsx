@@ -6,9 +6,10 @@ import markerIcon from "./PointSelected.svg";
 
 interface Props {
   points: Coordinates[];
+  deselectPoint: (point: Coordinates) => void;
 }
 
-const DrawRoute: React.FC<Props> = ({points}) => {
+const DrawRoute: React.FC<Props> = ({points, deselectPoint}) => {
   const flightPlan: google.maps.LatLng[] = points.map(point => 
     new google.maps.LatLng(point.latitude, point.longitude)
   );
@@ -16,21 +17,21 @@ const DrawRoute: React.FC<Props> = ({points}) => {
   return (flightPlan.length > 1)
   ? (
     <>
-      {points.forEach(position => {
-        return (
-          <Marker
-            key={`marker-${position.latitude},${position.longitude}`}
-            position={{lat: position.latitude, lng: position.longitude}}
-            icon={{
-              url: markerIcon,
-              scaledSize: new window.google.maps.Size(10, 10),
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(5, 5)
-            }}
-            draggable={true}
-          />
-        );
-      })}
+      {points.map(position => 
+        <Marker
+          key={`marker-${position.latitude},${position.longitude}`}
+          position={{lat: position.latitude, lng: position.longitude}}
+          icon={{
+            url: markerIcon,
+            scaledSize: new window.google.maps.Size(10, 10),
+            origin: new window.google.maps.Point(0, 0),
+            anchor: new window.google.maps.Point(5, 5)
+          }}
+          draggable={true}
+          onClick={() => deselectPoint(position)}
+        />
+      )}
+
       <Polyline
         path={flightPlan}
         options={{
