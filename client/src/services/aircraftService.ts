@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
 import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs, AircraftSearchResult } from "../types/Aircraft/Aircraft";
-import { FilterSearch } from "../types/Aircraft/Filter";
+import { AircraftsFilterSearch } from "../types/Aircraft/AircraftFilter";
 import {  PaginationOptions } from "../types/Pagination";
 import { buildStringEndpoint } from "../utils/stringBuilder";
 
@@ -63,7 +63,7 @@ const getAircraftsSavedByUser = async () => {
   return response;
 };
 
-const searchAircrafts = async (filter: FilterSearch) => {
+const searchAircrafts = async (filter: AircraftsFilterSearch) => {
   const config = {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };
@@ -88,7 +88,7 @@ const searchAircrafts = async (filter: FilterSearch) => {
 };
 
 // TODO: multi-query
-const searchAircraftsPaged = async (filter: FilterSearch, paging: PaginationOptions): Promise<AircraftSearchResult | void> => {
+const searchAircraftsPaged = async (filter: AircraftsFilterSearch, paging: PaginationOptions): Promise<AircraftSearchResult | void> => {
   const options = {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };

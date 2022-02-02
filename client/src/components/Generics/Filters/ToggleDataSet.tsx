@@ -1,5 +1,5 @@
 import React from 'react';
-import { AircraftsDataSets, FilterSearch } from '../../../types/Aircraft/Filter';
+import { AircraftsDataSets, AircraftsFilterSearch } from '../../../types/Aircraft/AircraftFilter';
 
 import Style from "./ToggleDataSet.module.scss";
 import CheckboxStyle from "../../../styles/components/_checkbox.module.scss";
@@ -9,8 +9,8 @@ interface Props {
   description: string;
   set: AircraftsDataSets;
   unset: AircraftsDataSets;
-  handleFilter: (filter: FilterSearch) => void;
-  filters: FilterSearch;
+  handleFilter: (filter: AircraftsFilterSearch) => void;
+  filters: AircraftsFilterSearch;
   disabled: boolean;
 }
 

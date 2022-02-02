@@ -6,15 +6,16 @@ import AsyncSelect from 'react-select/async';
 import { mapAircraftToFilter } from '../../../helpers/aircraftHelper';
 
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
-import { FilterSearch } from '../../../types/Aircraft/Filter';
+import { AircraftsFilterSearch } from '../../../types/Aircraft/AircraftFilter';
 
 import "./DropdownSearchbar.scss";
 
+// TODO: generic implementation
 interface Props {
   handleSelection: React.Dispatch<React.SetStateAction<any | null>>;
-  handleFilter: (filter: FilterSearch) => void;
+  handleFilter: (filter: AircraftsFilterSearch) => void;
   options: AircraftWithSocials[];
-  filters: FilterSearch;
+  filters: AircraftsFilterSearch;
   placeholder?: string;
 }
 
@@ -53,7 +54,6 @@ const DropdownSearchbar: React.FC<Props> = ({
     isSearchable: true,
   };
 
-  // TODO: selected aircraft
   return (
     <>
       <AsyncSelect

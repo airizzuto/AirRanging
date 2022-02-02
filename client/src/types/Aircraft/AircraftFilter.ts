@@ -4,18 +4,18 @@ export interface AircraftsSets {
     set: AircraftsDataSets;
 }
 
-export interface FilterSearch extends AircraftsSets {
+export interface AircraftsFilterSearch extends AircraftsSets {
     searchField: AircraftFieldsTypes;
     search: string;
 }
 
 export interface AdvancedFilters {
-    advancedFilters: Array<Filter>;
+    advancedFilters: Array<AircraftsFilter>;
 }
 
 export type AircraftsDataSets = "all" | "saved" | "owned";
 
-type Filter = {
+type AircraftsFilter = {
     field: AircraftFieldsTypes,
     value: any
 };

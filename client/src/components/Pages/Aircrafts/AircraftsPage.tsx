@@ -4,7 +4,7 @@ import aircraftService from '../../../services/aircraftService';
 import useDebounce from '../../../hooks/useDebounce';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
-import { FilterSearch } from '../../../types/Aircraft/Filter';
+import { AircraftsFilterSearch } from '../../../types/Aircraft/AircraftFilter';
 import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
 import { PaginationInfo, PaginationOptions } from '../../../types/Pagination';
 
@@ -33,7 +33,7 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftSelection,
 }) => {
   const [aircrafts, setAircrafts] = useState<AircraftWithSocials[] | undefined>([]);
-  const [filters, setFilters] = useState<FilterSearch>({
+  const [filters, setFilters] = useState<AircraftsFilterSearch>({
     set: "all",
     searchField: AircraftSearchOptions.Model,
     search: ""
@@ -69,7 +69,7 @@ const Aircrafts: React.FC<Props> = ({
     getAircrafts();
   },[debouncedFilter, paginationOptions]);
 
-  const handleAircraftsFilters = (filters: FilterSearch) => {
+  const handleAircraftsFilters = (filters: AircraftsFilterSearch) => {
     setFilters({...filters});
   };
 

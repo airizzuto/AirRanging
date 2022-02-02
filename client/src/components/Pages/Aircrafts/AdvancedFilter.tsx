@@ -1,7 +1,7 @@
 import React from 'react';
 import { getUserData } from '../../../helpers/userHelper';
 
-import { FilterSearch } from '../../../types/Aircraft/Filter';
+import { AircraftsFilterSearch } from '../../../types/Aircraft/AircraftFilter';
 import { UserPublic } from '../../../types/User/User';
 
 import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';
@@ -10,8 +10,8 @@ import Style from "./AdvancedFilter.module.scss";
 
 interface Props {
   user: UserPublic | null;
-  filters: FilterSearch;
-  handleAircraftsFilters: (filter: FilterSearch) => void;
+  filters: AircraftsFilterSearch;
+  handleAircraftsFilters: (filter: AircraftsFilterSearch) => void;
 }
 
 // TODO: Filter handling
