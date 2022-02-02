@@ -1,4 +1,4 @@
-# AirRanging Web Client v0.1.8
+# AirRanging Web Client v0.1.9
 
 Web frontend made for AirRanging app with React, Typescript and Sass.
 
@@ -8,9 +8,9 @@ Web frontend made for AirRanging app with React, Typescript and Sass.
 
 ### Added
 
-- Initial implementation of route drawing on map
-
 ### Updated
+
+- Modal input section style to generic
 
 ### Fixed
 
