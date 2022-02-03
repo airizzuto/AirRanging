@@ -14,10 +14,12 @@ import InfoOverlay from "../../../components/InfoOverlay/InfoOverlay";
 
 import Style from "./Home.module.scss";
 import PlanningModal from "../../PlanningModal/PlanningModal";
+import { Coordinates } from "../../../types/Map/MapTypes";
 
 interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;
   selectedAircraft: AircraftSelected | null;
+  mapPoints: Coordinates[];
   handleAircraftSelection: (selected: AircraftWithSocials | null) => void ;
   handleAircraftSave: (aircraftId: string) => Promise<void>;
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
@@ -27,6 +29,7 @@ interface Props {
 const Home: React.FC<Props> = ({
   aircraftsSaved,
   selectedAircraft,
+  mapPoints,
   handleAircraftSelection,
   handleAircraftSave,
   handleAircraftUnsave,
@@ -82,7 +85,7 @@ const Home: React.FC<Props> = ({
           show={displayPlanningModal}
           handleModalClose={setDisplayPlanningModal}
           handleAccept={setDisplayPlanningModal}
-          // pass map points state
+          points={mapPoints}
         />
       </div>
       

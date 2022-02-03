@@ -203,6 +203,7 @@ const App = (): JSX.Element =>{
               <Home
                 aircraftsSaved={aircraftsSaved}
                 selectedAircraft={aircraftSelected}
+                mapPoints={mapPoints}
                 handleAircraftSelection={handleAircraftSelection}
                 handleAircraftState={setAircraftSelected} handleAircraftSave={handleAircraftSave} handleAircraftUnsave={handleAircraftUnsave}
               />

@@ -74,15 +74,19 @@ const Map: React.FC<Props> = ({
         onClick={onMapClick}
       >
         {
-          // TODO: draw route
           (mapPoints && mapPoints[0] && selectedAircraft)
             ? <DrawAircraftRadius position={mapPoints[0]} aircraftSelected={selectedAircraft}/>
             : null
         }
-        <DrawRoute 
-          points={mapPoints}
-          deselectPoint={deselectMapPoint}
-        />
+        {
+          (mapPoints.length > 1)
+          ? <DrawRoute 
+              points={mapPoints}
+              deselectPoint={deselectMapPoint}
+            />
+          : null
+        }
+        
       </GoogleMap>
   );
 };
