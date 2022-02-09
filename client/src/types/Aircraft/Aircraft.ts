@@ -1,4 +1,5 @@
 import { PaginationInfo } from "../Pagination";
+import { Socials } from "../Socials";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "./AircraftEnums";
 
 export interface Aircraft {
@@ -24,10 +25,7 @@ export interface Aircraft {
   createdAtDate: number;
 }
 
-export interface AircraftWithSocials extends Aircraft{
-  savesCount: number;
-  authorUsername: string;
-}
+export interface AircraftWithSocials extends Aircraft, Socials{ }
 
 export interface AircraftSelected extends AircraftWithSocials {
   loadedFuel: number;
