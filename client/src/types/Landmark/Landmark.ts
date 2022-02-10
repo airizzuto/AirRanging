@@ -1,4 +1,5 @@
 import { Socials } from "../Socials";
+import { UnionOmit } from "../UnionOmit";
 
 export interface Landmark {
   id: string,
@@ -10,5 +11,7 @@ export interface Landmark {
   longitude: number,
   altitude: number
 }
+
+export type LandmarkWithoutIDs = UnionOmit<Landmark, 'id' | "createdAtDate">;
 
 export interface LandmarkWithSocials extends Socials, Landmark { }
