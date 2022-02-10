@@ -1,0 +1,46 @@
+@use "../../../styles/colors" as color;
+@use "../../../styles/fonts" as font;
+@use "../../../styles/components/separators" as separator;
+@use "../../../styles/components/boxes" as box;
+@use "../../../styles/components/form";
+@use "../../../styles/mixins" as *;
+
+.FormContainer {
+  position: relative;
+  @include main-component;
+  
+  display: grid;
+  grid-template-rows: auto min-content 8fr;
+  grid-template-columns: 1fr;
+  grid-template-areas: "title" "separator" "form";
+
+  padding: 0 15vw;
+
+  z-index: 3;
+
+  .FormTitle {
+    @include font.header-1;
+    @include text-shadow;
+    grid-area: title;
+
+    color: color.$light1;
+  }
+  
+  .Separator {
+    @include separator.style;
+    grid-area: separator;
+
+    width: 95%;
+    place-self: center;
+  }
+
+  .Form {
+    @include form.style;
+  }
+
+  .SubmitButton {
+    button {
+      padding: 0.5rem 0;
+    }
+  }
+}

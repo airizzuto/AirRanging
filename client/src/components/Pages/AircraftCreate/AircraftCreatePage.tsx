@@ -10,7 +10,7 @@ import AlertBox from "../../Generics/Alerts/AlertBox";
 import FieldSelect from "../../Generics/FormGroups/FieldSelect";
 import FieldGroup from "../../Generics/FormGroups/FieldGroup";
 
-import Style from "./AircraftCreate.module.scss";
+import Style from "../../Generics/FormGroups/FormPage.module.scss";
 
 interface Props {
   handleCreate: (newAircraft: AircraftWithoutIDs) => void;
