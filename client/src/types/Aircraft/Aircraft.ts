@@ -1,5 +1,6 @@
 import { PaginationInfo } from "../Pagination";
 import { Socials } from "../Socials";
+import { UnionOmit } from "../UnionOmit";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "./AircraftEnums";
 
 export interface Aircraft {
@@ -32,8 +33,6 @@ export interface AircraftSelected extends AircraftWithSocials {
   currentMaxRange: number;
 }
 
-// Define special omit for unions
-type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
 
 export type AircraftWithoutIDs = UnionOmit<Aircraft, 'id' | "createdAtDate">;
 
