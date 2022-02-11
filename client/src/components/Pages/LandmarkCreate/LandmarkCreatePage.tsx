@@ -2,10 +2,10 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
 
+import { landmarkSchema } from "../../../validators/landmarkValidators";
 import { LandmarkWithoutIDs } from "../../../types/Landmark/Landmark";
 
 import AlertBox from "../../Generics/Alerts/AlertBox";
-import FieldSelect from "../../Generics/FormGroups/FieldSelect";
 import FieldGroup from "../../Generics/FormGroups/FieldGroup";
 
 import Style from "../../Generics/FormGroups/FormPage.module.scss";
@@ -32,6 +32,13 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
   };
 
   const initialFormValues: LandmarkWithoutIDs = {
+    icaoId: "",
+    iataId: "",
+    name: "",
+    description: "",
+    latitude: 0,
+    longitude: 0,
+    altitude: 0
   };
 
   return (
@@ -42,7 +49,7 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
 
         <Formik 
           initialValues={initialFormValues}
-          validationSchema={landmarkSchemas}
+          validationSchema={landmarkSchema}
           onSubmit={async (values: LandmarkWithoutIDs, { setSubmitting }: FormikHelpers<LandmarkWithoutIDs>) => {
             await handleSubmit(values);
             setSubmitting(false);
@@ -52,19 +59,46 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
             <Form className={Style.Form}>
               <div className={Style.Fields}>
                 {/* TODO: field groups */}
-                {/* <FieldGroup 
-                  label="Manufacturer" type="text" 
-                  valueName="manufacturer"
-                  placeholder="Manufacturer"
+                <FieldGroup 
+                  label="IcaoID" type="text" 
+                  valueName="icaoId"
+                  placeholder="ICAO ID"
                   isDisabled={isSubmitting}
-                  />
-                  
-                  <FieldSelect
-                  enumerator={EAircraftType}
-                  labelName="Type"
-                  name="type"
+                />
+                <FieldGroup 
+                  label="IataID" type="text" 
+                  valueName="iataId"
+                  placeholder="IATA ID"
                   isDisabled={isSubmitting}
-                /> */}
+                />
+                <FieldGroup 
+                  label="name" type="text" 
+                  valueName="name"
+                  placeholder="Location name"
+                  isDisabled={isSubmitting}
+                />
+                <FieldGroup 
+                  label="description" type="text" 
+                  valueName="description"
+                  placeholder="Location description"
+                  isDisabled={isSubmitting}
+                />
+                <FieldGroup 
+                  label="latitude" type="number" 
+                  valueName="latitude"
+                  isDisabled={true}
+                />
+                <FieldGroup 
+                  label="longitude" type="number" 
+                  valueName="longitude"
+                  isDisabled={true}
+                />
+                <FieldGroup 
+                  label="altitude" type="number" 
+                  valueName="altitude"
+                  placeholder="Altitude"
+                  isDisabled={isSubmitting}
+                />
               </div>
 
               <div className={Style.AlertNotification}>
