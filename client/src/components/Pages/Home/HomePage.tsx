@@ -93,6 +93,7 @@ const Home: React.FC<Props> = ({
         <InfoOverlay 
           show={displayInfoOverlay}
           aircraftSelected={selectedAircraft}
+          mapPoints={mapPoints}
         />
       </div>
 

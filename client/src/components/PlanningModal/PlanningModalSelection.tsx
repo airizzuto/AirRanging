@@ -17,7 +17,6 @@ const PlanningModalSelection: React.FC<Props> = ({points}) => {
     <div className={Style.Selection}>
       <div>
         <label>Departure: </label>
-        
         <span>{departure[0]},{departure[1]}</span>
       </div>
       <div>

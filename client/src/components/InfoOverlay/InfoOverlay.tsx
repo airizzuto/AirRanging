@@ -9,6 +9,7 @@ import PointsInfoSection from "./PointsInfoSection";
 import RouteInfoSection from "./RouteInfoSection";
 
 import Style from "./InfoOverlay.module.scss";
+import { Coordinates } from "../../types/Map/MapTypes";
 
 /* TODO: Information overlay
   1. TODO: Aircraft selected or none
@@ -38,12 +39,12 @@ interface Props {
   show: boolean;
   aircraftSelected: AircraftSelected | null;
   // mapInformation: MapInfo;
-  // pointsInformation: PointInfo[];
+  mapPoints: Coordinates[];
 }
 
 type Tabs = "aircraft" | "points" | "route";
 
-const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
+const InfoOverlay: React.FC<Props> = ({show, aircraftSelected, mapPoints}) => {
   const [tabSelected, setTabSelected] = useState<Tabs>("aircraft");
 
   return (
@@ -62,7 +63,7 @@ const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
           style="MenuTab"
           isActive={tabSelected === "points"}
         >
-          POINTS
+          DEPARTURE/ARRIVAL
         </Tab>
         <Tab 
           handleTabClick={() => setTabSelected("route")}
@@ -89,7 +90,9 @@ const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
           selected={tabSelected} 
           route={"route"}
         >
-          <RouteInfoSection />
+          <RouteInfoSection 
+            mapPoints={mapPoints}
+          />
         </InfoSection>
       </div>
     </div>

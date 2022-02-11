@@ -41,7 +41,6 @@ const Map: React.FC<Props> = ({
   };
 
   const onMapClick = React.useCallback((event: google.maps.MapMouseEvent) => {
-    // TODO: remove point if already selected
     event.latLng
     ? selectMapPoint({ 
         latitude: event.latLng.lat(),
