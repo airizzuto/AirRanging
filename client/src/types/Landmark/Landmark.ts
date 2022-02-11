@@ -3,10 +3,10 @@ import { UnionOmit } from "../UnionOmit";
 
 export interface Landmark {
   id: string,
-  icaoId: string,
-  iataId: string,
+  icaoId?: string,
+  iataId?: string,
   name: string,
-  description: string,
+  description?: string,
   latitude: number,
   longitude: number,
   altitude: number
