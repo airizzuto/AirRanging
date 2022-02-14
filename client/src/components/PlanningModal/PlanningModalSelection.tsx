@@ -1,4 +1,5 @@
 import { Coordinates } from "../../types/Map/MapTypes";
+
 import Style from "../Generics/Modals/ModalInputs.module.scss";
 
 interface Props {
@@ -6,22 +7,22 @@ interface Props {
 }
 
 const PlanningModalSelection: React.FC<Props> = ({points}) => {
-  const departure: [number, number] | string = points.length 
-    ? [points[0].latitude, points[0].longitude] 
+  const departure: [number, number] | string = points.length
+    ? `${points[0].latitude.toFixed(8)}, ${points[0].longitude.toFixed(8)}`
     : "Not selected";
-  const arrival: [number, number] | string = points.length > 1 
-    ? [points[points.length - 1].latitude, points[points.length - 1].longitude]
+  const arrival: [number, number] | string = points.length > 1
+    ? `${points[points.length - 1].latitude.toFixed(8)}, ${points[points.length - 1].longitude.toFixed(8)}`
     : "Not selected";
 
   return (
     <div className={Style.Selection}>
       <div>
         <label>Departure: </label>
-        <span>{departure[0]},{departure[1]}</span>
+        <span>{departure}</span>
       </div>
       <div>
         <label>Arrival: </label>
-        <span>{arrival[0]},{arrival[1]}</span>
+        <span>{arrival}</span>
       </div>
     </div>
   );
