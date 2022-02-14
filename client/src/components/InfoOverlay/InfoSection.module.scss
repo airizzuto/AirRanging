@@ -20,22 +20,33 @@
       @include font.header-3;
     }
   }
-  
+
   .Main {
     background-color: color.$bg-semitransparent;
-    align-content: center;
     min-height: 20vh;
     height: 100%;
     width: 100%;
-  
-    tr {
-      .Label {
-        color: color.$light2;
+
+    tbody {
+      tr {
+        .Label {
+          text-align: left;
+          color: color.$light2;
+          width: 40%;
+        }
+
+        td {
+          text-align: center;
+        }
       }
     }
-    
+
     span {
-      place-self: center;
+      display: flex;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

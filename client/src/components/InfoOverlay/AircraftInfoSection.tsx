@@ -28,7 +28,7 @@ const AircraftInfoSection: React.FC<Props> = ({aircraftSelected}) => {
 
         <table className={Style.Main}>
           <tbody>
-            <tr>
+            {/* <tr>
               <td className={Style.Label}>Cruise Speed:</td>
               <td>WIP</td>
             </tr>
@@ -39,10 +39,14 @@ const AircraftInfoSection: React.FC<Props> = ({aircraftSelected}) => {
             <tr>
               <td className={Style.Label}>Endurance:</td>
               <td>WIP</td>
-            </tr>
+            </tr> */}
             <tr>
               <td className={Style.Label}>Max Range:</td>
               <td>{aircraftSelected.currentMaxRange}</td>
+            </tr>
+            <tr>
+              <td className={Style.Label}>Fuel Loaded:</td>
+              <td>{aircraftSelected.loadedFuel}</td>
             </tr>
           </tbody>
         </table>

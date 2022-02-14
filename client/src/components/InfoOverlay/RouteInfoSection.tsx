@@ -12,7 +12,7 @@ const RouteInfoSection: React.FC<Props> = ({mapPoints}) => {
     !mapPoints.length
       ? <>
           <div className={Style.Header}>
-            <h1>NO POIs SELECTED</h1>
+            <h1>NO POINTS SELECTED</h1>
           </div>
           <div className={Style.Main}>
             <span>SELECT A POINT IN MAP TO GET INFORMATION</span>
@@ -20,16 +20,16 @@ const RouteInfoSection: React.FC<Props> = ({mapPoints}) => {
         </>
       : <>
           <div className={Style.Header}>
-            <h1></h1> {/* TODO: parse name or coordinates */}
+            <h1>ROUTE INFO</h1>
           </div>
-          <div className={Style.Main}>
+          <table className={Style.Main}>
             <tbody>
               <tr>
                 <td className={Style.Label}>Total Distance:</td>
                 <td>{calculateTotalDistance(mapPoints).toFixed(1)}</td>
               </tr>
             </tbody>
-          </div>
+          </table>
         </>
   );
 };
