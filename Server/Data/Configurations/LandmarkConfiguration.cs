@@ -32,6 +32,9 @@ namespace Data.Configurations
             builder.Property(l => l.CreatedDate)
                 .ValueGeneratedOnAdd();
 
+            builder.Property(l => l.ModifiedDate)
+                .ValueGeneratedOnAddOrUpdate();
+
             builder.Property(l => l.SavesCount)
                 .HasDefaultValue(1);
 

@@ -10,7 +10,8 @@ namespace App.Profiles
         {
             CreateMap<Landmark, LandmarkReadDTO>();
             CreateMap<LandmarkCreateDTO, Landmark>();
-            // TODO: additional dtos
+            CreateMap<LandmarkUpdateDTO, Landmark>();
+            CreateMap<Landmark, LandmarkUpdateDTO>();
         }
     }
 }

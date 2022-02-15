@@ -5,6 +5,7 @@ using Constants;
 using Entities.Models.Aircrafts;
 using Entities.Models.Enums;
 using Entities.Models.Identity;
+using Entities.Models.Landmarks;
 using Microsoft.AspNetCore.Identity;
 
 namespace Data
@@ -69,7 +70,7 @@ namespace Data
             }
         }
 
-        public static async Task SeedExamples(
+        public static async Task SeedAircraftExamples(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager)
         {
@@ -78,6 +79,7 @@ namespace Data
                 return;  // Aircrafts already seeded
             }
 
+            #region default aircrafts
             var aircrafts = new Aircraft[]
             {
                 new Aircraft
@@ -270,9 +272,64 @@ namespace Data
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
             };
+            #endregion
 
             await context.AddRangeAsync(aircrafts);
+            await context.SaveChangesAsync();
+        }
 
+        public static async Task SeedLandmarkExamples(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager
+        )
+        {
+            if (context.Landmarks.Any())
+            {
+                return;  // Landmarks already seeded
+            }
+
+            #region default airports
+            var landmarks = new Landmark[]
+            {
+                new Landmark
+                {
+                    Id = Guid.NewGuid(),
+                    Type = Entities.Models.Enums.Landmarks.ELandmarkType.Airport,
+                    Name = "Ministro Pistarini Ezeiza (SAEZ)",
+                    Description = "High-traffic international airport with 3 terminals serving the area round the Argentine capital.",
+                    Latitude = -34.559667,
+                    Longitude = -58.415000,
+                    Altitude = 20.42,
+                    AuthorUsername = Authorization.default_username,
+                    User = await userManager.FindByNameAsync(Authorization.default_username)
+                },
+                new Landmark
+                {
+                    Id = Guid.NewGuid(),
+                    Type = Entities.Models.Enums.Landmarks.ELandmarkType.Airport,
+                    Name = "Aeroparque Jorge Newbery (SABE)",
+                    Description = "Airport for domestic flights & international routes to & from Uruguay, Brazil, Chile & Paraguay.",
+                    Latitude = -34.5617116,
+                    Longitude = -58.4176124,
+                    Altitude = 6,
+                    AuthorUsername = Authorization.default_username,
+                    User = await userManager.FindByNameAsync(Authorization.default_username)
+                },
+                new Landmark
+                {
+                    Id = Guid.NewGuid(),
+                    Type = Entities.Models.Enums.Landmarks.ELandmarkType.Airport,
+                    Name = "El Palomar (SADP)",
+                    Latitude = -34.610000,
+                    Longitude = -58.612500,
+                    Altitude = 13.10,
+                    AuthorUsername = Authorization.default_username,
+                    User = await userManager.FindByNameAsync(Authorization.default_username)
+                },
+            };
+            #endregion
+
+            await context.AddRangeAsync(landmarks);
             await context.SaveChangesAsync();
         }
     }

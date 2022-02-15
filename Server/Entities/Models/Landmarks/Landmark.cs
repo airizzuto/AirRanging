@@ -14,9 +14,9 @@ namespace Entities.Models.Landmarks
         public ELandmarkType Type { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public float Latitude { get; set; }
-        public float Longitude { get; set; }
-        public float Altitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Altitude { get; set; }
 
         [Display(Name = "Created At Date")]
         public DateTime CreatedDate { get; set; }
