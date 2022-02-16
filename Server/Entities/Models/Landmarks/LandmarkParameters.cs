@@ -1,3 +1,4 @@
+using System;
 using Entities.Models.Enums.Landmarks;
 using Entities.Models.Pagination;
 
@@ -9,5 +10,6 @@ namespace Entities.Models.Landmarks
         public ELandmarkType Type { get; set; }
         public string AuthorUsername { get; set; }
 
+        public DateTime CreatedDate { get; set; }
     }
 }

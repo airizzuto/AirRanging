@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Constants;
-using Contracts;
 using Data;
 using Entities.Models.Identity;
 using Logger;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NLog;
 
 namespace App
 {

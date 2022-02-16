@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Entities.Models.Bookmarks;
 using Entities.Models.Enums;
-using Entities.Models.Identity;
 
 namespace Entities.Models.Aircrafts
 {
-    public class Aircraft
+    public class Aircraft : UserResourceData<Aircraft>
     {
         public Guid Id { get; set; }
 
@@ -60,21 +57,5 @@ namespace Entities.Models.Aircrafts
 
         [Display(Name = "Entered Service At Year")]
         public int EnteredServiceAtYear { get; set; }
-
-        [Display(Name = "Saves Count")]
-        public uint SavesCount { get; set; }
-
-        [Display(Name = "Author Username")]
-        public string AuthorUsername { get; set; }
-
-        [Display(Name = "Created At Date")]
-        public DateTime CreatedDate { get; set; }
-        // public DateTime ModifiedDate { get; set; }
-
-        // Navigation properties
-        public string UserId { get; set; }
-        public ApplicationUser User { get; set; }
-
-        public ICollection<Bookmark<Aircraft>> AircraftBookmarks { get; set; }
     }
 }

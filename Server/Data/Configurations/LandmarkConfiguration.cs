@@ -30,10 +30,10 @@ namespace Data.Configurations
             builder.Property(l => l.Altitude);
 
             builder.Property(l => l.CreatedDate)
-                .ValueGeneratedOnAdd();
+                .HasDefaultValueSql("now()");
 
             builder.Property(l => l.ModifiedDate)
-                .ValueGeneratedOnAddOrUpdate();
+                .HasDefaultValueSql("now()");
 
             builder.Property(l => l.SavesCount)
                 .HasDefaultValue(1);

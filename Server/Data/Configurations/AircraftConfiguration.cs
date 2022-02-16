@@ -72,7 +72,10 @@ namespace Data.Configurations
                 .HasDefaultValue(1);
 
             builder.Property(a => a.CreatedDate)
-                .ValueGeneratedOnAdd();
+                .HasDefaultValueSql("now()");
+
+            builder.Property(a => a.ModifiedDate)
+                .HasDefaultValueSql("now()");
 
             builder.HasOne(a => a.User)
                 .WithMany(u => u.AircraftsOwned)
