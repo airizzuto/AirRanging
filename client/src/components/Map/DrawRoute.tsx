@@ -2,7 +2,7 @@ import React from 'react';
 import { Marker, Polyline } from '@react-google-maps/api';
 import { Coordinates } from '../../types/Map/MapTypes';
 
-import markerIcon from "./PointSelected.svg";
+import markerIcon from "../../assets/icons/PointSelected.svg";
 
 interface Props {
   points: Coordinates[];

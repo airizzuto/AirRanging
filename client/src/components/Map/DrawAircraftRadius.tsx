@@ -4,7 +4,7 @@ import { convertNauticalToMeters } from '../../utils/lengthUnitsConvertions';
 import { AircraftSelected } from '../../types/Aircraft/Aircraft';
 import { Coordinates } from '../../types/Map/MapTypes';
 
-import markerIcon from "./PointSelected.svg";
+import markerIcon from "../../assets/icons/PointSelected.svg";
 
 interface Props {
   position: Coordinates;
