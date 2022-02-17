@@ -38,7 +38,8 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
     description: "",
     latitude: 0,
     longitude: 0,
-    altitude: 0
+    altitude: 0,
+    imageUrl: "",
   };
 
   return (
@@ -97,6 +98,12 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
                   label="altitude" type="number" 
                   valueName="altitude"
                   placeholder="Altitude"
+                  isDisabled={isSubmitting}
+                />
+                <FieldGroup 
+                  label="imageUrl" type="text" 
+                  valueName="imageUrl"
+                  placeholder="Image URL"
                   isDisabled={isSubmitting}
                 />
               </div>

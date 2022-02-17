@@ -1,5 +1,5 @@
 import { PaginationInfo } from "../Pagination";
-import { Socials } from "../Socials";
+import { CommonData } from "../Socials";
 import { UnionOmit } from "../UnionOmit";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "./AircraftEnums";
 
@@ -23,10 +23,10 @@ export interface Aircraft {
   maxRange: number;
   serviceCeiling: number;
   enteredServiceAtYear: number;
-  createdAtDate: number;
+  imageUrl?: string;
 }
 
-export interface AircraftWithSocials extends Aircraft, Socials{ }
+export interface AircraftWithSocials extends Aircraft, CommonData{ }
 
 export interface AircraftSelected extends AircraftWithSocials {
   loadedFuel: number;

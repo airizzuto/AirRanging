@@ -52,6 +52,7 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
     maxRange: 0,
     serviceCeiling: 0,
     enteredServiceAtYear: 1950,
+    imageUrl: "",
   };
 
   return (
@@ -186,6 +187,12 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
                 <FieldGroup 
                   label="Entered Service Year" type="number" 
                   valueName="enteredServiceAtYear"
+                  isDisabled={isSubmitting}
+                />
+
+                <FieldGroup 
+                  label="Image URL" type="text"
+                  valueName="imageUrl"
                   isDisabled={isSubmitting}
                 />
               </div>
