@@ -14,6 +14,7 @@ namespace Entities.DTOs.V1.Landmarks
         public double Altitude { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public string ImageUrl { get; set; }
 
         public uint SavesCount { get; set; }
         public string AuthorUsername { get; set; }

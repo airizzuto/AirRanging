@@ -29,6 +29,8 @@ namespace Data.Configurations
 
             builder.Property(l => l.Altitude);
 
+            builder.Property(l => l.ImageUrl);
+
             builder.Property(l => l.CreatedDate)
                 .HasDefaultValueSql("now()");
 

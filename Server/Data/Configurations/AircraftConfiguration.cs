@@ -68,6 +68,8 @@ namespace Data.Configurations
 
             builder.Property(a => a.EnteredServiceAtYear);
 
+            builder.Property(a => a.ImageUrl);
+
             builder.Property(a => a.SavesCount)
                 .HasDefaultValue(1);
 

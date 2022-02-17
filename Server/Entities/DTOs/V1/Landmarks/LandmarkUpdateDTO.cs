@@ -17,6 +17,7 @@ namespace Entities.DTOs.V1.Landmarks
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Altitude { get; set; }
+        public string ImageUrl { get; set; }
 
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }

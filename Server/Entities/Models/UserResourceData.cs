@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Entities.Models.Bookmarks;
 using Entities.Models.Identity;
 
@@ -9,6 +8,10 @@ namespace Entities.Models
 {
     public class UserResourceData<T>
     {
+        
+        [Display(Name = "Image URL")]
+        public string ImageUrl { get; set; }
+
         [Display(Name = "Created At Date")]
         public DateTime CreatedDate { get; set; }
 
