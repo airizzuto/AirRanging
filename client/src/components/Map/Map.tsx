@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript } from '@react-google-maps/api';
 import { containerStyle, DEFAULT_MAP_CENTER, DEFAULT_MAP_OPTIONS } from '../../settings/google-maps/mapSettings';
 
 import { Coordinates } from '../../types/Map/MapTypes';
@@ -9,6 +9,7 @@ import Spinner from "../../styles/components/_spinner.module.scss";
 import DrawAircraftRadius from './DrawAircraftRadius';
 import DrawRoute from './DrawRoute';
 import { LandmarkWithSocials } from '../../types/Landmark/Landmark';
+import { DrawLandmarks } from './DrawLandmarks';
 
 // docs: https://tomchentw.github.io/react-google-maps/#installation
 // reference video: https://www.youtube.com/watch?v=WZcxJGmLbSo&t=0s
@@ -74,26 +75,19 @@ const Map: React.FC<Props> = ({
         onUnmount={onMapUnmount}
         onClick={onMapClick}
       >
-        { // TODO: Landmarks
+        {
           landmarks 
-          ? landmarks.map(landmark => {
-            return (<Marker 
-              key={`landmark-${landmark.latitude},${landmark.longitude}`}
-              position={{lat: landmark.latitude, lng: landmark.longitude}}
-            />);})
+          ? <DrawLandmarks landmarks={landmarks}/>
           : null
-  
-          // Mouseover window
-          // OnClick add coordinates to mapPoints
         }
 
-        { // RADIUS
+        {
           (mapPoints && mapPoints[0] && selectedAircraft)
             ? <DrawAircraftRadius position={mapPoints[0]} aircraftSelected={selectedAircraft}/>
             : null
         }
 
-        { // ROUTE
+        {
           (mapPoints.length > 1)
           ? <DrawRoute 
               points={mapPoints}
