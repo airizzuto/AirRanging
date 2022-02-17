@@ -99,6 +99,7 @@ namespace Data
                     FuelCapacity = 26,
                     MaxRange = 415,
                     ServiceCeiling = 14700,
+                    ImageUrl = "https://en.wikipedia.org/wiki/Cessna_152#/media/File:G-BRNE-Cessna152.jpg",
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
@@ -120,6 +121,7 @@ namespace Data
                     FuelCapacity = 38,
                     MaxRange = 691,
                     ServiceCeiling = 14700,
+                    ImageUrl = "https://en.wikipedia.org/wiki/Cessna_152#/media/File:G-BRNE-Cessna152.jpg",
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
@@ -140,6 +142,7 @@ namespace Data
                     FuelCapacity = 56,
                     MaxRange = 696,
                     ServiceCeiling = 13500,
+                    ImageUrl = "https://en.wikipedia.org/wiki/Cessna_172#/media/File:Cessna_172S_Skyhawk_SP,_Private_JP6817606.jpg",
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
@@ -160,6 +163,7 @@ namespace Data
                     FuelCapacity = 6400,
                     MaxRange = 3300,
                     ServiceCeiling = 39100,
+                    ImageUrl = "https://en.wikipedia.org/wiki/Airbus_A320_family#/media/File:Jetstar_Airbus_A320_in_flight_(6768081241)_crop.jpg",
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
@@ -180,6 +184,7 @@ namespace Data
                     FuelCapacity = 6875,
                     MaxRange = 2935,
                     ServiceCeiling = 41000,
+                    ImageUrl = "https://en.wikipedia.org/wiki/Boeing_737_Next_Generation#/media/File:Delta_Air_Lines_Boeing_737-832;_N3747D@LAX;10.10.2011_622in_(6482376485).jpg",
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
@@ -202,6 +207,7 @@ namespace Data
                     FuelCapacity = 10870,
                     MaxRange = 400,
                     ServiceCeiling = 50000,
+                    ImageUrl = "https://en.wikipedia.org/wiki/McDonnell_Douglas_F/A-18_Hornet#/media/File:FA-18C_desert_refueling.jpg",
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
@@ -224,6 +230,7 @@ namespace Data
                     FuelCapacity = 810,
                     MaxRange = 1008,
                     ServiceCeiling = 40000,
+                    ImageUrl = "https://en.wikipedia.org/wiki/Douglas_A-4_Skyhawk#/media/File:A-4_Skyhawk_Patrol_TNI-AU.jpg",
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
@@ -246,6 +253,7 @@ namespace Data
                     FuelCapacity = 60000,
                     MaxRange = 2050,
                     ServiceCeiling = 23000,
+                    ImageUrl = "https://en.wikipedia.org/wiki/Lockheed_C-130_Hercules#/media/File:Lockheed_C-130_Hercules.jpg",
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
@@ -297,8 +305,8 @@ namespace Data
                     Type = Entities.Models.Enums.Landmarks.ELandmarkType.Airport,
                     Name = "Ministro Pistarini Ezeiza (SAEZ)",
                     Description = "High-traffic international airport with 3 terminals serving the area round the Argentine capital.",
-                    Latitude = -34.559667,
-                    Longitude = -58.415000,
+                    Latitude = -34.822167,
+                    Longitude = -58.535833,
                     Altitude = 20.42,
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
@@ -312,6 +320,7 @@ namespace Data
                     Latitude = -34.5617116,
                     Longitude = -58.4176124,
                     Altitude = 6,
+                    ImageUrl = "https://en.wikipedia.org/wiki/Aeroparque_Jorge_Newbery#/media/File:Aeroparque_Jorge_Newberry-Overview_(by_Dar%C3%ADo_Crusaf%C3%B3n).jpg",
                     AuthorUsername = Authorization.default_username,
                     User = await userManager.FindByNameAsync(Authorization.default_username)
                 },
