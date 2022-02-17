@@ -7,6 +7,8 @@ import { AircraftsFilterSearch } from "../types/Aircraft/AircraftFilter";
 import {  PaginationOptions } from "../types/Pagination";
 import { buildStringEndpoint } from "../utils/stringBuilder";
 
+// TODO: make base service for aircrafts and landmarks
+
 const getAllAircrafts = async () => {
   const response = await axios.get(
     BASE_URL + "/api/aircrafts"

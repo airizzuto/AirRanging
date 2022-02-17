@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api';
 import { containerStyle, DEFAULT_MAP_CENTER, DEFAULT_MAP_OPTIONS } from '../../settings/google-maps/mapSettings';
 
 import { Coordinates } from '../../types/Map/MapTypes';
@@ -8,6 +8,7 @@ import { AircraftSelected } from '../../types/Aircraft/Aircraft';
 import Spinner from "../../styles/components/_spinner.module.scss";
 import DrawAircraftRadius from './DrawAircraftRadius';
 import DrawRoute from './DrawRoute';
+import { LandmarkWithSocials } from '../../types/Landmark/Landmark';
 
 // docs: https://tomchentw.github.io/react-google-maps/#installation
 // reference video: https://www.youtube.com/watch?v=WZcxJGmLbSo&t=0s
@@ -15,12 +16,13 @@ import DrawRoute from './DrawRoute';
 interface Props {
   selectedAircraft: AircraftSelected | null;
   mapPoints: Coordinates[];
+  landmarks: LandmarkWithSocials[];
   selectMapPoint: (point: Coordinates) => void;
   deselectMapPoint: (point: Coordinates) => void;
 }
 
 const Map: React.FC<Props> = ({ 
-  selectedAircraft, mapPoints, selectMapPoint, deselectMapPoint 
+  selectedAircraft, mapPoints, landmarks, selectMapPoint, deselectMapPoint 
 }): React.ReactElement => {
   const { isLoaded, loadError } = useLoadScript({
     id: "google-map-script",
@@ -72,12 +74,26 @@ const Map: React.FC<Props> = ({
         onUnmount={onMapUnmount}
         onClick={onMapClick}
       >
-        {
+        { // TODO: Landmarks
+          landmarks 
+          ? landmarks.map(landmark => {
+            return (<Marker 
+              key={`landmark-${landmark.latitude},${landmark.longitude}`}
+              position={{lat: landmark.latitude, lng: landmark.longitude}}
+            />);})
+          : null
+  
+          // Mouseover window
+          // OnClick add coordinates to mapPoints
+        }
+
+        { // RADIUS
           (mapPoints && mapPoints[0] && selectedAircraft)
             ? <DrawAircraftRadius position={mapPoints[0]} aircraftSelected={selectedAircraft}/>
             : null
         }
-        {
+
+        { // ROUTE
           (mapPoints.length > 1)
           ? <DrawRoute 
               points={mapPoints}

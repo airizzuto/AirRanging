@@ -36,6 +36,8 @@ import Footer from "./components/Footer/Footer";
 import Map from "./components/Map/Map";
 
 import "./App.scss";
+import { LandmarkWithSocials } from "./types/Landmark/Landmark";
+import landmarkService from "./services/landmarkService";
 
 const App = (): JSX.Element =>{
   const history = useHistory();
@@ -45,10 +47,13 @@ const App = (): JSX.Element =>{
   const [aircraftsSaved, setAircraftsSaved] = useState<AircraftWithSocials[]>([]);
   const [aircraftSelected, setAircraftSelected] = useState<AircraftSelected | null>(null);
   const [mapPoints, setMapPoints] = useState<Coordinates[]>([]);
+  const [landmarks, setLandmarks] = useState<LandmarkWithSocials[]>([]);
 
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
     console.debug("EFFECT - user check");
+
+    loadLandmarks();
 
     isUserAuthenticated()
       .then((isAuthenticated) =>
@@ -173,6 +178,16 @@ const App = (): JSX.Element =>{
     setMapPoints(mapPoints.filter(p => p !== point));
   };
 
+  const loadLandmarks = async () => {
+    await landmarkService.getAllLandmarks()
+      .then(result => {
+        result.length ? setLandmarks(result) : setLandmarks([]);
+      }).catch(error => {
+        console.error("loadLandmarks error:", error);
+        setLandmarks([]);
+      });
+  };
+
   /* User state handlers */
   const handleLogout = () => {
     userService.logout();
@@ -192,6 +207,7 @@ const App = (): JSX.Element =>{
         <Map 
           selectedAircraft={aircraftSelected}
           mapPoints={mapPoints}
+          landmarks={landmarks}
           selectMapPoint={handleSelectMapPoint}
           deselectMapPoint={handleDeselectMapPoint}
         />

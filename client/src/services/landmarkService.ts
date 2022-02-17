@@ -1,17 +1,19 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
-import { Landmark, LandmarkSearchResult, LandmarkWithoutIDs, LandmarkWithSocials } from "../types/Landmark/Landmark";
+import { LandmarkSearchResult, LandmarkWithoutIDs, LandmarkWithSocials } from "../types/Landmark/Landmark";
 import { PaginationOptions } from "../types/Pagination";
 import { buildStringEndpoint } from "../utils/stringBuilder";
 
+// TODO: make base service for aircrafts and landmarks
+
 const getAllLandmarks = async () => {
-  return await axios.get<Landmark[]>(BASE_URL + "/api/landmarks")
+  return await axios.get<LandmarkWithSocials[]>(BASE_URL + "/api/landmarks")
     .then(res => res.data);
 };
 
 const getLandmarkById = async (landmarkId: string) => {
-  return await axios.get<Landmark>(BASE_URL + `/api/landmarks/${landmarkId}`)
+  return await axios.get<LandmarkWithSocials>(BASE_URL + `/api/landmarks/${landmarkId}`)
     .then(res => res.data);
 };
 
@@ -27,7 +29,7 @@ const getLandmarksOwnedByUser = async () => {
 
   const url = buildStringEndpoint(urlOptions);
 
-  return await axios.get<Landmark[]>(url, config)
+  return await axios.get<LandmarkWithSocials[]>(url, config)
     .then(res => res.data);
 };
 
@@ -43,7 +45,7 @@ const getLandmarksSavedByUser = async () => {
 
   const url = buildStringEndpoint(urlOptions);
 
-  return await axios.get<Landmark[]>(url, config)
+  return await axios.get<LandmarkWithSocials[]>(url, config)
     .then(res => res.data);
 };
 

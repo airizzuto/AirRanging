@@ -26,7 +26,7 @@ const RouteInfoSection: React.FC<Props> = ({mapPoints}) => {
             <tbody>
               <tr>
                 <td className={Style.Label}>Total Distance:</td>
-                <td>{calculateTotalDistance(mapPoints).toFixed(1)}</td>
+                <td>{ calculateTotalDistance(mapPoints).toFixed(1) }</td>
               </tr>
             </tbody>
           </table>
