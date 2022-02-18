@@ -13,8 +13,8 @@ import { Coordinates } from "./types/Map/MapTypes";
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
-import AircraftDetails from "./components/Pages/AircraftDetails/AircraftDetailsPage";
-import AircraftCreate from "./components/Pages/AircraftCreate/AircraftCreatePage";
+import AircraftDetails from "./components/Pages/Aircrafts/AircraftDetails/AircraftDetailsPage";
+import AircraftCreate from "./components/Pages/Aircrafts/AircraftCreate/AircraftCreatePage";
 import Login from "./components/Pages/UserLogin/LoginPage";
 import UserRegistration from "./components/Pages/UserRegistration/UserRegistrationPage";
 import TermsAndConditions from "./components/Pages/Legals/TermsAndConditionsPage";

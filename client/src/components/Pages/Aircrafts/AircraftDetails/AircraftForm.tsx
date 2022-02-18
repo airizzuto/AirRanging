@@ -2,14 +2,14 @@ import React from 'react';
 
 import { Form, Formik, FormikHelpers } from 'formik';
 
-import FieldSelect from '../../Generics/FormGroups/FieldSelect';
-import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
-import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from '../../../types/Aircraft/AircraftEnums';
-import { aircraftSchema } from '../../../validators/aircraftValidators';
+import FieldSelect from '../../../Generics/FormGroups/FieldSelect';
+import { AircraftWithSocials } from '../../../../types/Aircraft/Aircraft';
+import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from '../../../../types/Aircraft/AircraftEnums';
+import { aircraftSchema } from '../../../../validators/aircraftValidators';
 
 import "./AircraftDetails.scss";
 import AircraftActionsButtons, { IAircraftButtonsHandlers } from './AircraftActionsButtons';
-import FieldGroup from '../../Generics/FormGroups/FieldGroup';
+import FieldGroup from '../../../Generics/FormGroups/FieldGroup';
 
 interface Props {
   aircraft: AircraftWithSocials;

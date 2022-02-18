@@ -2,13 +2,13 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
 
-import { landmarkSchema } from "../../../validators/landmarkValidators";
-import { LandmarkWithoutIDs } from "../../../types/Landmark/Landmark";
+import { landmarkSchema } from "../../../../validators/landmarkValidators";
+import { LandmarkWithoutIDs } from "../../../../types/Landmark/Landmark";
 
-import AlertBox from "../../Generics/Alerts/AlertBox";
-import FieldGroup from "../../Generics/FormGroups/FieldGroup";
+import AlertBox from "../../../Generics/Alerts/AlertBox";
+import FieldGroup from "../../../Generics/FormGroups/FieldGroup";
 
-import Style from "../../Generics/FormGroups/FormPage.module.scss";
+import Style from "../../../Generics/FormGroups/FormPage.module.scss";
 
 interface Props {
   handleCreate: (newAircraft: LandmarkWithoutIDs) => void;

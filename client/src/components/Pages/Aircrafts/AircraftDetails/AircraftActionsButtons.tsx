@@ -1,9 +1,9 @@
 import React from 'react';
-import { getUserData } from '../../../helpers/userHelper';
-import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
+import { getUserData } from '../../../../helpers/userHelper';
+import { AircraftWithSocials } from '../../../../types/Aircraft/Aircraft';
 
-import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
-import { Button } from '../../Generics/Buttons/Button';
+import SaveActionsButton from '../../../AircraftActions/SaveActionsButton';
+import { Button } from '../../../Generics/Buttons/Button';
 
 import "./ActionsButtons.scss";
 

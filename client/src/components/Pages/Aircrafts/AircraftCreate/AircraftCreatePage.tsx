@@ -2,15 +2,15 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
 
-import { aircraftSchema } from "../../../validators/aircraftValidators";
-import { AircraftWithoutIDs } from "../../../types/Aircraft/Aircraft";
-import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../types/Aircraft/AircraftEnums";
+import { aircraftSchema } from "../../../../validators/aircraftValidators";
+import { AircraftWithoutIDs } from "../../../../types/Aircraft/Aircraft";
+import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "../../../../types/Aircraft/AircraftEnums";
 
-import AlertBox from "../../Generics/Alerts/AlertBox";
-import FieldSelect from "../../Generics/FormGroups/FieldSelect";
-import FieldGroup from "../../Generics/FormGroups/FieldGroup";
+import AlertBox from "../../../Generics/Alerts/AlertBox";
+import FieldSelect from "../../../Generics/FormGroups/FieldSelect";
+import FieldGroup from "../../../Generics/FormGroups/FieldGroup";
 
-import Style from "../../Generics/FormGroups/FormPage.module.scss";
+import Style from "../../../Generics/FormGroups/FormPage.module.scss";
 
 interface Props {
   handleCreate: (newAircraft: AircraftWithoutIDs) => void;

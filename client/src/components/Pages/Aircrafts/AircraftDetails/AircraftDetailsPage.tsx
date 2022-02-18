@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-import { isUserAuthenticated } from "../../../helpers/tokenHelper";
-import { isUserOwner } from "../../../helpers/userHelper";
-import propsToLabel from "../../../utils/propsToLabel";
+import { isUserAuthenticated } from "../../../../helpers/tokenHelper";
+import { isUserOwner } from "../../../../helpers/userHelper";
+import propsToLabel from "../../../../utils/propsToLabel";
 
-import { AircraftWithSocials, CloneAircraft } from "../../../types/Aircraft/Aircraft";
+import { AircraftWithSocials, CloneAircraft } from "../../../../types/Aircraft/Aircraft";
 
-import AlertBox from "../../Generics/Alerts/AlertBox";
+import AlertBox from "../../../Generics/Alerts/AlertBox";
 import AircraftForm from "./AircraftForm";
 
 import "./AircraftDetails.scss";
-import Spinner from "../../../styles/components/_spinner.module.scss";
-import aircraftService from "../../../services/aircraftService";
+import Spinner from "../../../../styles/components/_spinner.module.scss";
+import aircraftService from "../../../../services/aircraftService";
 
 interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;

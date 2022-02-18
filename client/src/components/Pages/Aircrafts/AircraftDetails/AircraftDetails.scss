@@ -1,9 +1,9 @@
-@use "../../../styles/mixins" as *;
-@use "../../../styles/fonts" as font;
-@use "../../../styles/colors" as color;
-@use "../../../styles/components/separators" as separator;
-@use "../../../styles/components/form";
-@use "../../../styles/components/buttons" as button;
+@use "../../../../styles/mixins" as *;
+@use "../../../../styles/fonts" as font;
+@use "../../../../styles/colors" as color;
+@use "../../../../styles/components/separators" as separator;
+@use "../../../../styles/components/form";
+@use "../../../../styles/components/buttons" as button;
 
 .Container {
   @include main-component;
