@@ -17,7 +17,10 @@ const DrawRoute: React.FC<Props> = ({points, deselectPoint}) => {
   ? (
     <>
       {points.map(position => 
-        <MapPoint deselectPoint={deselectPoint} position={position}/>
+        <MapPoint
+          onRightClick={deselectPoint} 
+          point={position}
+        />
       )}
 
       <Polyline

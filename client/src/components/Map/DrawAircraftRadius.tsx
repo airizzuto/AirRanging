@@ -26,7 +26,7 @@ const DrawAircraftRadius: React.FC<Props> = ({position, aircraftSelected, desele
         }}
         draggable={true}
       />
-      <MapPoint position={position} deselectPoint={deselectPoint}/>
+      <MapPoint point={position} onRightClick={deselectPoint}/>
     </>
   );
 };
