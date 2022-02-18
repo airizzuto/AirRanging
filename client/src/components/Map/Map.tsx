@@ -82,13 +82,17 @@ const Map: React.FC<Props> = ({
         }
 
         {
-          (mapPoints && mapPoints[0] && selectedAircraft)
-            ? <DrawAircraftRadius position={mapPoints[0]} aircraftSelected={selectedAircraft}/>
+          (mapPoints.length && selectedAircraft)
+            ? <DrawAircraftRadius 
+                position={mapPoints[0]} 
+                aircraftSelected={selectedAircraft} 
+                deselectPoint={deselectMapPoint}
+              />
             : null
         }
 
         {
-          (mapPoints.length > 1)
+          (mapPoints.length)
           ? <DrawRoute 
               points={mapPoints}
               deselectPoint={deselectMapPoint}
