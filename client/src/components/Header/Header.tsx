@@ -31,8 +31,8 @@ const Header = ({handleLogout, user}: Props): JSX.Element => (
         </LinkButton>
       </li>
       <li>
-        <LinkButton style={"primary"} path="/airports">
-          AIRPORTS
+        <LinkButton style={"primary"} path="/landmarks">
+          LANDMARKS
         </LinkButton>
       </li>
     </ul>
