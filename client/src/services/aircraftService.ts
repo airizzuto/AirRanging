@@ -2,8 +2,7 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
-import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs, AircraftSearchResult } from "../types/Aircraft/Aircraft";
-import { AircraftsFilterSearch } from "../types/Aircraft/AircraftFilter";
+import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs, AircraftSearchResult, AircraftsFilterSearch } from "../types/Aircraft/Aircraft";
 import {  PaginationOptions } from "../types/Pagination";
 import { buildStringEndpoint } from "../utils/stringBuilder";
 

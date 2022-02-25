@@ -8,9 +8,9 @@ Web frontend made for AirRanging app with React, Typescript and Sass.
 
 ### Added
 
-- Model images
-
 ### Updated
+
+- Models refactor
 
 ### Fixed
 

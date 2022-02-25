@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
-import { LandmarkSearchResult, LandmarkWithoutIDs, LandmarkWithSocials } from "../types/Landmark/Landmark";
+import { LandmarkSearchResult, LandmarksFilterSearch, LandmarkWithoutIDs, LandmarkWithSocials } from "../types/Landmark/Landmark";
 import { PaginationOptions } from "../types/Pagination";
 import { buildStringEndpoint } from "../utils/stringBuilder";
 
@@ -51,7 +51,7 @@ const getLandmarksSavedByUser = async () => {
 
 // TODO: search by map bounds
 
-const searchAircraftsPaged = async (paging: PaginationOptions): Promise<LandmarkSearchResult | void> => {
+const searchLandmarksPaged = async (filter: LandmarksFilterSearch, paging: PaginationOptions): Promise<LandmarkSearchResult | void> => {
   const options = {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };
@@ -61,6 +61,7 @@ const searchAircraftsPaged = async (paging: PaginationOptions): Promise<Landmark
   const urlOptions = {
     baseUrl: BASE_URL!,
     slug: `/api/landmarks/`,
+    filters: `${filter.set}?${filter.searchField}=${filter.search}`,
     paging: `&pageNumber=${paging.CurrentPage}&pageSize=${paging.PageSize}`
   };
 
@@ -169,7 +170,7 @@ export default {
   getLandmarkById,
   getLandmarksOwnedByUser,
   getLandmarksSavedByUser,
-  searchAircraftsPaged,
+  searchLandmarksPaged,
   createLandmark,
   saveLandmark,
   unsaveLandmark,

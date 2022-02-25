@@ -1,7 +1,7 @@
 import React from 'react';
 import { getUserData } from '../../../helpers/userHelper';
 
-import { AircraftsFilterSearch } from '../../../types/Aircraft/AircraftFilter';
+import { AircraftsFilterSearch } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
 
 import ToggleDataSet from '../../Generics/Filters/ToggleDataSet';

@@ -1,16 +1,15 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
-import { AircraftsFilterSearch, AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
+import { LandmarkSearchOptions, LandmarksFilterSearch, LandmarkWithSocials } from '../../../types/Landmark/Landmark';
 
-import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
 
 import "./Dropdown.scss";
 
 interface Props {
   placeholder: string;
-  filters: AircraftsFilterSearch;
-  enumerator: typeof AircraftSearchOptions;
-  handleFilter: (filter: AircraftsFilterSearch) => void;
+  filters: LandmarksFilterSearch;
+  enumerator: typeof LandmarkSearchOptions;
+  handleFilter: (filter: LandmarksFilterSearch) => void;
 }
 
 const DropdownAircraftOptions: React.FC<Props> = ({placeholder, filters, enumerator, handleFilter}) => {
@@ -18,7 +17,7 @@ const DropdownAircraftOptions: React.FC<Props> = ({placeholder, filters, enumera
   const handleChange = (value: string | undefined) => {
     handleFilter({
       ...filters,
-      searchField: AircraftSearchOptions[value as keyof typeof AircraftSearchOptions] as keyof AircraftWithSocials
+      searchField: LandmarkSearchOptions[value as keyof typeof LandmarkSearchOptions] as keyof LandmarkWithSocials
     });
   };
 

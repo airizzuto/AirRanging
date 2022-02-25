@@ -1,7 +1,6 @@
 
-import { AircraftWithSocials } from "../types/Aircraft/Aircraft";
+import { AircraftsFilterSearch, AircraftsSets, AircraftWithSocials } from "../types/Aircraft/Aircraft";
 import { AircraftSearchOptions } from "../types/Aircraft/AircraftEnums";
-import { AircraftsFilterSearch, AircraftsSets } from "../types/Aircraft/AircraftFilter";
 
 export const filterSets = async (
   data: AircraftWithSocials[],

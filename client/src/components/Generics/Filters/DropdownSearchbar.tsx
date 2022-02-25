@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-
 import AsyncSelect from 'react-select/async';
 
+import { AircraftsFilterSearch, AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { mapAircraftToFilter } from '../../../helpers/aircraftHelper';
-
-import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
-import { AircraftsFilterSearch } from '../../../types/Aircraft/AircraftFilter';
 
 import "./DropdownSearchbar.scss";
 
@@ -20,7 +17,6 @@ interface Props {
 }
 
 /* React select documentation https://react-select.com/home */
-
 const DropdownSearchbar: React.FC<Props> = ({
   handleSelection, handleFilter, filters, placeholder, options
 }) => {

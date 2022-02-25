@@ -2,20 +2,19 @@ import React, { useEffect, useState } from 'react';
 
 import aircraftService from '../../../services/aircraftService';
 import useDebounce from '../../../hooks/useDebounce';
-import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
+import { AircraftsFilterSearch, AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
-import { AircraftsFilterSearch } from '../../../types/Aircraft/AircraftFilter';
 import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
 import { PaginationInfo, PaginationOptions } from '../../../types/Pagination';
 
 import {LinkButton} from '../../Generics/Buttons/Button';
-import Searchbar from '../../Generics/Filters/Searchbar';
+import AircraftsSearchbar from '../../Generics/Filters/AircraftsSearchbar';
 import DropdownAircraftOptions from '../../Generics/Filters/DropdownAircraftOptions';
 import AircraftCard from '../../Generics/Cards/AircraftCard';
 import PaginationControls from '../../Generics/Pagination/PaginationControls';
 import AdvancedFilter from './AdvancedFilter';
 
-import Style from "./Aircrafts.module.scss";
+import Style from "../../Generics/ListingPage.module.scss";
 
 interface Props {
   user: UserPublic | null;
@@ -76,13 +75,13 @@ const Aircrafts: React.FC<Props> = ({
   };
 
   return (
-    <div className={Style.AircraftsView}>
+    <div className={Style.Container}>
 
       <div className={Style.SubHeader}>
         <h1 className={Style.Title}>Browse Aircrafts</h1>
 
         <div className={Style.Searchbar}>
-          <Searchbar
+          <AircraftsSearchbar
             filters={filters}
             handleFilter={handleAircraftsFilters}
             placeholder={"Search aircrafts"}

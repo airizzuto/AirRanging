@@ -1,10 +1,9 @@
 import { PaginationInfo } from "../Pagination";
-import { CommonData } from "../Socials";
+import { BaseModel, BaseModelSets, BaseModelSocials } from "../BaseModel";
 import { UnionOmit } from "../UnionOmit";
 import { EAircraftType, EEngineType, EFuelType, EIcaoWakeCategory, EWeightCategory } from "./AircraftEnums";
 
-export interface Aircraft {
-  id: string;
+export interface Aircraft extends BaseModel {
   icaoId: string;
   manufacturer: string;
   model: string;
@@ -23,18 +22,35 @@ export interface Aircraft {
   maxRange: number;
   serviceCeiling: number;
   enteredServiceAtYear: number;
-  imageUrl?: string;
 }
 
-export interface AircraftWithSocials extends Aircraft, CommonData{ }
+export interface AircraftWithSocials extends Aircraft, BaseModelSocials{ }
 
 export interface AircraftSelected extends AircraftWithSocials {
   loadedFuel: number;
   currentMaxRange: number;
 }
 
+export interface AircraftsSets {
+  set: BaseModelSets;
+}
 
-export type AircraftWithoutIDs = UnionOmit<Aircraft, 'id' | "createdAtDate">;
+export interface AircraftsFilterSearch extends AircraftsSets {
+  set: BaseModelSets
+  searchField: AircraftFieldsTypes;
+  search: string;
+}
+
+export interface AdvancedFilters {
+  advancedFilters: Array<AircraftsFilter>;
+}
+
+type AircraftsFilter = {
+  field: AircraftFieldsTypes,
+  value: any
+};
+
+export type AircraftWithoutIDs = UnionOmit<Aircraft, 'id' | "createdAtDate" | "modifiedAtDate">;
 
 export type AircraftFieldsTypes = keyof AircraftWithSocials;
 

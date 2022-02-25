@@ -1,15 +1,16 @@
 import React from 'react';
-import { AircraftsFilterSearch } from '../../../types/Aircraft/AircraftFilter';
+import { LandmarksFilterSearch } from '../../../types/Landmark/Landmark';
 
 import Style from "./Searchbar.module.scss";
 
 interface Props {
-  filters: AircraftsFilterSearch;
-  handleFilter: (filter: AircraftsFilterSearch) => void;
+  filters: LandmarksFilterSearch;
+  handleFilter: (filter: LandmarksFilterSearch) => void;
   placeholder: string;
 }
 
-const Searchbar: React.FC<Props> = ({filters, handleFilter, placeholder}) => {
+// TODO: make generic
+const LandmarksSearchbar: React.FC<Props> = ({filters, handleFilter, placeholder}) => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -28,4 +29,4 @@ const Searchbar: React.FC<Props> = ({filters, handleFilter, placeholder}) => {
   );
 };
 
-export default Searchbar;
+export default LandmarksSearchbar;

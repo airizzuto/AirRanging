@@ -3,9 +3,8 @@ import useDebounce from '../../hooks/useDebounce';
 
 import aircraftService from '../../services/aircraftService';
 import { getUserData } from '../../helpers/userHelper';
-import { AircraftSelected, AircraftWithSocials } from '../../types/Aircraft/Aircraft';
-import { AircraftsFilterSearch } from '../../types/Aircraft/AircraftFilter';
 import { AircraftSearchOptions } from '../../types/Aircraft/AircraftEnums';
+import { AircraftSelected, AircraftsFilterSearch, AircraftWithSocials } from '../../types/Aircraft/Aircraft';
 
 import SaveActionsButton from '../AircraftActions/SaveActionsButton';
 import DropdownSearchbar from '../Generics/Filters/DropdownSearchbar';
