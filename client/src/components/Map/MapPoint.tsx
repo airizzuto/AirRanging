@@ -1,17 +1,25 @@
-import { Marker } from '@react-google-maps/api';
+import { InfoWindow, Marker } from '@react-google-maps/api';
 
 import { Coordinates } from '../../types/Map/MapTypes';
 import { Landmark } from '../../types/Landmark/Landmark';
 
 import markerIcon from "../../assets/icons/PointSelected.svg";
+import { useState } from 'react';
 
 interface Props {
   point: Coordinates | Landmark;
-  // TODO onLeftClick: (point: Coordinates | Landmark) => void;
-  onRightClick: (point: Coordinates | Landmark) => void;
+  deselectPoint: (point: Coordinates | Landmark) => void;
 }
 
-const MapPoint: React.FC<Props> = ({ point, onRightClick }) => {
+// https://tomchentw.github.io/react-google-maps/#infowindow
+
+const MapPoint: React.FC<Props> = ({ point, deselectPoint }) => {
+  const [isInfoOpen, setIsInfoOpen] = useState<boolean>(false);
+
+  const toggleInfoWindow = () => {
+    setIsInfoOpen(!isInfoOpen);
+  };
+
   return (
     <Marker
       key={`marker-${point.latitude},${point.longitude}`}
@@ -23,8 +31,18 @@ const MapPoint: React.FC<Props> = ({ point, onRightClick }) => {
         anchor: new window.google.maps.Point(5, 5)
       }}
       draggable={false}
-      onRightClick={() => onRightClick(point)}
-    />
+      onClick={() => deselectPoint(point)}
+      onRightClick={() => toggleInfoWindow()}
+    >{
+      isInfoOpen
+      && <InfoWindow
+          onCloseClick={toggleInfoWindow}
+        >
+          <div>
+            Hello {`${point.latitude},${point.longitude}`} Info Window
+          </div>
+        </InfoWindow>
+    }</Marker>
   );
 };
 

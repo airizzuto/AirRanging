@@ -8,7 +8,7 @@ interface Props {
   landmark: Landmark;
 }
 
-const DrawMapLandmark: React.FC<Props> = ({ landmark }) => {
+const MapLandmark: React.FC<Props> = ({ landmark }) => {
   return (
     <Marker 
       key={`landmark-${landmark.latitude},${landmark.longitude}`}
@@ -23,4 +23,4 @@ const DrawMapLandmark: React.FC<Props> = ({ landmark }) => {
   );
 };
 
-export default DrawMapLandmark;
+export default MapLandmark;

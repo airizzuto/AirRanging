@@ -1,6 +1,6 @@
 import { LandmarkWithSocials } from "../../types/Landmark/Landmark";
 
-import DrawMapLandmark from "./DrawMapLandmark";
+import MapLandmark from "./MapLandmark";
 
 interface Props {
   landmarks: LandmarkWithSocials[];
@@ -11,7 +11,7 @@ export const DrawLandmarks: React.FC<Props> = ({ landmarks }) => {
   ? (
       <>
         {landmarks.map(landmark => 
-          <DrawMapLandmark landmark={landmark} />
+          <MapLandmark landmark={landmark} />
         )}
       </>
   ) : null;

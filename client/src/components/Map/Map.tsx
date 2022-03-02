@@ -43,7 +43,7 @@ const Map: React.FC<Props> = ({
     mapRef.current = null;
   };
 
-  const onMapClick = React.useCallback((event: google.maps.MapMouseEvent) => {
+  const onMapLeftClick = React.useCallback((event: google.maps.MapMouseEvent) => {
     event.latLng
     ? selectMapPoint({ 
         latitude: event.latLng.lat(),
@@ -73,7 +73,7 @@ const Map: React.FC<Props> = ({
         zoom={5}
         onLoad={onMapLoad}
         onUnmount={onMapUnmount}
-        onClick={onMapClick}
+        onClick={onMapLeftClick}
       >
         {
           landmarks 

@@ -18,7 +18,7 @@ const DrawRoute: React.FC<Props> = ({points, deselectPoint}) => {
     <>
       {points.map(position => 
         <MapPoint
-          onRightClick={deselectPoint} 
+          deselectPoint={deselectPoint}
           point={position}
         />
       )}
