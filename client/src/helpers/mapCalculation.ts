@@ -8,6 +8,9 @@ interface FuelProps {
 
 const EARTH_RADIUS_KM = 6371;
 
+// TODO: switch to maps geometry library for calcs
+
+
 export const calculateRange = ({maxRange, fuelCapacity, fuelLoaded}: FuelProps): number => {
   return ((fuelLoaded * maxRange) / fuelCapacity);
 };

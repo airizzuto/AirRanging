@@ -29,7 +29,7 @@ const Map: React.FC<Props> = ({
     id: "google-map-script",
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY!,
-    libraries: ["places", "drawing"],
+    libraries: ["places", "drawing", "geometry"],
   });
 
   // Save map in ref if we want to access the map from outside the component

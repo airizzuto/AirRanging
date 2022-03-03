@@ -8,6 +8,7 @@ interface Props {
   deselectPoint: (point: Coordinates) => void;
 }
 
+// TODO: heading info
 const DrawRoute: React.FC<Props> = ({points, deselectPoint}) => {
   const flightPlan: google.maps.LatLng[] = points.map(point => 
     new google.maps.LatLng(point.latitude, point.longitude)
@@ -26,7 +27,6 @@ const DrawRoute: React.FC<Props> = ({points, deselectPoint}) => {
       <Polyline
         path={flightPlan}
         options={{
-          clickable: true,
           strokeColor: "#26bbd9",
         }}
       />
