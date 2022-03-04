@@ -1,0 +1,12 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/fonts" as font;
+@use "../../styles/colors" as color;
+
+
+.InfoWindow {
+  max-width: 15rem;
+
+  h1 {
+    @include font.header-3;
+  }
+}

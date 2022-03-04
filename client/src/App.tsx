@@ -166,7 +166,7 @@ const App = (): JSX.Element =>{
   };
 
   /* Map state handlers */
-  const handleSelectMapPoint = (point: Coordinates) => {
+  const handleSelectMapPoint = (point: Coordinates | LandmarkWithSocials) => {
     if (mapPoints.includes(point)) {
       return handleDeselectMapPoint(point);
     }
@@ -174,7 +174,7 @@ const App = (): JSX.Element =>{
     setMapPoints(mapPoints.concat(point));
   };
 
-  const handleDeselectMapPoint = (point: Coordinates) => {
+  const handleDeselectMapPoint = (point: Coordinates | LandmarkWithSocials) => {
     setMapPoints(mapPoints.filter(p => p !== point));
   };
 

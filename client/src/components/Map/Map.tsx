@@ -18,8 +18,8 @@ interface Props {
   selectedAircraft: AircraftSelected | null;
   mapPoints: Coordinates[];
   landmarks: LandmarkWithSocials[];
-  selectMapPoint: (point: Coordinates) => void;
-  deselectMapPoint: (point: Coordinates) => void;
+  selectMapPoint: (point: Coordinates | LandmarkWithSocials) => void;
+  deselectMapPoint: (point: Coordinates | LandmarkWithSocials) => void;
 }
 
 const Map: React.FC<Props> = ({ 
@@ -77,7 +77,10 @@ const Map: React.FC<Props> = ({
       >
         {
           landmarks 
-          ? <DrawLandmarks landmarks={landmarks}/>
+          ? <DrawLandmarks 
+              landmarks={landmarks}
+              deselectPoint={deselectMapPoint}
+            />
           : null
         }
 
