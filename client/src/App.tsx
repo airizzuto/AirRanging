@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
 
 import aircraftService from "./services/aircraftService";
+import landmarkService from "./services/landmarkService";
 import userService from "./services/userService";
 import bookmarkService from "./services/bookmarkService";
 import { isUserAuthenticated } from "./helpers/tokenHelper";
@@ -9,12 +10,14 @@ import { getUserData } from "./helpers/userHelper";
 
 import { UserPublic } from "./types/User/User";
 import { AircraftWithSocials, AircraftSelected, CloneAircraft, AircraftWithoutIDs } from "./types/Aircraft/Aircraft";
+import { LandmarkWithoutIDs, LandmarkWithSocials } from "./types/Landmark/Landmark";
 import { Coordinates } from "./types/Map/MapTypes";
 
 import Home from "./components/Pages/Home/HomePage";
 import Aircrafts from "./components/Pages/Aircrafts/AircraftsPage";
 import AircraftDetails from "./components/Pages/Aircrafts/AircraftDetails/AircraftDetailsPage";
 import AircraftCreate from "./components/Pages/Aircrafts/AircraftCreate/AircraftCreatePage";
+import LandmarkCreatePage from "./components/Pages/Landmarks/LandmarkCreate/LandmarkCreatePage";
 import Login from "./components/Pages/UserLogin/LoginPage";
 import UserRegistration from "./components/Pages/UserRegistration/UserRegistrationPage";
 import TermsAndConditions from "./components/Pages/Legals/TermsAndConditionsPage";
@@ -36,8 +39,6 @@ import Footer from "./components/Footer/Footer";
 import Map from "./components/Map/Map";
 
 import "./App.scss";
-import { LandmarkWithSocials } from "./types/Landmark/Landmark";
-import landmarkService from "./services/landmarkService";
 
 const App = (): JSX.Element =>{
   const history = useHistory();
@@ -165,6 +166,13 @@ const App = (): JSX.Element =>{
       }).catch(error => console.error("Cloning aircraft: ", error));
   };
 
+  /* Landmarks handlers */
+  const handleLandmarkCreate = async (newLandmark: LandmarkWithoutIDs) => {
+    await landmarkService.createLandmark(newLandmark)
+      .then((response) => setLandmarks(landmarks.concat(response)))
+      .catch(error => console.error("Creating landmark - ", error));
+  };
+
   /* Map state handlers */
   const handleSelectMapPoint = (point: Coordinates | LandmarkWithSocials) => {
     if (mapPoints.includes(point)) {
@@ -255,6 +263,14 @@ const App = (): JSX.Element =>{
               isAuthenticated={(async () => await isUserAuthenticated()) && user}
             >
               <AircraftCreate handleCreate={handleAircraftCreate}/>
+            </ProtectedRoute>
+
+            <ProtectedRoute 
+              path={"/landmarks/create"}
+              authenticationPath="/login"
+              isAuthenticated={(async () => await isUserAuthenticated()) && user}
+            >
+              <LandmarkCreatePage handleCreate={handleLandmarkCreate} />
             </ProtectedRoute>
 
             <Route exact path="/airports">

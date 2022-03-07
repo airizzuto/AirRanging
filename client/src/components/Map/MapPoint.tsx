@@ -49,6 +49,7 @@ const MapPoint: React.FC<Props> = ({ point, deselectPoint }) => {
             <div>
               <p>Lat: {`${point.latitude.toFixed(3)}`}</p>
               <p>Lon: {`${point.longitude.toFixed(4)}`}</p>
+              {/*  TODO: create */}
             </div>
           </div>
         </InfoWindow>

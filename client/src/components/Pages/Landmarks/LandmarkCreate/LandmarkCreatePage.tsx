@@ -11,7 +11,7 @@ import FieldGroup from "../../../Generics/FormGroups/FieldGroup";
 import Style from "../../../Generics/FormGroups/FormPage.module.scss";
 
 interface Props {
-  handleCreate: (newAircraft: LandmarkWithoutIDs) => void;
+  handleCreate: (newLandmark: LandmarkWithoutIDs) => void;
 }
 
 const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
