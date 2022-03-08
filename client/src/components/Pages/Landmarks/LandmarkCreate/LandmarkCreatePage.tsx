@@ -9,15 +9,18 @@ import AlertBox from "../../../Generics/Alerts/AlertBox";
 import FieldGroup from "../../../Generics/FormGroups/FieldGroup";
 
 import Style from "../../../Generics/FormGroups/FormPage.module.scss";
+import { Coordinates } from "../../../../types/Map/MapTypes";
 
 interface Props {
   handleCreate: (newLandmark: LandmarkWithoutIDs) => void;
 }
 
-const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
+const LandmarkCreate: React.FC<Props> = ({handleCreate}) => {
   const [alert, setAlert] = React.useState("");
-
   const history = useHistory();
+
+  const coordinates: Coordinates = history.location.state as Coordinates;
+  console.log("Coordinates from history:", coordinates);
 
   const handleSubmit = (newLandmark: LandmarkWithoutIDs) => { 
     try {
@@ -36,12 +39,13 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
     iataId: "",
     name: "",
     description: "",
-    latitude: 0,
-    longitude: 0,
+    latitude: coordinates ? coordinates.latitude : 0,
+    longitude: coordinates ? coordinates.longitude : 0,
     altitude: 0,
     imageUrl: "",
   };
 
+  /* TODO: refactor with aircraft create page */
   return (
       <div className={Style.FormContainer}>
         <h1 className={Style.FormTitle}>Create Landmark</h1>
@@ -59,7 +63,6 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
           {({ isSubmitting }) => 
             <Form className={Style.Form}>
               <div className={Style.Fields}>
-                {/* TODO: field groups */}
                 <FieldGroup 
                   label="IcaoID" type="text" 
                   valueName="icaoId"
@@ -87,12 +90,12 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
                 <FieldGroup 
                   label="latitude" type="number" 
                   valueName="latitude"
-                  isDisabled={true}
+                  isDisabled={isSubmitting}
                 />
                 <FieldGroup 
                   label="longitude" type="number" 
                   valueName="longitude"
-                  isDisabled={true}
+                  isDisabled={isSubmitting}
                 />
                 <FieldGroup 
                   label="altitude" type="number" 
@@ -124,4 +127,4 @@ const AircraftCreate: React.FC<Props> = ({handleCreate}) => {
   );
 };
 
-export default AircraftCreate;
+export default LandmarkCreate;

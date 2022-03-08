@@ -6,6 +6,7 @@ import { Landmark } from '../../types/Landmark/Landmark';
 
 import markerIcon from "../../assets/icons/PointSelected.svg";
 import InfoWindowStyle from "./InfoWindow.module.scss";
+import { LinkButton } from '../Generics/Buttons/Button';
 
 interface Props {
   point: Coordinates | Landmark;
@@ -37,20 +38,20 @@ const MapPoint: React.FC<Props> = ({ point, deselectPoint }) => {
         anchor: new window.google.maps.Point(5, 5)
       }}
       draggable={false}
-      onClick={() => deselectPoint(point)}
-      onRightClick={() => toggleInfoWindow()}
+      onRightClick={() => deselectPoint(point)}
+      onClick={() => toggleInfoWindow()}
     >{
       isInfoOpen
       && <InfoWindow
           onCloseClick={toggleInfoWindow}
         >
           <div className={InfoWindowStyle.InfoWindow}>
-            <h1>Map Point </h1>
-            <div>
-              <p>Lat: {`${point.latitude.toFixed(3)}`}</p>
-              <p>Lon: {`${point.longitude.toFixed(4)}`}</p>
-              {/*  TODO: create */}
-            </div>
+            <h1>Point Selected</h1>
+            <p>Lat: {`${point.latitude.toFixed(3)}`}</p>
+            <p>Lon: {`${point.longitude.toFixed(4)}`}</p>
+            <LinkButton path={'/landmarks/create'} style={'primary'} state={point}>
+              CREATE
+            </LinkButton>
           </div>
         </InfoWindow>
     }</Marker>
