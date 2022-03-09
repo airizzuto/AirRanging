@@ -12,7 +12,8 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: auto;
-  grid-template-areas: "title" "." "form";
+  grid-template-areas: "title" "photo" "." "form";
+  row-gap: 1rem;
 
   padding: 0 15vw;
   padding-top: 1rem;
@@ -39,9 +40,23 @@
     width: 95%;
   }
 
+  .Image {
+    grid-area: photo;
+    image {
+      height: 10rem;
+      width: 10rem;
+      z-index: 1;
+    }
+  }
+
   .Form {
     @include form.style;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     grid-area: form;
+
+    .Fields {
+      padding: 0 0 1rem 0;
+    }
   }
 };

@@ -116,17 +116,21 @@ const AircraftDetails: React.FC<Props> = ({
       <h1>
         Aircraft Page - {isEditMode ? "Edit" : "View"} Mode
       </h1>
-      <h2>
-        {propsToLabel({
-          props: [aircraft?.authorUsername, aircraft?.manufacturer, aircraft?.model, aircraft?.variant],
-          separator: " / "
-        })}
-      </h2>
-
-      <hr />
-
       {aircraft
       ? <div>
+          <h2>
+            {propsToLabel({
+              props: [aircraft?.authorUsername, aircraft?.manufacturer, aircraft?.model, aircraft?.variant],
+              separator: " / "
+            })}
+          </h2>
+
+          <div className={"Image"}>
+            <image href={aircraft.imageUrl}/>
+          </div>
+
+          <hr />
+
           <div className={"AlertNotification"}>
             <AlertBox alertText={alert}/>
           </div>
