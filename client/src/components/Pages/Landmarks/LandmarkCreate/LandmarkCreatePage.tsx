@@ -39,13 +39,14 @@ const LandmarkCreate: React.FC<Props> = ({handleCreate}) => {
     iataId: "",
     name: "",
     description: "",
-    latitude: coordinates ? coordinates.latitude : 0,
-    longitude: coordinates ? coordinates.longitude : 0,
+    latitude: coordinates ? Number(coordinates.latitude) : 0,
+    longitude: coordinates ? Number(coordinates.longitude) : 0,
     altitude: 0,
     imageUrl: "",
   };
 
-  /* TODO: refactor with aircraft create page */
+  // TODO: refactor with aircraft create page
+  // TODO: preview image
   return (
       <div className={Style.FormContainer}>
         <h1 className={Style.FormTitle}>Create Landmark</h1>
@@ -60,51 +61,59 @@ const LandmarkCreate: React.FC<Props> = ({handleCreate}) => {
             setSubmitting(false);
         }}
         >
-          {({ isSubmitting }) => 
+          {({ values, isSubmitting }) => 
             <Form className={Style.Form}>
               <div className={Style.Fields}>
                 <FieldGroup 
-                  label="IcaoID" type="text" 
+                  label="IcaoID" type="text"
+                  value={values.icaoId}
                   valueName="icaoId"
                   placeholder="ICAO ID"
                   isDisabled={isSubmitting}
                 />
                 <FieldGroup 
                   label="IataID" type="text" 
+                  value={values.iataId}
                   valueName="iataId"
                   placeholder="IATA ID"
                   isDisabled={isSubmitting}
                 />
                 <FieldGroup 
                   label="name" type="text" 
+                  value={values.name}
                   valueName="name"
                   placeholder="Location name"
                   isDisabled={isSubmitting}
                 />
                 <FieldGroup 
                   label="description" type="text" 
+                  value={values.description}
                   valueName="description"
                   placeholder="Location description"
                   isDisabled={isSubmitting}
                 />
                 <FieldGroup 
                   label="latitude" type="number" 
+                  value={values.latitude}
                   valueName="latitude"
                   isDisabled={isSubmitting}
                 />
                 <FieldGroup 
                   label="longitude" type="number" 
+                  value={values.longitude}
                   valueName="longitude"
                   isDisabled={isSubmitting}
                 />
                 <FieldGroup 
                   label="altitude" type="number" 
+                  value={values.altitude}
                   valueName="altitude"
                   placeholder="Altitude"
                   isDisabled={isSubmitting}
                 />
                 <FieldGroup 
                   label="imageUrl" type="text" 
+                  value={values.imageUrl}
                   valueName="imageUrl"
                   placeholder="Image URL"
                   isDisabled={isSubmitting}
