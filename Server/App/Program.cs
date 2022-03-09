@@ -28,6 +28,7 @@ namespace App
                     var dbContext = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     await DataSeeding.SeedDefaultUser(dbContext, userManager);
+                    // await DataSeeding.SeedMockUsers(dbContext, userManager);
                     await DataSeeding.SeedAircraftExamples(dbContext, userManager);
                     await DataSeeding.SeedLandmarkExamples(dbContext, userManager);
                 }
