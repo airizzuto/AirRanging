@@ -12,7 +12,7 @@ export const DrawLandmarks: React.FC<Props> = ({ landmarks, deselectPoint }) => 
   ? (
       <>
         {landmarks.map(landmark => 
-          <MapLandmark landmark={landmark} deselectPoint={deselectPoint}/>
+          <MapLandmark landmark={landmark} deselectPoint={deselectPoint} key={landmark.id}/>
         )}
       </>
   ) : null;
