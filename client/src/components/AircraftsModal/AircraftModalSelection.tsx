@@ -6,7 +6,7 @@ import { getUserData } from '../../helpers/userHelper';
 import { AircraftSearchOptions } from '../../types/Aircraft/AircraftEnums';
 import { AircraftSelected, AircraftsFilterSearch, AircraftWithSocials } from '../../types/Aircraft/Aircraft';
 
-import SaveActionsButton from '../AircraftActions/SaveActionsButton';
+import AircraftSaveButton from '../AircraftActions/AircraftSaveButton';
 import DropdownSearchbar from '../Generics/Filters/DropdownSearchbar';
 import { LinkButton } from '../Generics/Buttons/Button';
 import ToggleDataSet from '../Generics/Filters/ToggleDataSet';
@@ -96,7 +96,7 @@ const AircraftModalSelection: React.FC<Props> = ({
           VIEW AIRCRAFT
         </LinkButton>
 
-        <SaveActionsButton
+        <AircraftSaveButton
           aircraft={aircraftSelected}
           aircraftsSaved={aircraftsSaved}
           handleAircraftSave={handleAircraftSave}
