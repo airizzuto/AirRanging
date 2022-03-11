@@ -1,3 +1,5 @@
+import { AircraftWithSocials } from "./Aircraft/Aircraft";
+import { LandmarkWithSocials } from "./Landmark/Landmark";
 
 export interface BaseModel {
   id: string;
@@ -12,3 +14,5 @@ export interface BaseModelSocials {
 }
 
 export type BaseModelSets = "all" | "saved" | "owned";
+
+export type Resource = AircraftWithSocials | LandmarkWithSocials;

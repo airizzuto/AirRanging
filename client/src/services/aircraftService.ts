@@ -56,10 +56,7 @@ const getAircraftsSavedByUser = async () => {
 
   const url = buildStringEndpoint(urlOptions);
 
-  const response = await axios.get(
-    url,
-    config
-  );
+  const response = await axios.get(url, config);
 
   return response;
 };

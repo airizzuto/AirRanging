@@ -49,9 +49,12 @@ const MapPoint: React.FC<Props> = ({ point, deselectPoint }) => {
             <h1>Point Selected</h1>
             <p>Lat: {`${point.latitude.toFixed(3)}`}</p>
             <p>Lon: {`${point.longitude.toFixed(4)}`}</p>
-            <LinkButton path={'/landmarks/create'} style={'primary'} state={point}>
-              CREATE
-            </LinkButton>
+
+            <div className={InfoWindowStyle.Buttons}>
+              <LinkButton path={'/landmarks/create'} style={'primary'} state={point}>
+                CREATE
+              </LinkButton>
+            </div>
           </div>
         </InfoWindow>
     }</Marker>

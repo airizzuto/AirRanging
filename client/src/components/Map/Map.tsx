@@ -18,12 +18,22 @@ interface Props {
   selectedAircraft: AircraftSelected | null;
   mapPoints: Coordinates[];
   landmarks: LandmarkWithSocials[];
+  landmarksSaved: LandmarkWithSocials[] | null;
+  handleLandmarkSave: (landmarkId: string) => Promise<void>;
+  handleLandmarkUnsave: (landmarkId: string) => Promise<void>;
   selectMapPoint: (point: Coordinates | LandmarkWithSocials) => void;
   deselectMapPoint: (point: Coordinates | LandmarkWithSocials) => void;
 }
 
 const Map: React.FC<Props> = ({ 
-  selectedAircraft, mapPoints, landmarks, selectMapPoint, deselectMapPoint 
+  selectedAircraft, 
+  mapPoints, 
+  landmarks, 
+  landmarksSaved, 
+  handleLandmarkSave, 
+  handleLandmarkUnsave,
+  selectMapPoint, 
+  deselectMapPoint 
 }): React.ReactElement => {
   const { isLoaded, loadError } = useLoadScript({
     id: "google-map-script",
@@ -78,8 +88,10 @@ const Map: React.FC<Props> = ({
         {
           landmarks 
           ? <DrawLandmarks 
-              landmarks={landmarks}
-              deselectPoint={deselectMapPoint}
+            landmarks={landmarks} 
+            landmarksSaved={landmarksSaved}
+            handleLandmarkSave={handleLandmarkSave}
+            handleLandmarkUnsave={handleLandmarkUnsave}
             />
           : null
         }

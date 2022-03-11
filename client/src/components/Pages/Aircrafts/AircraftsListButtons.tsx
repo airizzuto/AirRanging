@@ -2,7 +2,7 @@ import React from 'react';
 import { isUserOwner } from '../../../helpers/userHelper';
 import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
-import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
+import AircraftSaveButton from '../../AircraftActions/AircraftSaveButton';
 import { Button, LinkButton } from '../../Generics/Buttons/Button';
 
 interface Props {
@@ -27,7 +27,7 @@ const AircraftsListButtons: React.FC<Props> = ({
       // user is owner
       ? <Button disabled={true} style={"primary"}>OWNED</Button>
       // user is not owner
-      : <SaveActionsButton
+      : <AircraftSaveButton
           aircraft={aircraft}
           aircraftsSaved={aircraftsSaved}
           handleAircraftSave={handleAircraftSave}

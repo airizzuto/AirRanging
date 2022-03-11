@@ -29,7 +29,7 @@ const getLandmarksOwnedByUser = async () => {
 
   const url = buildStringEndpoint(urlOptions);
 
-  return await axios.get<LandmarkWithSocials[]>(url, config)
+  return await axios.get(url, config)
     .then(res => res.data);
 };
 

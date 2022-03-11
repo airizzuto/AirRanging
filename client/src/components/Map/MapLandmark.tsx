@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
 import { InfoWindow, Marker } from '@react-google-maps/api';
+
+import { getUserData } from '../../helpers/userHelper';
 import { LandmarkWithSocials } from '../../types/Landmark/Landmark';
+
+import LandmarkSaveButton from '../LandmarkActions/LandmarkSaveButton';
 
 import airportIcon from "../../assets/icons/airport-svgrepo-com.svg";
 import InfoWindowStyle from "./InfoWindow.module.scss";
 
 interface Props {
   landmark: LandmarkWithSocials;
-  deselectPoint: (point: LandmarkWithSocials) => void;
+  landmarksSaved: LandmarkWithSocials[] | null;
+  handleLandmarkSave: (landmarkId: string) => Promise<void>;
+  handleLandmarkUnsave: (landmarkId: string) => Promise<void>;
 }
 
 /* TODOs
   Info Window:
-    1- Save to bookmark button
     2- Set nav button
 */
-const MapLandmark: React.FC<Props> = ({ landmark }) => {
+const MapLandmark: React.FC<Props> = ({ 
+  landmark, landmarksSaved, handleLandmarkSave, handleLandmarkUnsave
+}) => {
   const [isInfoOpen, setIsInfoOpen] = useState<boolean>(false);
 
   const toggleInfoWindow = () => {
@@ -44,6 +51,20 @@ const MapLandmark: React.FC<Props> = ({ landmark }) => {
               <p>Description: {landmark.description}</p>
               <p>Lat: {landmark.latitude.toFixed(3)}</p>
               <p>Lon: {landmark.longitude.toFixed(4)}</p>
+            </div>
+            <div className={InfoWindowStyle.Buttons}>
+              {/* TODO: view
+                <LinkButton path={'/landmarks/:id'} style={'primary'} state={point}>
+                  VIEW
+                </LinkButton> 
+              */}
+              <LandmarkSaveButton
+                landmark={landmark}
+                landmarksSaved={landmarksSaved}
+                handleLandmarkSave={handleLandmarkSave}
+                handleLandmarkUnsave={handleLandmarkUnsave}
+                disabled={getUserData() === null || !landmark}
+              />
             </div>
           </div>
         </InfoWindow>

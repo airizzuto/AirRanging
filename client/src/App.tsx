@@ -49,12 +49,11 @@ const App = (): JSX.Element =>{
   const [aircraftSelected, setAircraftSelected] = useState<AircraftSelected | null>(null);
   const [mapPoints, setMapPoints] = useState<Coordinates[]>([]);
   const [landmarks, setLandmarks] = useState<LandmarkWithSocials[]>([]);
+  const [landmarksSaved, setLandmarksSaved] = useState<LandmarkWithSocials[]>([]);
 
   // Sets user if a valid token is found in localStorage
   useEffect(() => {
     console.debug("EFFECT - user check");
-
-    loadLandmarks();
 
     isUserAuthenticated()
       .then((isAuthenticated) =>
@@ -66,9 +65,11 @@ const App = (): JSX.Element =>{
   // Sets user saved aircrafts
   useEffect(() => {
     console.debug("EFFECT - user aircrafts refresh");
+    refreshLandmarks();
 
     if (user) {
       refreshSavedAircrafts();
+      refreshSavedLandmarks();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, initialAircrafts]);
@@ -122,7 +123,7 @@ const App = (): JSX.Element =>{
   };
 
   const handleAircraftUnsave = async (aircraftId: string) => {
-    await bookmarkService.unsaveAircraft(aircraftId)
+    await bookmarkService.unsaveResource(aircraftId)
       // TODO: abstract
       .then(async () => {
         // Updates saved aircrafts list
@@ -186,7 +187,35 @@ const App = (): JSX.Element =>{
     setMapPoints(mapPoints.filter(p => p !== point));
   };
 
-  const loadLandmarks = async () => {
+  const handleLandmarkSave = async (landmarkId: string) => {
+    await landmarkService.saveLandmark(landmarkId)
+      // TODO: abstract
+      .then(async () => {
+        // Updates saved landmarks list
+        await refreshSavedLandmarks();
+        // Refreshes saved landmark in landmarks list
+        await landmarkService.getLandmarkById(landmarkId)
+          .then(response => setLandmarks(
+              landmarks.map(landmark => landmark.id !== landmarkId ? landmark : response)
+          )).catch(error => console.error(`Fetching landmark ${landmarkId}: `, error));
+      }).catch(error => console.error("Retrieving landmark - ", error));
+  };
+
+  const handleLandmarkUnsave = async (landmarkId: string) => {
+    await bookmarkService.unsaveResource(landmarkId)
+      // TODO: abstract
+      .then(async () => {
+        // Updates saved landmarks list
+        await refreshSavedLandmarks();
+        // Refreshes saved landmark in landmarks list
+        await landmarkService.getLandmarkById(landmarkId)
+          .then(response => setLandmarks(
+              landmarks.map(landmark => landmark.id !== landmarkId ? landmark : response)
+          )).catch(error => console.error(`Fetching landmark ${landmarkId} - `, error));
+      }).catch(error => console.error("Retrieving landmark - ", error));
+  };
+
+  const refreshLandmarks = async () => {
     await landmarkService.getAllLandmarks()
       .then(result => {
         result.length ? setLandmarks(result) : setLandmarks([]);
@@ -194,6 +223,17 @@ const App = (): JSX.Element =>{
         console.error("loadLandmarks error:", error);
         setLandmarks([]);
       });
+  };
+
+  const refreshSavedLandmarks = async () => {
+    user
+    ? await landmarkService.getLandmarksSavedByUser()
+        .then((response) => setLandmarksSaved(response))
+        .catch(error => {
+          setLandmarksSaved([]);
+          console.error("Retrieving saved aicrafts - ", error);
+        })
+    : setLandmarksSaved([]);
   };
 
   /* User state handlers */
@@ -212,12 +252,15 @@ const App = (): JSX.Element =>{
       </div>
 
       <div className="Map">
-        <Map 
+        <Map
           selectedAircraft={aircraftSelected}
           mapPoints={mapPoints}
           landmarks={landmarks}
           selectMapPoint={handleSelectMapPoint}
           deselectMapPoint={handleDeselectMapPoint}
+          landmarksSaved={landmarksSaved}
+          handleLandmarkSave={handleLandmarkSave}
+          handleLandmarkUnsave={handleLandmarkUnsave}
         />
       </div>
 
@@ -256,6 +299,20 @@ const App = (): JSX.Element =>{
                 handleAircraftCloning={handleAircraftCloning}
               />
             </Route>
+
+            {/* <Route
+              exact path="/aircrafts/details/:aircraftId"
+            >
+              <LandmarkDetails
+                landmarksSaved={landmarksSaved}
+                handleLandmarkEdit={handleLandmarkEdit}
+                handleLandmarkSelect={handleLandmarkSelection}
+                handleLandmarkSave={handleLandmarkSave}
+                handleLandmarkUnsave={handleLandmarkUnsave}
+                handleLandmarkDelete={handleLandmarkDelete}
+                handleLandmarkCloning={handleLandmarkCloning}
+              />
+            </Route> */}
 
             <ProtectedRoute 
               path="/aircrafts/create" 
