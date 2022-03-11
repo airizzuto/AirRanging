@@ -1,4 +1,4 @@
-# AirRanging Web Client v0.1.5
+# AirRanging Web Client v0.2.5
 
 Web frontend made for AirRanging app with React, Typescript and Sass.
 
@@ -8,9 +8,9 @@ Web frontend made for AirRanging app with React, Typescript and Sass.
 
 ### Added
 
-### Updated
+- Landmark marker info window
 
-- Info overlay style refactor
+### Updated
 
 ### Fixed
 

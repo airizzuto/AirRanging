@@ -1,5 +1,5 @@
-@use "../../styles/colors" as color;
-@use "../../styles/mixins" as *;
+@use "../../../styles/colors" as color;
+@use "../../../styles/mixins" as *;
 
 .Selection {
   display: grid;
@@ -7,7 +7,7 @@
   grid-template-areas:
     "toggles"
     "searchbar"
-    "aircraft-buttons";
+    "buttons";
   row-gap: 1rem;
   padding: 1rem 0;
   border-bottom: 2px solid color.$light1;
@@ -33,8 +33,8 @@
     }
   }
 
-  .AircraftButtons {
-    grid-area: aircraft-buttons;
+  .Buttons {
+    grid-area: buttons;
     display: flex;
     justify-content: space-between;
     flex-direction: row;

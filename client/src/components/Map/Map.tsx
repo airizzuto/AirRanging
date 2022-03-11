@@ -7,25 +7,39 @@ import { AircraftSelected } from '../../types/Aircraft/Aircraft';
 
 import Spinner from "../../styles/components/_spinner.module.scss";
 import DrawAircraftRadius from './DrawAircraftRadius';
+import DrawRoute from './DrawRoute';
+import { LandmarkWithSocials } from '../../types/Landmark/Landmark';
+import { DrawLandmarks } from './DrawLandmarks';
 
-// TODO: https://tomchentw.github.io/react-google-maps/#installation
-// TODO REMOVE: reference video https://www.youtube.com/watch?v=WZcxJGmLbSo&t=0s
+// docs: https://tomchentw.github.io/react-google-maps/#installation
+// reference video: https://www.youtube.com/watch?v=WZcxJGmLbSo&t=0s
 
 interface Props {
   selectedAircraft: AircraftSelected | null;
+  mapPoints: Coordinates[];
+  landmarks: LandmarkWithSocials[];
+  landmarksSaved: LandmarkWithSocials[] | null;
+  handleLandmarkSave: (landmarkId: string) => Promise<void>;
+  handleLandmarkUnsave: (landmarkId: string) => Promise<void>;
+  selectMapPoint: (point: Coordinates | LandmarkWithSocials) => void;
+  deselectMapPoint: (point: Coordinates | LandmarkWithSocials) => void;
 }
 
-const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
-  const [point, setPoint] = React.useState<Coordinates | null>(null);
-  // TODO: replace point with an array for route calculation
-  // const [points, setPoints] = React.useState<Coordinates[]>();
-  // const [selectedPoint, setSelectedPoint] = React.useState();
-
+const Map: React.FC<Props> = ({ 
+  selectedAircraft, 
+  mapPoints, 
+  landmarks, 
+  landmarksSaved, 
+  handleLandmarkSave, 
+  handleLandmarkUnsave,
+  selectMapPoint, 
+  deselectMapPoint 
+}): React.ReactElement => {
   const { isLoaded, loadError } = useLoadScript({
     id: "google-map-script",
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY!,
-    libraries: ["places", "drawing"],
+    libraries: ["places", "drawing", "geometry"],
   });
 
   // Save map in ref if we want to access the map from outside the component
@@ -39,14 +53,14 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
     mapRef.current = null;
   };
 
-  const onMapClick = React.useCallback((event: google.maps.MapMouseEvent) => {
+  const onMapLeftClick = React.useCallback((event: google.maps.MapMouseEvent) => {
     event.latLng
-    ? setPoint({ 
+    ? selectMapPoint({ 
         latitude: event.latLng.lat(),
         longitude: event.latLng.lng()
       })
-    : setPoint(null);
-  }, []);
+    : null;
+  }, [selectMapPoint]);
 
   if (loadError) {
     return (
@@ -69,13 +83,38 @@ const Map: React.FC<Props> = ({selectedAircraft}): React.ReactElement => {
         zoom={5}
         onLoad={onMapLoad}
         onUnmount={onMapUnmount}
-        onClick={onMapClick}
+        onClick={onMapLeftClick}
       >
         {
-          (point && selectedAircraft)
-            ? <DrawAircraftRadius position={point} aircraftSelected={selectedAircraft}/>
+          landmarks 
+          ? <DrawLandmarks 
+            landmarks={landmarks} 
+            landmarksSaved={landmarksSaved}
+            handleLandmarkSave={handleLandmarkSave}
+            handleLandmarkUnsave={handleLandmarkUnsave}
+            />
+          : null
+        }
+
+        {
+          (mapPoints.length && selectedAircraft)
+            ? <DrawAircraftRadius 
+                position={mapPoints[0]} 
+                aircraftSelected={selectedAircraft} 
+                deselectPoint={deselectMapPoint}
+              />
             : null
         }
+
+        {
+          (mapPoints.length)
+          ? <DrawRoute 
+              points={mapPoints}
+              deselectPoint={deselectMapPoint}
+            />
+          : null
+        }
+        
       </GoogleMap>
   );
 };

@@ -35,8 +35,12 @@ const AircraftCard: React.FC<Props> = ({
 
   return (
     <div className={Style.Container}>
-      <div className={Style.Image}>
-        NO IMAGE
+      <div className={Style.Image} style={{backgroundImage: `url(${aircraft.imageUrl})`}}>
+        {!aircraft.imageUrl 
+          ? "NO IMAGE"
+          : null
+        }
+
         <div className={Style.ShortDescription}>
           <label>{aircraft.manufacturer}</label>
           <label>{aircraft.model}</label>

@@ -1,10 +1,10 @@
-@use "../../../styles/colors" as color;
-@use "../../../styles/fonts" as font;
-@use "../../../styles/components/separators" as separator;
-@use "../../../styles/components/boxes" as box;
-@use "../../../styles/mixins" as *;
+@use "../../styles/colors" as color;
+@use "../../styles/fonts" as font;
+@use "../../styles/components/separators" as separator;
+@use "../../styles/components/boxes" as box;
+@use "../../styles/mixins" as *;
 
-.AircraftsView {
+.Container {
   @include main-component;
   position: relative;
   display: flex;
@@ -78,7 +78,7 @@
 }
 
 @media (max-width: 600px) {
-  .AircraftsView {
+  .Container {
     padding: 0;
 
     .SubHeader {

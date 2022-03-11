@@ -3,16 +3,15 @@ import useDebounce from '../../hooks/useDebounce';
 
 import aircraftService from '../../services/aircraftService';
 import { getUserData } from '../../helpers/userHelper';
-import { AircraftSelected, AircraftWithSocials } from '../../types/Aircraft/Aircraft';
-import { FilterSearch } from '../../types/Aircraft/Filter';
 import { AircraftSearchOptions } from '../../types/Aircraft/AircraftEnums';
+import { AircraftSelected, AircraftsFilterSearch, AircraftWithSocials } from '../../types/Aircraft/Aircraft';
 
-import SaveActionsButton from '../AircraftActions/SaveActionsButton';
+import AircraftSaveButton from '../AircraftActions/AircraftSaveButton';
 import DropdownSearchbar from '../Generics/Filters/DropdownSearchbar';
 import { LinkButton } from '../Generics/Buttons/Button';
 import ToggleDataSet from '../Generics/Filters/ToggleDataSet';
 
-import Style from "./AircraftModalSelection.module.scss";
+import Style from "../Generics/Modals/ModalInputs.module.scss";
 
 interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;
@@ -30,7 +29,7 @@ const AircraftModalSelection: React.FC<Props> = ({
   handleAircraftUnsave,
 }) => {
   const [aircrafts, setAircrafts] = useState<AircraftWithSocials[]>([]);
-  const [filters, setFilters] = useState<FilterSearch>({
+  const [filters, setFilters] = useState<AircraftsFilterSearch>({
     set: "all",
     searchField: AircraftSearchOptions.Model,
     search: ""
@@ -49,7 +48,7 @@ const AircraftModalSelection: React.FC<Props> = ({
     };
   },[debouncedFilter]);
 
-  const handleAircraftsFilters = (filters: FilterSearch) => {
+  const handleAircraftsFilters = (filters: AircraftsFilterSearch) => {
     setFilters({...filters});
   };
 
@@ -88,7 +87,7 @@ const AircraftModalSelection: React.FC<Props> = ({
         />
       </div>
 
-      <div className={Style.AircraftButtons}>
+      <div className={Style.Buttons}>
         <LinkButton
           style={"primary"}
           disabled={!aircraftSelected}
@@ -97,7 +96,7 @@ const AircraftModalSelection: React.FC<Props> = ({
           VIEW AIRCRAFT
         </LinkButton>
 
-        <SaveActionsButton
+        <AircraftSaveButton
           aircraft={aircraftSelected}
           aircraftsSaved={aircraftsSaved}
           handleAircraftSave={handleAircraftSave}

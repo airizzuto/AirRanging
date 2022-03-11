@@ -1,4 +1,4 @@
-# AirRanging API v0.1.1
+# AirRanging API v0.1.4
 
 Web API made for AirRanging application using .NET and PostgreSQL with Docker.
 
@@ -8,11 +8,11 @@ Web API made for AirRanging application using .NET and PostgreSQL with Docker.
 
 ### Added
 
+- Model images from url
+
 ### Updated
 
 ### Fixed
-
-- Conflicting bookmark endpoints
 
 ### Deprecated
 

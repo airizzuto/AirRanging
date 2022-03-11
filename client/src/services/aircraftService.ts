@@ -2,10 +2,11 @@
 import axios from "axios";
 import { BASE_URL } from "../constants/globals";
 import { getStoredToken, isUserAuthenticated } from "../helpers/tokenHelper";
-import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs, AircraftSearchResult } from "../types/Aircraft/Aircraft";
-import { FilterSearch } from "../types/Aircraft/Filter";
+import { AircraftWithSocials, CloneAircraft, AircraftWithoutIDs, AircraftSearchResult, AircraftsFilterSearch } from "../types/Aircraft/Aircraft";
 import {  PaginationOptions } from "../types/Pagination";
 import { buildStringEndpoint } from "../utils/stringBuilder";
+
+// TODO: make base service for aircrafts and landmarks
 
 const getAllAircrafts = async () => {
   const response = await axios.get(
@@ -55,15 +56,12 @@ const getAircraftsSavedByUser = async () => {
 
   const url = buildStringEndpoint(urlOptions);
 
-  const response = await axios.get(
-    url,
-    config
-  );
+  const response = await axios.get(url, config);
 
   return response;
 };
 
-const searchAircrafts = async (filter: FilterSearch) => {
+const searchAircrafts = async (filter: AircraftsFilterSearch) => {
   const config = {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };
@@ -88,7 +86,7 @@ const searchAircrafts = async (filter: FilterSearch) => {
 };
 
 // TODO: multi-query
-const searchAircraftsPaged = async (filter: FilterSearch, paging: PaginationOptions): Promise<AircraftSearchResult | void> => {
+const searchAircraftsPaged = async (filter: AircraftsFilterSearch, paging: PaginationOptions): Promise<AircraftSearchResult | void> => {
   const options = {
     headers: { Authorization: `Bearer ${getStoredToken()}` }
   };

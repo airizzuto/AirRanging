@@ -1,6 +1,56 @@
 
 const mapStyles = [
   {
+    "featureType": "administrative",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
       "featureType": "transit.station.airport",
       "elementType": "all",
       "stylers": [
@@ -9,6 +59,7 @@ const mapStyles = [
           }
       ]
   },
+  
   {
       "featureType": "transit.station.airport",
       "elementType": "geometry.fill",
@@ -29,7 +80,7 @@ const mapStyles = [
               "weight": "1.00"
           }
       ]
-  }
+  },
 ];
 
 export default mapStyles;

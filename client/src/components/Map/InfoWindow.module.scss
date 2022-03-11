@@ -1,0 +1,29 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/fonts" as font;
+@use "../../styles/colors" as color;
+
+
+.InfoWindow {
+  display: flex;
+  flex-direction: column;
+  max-width: 15rem;
+  width: 12rem;
+
+  h1 {
+    @include font.header-3;
+  }
+
+  .Buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    a {
+      justify-content: center;
+      align-items: center;
+      padding: 0 0.5rem;
+      margin: 0.5rem;
+      width: auto;
+    }
+  }
+}

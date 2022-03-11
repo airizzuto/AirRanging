@@ -12,7 +12,7 @@ namespace Data.Configurations
             builder.HasKey(ua => new { ua.UserId, ua.ResourceId });
 
             builder.HasOne(ua => ua.Resource)
-                .WithMany(a => a.AircraftBookmarks)
+                .WithMany(a => a.Bookmarks)
                 .HasForeignKey(ua => ua.ResourceId);
             
             builder.HasOne(ua => ua.User)

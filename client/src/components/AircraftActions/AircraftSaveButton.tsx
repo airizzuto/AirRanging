@@ -11,7 +11,8 @@ interface Props {
   handleAircraftUnsave: (aircraftId: string) => Promise<void>;
 }
 
-const SaveActionsButton: React.FC<Props> = ({aircraft, aircraftsSaved, disabled, handleAircraftUnsave, handleAircraftSave}) => {
+// TODO: refactor to generic with LandmarkSaveButton
+const AircraftSaveButton: React.FC<Props> = ({aircraft, aircraftsSaved, disabled, handleAircraftUnsave, handleAircraftSave}) => {
   if (aircraft) {
     return (
       isAircraftInUserList(aircraft, aircraftsSaved)
@@ -40,4 +41,4 @@ const SaveActionsButton: React.FC<Props> = ({aircraft, aircraftsSaved, disabled,
   );
 };
 
-export default SaveActionsButton;
+export default AircraftSaveButton;

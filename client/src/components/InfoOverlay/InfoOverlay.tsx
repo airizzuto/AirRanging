@@ -9,6 +9,7 @@ import PointsInfoSection from "./PointsInfoSection";
 import RouteInfoSection from "./RouteInfoSection";
 
 import Style from "./InfoOverlay.module.scss";
+import { Coordinates } from "../../types/Map/MapTypes";
 
 /* TODO: Information overlay
 
@@ -29,20 +30,39 @@ interface Props {
   show: boolean;
   aircraftSelected: AircraftSelected | null;
   // mapInformation: MapInfo;
-  // pointsInformation: PointInfo[];
+  mapPoints: Coordinates[];
 }
 
 type Tabs = "aircraft" | "points" | "route";
 
-const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
+const InfoOverlay: React.FC<Props> = ({show, aircraftSelected, mapPoints}) => {
   const [tabSelected, setTabSelected] = useState<Tabs>("aircraft");
 
   return (
     <div className={Style.Container} style={displayComponent(show)}>
       <div className={Style.Tabs}>
-        <Tab handleTabClick={() => setTabSelected("aircraft")} style="MenuTab">AIRCRAFT</Tab>
-        <Tab handleTabClick={() => setTabSelected("points")} style="MenuTab">POINTS</Tab>
-        <Tab handleTabClick={() => setTabSelected("route")} style="MenuTab">ROUTE</Tab>
+        <Tab
+          handleTabClick={() => setTabSelected("aircraft")} 
+          style="MenuTab" 
+          isActive={tabSelected === "aircraft"}
+        >
+          AIRCRAFT
+        </Tab>
+    
+        <Tab
+          handleTabClick={() => setTabSelected("points")} 
+          style="MenuTab"
+          isActive={tabSelected === "points"}
+        >
+          DEPARTURE/ARRIVAL
+        </Tab>
+        <Tab 
+          handleTabClick={() => setTabSelected("route")}
+          style="MenuTab"
+          isActive={tabSelected === "route"}
+        >
+          ROUTE
+        </Tab>
       </div>
 
       <div className={Style.Sections}>
@@ -64,7 +84,9 @@ const InfoOverlay: React.FC<Props> = ({show, aircraftSelected}) => {
           selected={tabSelected} 
           route={"route"}
         >
-          <RouteInfoSection />
+          <RouteInfoSection 
+            mapPoints={mapPoints}
+          />
         </InfoSection>
       </div>
     </div>

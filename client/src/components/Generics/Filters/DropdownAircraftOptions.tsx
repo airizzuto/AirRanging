@@ -1,17 +1,16 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
+import { AircraftsFilterSearch, AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 
-import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
-import { FilterSearch } from '../../../types/Aircraft/Filter';
 
 import "./Dropdown.scss";
 
 interface Props {
   placeholder: string;
-  filters: FilterSearch;
+  filters: AircraftsFilterSearch;
   enumerator: typeof AircraftSearchOptions;
-  handleFilter: (filter: FilterSearch) => void;
+  handleFilter: (filter: AircraftsFilterSearch) => void;
 }
 
 const DropdownAircraftOptions: React.FC<Props> = ({placeholder, filters, enumerator, handleFilter}) => {

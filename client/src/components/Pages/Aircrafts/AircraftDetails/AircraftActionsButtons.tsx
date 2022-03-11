@@ -1,9 +1,9 @@
 import React from 'react';
-import { getUserData } from '../../../helpers/userHelper';
-import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
+import { getUserData } from '../../../../helpers/userHelper';
+import { AircraftWithSocials } from '../../../../types/Aircraft/Aircraft';
 
-import SaveActionsButton from '../../AircraftActions/SaveActionsButton';
-import { Button } from '../../Generics/Buttons/Button';
+import AircraftSaveButton from '../../../AircraftActions/AircraftSaveButton';
+import { Button } from '../../../Generics/Buttons/Button';
 
 import "./ActionsButtons.scss";
 
@@ -44,7 +44,7 @@ const AircraftActionsButtons: React.FC<Props> = ({
           >
             DELETE
           </Button>
-        : <SaveActionsButton
+        : <AircraftSaveButton
             aircraft={aircraft}
             aircraftsSaved={aircraftsSaved}
             handleAircraftSave={handlers.handleSave}

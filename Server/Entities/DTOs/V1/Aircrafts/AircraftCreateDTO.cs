@@ -24,5 +24,6 @@ namespace Entities.DTOs.V1.Aircrafts
         public decimal MaxRange { get; set; }
         public uint ServiceCeiling { get; set; }
         public int EnteredServiceAtYear { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

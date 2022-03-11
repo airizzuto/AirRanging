@@ -68,11 +68,16 @@ namespace Data.Configurations
 
             builder.Property(a => a.EnteredServiceAtYear);
 
+            builder.Property(a => a.ImageUrl);
+
             builder.Property(a => a.SavesCount)
                 .HasDefaultValue(1);
 
             builder.Property(a => a.CreatedDate)
-                .ValueGeneratedOnAdd();
+                .HasDefaultValueSql("now()");
+
+            builder.Property(a => a.ModifiedDate)
+                .HasDefaultValueSql("now()");
 
             builder.HasOne(a => a.User)
                 .WithMany(u => u.AircraftsOwned)

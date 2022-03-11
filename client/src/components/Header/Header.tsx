@@ -3,7 +3,7 @@ import { UserPublic } from "../../types/User/User";
 
 import { Button, LinkButton } from "../Generics/Buttons/Button";
 import Menu from "../Menu/Menu";
-import Logo from "./LogoVector.svg";
+import Logo from "../../assets/icons/LogoVector.svg";
 
 import Style from "./Header.module.scss";
 
@@ -31,8 +31,8 @@ const Header = ({handleLogout, user}: Props): JSX.Element => (
         </LinkButton>
       </li>
       <li>
-        <LinkButton style={"primary"} path="/airports">
-          AIRPORTS
+        <LinkButton style={"primary"} path="/landmarks">
+          LANDMARKS
         </LinkButton>
       </li>
     </ul>

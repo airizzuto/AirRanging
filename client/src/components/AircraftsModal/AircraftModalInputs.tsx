@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { calculateRange } from '../../helpers/fuelCalculation';
+import { calculateRange } from '../../helpers/mapCalculation';
+
 import { AircraftSelected } from '../../types/Aircraft/Aircraft';
 
 import SliderInput from '../Generics/InputGroups/SliderInput';

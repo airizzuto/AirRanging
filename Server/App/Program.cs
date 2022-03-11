@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Constants;
-using Contracts;
 using Data;
 using Entities.Models.Identity;
 using Logger;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NLog;
 
 namespace App
 {
@@ -30,7 +28,9 @@ namespace App
                     var dbContext = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     await DataSeeding.SeedDefaultUser(dbContext, userManager);
-                    await DataSeeding.SeedExamples(dbContext, userManager);
+                    // await DataSeeding.SeedMockUsers(dbContext, userManager);
+                    await DataSeeding.SeedAircraftExamples(dbContext, userManager);
+                    await DataSeeding.SeedLandmarkExamples(dbContext, userManager);
                 }
                 catch (Exception ex)
                 {

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-import { isUserAuthenticated } from "../../../helpers/tokenHelper";
-import { isUserOwner } from "../../../helpers/userHelper";
-import propsToLabel from "../../../utils/propsToLabel";
+import { isUserAuthenticated } from "../../../../helpers/tokenHelper";
+import { isUserOwner } from "../../../../helpers/userHelper";
+import propsToLabel from "../../../../utils/propsToLabel";
 
-import { AircraftWithSocials, CloneAircraft } from "../../../types/Aircraft/Aircraft";
+import { AircraftWithSocials, CloneAircraft } from "../../../../types/Aircraft/Aircraft";
 
-import AlertBox from "../../Generics/Alerts/AlertBox";
+import AlertBox from "../../../Generics/Alerts/AlertBox";
 import AircraftForm from "./AircraftForm";
 
 import "./AircraftDetails.scss";
-import Spinner from "../../../styles/components/_spinner.module.scss";
-import aircraftService from "../../../services/aircraftService";
+import Spinner from "../../../../styles/components/_spinner.module.scss";
+import aircraftService from "../../../../services/aircraftService";
 
 interface Props {
   aircraftsSaved: AircraftWithSocials[] | null;
@@ -116,17 +116,21 @@ const AircraftDetails: React.FC<Props> = ({
       <h1>
         Aircraft Page - {isEditMode ? "Edit" : "View"} Mode
       </h1>
-      <h2>
-        {propsToLabel({
-          props: [aircraft?.authorUsername, aircraft?.manufacturer, aircraft?.model, aircraft?.variant],
-          separator: " / "
-        })}
-      </h2>
-
-      <hr />
-
       {aircraft
       ? <div>
+          <h2>
+            {propsToLabel({
+              props: [aircraft?.authorUsername, aircraft?.manufacturer, aircraft?.model, aircraft?.variant],
+              separator: " / "
+            })}
+          </h2>
+
+          <div className={"Image"}>
+            <image href={aircraft.imageUrl}/>
+          </div>
+
+          <hr />
+
           <div className={"AlertNotification"}>
             <AlertBox alertText={alert}/>
           </div>

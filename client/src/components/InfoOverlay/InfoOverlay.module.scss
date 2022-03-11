@@ -6,7 +6,6 @@
   position: absolute;
 
   @include text-shadow;
-
   bottom: 0;
   left: 0;
   width: 40vw;
@@ -16,6 +15,8 @@
     flex-direction: row;
     width: 100%;
     height: 1.5rem;
+
+    border-bottom: 1px solid color.$neutral;
 
     text {
       place-self: center;

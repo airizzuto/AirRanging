@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ButtonStyles } from "../../../types/Buttons/ButtonStyles";
+import { Coordinates } from "../../../types/Map/MapTypes";
 
 import "./ButtonStyles.scss";
 
@@ -42,6 +43,7 @@ interface LinkProps {
   children?: React.ReactElement | string;
   style: ButtonStyles;
   disabled?: boolean;
+  state?: Coordinates;  // TODO: state ISPs interfaces
 }
 
 /**
@@ -51,12 +53,20 @@ interface LinkProps {
  * @param handleClick: handler function used by this button.
  * @param disabled: optional conditional check that disables or enables button use.
  * @param style: button style selected from ButtonStyles.
+ * @param state: state object to pass with page routing. ex: map coordinates
  * @returns button component.
  */
-export const LinkButton: React.FC<LinkProps> = ({path, children, style, handleClick, disabled}) => {
+export const LinkButton: React.FC<LinkProps> = ({path, children, style="primary", handleClick, disabled, state }) => {
   return (
     !disabled
-    ? <Link to={path} className={style} onClick={handleClick}>
+    ? <Link 
+        to={{
+          pathname: path,
+          state: state
+        }}
+        className={style} 
+        onClick={handleClick} 
+      >
         {children}
       </Link>
     : <Button style={style} disabled={disabled}>

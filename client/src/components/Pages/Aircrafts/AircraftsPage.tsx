@@ -2,20 +2,19 @@ import React, { useEffect, useState } from 'react';
 
 import aircraftService from '../../../services/aircraftService';
 import useDebounce from '../../../hooks/useDebounce';
-import { AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
+import { AircraftsFilterSearch, AircraftWithSocials } from '../../../types/Aircraft/Aircraft';
 import { UserPublic } from '../../../types/User/User';
-import { FilterSearch } from '../../../types/Aircraft/Filter';
 import { AircraftSearchOptions } from '../../../types/Aircraft/AircraftEnums';
 import { PaginationInfo, PaginationOptions } from '../../../types/Pagination';
 
 import {LinkButton} from '../../Generics/Buttons/Button';
-import Searchbar from '../../Generics/Filters/Searchbar';
+import AircraftsSearchbar from '../../Generics/Filters/AircraftsSearchbar';
 import DropdownAircraftOptions from '../../Generics/Filters/DropdownAircraftOptions';
 import AircraftCard from '../../Generics/Cards/AircraftCard';
 import PaginationControls from '../../Generics/Pagination/PaginationControls';
 import AdvancedFilter from './AdvancedFilter';
 
-import Style from "./Aircrafts.module.scss";
+import Style from "../../Generics/ListingPage.module.scss";
 
 interface Props {
   user: UserPublic | null;
@@ -33,7 +32,7 @@ const Aircrafts: React.FC<Props> = ({
   handleAircraftSelection,
 }) => {
   const [aircrafts, setAircrafts] = useState<AircraftWithSocials[] | undefined>([]);
-  const [filters, setFilters] = useState<FilterSearch>({
+  const [filters, setFilters] = useState<AircraftsFilterSearch>({
     set: "all",
     searchField: AircraftSearchOptions.Model,
     search: ""
@@ -52,24 +51,22 @@ const Aircrafts: React.FC<Props> = ({
   const debouncedFilter = useDebounce(filters, 500);
 
   // TODO: const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilters>([]);
-  {/* FIXME: possible async issue on effect */}
   useEffect(() => {
     console.debug("EFFECT - filter: ", debouncedFilter);
-    async function getAircrafts() {
-      await aircraftService
-        .searchAircraftsPaged(debouncedFilter, paginationOptions)
-        .then(response => {
-          if (response) {
-            setPaginationInfo(response.pagination);
-            setAircrafts(response.data);
-          }
-        });
-    }
+    aircraftService.searchAircraftsPaged(debouncedFilter, paginationOptions)
+      .then(response => {
+        if (response) {
+          setPaginationInfo(response.pagination);
+          setAircrafts(response.data);
+        }
+      }).catch(error => {
+        console.error(error);
+        setAircrafts([]);
+      });
   
-    getAircrafts();
   },[debouncedFilter, paginationOptions]);
 
-  const handleAircraftsFilters = (filters: FilterSearch) => {
+  const handleAircraftsFilters = (filters: AircraftsFilterSearch) => {
     setFilters({...filters});
   };
 
@@ -78,13 +75,13 @@ const Aircrafts: React.FC<Props> = ({
   };
 
   return (
-    <div className={Style.AircraftsView}>
+    <div className={Style.Container}>
 
       <div className={Style.SubHeader}>
         <h1 className={Style.Title}>Browse Aircrafts</h1>
 
         <div className={Style.Searchbar}>
-          <Searchbar
+          <AircraftsSearchbar
             filters={filters}
             handleFilter={handleAircraftsFilters}
             placeholder={"Search aircrafts"}
